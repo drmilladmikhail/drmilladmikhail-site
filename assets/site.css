@@ -218,3 +218,19 @@ html[lang="en"] .thesis .translated { font-family: var(--display-ar); font-style
   .thesis dd { margin-bottom: 8px; }
 }
 .art figcaption span { white-space: nowrap; }
+
+/* portrait in hero */
+.portrait { margin: 0; }
+.portrait picture { display: block; max-width: 400px; margin-inline: auto; aspect-ratio: 1 / 1; border-radius: 50%; padding: 10px; background: var(--mist); box-shadow: 0 0 0 1px var(--line); }
+.portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+@media (max-width: 860px) { .portrait picture { max-width: 260px; } }
+
+/* couch illustration next to the about text */
+.about-grid { display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: center; }
+.art-small { margin: 0; }
+.art-small .art-disc { max-width: 280px; }
+@media (max-width: 860px) {
+  .about-grid { grid-template-columns: 1fr; gap: 24px; }
+  .art-small .art-disc { max-width: 220px; }
+}
+@media (max-width: 860px) { .hero .portrait { order: -1; } .portrait picture { max-width: 200px; } }
