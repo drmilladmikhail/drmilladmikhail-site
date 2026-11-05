@@ -73,6 +73,53 @@ def esc(s):
     return html.escape(s, quote=True)
 
 
+def pic(name, alt, eager=False, sizes="(max-width: 700px) 100vw, 700px"):
+    """<picture> with WebP (600w + 1200w) and the JPG as fallback. name = e.g. 'love-p09'."""
+    load = 'fetchpriority="high" decoding="async"' if eager else 'loading="lazy" decoding="async"'
+    return (f'<picture><source type="image/webp" srcset="/assets/book/{name}-600.webp 600w, /assets/book/{name}.webp 1200w" sizes="{sizes}">'
+            f'<img src="/assets/book/{name}.jpg" width="1200" height="800" alt="{esc(alt)}" {load}></picture>')
+
+
+IMG_RE = re.compile(r'<img src="/assets/book/(love-p\d+)\.jpg" width="1200" height="800" alt="([^"]*)"[^>]*>')
+
+
+def upgrade_imgs(body):
+    """Turn plain book <img> tags in an article body into responsive <picture> tags."""
+    return IMG_RE.sub(lambda m: pic(m.group(1), html.unescape(m.group(2))), body)
+
+
+def chapter_no(a):
+    order = ["الأول", "التاني", "التالت", "الرابع", "الخامس", "السادس", "السابع", "الخاتمة"]
+    c = a.get("chapter", "")
+    for i, w in enumerate(order):
+        if w in c:
+            return i
+    return 99
+
+
+def related(a, others, n=3):
+    """Same chapter first, then neighbouring chapters, then newest."""
+    me = chapter_no(a)
+    return sorted(others, key=lambda o: (abs(chapter_no(o) - me), o["date"] < a["date"], o["date"]), )[:n]
+
+
+def social(url, title, desc, image, alt, kind="article"):
+    return f'''<meta property="og:site_name" content="د. ميلاد منير ميخائيل">
+<meta property="og:type" content="{kind}">
+<meta property="og:url" content="{url}">
+<meta property="og:title" content="{esc(title)}">
+<meta property="og:description" content="{esc(desc)}">
+<meta property="og:image" content="{image}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{esc(alt)}">
+<meta property="og:locale" content="ar_EG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{esc(title)}">
+<meta name="twitter:description" content="{esc(desc)}">
+<meta name="twitter:image" content="{image}">'''
+
+
 def load():
     with open(os.path.join(ROOT, "articles", "articles.json"), encoding="utf-8") as f:
         items = json.load(f)
@@ -96,14 +143,15 @@ def load():
 def article_page(a, prev_items):
     url = f"{SITE}/articles/{a['slug']}/"
     img = f"{SITE}/assets/book/{a['image']}.jpg"
+    og = f"{SITE}/assets/og/{a['slug']}.jpg"
     with open(os.path.join(ROOT, "articles", "content", a["slug"] + ".html"), encoding="utf-8") as f:
-        body = f.read().strip()
+        body = upgrade_imgs(f.read().strip())
     ld = {
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": a["title"],
         "description": a["description"],
-        "image": img,
+        "image": [og, img],
         "datePublished": a["date"],
         "dateModified": a.get("updated", a["date"]),
         "inLanguage": "ar",
@@ -113,10 +161,14 @@ def article_page(a, prev_items):
         "publisher": {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail"},
         "isBasedOn": {"@type": "Book", "name": "ليه بنحب اللي بيوجعنا؟", "url": BOOK_AR},
     }
-    more = "".join(
-        f'<li><a href="/articles/{p["slug"]}/">{esc(p["title"])}</a></li>' for p in prev_items[:3]
-    )
-    more_block = (f'<aside class="more"><h2>مقالات تانية</h2><ul>{more}</ul></aside>' if more else "")
+    rel = related(a, prev_items)
+    more = "\n        ".join(card(p, "h3") for p in rel)
+    more_block = (f'<aside class="more"><h2>مقالات ممكن تعجبك</h2><ul class="cards">\n        {more}\n      </ul></aside>' if more else "")
+    tests_block = ('''<aside class="tests-cta">
+        <p class="tests-cta-title">عايز تعرف نمط تعلقك؟</p>
+        <p>جرّب اختبار نمط التعلق المجاني على الموقع. بياخد دقيقتين، والنتيجة بتطلعلك على طول ومش بتتحفظ في أي مكان.</p>
+        <div class="actions"><a class="btn primary" href="/tests/attachment-style/">ابدأ الاختبار</a> <a class="btn" href="/tests/">كل الاختبارات</a></div>
+      </aside>''')
     meta = ar_date(a["date"]) + (f" · {a['minutes']} دقايق قراءة" if a.get("minutes") else "")
     return f'''<!doctype html>
 <html lang="ar" dir="rtl">
@@ -127,12 +179,8 @@ def article_page(a, prev_items):
 <meta name="description" content="{esc(a["description"])}">
 <meta name="author" content="Dr. Millad Mikhail">
 <link rel="canonical" href="{url}">
-<meta property="og:type" content="article">
-<meta property="og:url" content="{url}">
-<meta property="og:title" content="{esc(a["title"])}">
-<meta property="og:description" content="{esc(a["description"])}">
-<meta property="og:image" content="{img}">
-<meta property="og:locale" content="ar_EG">
+{social(url, a["title"], a["description"], og, a["title"])}
+<meta property="article:published_time" content="{a["date"]}">
 <meta name="theme-color" content="#2f6f62">
 {FONTS}
 <script type="application/ld+json">
@@ -147,7 +195,7 @@ def article_page(a, prev_items):
       <p class="crumbs"><a href="/articles/">المقالات</a>{(" · " + esc(a["chapter"])) if a.get("chapter") else ""}</p>
       <h1>{esc(a["title"])}</h1>
       <p class="post-meta">د. ميلاد منير ميخائيل · {meta}</p>
-      <figure class="post-hero"><img src="/assets/book/{a["image"]}.jpg" width="1200" height="800" alt="{esc(a["image_alt"])}"></figure>
+      <figure class="post-hero">{pic(a["image"], a["image_alt"], eager=True)}</figure>
       <div class="post-body">
 {body}
       </div>
@@ -169,6 +217,7 @@ def article_page(a, prev_items):
         <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد منير ميخائيل" loading="lazy">
         <p><strong>د. ميلاد منير ميخائيل</strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
       </aside>
+      {tests_block}
       {more_block}
     </div>
   </article>
@@ -182,7 +231,7 @@ def article_page(a, prev_items):
 def card(a, heading="h2"):
     return f'''<li class="card">
         <a href="/articles/{a["slug"]}/">
-          <img src="/assets/book/{a["image"]}.jpg" width="1200" height="800" alt="{esc(a["image_alt"])}" loading="lazy">
+          {pic(a["image"], a["image_alt"], sizes="(max-width: 640px) 100vw, 380px")}
           <span class="card-body">
             <{heading}>{esc(a["title"])}</{heading}>
             <span class="card-desc">{esc(a["description"])}</span>
@@ -206,10 +255,7 @@ def index_page(items):
 <title>مقالات | د. ميلاد منير ميخائيل</title>
 <meta name="description" content="مقالات بالعامية عن الحب والتعلق والعلاقات المؤذية واختيار شريك الحياة، من كتب د. ميلاد منير ميخائيل.">
 <link rel="canonical" href="{SITE}/articles/">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{SITE}/articles/">
-<meta property="og:title" content="مقالات د. ميلاد منير ميخائيل">
-<meta property="og:image" content="{SITE}/assets/millad.jpg">
+{social(SITE + "/articles/", "مقالات د. ميلاد منير ميخائيل", "مقالات بالعامية عن الحب والتعلق والعلاقات المؤذية واختيار شريك الحياة.", SITE + "/assets/og/articles.jpg", "مقالات د. ميلاد منير ميخائيل", "website")}
 <meta name="theme-color" content="#2f6f62">
 {FONTS}
 <script type="application/ld+json">
@@ -290,6 +336,8 @@ def sitemap(items):
 
 def main():
     items = load()
+    import subprocess
+    subprocess.run([sys.executable, os.path.join(ROOT, "tools", "build_images.py")], check=True)
     for i, a in enumerate(items):
         d = os.path.join(ROOT, "articles", a["slug"])
         os.makedirs(d, exist_ok=True)

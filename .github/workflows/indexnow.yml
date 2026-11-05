@@ -1,0 +1,39 @@
+# Tells Bing (and other IndexNow search engines) about every page in sitemap.xml
+# right after a deploy, so new articles show up in search faster.
+# The key file a70e72adc175449e921c4c096d97787f.txt at the site root proves we own the site.
+name: IndexNow ping
+
+on:
+  push:
+    branches: [main]
+    paths: ["sitemap.xml", "**/index.html"]
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for Netlify to finish deploying
+        run: sleep 120
+      - name: Send sitemap URLs to IndexNow
+        run: |
+          python3 - <<'EOF'
+          import json, re, urllib.request
+          KEY = "a70e72adc175449e921c4c096d97787f"
+          urls = re.findall(r"<loc>([^<]+)</loc>", open("sitemap.xml", encoding="utf-8").read())
+          body = json.dumps({
+              "host": "drmilladmikhail.com",
+              "key": KEY,
+              "keyLocation": f"https://drmilladmikhail.com/{KEY}.txt",
+              "urlList": urls,
+          }).encode()
+          req = urllib.request.Request("https://api.indexnow.org/indexnow", data=body,
+                                       headers={"Content-Type": "application/json; charset=utf-8"})
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  print("IndexNow:", r.status, f"({len(urls)} URLs)")
+          except urllib.error.HTTPError as e:
+              print("IndexNow error:", e.code, e.read()[:300])
+              raise SystemExit(1 if e.code not in (202,) else 0)
+          EOF

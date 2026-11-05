@@ -333,3 +333,13 @@ html[dir="ltr"] .q legend { float: left; }
 .test-card svg { width: 44px; height: 44px; flex: none; color: var(--eucalyptus); }
 .tc-body { display: flex; flex-direction: column; gap: 6px; }
 .test-card h2, .test-card h3 { margin: 0; font-family: var(--display); font-size: 21px; }
+
+/* ---------- responsive pictures, related articles, tests call-to-action ---------- */
+picture { display: block; }
+.card picture img { display: block; }
+.more .cards { padding: 0; margin-top: 6px; }
+.more .cards li { margin: 0; }
+.tests-cta { margin: 28px 0 8px; padding: 20px 22px; border-radius: 16px; background: var(--mist); border: 1px solid var(--line); }
+.tests-cta p { margin: 0 0 10px; }
+.tests-cta-title { font-family: var(--display); font-weight: 700; font-size: 20px; }
+.tests-cta .actions { margin-top: 12px; }

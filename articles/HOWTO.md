@@ -12,8 +12,21 @@
    - 1–2 `<figure>` images inside the body (different from the hero image).
 3. Append an entry to `articles/articles.json`:
    `{"slug", "title", "description" (one sentence, ~150 chars, with the words people search for), "date" (YYYY-MM-DD), "image" (hero, e.g. "love-p16"), "image_alt", "chapter" (e.g. "من الفصل التاني"), "minutes"}`
-4. Run `python3 tools/build_articles.py` (it validates and rebuilds article pages, `/articles/`, the home-page "latest" block and `sitemap.xml`).
-5. Commit and push to `main`; Netlify deploys automatically.
+4. Run `python3 tools/build_articles.py` (it validates and rebuilds article pages, `/articles/`, the home-page "latest" block and `sitemap.xml`;
+   it also runs `tools/build_images.py`, which makes the WebP versions of book images and the 1200x630 share card
+   `assets/og/<slug>.jpg` with the article title — open that card and check the Arabic text looks right).
+   Commit the new files in `assets/og/` and `assets/book/*.webp` too.
+5. Commit and push to `main`; Netlify deploys automatically. A GitHub Action (`.github/workflows/indexnow.yml`)
+   then pings IndexNow (Bing etc.) with the sitemap URLs — nothing to do by hand.
+
+## Titles and descriptions people actually search for (SEO)
+- Write the title the way people type the question into Google, in Egyptian Arabic or simple Arabic:
+  e.g. «إزاي أنسى حد بحبه وهو أذاني؟»، «ليه برجع لحد عارف إنه مش مناسب ليا؟»، «علامات إن العلاقة مؤذية».
+  Before choosing, run 2–3 web searches on the topic to see the phrasing people and other sites use; prefer
+  the common phrasing over a clever one. Keep the main phrase near the start; 45–65 characters is ideal.
+- `description`: one sentence (130–155 characters) that repeats the main phrase naturally and says what the reader gets.
+- Use the main phrase once in the first paragraph and in one `<h2>`; never stuff keywords.
+- Link to one related article (if any exists) and, when the topic fits, to a test in `/tests/` inside the body.
 
 Book illustrations available (book page numbers): love-p09, p10, p11, p12 (ch.1), p16, p17, p18, p19 (ch.2),
 p23, p27 (ch.3), p30, p35 (ch.4), p37, p42 (ch.5), p46, p50, p53 (ch.6), p59 (ch.7), p64 (conclusion).
