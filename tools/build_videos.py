@@ -344,7 +344,7 @@ def page(vs, data=None):
 </head>
 <body>
 {ba.TOPBAR}
-<main>
+<main id="main">
   <section class="section videos-index">
     <div class="wrap">
       <h1>فيديوهات «جلسة شيزلونج»</h1>

@@ -35,7 +35,8 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">\n'
          '<link rel="stylesheet" href="/assets/site.css">')
 
-TOPBAR = '''<header class="topbar">
+TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
+<header class="topbar">
   <div class="wrap">
     <a class="brand" href="/">د. ميلاد منير ميخائيل</a>
     <nav class="nav" aria-label="أقسام الموقع">
@@ -216,7 +217,7 @@ def article_page(a, prev_items):
 </head>
 <body>
 {TOPBAR}
-<main>
+<main id="main">
   <article class="post">
     <div class="wrap narrow">
       <p class="crumbs"><a href="/articles/">المقالات</a>{(" · " + esc(a["chapter"])) if a.get("chapter") else ""}</p>
@@ -292,7 +293,7 @@ def index_page(items):
 </head>
 <body>
 {TOPBAR}
-<main>
+<main id="main">
   <section class="section articles-index">
     <div class="wrap">
       <h1>المقالات</h1>

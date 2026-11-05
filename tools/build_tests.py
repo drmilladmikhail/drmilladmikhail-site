@@ -210,7 +210,8 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">\n'
          '<link rel="stylesheet" href="/assets/site.css">')
 
-TOPBAR = '''<header class="topbar">
+TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
+<header class="topbar">
   <div class="wrap">
     <a class="brand" href="/">د. ميلاد منير ميخائيل</a>
     <nav class="nav" aria-label="أقسام الموقع">
@@ -296,7 +297,7 @@ def head(title, desc, url, ld):
 </head>
 <body>
 {TOPBAR}
-<main>'''
+<main id="main">'''
 
 
 def test_page(t):
