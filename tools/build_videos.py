@@ -12,8 +12,9 @@ Where the list comes from:
      plus date + description for videos we don't know yet.
   2. The channel's RSS feed: the newest 15 uploads with date and description.
 Everything is merged into assets/videos.json, which keeps growing (a video that
-drops out of the feed is not lost). To hide a video, add its id to "hidden" in
-that file.
+drops out of the feed is not lost). In that file:
+  "hidden":   ids that never show on the site
+  "featured": ids shown on the home page, in this order (else the newest)
 
 What it writes:
   assets/videos.json   the data
@@ -131,6 +132,8 @@ def refresh(data):
                 v[k] = f[k]
         if f.get("short"):
             v["short"] = True
+        if "order" in f:
+            v["order"] = f["order"] + (10000 if f.get("short") else 0)
     missing = [i for i, v in known.items() if not v.get("published") or not v.get("title")]
     try:
         for i, d in details(missing[:80]).items():
@@ -141,7 +144,11 @@ def refresh(data):
                 known[i]["short"] = d["duration"] <= 60
     except (FileNotFoundError, subprocess.TimeoutExpired) as e:
         print("details skipped:", e)
-    data["videos"] = sorted(known.values(), key=lambda v: (v.get("published") or "0000", v["id"]), reverse=True)
+    # Newest first. The channel tab order (from yt-dlp) is the most reliable; a brand-new
+    # upload seen only in the RSS feed has no order yet and goes on top.
+    fresh = sorted((v for v in known.values() if "order" not in v), key=lambda v: v.get("published") or "", reverse=True)
+    listed = sorted((v for v in known.values() if "order" in v), key=lambda v: v["order"])
+    data["videos"] = fresh + listed
     return data
 
 
@@ -180,13 +187,18 @@ def vcard(v, heading="h3", lang="ar"):
         </li>'''
 
 
-def pick_home(vs, n):
+def pick_home(vs, n, featured=()):
+    """Home page shows the "featured" ids from videos.json (your choice, in that order);
+    if fewer than n are featured, the newest videos fill the rest."""
+    by_id = {v["id"]: v for v in vs}
+    out = [by_id[i] for i in featured if i in by_id][:n]
     longs = [v for v in vs if not v.get("short")]
-    return (longs or vs)[:n]
+    out += [v for v in (longs or vs) if v not in out][: n - len(out)]
+    return out
 
 
-def home_block_ar(vs):
-    cards = "\n        ".join(vcard(v) for v in pick_home(vs, 6))
+def home_block_ar(vs, featured=()):
+    cards = "\n        ".join(vcard(v) for v in pick_home(vs, 6, featured))
     return f'''<!-- VIDEOS:START -->
   <section class="section" id="videos" aria-labelledby="vid-h">
     <div class="wrap">
@@ -204,8 +216,8 @@ def home_block_ar(vs):
   <!-- VIDEOS:END -->'''
 
 
-def home_block_en(vs):
-    cards = "\n        ".join(vcard(v, lang="en") for v in pick_home(vs, 3))
+def home_block_en(vs, featured=()):
+    cards = "\n        ".join(vcard(v, lang="en") for v in pick_home(vs, 3, featured))
     return f'''<!-- VIDEOS:START -->
   <section class="section" id="videos" aria-labelledby="vid-h">
     <div class="wrap">
@@ -317,8 +329,8 @@ def main():
     with open(os.path.join(ROOT, "videos", "index.html"), "w", encoding="utf-8") as f:
         f.write(page(vs))
     if vs:
-        put_block(os.path.join(ROOT, "index.html"), home_block_ar(vs), '<section class="book-feature" id="book"')
-        put_block(os.path.join(ROOT, "en", "index.html"), home_block_en(vs), '<section class="section" id="blog"')
+        put_block(os.path.join(ROOT, "index.html"), home_block_ar(vs, data.get("featured", [])), '<section class="book-feature" id="book"')
+        put_block(os.path.join(ROOT, "en", "index.html"), home_block_en(vs, data.get("featured", [])), '<section class="section" id="blog"')
     ba.sitemap(ba.load())
     print(f"videos: {len(vs)} shown ({sum(1 for v in vs if v.get('short'))} short)")
 
