@@ -548,3 +548,8 @@ section[id] { scroll-margin-top: 72px; }
 .v-sub { margin-top: 36px; }
 .videos-index h1 { margin-top: 0; }
 @media (prefers-reduced-motion: reduce) { .yt img { transition: none; } .yt:hover img { transform: none; } }
+/* Phones: home-page videos become a swipeable row instead of a tall stack */
+@media (max-width: 640px) {
+  #videos .vcards { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84%; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; padding-bottom: 10px; margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; scrollbar-width: thin; }
+  #videos .vcard { scroll-snap-align: start; }
+}
