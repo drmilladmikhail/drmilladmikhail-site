@@ -349,6 +349,11 @@ def sitemap(items):
         with open(tj, encoding="utf-8") as f:
             tests = json.load(f)
         urls += [(f"{SITE}/tests/", "2026-11-04", False)] + [(f"{SITE}/tests/{x['slug']}/", "2026-11-04", False) for x in tests]
+    vj = os.path.join(ROOT, "assets", "videos.json")
+    if os.path.exists(os.path.join(ROOT, "videos", "index.html")) and os.path.exists(vj):
+        with open(vj, encoding="utf-8") as f:
+            vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
+        urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
     parts = []
     for loc, mod, alt in urls:
         alts = ""

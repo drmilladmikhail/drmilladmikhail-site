@@ -1,0 +1,44 @@
+# Pulls the newest videos from the YouTube channel «جلسة شيزلونج» every day
+# and updates the site (home page block, /videos/ page, sitemap).
+# It only commits when something changed; Netlify then deploys automatically.
+name: YouTube videos
+
+on:
+  schedule:
+    - cron: "17 11 * * *"   # every day, about 6:17 AM New York time
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["tools/build_videos.py", ".github/workflows/videos.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: videos
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install yt-dlp
+        run: pip install --quiet --upgrade yt-dlp
+      - name: Fetch videos and rebuild pages
+        run: python3 tools/build_videos.py
+      - name: Commit if anything changed
+        run: |
+          git config user.name "site-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A assets/videos.json videos/ index.html en/index.html sitemap.xml
+          if git diff --cached --quiet; then
+            echo "No new videos."
+          else
+            git commit -m "Update videos from YouTube"
+            git pull --rebase --quiet origin main
+            git push
+          fi

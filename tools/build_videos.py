@@ -1,0 +1,327 @@
+#!/usr/bin/env python3
+"""Pull the videos of the YouTube channel «جلسة شيزلونج» and show them on the site.
+
+Run:  python3 tools/build_videos.py            (fetch from YouTube, then build)
+      python3 tools/build_videos.py --offline  (build from assets/videos.json only)
+
+The GitHub Action .github/workflows/videos.yml runs it every day, so a new upload
+appears on the site by itself.
+
+Where the list comes from:
+  1. yt-dlp (if installed): every video on the channel's Videos and Shorts tabs,
+     plus date + description for videos we don't know yet.
+  2. The channel's RSS feed: the newest 15 uploads with date and description.
+Everything is merged into assets/videos.json, which keeps growing (a video that
+drops out of the feed is not lost). To hide a video, add its id to "hidden" in
+that file.
+
+What it writes:
+  assets/videos.json   the data
+  videos/index.html    page with every video (VideoObject structured data for Google)
+  index.html           "فيديوهات" block between VIDEOS markers (newest 6)
+  en/index.html        "Videos" block between VIDEOS markers (newest 3)
+  sitemap.xml          via build_articles.sitemap()
+
+Players are "click to play": the page only loads a small WebP thumbnail; the
+YouTube player (privacy-enhanced youtube-nocookie.com) loads when someone clicks.
+See assets/videos.js.
+"""
+import html
+import json
+import os
+import re
+import subprocess
+import sys
+import urllib.request
+import xml.etree.ElementTree as ET
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "tools"))
+import build_articles as ba  # noqa: E402  (shared header, footer, fonts, sitemap)
+
+CHANNEL_ID = "UCTR2Y82KQ3743gUk6GgsIgA"
+HANDLE = "https://www.youtube.com/@DrMilladMikhail"
+DATA = os.path.join(ROOT, "assets", "videos.json")
+SITE = ba.SITE
+esc = ba.esc
+UA = {"User-Agent": "Mozilla/5.0 (site build; drmilladmikhail.com)", "Accept-Language": "ar,en;q=0.8"}
+
+
+# ---------------------------------------------------------------- fetching
+def load_data():
+    if os.path.exists(DATA):
+        with open(DATA, encoding="utf-8") as f:
+            return json.load(f)
+    return {"channel": "جلسة شيزلونج", "hidden": [], "videos": []}
+
+
+def from_rss():
+    url = f"https://www.youtube.com/feeds/videos.xml?channel_id={CHANNEL_ID}"
+    req = urllib.request.Request(url, headers=UA)
+    with urllib.request.urlopen(req, timeout=30) as r:
+        root = ET.fromstring(r.read())
+    ns = {"a": "http://www.w3.org/2005/Atom", "yt": "http://www.youtube.com/xml/schemas/2015",
+          "media": "http://search.yahoo.com/mrss/"}
+    out = []
+    for i, e in enumerate(root.findall("a:entry", ns)):
+        vid = e.findtext("yt:videoId", namespaces=ns)
+        link = (e.find("a:link", ns).get("href") if e.find("a:link", ns) is not None else "") or ""
+        out.append({
+            "id": vid,
+            "title": (e.findtext("a:title", namespaces=ns) or "").strip(),
+            "published": (e.findtext("a:published", namespaces=ns) or "")[:10],
+            "description": (e.findtext("media:group/media:description", namespaces=ns) or "").strip(),
+            "short": "/shorts/" in link,
+        })
+    print(f"rss: {len(out)} video(s)")
+    return out
+
+
+def ytdlp(args, timeout=300):
+    r = subprocess.run(["yt-dlp", "--no-warnings", "--ignore-errors", *args],
+                       capture_output=True, text=True, timeout=timeout)
+    return [json.loads(ln) for ln in r.stdout.splitlines() if ln.startswith("{")]
+
+
+def from_ytdlp():
+    """Every video id on the Videos and Shorts tabs (newest first)."""
+    out = []
+    for tab, short in (("videos", False), ("shorts", True)):
+        rows = ytdlp(["--flat-playlist", "-j", f"{HANDLE}/{tab}"])
+        for i, x in enumerate(rows):
+            if x.get("id") and len(x["id"]) == 11:
+                out.append({"id": x["id"], "title": (x.get("title") or "").strip(), "short": short, "order": i})
+        print(f"yt-dlp {tab}: {len(rows)} video(s)")
+    return out
+
+
+def details(ids):
+    """Date + description for videos we only know by id (one light request each, no download)."""
+    if not ids:
+        return {}
+    rows = ytdlp(["--skip-download", "-j", *[f"https://www.youtube.com/watch?v={i}" for i in ids]], timeout=900)
+    got = {}
+    for x in rows:
+        d = x.get("upload_date") or ""
+        got[x["id"]] = {
+            "published": f"{d[:4]}-{d[4:6]}-{d[6:8]}" if len(d) == 8 else "",
+            "description": (x.get("description") or "").strip(),
+            "title": (x.get("title") or "").strip(),
+            "duration": x.get("duration") or 0,
+        }
+    print(f"yt-dlp details: {len(got)} of {len(ids)}")
+    return got
+
+
+def refresh(data):
+    known = {v["id"]: v for v in data["videos"]}
+    found = []
+    try:
+        found += from_ytdlp()
+    except (FileNotFoundError, subprocess.TimeoutExpired) as e:
+        print("yt-dlp skipped:", e)
+    try:
+        found += from_rss()
+    except Exception as e:  # network trouble must not break the site build
+        print("rss skipped:", e)
+    for f in found:
+        v = known.setdefault(f["id"], {"id": f["id"]})
+        for k in ("title", "published", "description"):
+            if f.get(k):
+                v[k] = f[k]
+        if f.get("short"):
+            v["short"] = True
+    missing = [i for i, v in known.items() if not v.get("published") or not v.get("title")]
+    try:
+        for i, d in details(missing[:80]).items():
+            for k, val in d.items():
+                if val and not known[i].get(k):
+                    known[i][k] = val
+            if d.get("duration") and d["duration"] <= 180 and "short" not in known[i]:
+                known[i]["short"] = d["duration"] <= 60
+    except (FileNotFoundError, subprocess.TimeoutExpired) as e:
+        print("details skipped:", e)
+    data["videos"] = sorted(known.values(), key=lambda v: (v.get("published") or "0000", v["id"]), reverse=True)
+    return data
+
+
+# ---------------------------------------------------------------- rendering
+PLAY = '<span class="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path class="bg" d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2.4 34 .4 34 .4s-21.2 0-26.5 1.3a8.5 8.5 0 0 0-6 6C.2 13 .2 24 .2 24s0 11 1.3 16.3a8.5 8.5 0 0 0 6 6c5.3 1.3 26.5 1.3 26.5 1.3s21.2 0 26.5-1.3a8.5 8.5 0 0 0 6-6C67.8 35 67.8 24 67.8 24s0-11-1.3-16.3Z"/><path class="fg" d="M45 24 27 14v20"/></svg></span>'
+
+
+def visible(data):
+    hidden = set(data.get("hidden", []))
+    return [v for v in data["videos"] if v["id"] not in hidden and v.get("title")]
+
+
+def en_date(iso):
+    m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    y, mo, d = iso.split("-")
+    return f"{m[int(mo) - 1]} {int(d)}, {y}"
+
+
+def vcard(v, heading="h3", lang="ar"):
+    vid, t = v["id"], v["title"]
+    label = (f"شغّل الفيديو: {t}" if lang == "ar" else f"Play video: {t}")
+    date = ""
+    if v.get("published"):
+        date = f'<span class="card-date">{ba.ar_date(v["published"]) if lang == "ar" else en_date(v["published"])}</span>'
+    kind = " vcard-short" if v.get("short") else ""
+    title_attr = '' if lang == "ar" else ' lang="ar" dir="rtl"'
+    return f'''<li class="vcard{kind}">
+          <a class="yt" href="https://www.youtube.com/watch?v={vid}" data-id="{vid}" target="_blank" rel="noopener" aria-label="{esc(label)}">
+            <img src="https://i.ytimg.com/vi_webp/{vid}/hqdefault.webp" width="480" height="360" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/{vid}/hqdefault.jpg'">
+            {PLAY}
+          </a>
+          <span class="card-body">
+            <{heading}{title_attr}>{esc(t)}</{heading}>
+            {date}
+          </span>
+        </li>'''
+
+
+def pick_home(vs, n):
+    longs = [v for v in vs if not v.get("short")]
+    return (longs or vs)[:n]
+
+
+def home_block_ar(vs):
+    cards = "\n        ".join(vcard(v) for v in pick_home(vs, 6))
+    return f'''<!-- VIDEOS:START -->
+  <section class="section" id="videos" aria-labelledby="vid-h">
+    <div class="wrap">
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="7" width="26" height="18" rx="4"/><path d="m13 12 7 4-7 4Z"/></svg>
+        <h2 id="vid-h">فيديوهات من «جلسة شيزلونج»</h2>
+      </div>
+      <p class="section-intro">اتفرّج هنا على طول، من غير ما تخرج من الموقع.</p>
+      <ul class="vcards">
+        {cards}
+      </ul>
+      <div class="actions"><a class="btn primary" href="/videos/">كل الفيديوهات</a> <a class="btn" href="{HANDLE}?sub_confirmation=1" target="_blank" rel="noopener">اشترك في القناة</a></div>
+    </div>
+  </section>
+  <!-- VIDEOS:END -->'''
+
+
+def home_block_en(vs):
+    cards = "\n        ".join(vcard(v, lang="en") for v in pick_home(vs, 3))
+    return f'''<!-- VIDEOS:START -->
+  <section class="section" id="videos" aria-labelledby="vid-h">
+    <div class="wrap">
+      <div class="section-head">
+        <svg class="icon" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="7" width="26" height="18" rx="4"/><path d="m13 12 7 4-7 4Z"/></svg>
+        <h2 id="vid-h">Videos <span class="muted">(in Arabic)</span></h2>
+      </div>
+      <p class="section-intro">From my YouTube channel «Glset Shezlong»: relationships, anxiety and finding meaning.</p>
+      <ul class="vcards">
+        {cards}
+      </ul>
+      <div class="actions"><a class="btn primary" href="/videos/" hreflang="ar">All videos</a> <a class="btn" href="{HANDLE}?sub_confirmation=1" target="_blank" rel="noopener">Subscribe</a></div>
+    </div>
+  </section>
+  <!-- VIDEOS:END -->'''
+
+
+def put_block(path, block, before):
+    """Replace the VIDEOS block, or insert it once just before `before`."""
+    with open(path, encoding="utf-8") as f:
+        t = f.read()
+    start, end = "<!-- VIDEOS:START -->", "<!-- VIDEOS:END -->"
+    if start in t:
+        t = re.sub(re.escape(start) + r".*?" + re.escape(end), lambda m: block, t, flags=re.S)
+    elif before in t:
+        t = t.replace(before, block + "\n" + before, 1)
+    else:
+        print("no place for videos block in", path)
+        return
+    if "/assets/videos.js" not in t:
+        t = t.replace("</body>", '<script src="/assets/videos.js" defer></script>\n</body>', 1)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(t)
+
+
+def ld_video(v):
+    d = {"@type": "VideoObject", "name": v["title"],
+         "description": (v.get("description") or v["title"])[:500],
+         "thumbnailUrl": [f"https://i.ytimg.com/vi/{v['id']}/hqdefault.jpg"],
+         "uploadDate": v["published"],
+         "contentUrl": f"https://www.youtube.com/watch?v={v['id']}",
+         "embedUrl": f"https://www.youtube-nocookie.com/embed/{v['id']}",
+         "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
+    return d
+
+
+def page(vs):
+    longs = [v for v in vs if not v.get("short")]
+    shorts = [v for v in vs if v.get("short")]
+    sec = ""
+    if longs:
+        sec += '<ul class="vcards">\n        ' + "\n        ".join(vcard(v, "h2") for v in longs) + "\n      </ul>"
+    if shorts:
+        sec += ('\n      <h2 class="plain-h v-sub">فيديوهات قصيرة</h2>\n      <ul class="vcards vcards-short">\n        '
+                + "\n        ".join(vcard(v, "h3") for v in shorts) + "\n      </ul>")
+    if not vs:
+        sec = f'<p>الفيديوهات هتظهر هنا قريب. لحد ما تظهر، تقدر تتفرّج على <a href="{HANDLE}">القناة على يوتيوب</a>.</p>'
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "فيديوهات د. ميلاد منير ميخائيل",
+          "url": f"{SITE}/videos/", "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
+          "hasPart": [ld_video(v) for v in vs if v.get("published")]}
+    desc = "فيديوهات بالعامية عن الحب والتعلق والقلق والبحث عن المعنى، من قناة «جلسة شيزلونج» لـ د. ميلاد منير ميخائيل."
+    first = vs[0]["id"] if vs else None
+    og = f"https://i.ytimg.com/vi/{first}/hqdefault.jpg" if first else f"{SITE}/assets/og/home.jpg"
+    return f'''<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>فيديوهات «جلسة شيزلونج» | د. ميلاد منير ميخائيل</title>
+<meta name="description" content="{esc(desc)}">
+<link rel="canonical" href="{SITE}/videos/">
+{ba.social(SITE + "/videos/", "فيديوهات د. ميلاد منير ميخائيل", desc, f"{SITE}/assets/og/home.jpg", "د. ميلاد منير ميخائيل", "website")}
+<meta name="theme-color" content="#2f6f62">
+<link rel="preconnect" href="https://i.ytimg.com">
+{ba.FONTS}
+<script type="application/ld+json">
+{json.dumps(ld, ensure_ascii=False, indent=2)}
+</script>
+</head>
+<body>
+{ba.TOPBAR}
+<main>
+  <section class="section videos-index">
+    <div class="wrap">
+      <h1>فيديوهات «جلسة شيزلونج»</h1>
+      <p class="section-intro">دوس على أي فيديو يشتغل هنا على طول. الفيديوهات الجديدة بتظهر هنا لوحدها أول ما تنزل على القناة.</p>
+      {sec}
+      <div class="actions"><a class="btn" href="{HANDLE}?sub_confirmation=1" target="_blank" rel="noopener">اشترك في القناة على يوتيوب</a></div>
+    </div>
+  </section>
+</main>
+{ba.FOOTER}
+<script src="/assets/videos.js" defer></script>
+<script src="/assets/helper.js" defer></script>
+</body>
+</html>
+'''
+
+
+def main():
+    data = load_data()
+    if "--offline" not in sys.argv:
+        data = refresh(data)
+    with open(DATA, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    vs = visible(data)
+    os.makedirs(os.path.join(ROOT, "videos"), exist_ok=True)
+    with open(os.path.join(ROOT, "videos", "index.html"), "w", encoding="utf-8") as f:
+        f.write(page(vs))
+    if vs:
+        put_block(os.path.join(ROOT, "index.html"), home_block_ar(vs), '<section class="book-feature" id="book"')
+        put_block(os.path.join(ROOT, "en", "index.html"), home_block_en(vs), '<section class="section" id="blog"')
+    ba.sitemap(ba.load())
+    print(f"videos: {len(vs)} shown ({sum(1 for v in vs if v.get('short'))} short)")
+
+
+if __name__ == "__main__":
+    main()
