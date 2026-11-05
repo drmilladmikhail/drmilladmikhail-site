@@ -493,3 +493,4 @@ html[dir="rtl"] .quote-band::before { background: linear-gradient(270deg, rgba(2
 .tb-photo { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 16px; margin-top: 28px; }
 @media (max-width: 760px) { .tb-photo { display: none; } }
 .quote-band + .section { border-top: 0; }
+section[id] { scroll-margin-top: 72px; }
