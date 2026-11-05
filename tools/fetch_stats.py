@@ -9,7 +9,8 @@ downloads it, writes the report and updates content/PRIORITIES.md.
 Needs:
   CF_API_TOKEN    Cloudflare API token with  Account > Account Analytics > Read
                   (GitHub secret, added by the site owner)
-  CF_ACCOUNT_ID   Cloudflare account id (not secret)
+  CF_ACCOUNT_ID   Cloudflare account id (optional: if missing, it is looked up
+                  from the token via GET /accounts)
 
 Run:  python3 tools/fetch_stats.py [--days 15] [--out stats.json]
 Each part is queried separately; a failing part is recorded under "errors"
@@ -52,6 +53,19 @@ def gql(token, query, variables):
         return {"errors": [{"message": f"HTTP {e.code}: {e.read()[:300].decode('utf-8', 'replace')}"}]}
 
 
+def find_account(token):
+    """Look up the account id the token can see (used when CF_ACCOUNT_ID is not set)."""
+    req = urllib.request.Request("https://api.cloudflare.com/client/v4/accounts?per_page=5",
+                                 headers={"Authorization": f"Bearer {token}"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            res = json.loads(r.read())
+        accts = res.get("result") or []
+        return (accts[0]["id"], None) if accts else (None, "token sees no account")
+    except urllib.error.HTTPError as e:
+        return None, f"accounts lookup HTTP {e.code}: {e.read()[:200].decode('utf-8', 'replace')}"
+
+
 def part(token, account, start, end, dataset, selection, order, limit):
     order_arg = f", orderBy: {order}" if order else ""
     q = f"""query ($account: String!, $start: Time!, $end: Time!) {{
@@ -90,9 +104,13 @@ def main():
     start = now - dt.timedelta(days=a.days)
     prev_start = start - dt.timedelta(days=a.days)
     result = {"generated": now.isoformat(), "period": {"start": start.isoformat(), "end": now.isoformat(), "days": a.days}}
+    if token and not account:
+        account, err = find_account(token)
+        if err:
+            result["errors"] = {"setup": f"CF_ACCOUNT_ID not set and lookup failed: {err}"}
     missing = [n for n, v in (("CF_API_TOKEN", token), ("CF_ACCOUNT_ID", account)) if not v]
     if missing:
-        result["errors"] = {"setup": "missing " + ", ".join(missing)}
+        result.setdefault("errors", {}).setdefault("setup", "missing " + ", ".join(missing))
     else:
         cur, err = period(token, account, start, now, list(PARTS))
         prev, perr = period(token, account, prev_start, start, ["total", "pages"])
