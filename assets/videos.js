@@ -4,6 +4,16 @@
    no YouTube cookies until the visitor plays). Without JavaScript the link
    simply opens the video on YouTube. Built by tools/build_videos.py. */
 (function () {
+  // WebP thumbnail missing (rare, old uploads) -> use the JPG one. Kept here instead of an
+  // inline onerror="" so the page's Content-Security-Policy can forbid inline scripts.
+  function fix(img) {
+    if (img.src.indexOf("/vi_webp/") > -1) img.src = img.src.replace("/vi_webp/", "/vi/").replace(".webp", ".jpg");
+  }
+  document.addEventListener("error", function (e) { if (e.target && e.target.tagName === "IMG") fix(e.target); }, true);
+  Array.prototype.forEach.call(document.querySelectorAll(".yt img"), function (img) {
+    if (img.complete && img.naturalWidth === 0) fix(img);
+  });
+
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a.yt[data-id]");
     if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button > 0) return;

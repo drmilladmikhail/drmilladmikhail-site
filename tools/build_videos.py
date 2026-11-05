@@ -200,7 +200,7 @@ def vcard(v, heading="h3", lang="ar", tag=""):
     title_attr = '' if lang == "ar" else ' lang="ar" dir="rtl"'
     return f'''<li class="vcard{kind}">
           <a class="yt" href="https://www.youtube.com/watch?v={vid}" data-id="{vid}" target="_blank" rel="noopener" aria-label="{esc(label)}">
-            <img src="https://i.ytimg.com/vi_webp/{vid}/hqdefault.webp" width="480" height="360" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/{vid}/hqdefault.jpg'">
+            <img src="https://i.ytimg.com/vi_webp/{vid}/hqdefault.webp" width="480" height="360" alt="" loading="lazy" decoding="async">
             {PLAY}
           </a>
           <span class="card-body">
