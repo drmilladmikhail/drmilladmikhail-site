@@ -1,7 +1,8 @@
 # Pulls visitor statistics from Cloudflare Web Analytics on the 1st and 16th of
-# every month (and on demand). The numbers are uploaded as a short-lived
-# artifact "site-stats" — not committed, because this repository is public.
-# The scheduled task «تقرير زوار الموقع» reads it and writes the report.
+# every month (and on demand). The numbers are printed to this job's log
+# (between STATS-JSON-BEGIN/END) — not committed, because this repository is
+# public. The scheduled task «تقرير زوار الموقع» reads the log, deletes it,
+# and writes the report.
 # Needs the repository secret CF_API_TOKEN (Account Analytics: Read).
 name: Site stats
 
@@ -24,8 +25,3 @@ jobs:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID || vars.CF_ACCOUNT_ID }}
         run: python3 tools/fetch_stats.py --days "${{ github.event.inputs.days || '15' }}" --out stats.json
-      - uses: actions/upload-artifact@v4
-        with:
-          name: site-stats
-          path: stats.json
-          retention-days: 10

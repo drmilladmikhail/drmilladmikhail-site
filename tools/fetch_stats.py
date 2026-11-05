@@ -2,9 +2,10 @@
 """Fetch visitor statistics from Cloudflare Web Analytics (GraphQL API).
 
 Used by .github/workflows/stats.yml (every 1st and 16th of the month). The
-result is uploaded as a short-lived workflow artifact named "site-stats"
-(NOT committed: the repo is public). The scheduled task «تقرير زوار الموقع»
-downloads it, writes the report and updates content/PRIORITIES.md.
+result is printed to the job log between the lines STATS-JSON-BEGIN and
+STATS-JSON-END (NOT committed: the repo is public). The scheduled task
+«تقرير زوار الموقع» reads it from the log, then deletes that run's logs,
+writes the report and updates content/PRIORITIES.md.
 
 Needs:
   CF_API_TOKEN    Cloudflare API token with  Account > Account Analytics > Read
@@ -123,6 +124,9 @@ def main():
     print("visits:", (tot[0].get("sum") or {}).get("visits") if tot else None, "| page views:", tot[0].get("count") if tot else None)
     if result.get("errors"):
         print("errors:", json.dumps(result["errors"], ensure_ascii=False))
+    print("STATS-JSON-BEGIN")
+    print(json.dumps(result, ensure_ascii=False, separators=(",", ":")))
+    print("STATS-JSON-END")
     return 0
 
 
