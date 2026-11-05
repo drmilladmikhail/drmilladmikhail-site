@@ -10,6 +10,7 @@
   --eucalyptus: #2f6f62;
   --eucalyptus-ink: #ffffff;
   --amber: #b9862a;
+  --amber-text: #8a6214; /* darker gold for small text on light backgrounds (WCAG AA 4.5:1) */
   --focus: #2f6f62;
 
   --body-ar: "IBM Plex Sans Arabic", "IBM Plex Sans", system-ui, sans-serif;
@@ -29,13 +30,14 @@
     --eucalyptus: #7fc1b1;
     --eucalyptus-ink: #0f1a24;
     --amber: #e2b35a;
+    --amber-text: #e2b35a;
     --focus: #7fc1b1;
   }
 }
 :root[data-theme="dark"] {
   --paper: #111a2a; --surface: #18233a; --mist: #1f3040; --ink: #e8ecef;
   --muted: #a3afbd; --line: #2a3a4d; --eucalyptus: #7fc1b1; --eucalyptus-ink: #0f1a24;
-  --amber: #e2b35a; --focus: #7fc1b1;
+  --amber: #e2b35a; --amber-text: #e2b35a; --focus: #7fc1b1;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -159,7 +161,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline
 .timeline { list-style: none; margin: 0; padding: 0; }
 .timeline li { display: grid; grid-template-columns: 84px 1fr; gap: 20px; padding-block: 18px; border-bottom: 1px solid var(--line); }
 .timeline li:last-child { border-bottom: 0; }
-.timeline .year { font-family: var(--display-en); font-weight: 600; font-size: 26px; line-height: 1.2; color: var(--amber); font-variant-numeric: lining-nums; }
+.timeline .year { font-family: var(--display-en); font-weight: 600; font-size: 26px; line-height: 1.2; color: var(--amber-text); font-variant-numeric: lining-nums; }
 .timeline h3 { margin: 0; font-size: 18.5px; font-weight: 600; line-height: 1.5; }
 .timeline .inst { margin: 2px 0 0; color: var(--muted); font-size: 15.5px; }
 .timeline .meta { margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 8px; font-size: 13.5px; }
@@ -286,7 +288,7 @@ html[lang="en"] .thesis .translated { font-family: var(--display-ar); font-style
 .card-body { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px 18px; }
 .card h2, .card h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 20px; line-height: 1.55; }
 .card-desc { color: var(--muted); font-size: 15px; line-height: 1.7; }
-.card-date { color: var(--amber); font-size: 14px; font-weight: 600; margin-top: auto; }
+.card-date { color: var(--amber-text); font-size: 14px; font-weight: 600; margin-top: auto; }
 
 /* ---------- tests ---------- */
 .test { border-top: 0; padding-block: 36px 56px; }
