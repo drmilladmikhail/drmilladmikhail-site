@@ -31,3 +31,6 @@
 Book illustrations available (book page numbers): love-p09, p10, p11, p12 (ch.1), p16, p17, p18, p19 (ch.2),
 p23, p27 (ch.3), p30, p35 (ch.4), p37, p42 (ch.5), p46, p50, p53 (ch.6), p59 (ch.7), p64 (conclusion).
 Look at the image before choosing it if you are unsure what it shows.
+
+## Visitor data → what to make next (added 2026-11-05)
+Before choosing a topic (article, English translation, glossary term, worksheet, or self-test), read `content/PRIORITIES.md`. It is rewritten every 15 days from Cloudflare Web Analytics by the scheduled task «تقرير زوار الموقع». If it has data, prefer the topics it ranks higher — but only within this task's own rules and sources (articles from the book, tests only from scales allowed here and in ROADMAP.md). If it says "No data yet", keep the normal order.

@@ -14,3 +14,6 @@ Steps:
 4. Test in a real browser with Playwright (chromium is pre-installed): serve the repo with `python3 -m http.server`, open the new test, answer all-first and all-last options, and check that the score, band and alert are correct by hand calculation. Also re-check one existing test still works. No horizontal scroll at 390px.
 5. Commit ("Add test: <slug>" + trailer "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>") and push to main.
 6. Mark the scale as done in `tests/ROADMAP.md` (date + slug) in the same commit.
+
+## Visitor data → what to make next (added 2026-11-05)
+Before choosing a topic (article, English translation, glossary term, worksheet, or self-test), read `content/PRIORITIES.md`. It is rewritten every 15 days from Cloudflare Web Analytics by the scheduled task «تقرير زوار الموقع». If it has data, prefer the topics it ranks higher — but only within this task's own rules and sources (articles from the book, tests only from scales allowed here and in ROADMAP.md). If it says "No data yet", keep the normal order.
