@@ -1,0 +1,14 @@
+name: Live check (one-off)
+on: workflow_dispatch
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for u in https://drmilladmikhail.com/ https://drmilladmikhail.com/videos/ https://drmilladmikhail.com/tests/anxiety-gad7/; do
+            echo "=== $u"; curl -sSIL "$u" | grep -iE '^(HTTP|strict|content-security|x-|referrer|permissions|server|cache-control)' ;
+            curl -sSL "$u" -o page.html; echo "size $(wc -c < page.html)";
+            grep -oiE '(src|href)=["'"'"']https?://[^/"'"'"']+' page.html | sort | uniq -c;
+            grep -oiE 'netlify[^"<>]{0,80}' page.html | sort -u | head;
+            grep -c cloudflareinsights page.html; grep -c skip-link page.html;
+          done
