@@ -40,6 +40,7 @@ TOPBAR = '''<header class="topbar">
     <a class="brand" href="/">د. ميلاد منير ميخائيل</a>
     <nav class="nav" aria-label="أقسام الموقع">
       <a href="/">الرئيسية</a>
+      <a href="/tests/">اختبارات</a>
       <a href="/articles/">المقالات</a>
       <a href="/#book">الكتب</a>
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
@@ -268,6 +269,11 @@ def sitemap(items):
         (f"{SITE}/en/", "2026-11-04", True),
         (f"{SITE}/articles/", newest, False),
     ] + [(f"{SITE}/articles/{a['slug']}/", a.get("updated", a["date"]), False) for a in items]
+    tj = os.path.join(ROOT, "tests", "tests.json")
+    if os.path.exists(tj):
+        with open(tj, encoding="utf-8") as f:
+            tests = json.load(f)
+        urls += [(f"{SITE}/tests/", "2026-11-04", False)] + [(f"{SITE}/tests/{x['slug']}/", "2026-11-04", False) for x in tests]
     parts = []
     for loc, mod, alt in urls:
         alts = ""

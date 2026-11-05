@@ -287,3 +287,49 @@ html[lang="en"] .thesis .translated { font-family: var(--display-ar); font-style
 .card h2, .card h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 20px; line-height: 1.55; }
 .card-desc { color: var(--muted); font-size: 15px; line-height: 1.7; }
 .card-date { color: var(--amber); font-size: 14px; font-weight: 600; margin-top: auto; }
+
+/* ---------- tests ---------- */
+.test { border-top: 0; padding-block: 36px 56px; }
+.test h1 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(26px, 5vw, 38px); line-height: 1.5; }
+.test-intro { font-size: 18px; margin: 14px 0 6px; }
+.privacy { font-size: 14.5px; color: var(--muted); margin: 0 0 22px; }
+.q { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 16px 16px 14px; margin: 0 0 12px; }
+.q.done { border-color: var(--eucalyptus); }
+.q.missing { border-color: #c0392b; box-shadow: 0 0 0 2px rgba(192,57,43,.15); }
+.q legend { float: right; width: 100%; padding: 0; margin: 0 0 12px; font-weight: 600; font-size: 17.5px; line-height: 1.7; }
+html[dir="ltr"] .q legend { float: left; }
+.qn { display: inline-grid; place-items: center; width: 28px; height: 28px; margin-inline-end: 6px; border-radius: 50%; background: var(--mist); color: var(--eucalyptus); font-size: 14px; font-weight: 700; vertical-align: 2px; }
+.opts { clear: both; display: grid; gap: 8px; }
+.opts-4 { grid-template-columns: repeat(4, 1fr); }
+.opts-6 { grid-template-columns: repeat(3, 1fr); }
+.opts-7 { grid-template-columns: repeat(7, 1fr); }
+@media (max-width: 640px) { .opts-4, .opts-6, .opts-7 { grid-template-columns: 1fr; } }
+.opt { position: relative; display: block; cursor: pointer; }
+.opt input { position: absolute; opacity: 0; inset: 0; }
+.opt span { display: flex; align-items: center; justify-content: center; min-height: 46px; padding: 8px 10px; text-align: center; font-size: 15px; line-height: 1.4; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+.opt input:checked + span { background: var(--eucalyptus); border-color: var(--eucalyptus); color: var(--eucalyptus-ink); font-weight: 600; }
+.opt input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.quiz-error { color: #c0392b; font-weight: 600; }
+.btn.big { min-height: 54px; padding-inline: 28px; font-size: 17px; margin-top: 8px; }
+.result { background: var(--mist); border-radius: 16px; padding: 24px; margin: 8px 0 24px; outline: none; }
+.result h2 { margin: 0 0 10px; font-family: var(--display); font-size: clamp(26px, 4.5vw, 34px); color: var(--eucalyptus); }
+.result-kicker { margin: 0 0 4px; color: var(--muted); font-size: 15px; }
+.result p { margin: 0 0 12px; }
+.result-note { font-size: 15px; color: var(--muted); }
+.result-alert { background: var(--surface); border-inline-start: 4px solid #c0392b; padding: 12px 14px; border-radius: 8px; }
+.meter { margin: 16px 0; }
+.meter-top { display: flex; justify-content: space-between; gap: 10px; font-size: 15px; margin-bottom: 6px; }
+.meter-track { height: 12px; border-radius: 999px; background: var(--surface); overflow: hidden; border: 1px solid var(--line); }
+.meter-track span { display: block; height: 100%; background: var(--eucalyptus); border-radius: 999px; }
+.result .again { margin-top: 6px; }
+.test-safety { margin-top: 18px; }
+.about-test { margin: 22px 0; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; font-size: 15px; background: var(--surface); }
+.about-test summary { cursor: pointer; font-weight: 600; color: var(--eucalyptus); }
+.about-test p { margin: 10px 0 0; line-height: 1.8; }
+.related a { color: var(--eucalyptus); font-weight: 600; }
+.more-tests { margin-top: 20px; }
+.test-card a { display: flex; gap: 14px; align-items: flex-start; height: 100%; padding: 18px; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.test-card a:hover { border-color: var(--eucalyptus); }
+.test-card svg { width: 44px; height: 44px; flex: none; color: var(--eucalyptus); }
+.tc-body { display: flex; flex-direction: column; gap: 6px; }
+.test-card h2, .test-card h3 { margin: 0; font-family: var(--display); font-size: 21px; }
