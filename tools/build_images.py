@@ -5,7 +5,7 @@ Run:  python3 tools/build_images.py
 (build_articles.py calls it automatically.)
 
 It writes, only when missing or older than the source:
-  assets/book/<name>.webp        1200px WebP of every book illustration
+  assets/book/<name>.webp        1000px WebP of every book illustration (source JPG is also capped at 1000px)
   assets/book/<name>-600.webp    600px WebP (cards, phones)
   assets/og/<slug>.jpg           1200x630 share card for every article (title + book image)
   assets/og/home.jpg, home-en.jpg, articles.jpg, tests.jpg   share cards for main pages
@@ -31,6 +31,7 @@ AMBER = (185, 134, 42)
 W, H = 1200, 630
 PANEL = 560  # image width on the left
 PAD = 64
+MAX_W = 1000  # largest book-image width; article column is ~700px
 
 
 def font(name, size):
@@ -44,7 +45,20 @@ def stale(out, *srcs):
     return any(os.path.getmtime(s) > t for s in srcs if os.path.exists(s))
 
 
+def shrink_sources():
+    """Cap new book JPGs at MAX_W px and recompress them (they are fallbacks and share-card sources)."""
+    for fn in sorted(os.listdir(BOOK)):
+        if not fn.endswith(".jpg"):
+            continue
+        src = os.path.join(BOOK, fn)
+        im = Image.open(src)
+        if im.width > MAX_W:
+            im = im.convert("RGB").resize((MAX_W, round(im.height * MAX_W / im.width)), Image.LANCZOS)
+            im.save(src, "JPEG", quality=76, optimize=True, progressive=True)
+
+
 def webp_variants():
+    shrink_sources()
     n = 0
     for fn in sorted(os.listdir(BOOK)):
         if not fn.endswith(".jpg"):
@@ -56,9 +70,10 @@ def webp_variants():
             if not stale(out, src):
                 continue
             im = Image.open(src).convert("RGB")
-            if width:
-                im = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
-            im.save(out, "WEBP", quality=78, method=6)
+            w = width or min(im.width, MAX_W)
+            if im.width > w:
+                im = im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
+            im.save(out, "WEBP", quality=65, method=6)
             n += 1
     return n
 
@@ -116,7 +131,7 @@ def card(out, image_path, kicker, title, foot, rtl=True, title_font="naskh-700.t
     d.text((x_text, H - 118), foot, font=ff, fill=INK, anchor=anchor, **kw)
     lf = font("plexar-400.ttf", 26)
     d.text((x_text, H - 74), "drmilladmikhail.com", font=lf, fill=MUTED, anchor=anchor)
-    im.save(out, "JPEG", quality=86, optimize=True, progressive=True)
+    im.save(out, "JPEG", quality=80, optimize=True, progressive=True)
 
 
 def main():

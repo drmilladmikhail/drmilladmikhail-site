@@ -101,9 +101,9 @@ def esc(s):
 
 
 def pic(name, alt, eager=False, sizes="(max-width: 700px) 100vw, 700px"):
-    """<picture> with WebP (600w + 1200w) and the JPG as fallback. name = e.g. 'love-p09'."""
+    """<picture> with WebP (600w + 1000w) and the JPG as fallback. name = e.g. 'love-p09'."""
     load = 'fetchpriority="high" decoding="async"' if eager else 'loading="lazy" decoding="async"'
-    return (f'<picture><source type="image/webp" srcset="/assets/book/{name}-600.webp 600w, /assets/book/{name}.webp 1200w" sizes="{sizes}">'
+    return (f'<picture><source type="image/webp" srcset="/assets/book/{name}-600.webp 600w, /assets/book/{name}.webp 1000w" sizes="{sizes}">'
             f'<img src="/assets/book/{name}.jpg" width="1200" height="800" alt="{esc(alt)}" {load}></picture>')
 
 
