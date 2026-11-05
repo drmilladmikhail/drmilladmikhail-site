@@ -75,7 +75,8 @@ def start_page():
     art_cards = "\n        ".join(ba.card(a, "h3") for a in arts[:3])
     vid_chips = "\n".join(f'<a href="/videos/#{c["slug"]}">{esc(c["name"])}</a>' for c in cats)
     extra = []
-    for slug, label, note in (("glossary", "القاموس النفسي", "مصطلحات نفسية بشرح بسيط بالمصري."),
+    for slug, label, note in (("questions", "أسئلة محرجة وإجابات علمية", "اللي بتتكسف تسأله، من غير حكم."),
+                              ("challenges", "تحديات قصيرة", "مهمة صغيرة كل يوم من 3 لـ 7 أيام."),("glossary", "القاموس النفسي", "مصطلحات نفسية بشرح بسيط بالمصري."),
                               ("worksheets", "أوراق تمرين مجانية", "تمارين تطبعها وتكتب فيها."),
                               ("roundup", "خلاصة كل شهر", "كل اللي نزل في الشهر في صفحة واحدة.")):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
@@ -259,11 +260,102 @@ def battery_page():
     write("battery", page("battery", "بطاريتي 1% (قريبًا)", "«بطاريتي 1%»: كتاب جديد قريبًا لـ د. ميلاد ميخائيل عن إزاي تشحن روحك وتلاقي معنى لحياتك.", body, ld))
 
 
+# ------------------------------------------------------------------ questions
+def questions_page():
+    data = load("content/questions.json", {"sections": [], "items": []})
+    secs, items = data["sections"], data["items"]
+
+    def qa(it):
+        paras = "".join(f"<p>{esc(x)}</p>" for x in it["a"])
+        link = (f'<p class="qa-link">اقرا كمان: <a href="{it["link"][0]}">{esc(it["link"][1])}</a></p>' if it.get("link") else "")
+        when = (f'<p class="qa-when{" qa-urgent" if it.get("safety") else ""}"><b>امتى تكلّم متخصص؟</b> {esc(it["when"])}</p>' if it.get("when") else "")
+        return f'<details class="faq qa" id="{it["id"]}"><summary>{esc(it["q"])}</summary><div class="qa-body">{paras}{when}{link}</div></details>'
+
+    chips = "\n".join(f'<a href="#sec-{c["slug"]}">{esc(c["name"])}{' (<bdi dir="ltr">18+</bdi>)' if c.get("adult") else ""} <span>{sum(1 for i in items if i["section"] == c["slug"])}</span></a>' for c in secs)
+    blocks = ""
+    for c in secs:
+        qs = "\n".join(qa(i) for i in items if i["section"] == c["slug"])
+        if c.get("adult"):
+            inner = f'''<details class="adult-gate"><summary>القسم ده للكبار فوق 18 سنة. دوس هنا عشان تفتحه</summary>
+          <p class="vnote">{esc(c.get("note", ""))}</p>
+          {qs}
+        </details>'''
+        else:
+            inner = qs
+        blocks += f'''
+      <section class="vcat" id="sec-{c["slug"]}" aria-labelledby="h-{c["slug"]}">
+        <h2 id="h-{c["slug"]}">{esc(c["name"])}{' <span class="vcount" dir="ltr">18+</span>' if c.get("adult") else ""}</h2>
+        {inner}
+      </section>'''
+    body = f'''  <section class="page-hero">
+    <div class="wrap narrow">
+      <p class="kicker-g">من غير كسوف</p>
+      <h1>أسئلة محرجة… وإجابات علمية</h1>
+      <p class="lead">أسئلة ناس كتير بتتكسف تسألها قدام حد، عن المشاعر والعلاقات والجنس. الإجابات مبسّطة ومبنية على العلم، ومن غير حكم على حد.</p>
+      <p class="privacy">🔒 محدش بيعرف انت فتحت أنهي سؤال. الصفحة مش بتسجل أي حاجة.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap narrow">
+      <nav class="vchips" aria-label="أقسام الأسئلة">{chips}</nav>
+      {blocks}
+      <aside class="safety-note">
+        <p><b>تنبيه:</b> الإجابات دي للتوعية، ومش تشخيص ولا بديل عن دكتور أو معالج. لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p>
+      </aside>
+      {ba.share_block(SITE + "/questions/", "أسئلة محرجة وإجابات علمية بالمصري — د. ميلاد ميخائيل", "شارك الصفحة")}
+    </div>
+  </section>'''
+    ld = {"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "ar", "url": f"{SITE}/questions/",
+          "author": {"@id": f"{SITE}/#person"},
+          "mainEntity": [{"@type": "Question", "name": i["q"],
+                          "acceptedAnswer": {"@type": "Answer", "text": " ".join(i["a"]) + (" " + i["when"] if i.get("when") else "")}}
+                         for i in items]}
+    write("questions", page("questions", "أسئلة محرجة وإجابات علمية",
+                            "أسئلة ناس كتير بتتكسف تسألها عن المشاعر والعلاقات والجنس، وإجاباتها العلمية بالعامية المصرية من غير حكم.", body, ld))
+
+
+# ------------------------------------------------------------------ challenges
+def challenges_page():
+    chs = load("content/challenges.json", [])
+    cards = ""
+    for c in chs:
+        tasks = "\n".join(f'<li><label><input type="checkbox" data-key="{c["id"]}-{n}"> <span><b>يوم {n}:</b> {esc(t)}</span></label></li>'
+                          for n, t in enumerate(c["tasks"], 1))
+        cards += f'''
+      <article class="challenge" id="{c["id"]}">
+        <h2>{esc(c["title"])}</h2>
+        <p class="ch-why">{esc(c["why"])}</p>
+        <ol class="ch-tasks">{tasks}</ol>
+        <p class="ch-progress" aria-live="polite" data-for="{c["id"]}" data-total="{len(c["tasks"])}"></p>
+      </article>'''
+    body = f'''  <section class="page-hero">
+    <div class="wrap narrow">
+      <p class="kicker-g">خطوة صغيرة كل يوم</p>
+      <h1>تحديات قصيرة</h1>
+      <p class="lead">تحديات من 3 لـ 7 أيام، مهمة صغيرة كل يوم مش بتاخد أكتر من 10 دقايق. علّم ✓ على اليوم اللي خلّصته، والموقع هيفتكره على جهازك انت بس.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap narrow">
+      {cards}
+      <aside class="safety-note"><p>التحديات دي للتجربة وتحسين المزاج، ومش علاج. لو حاسس إنك مش بخير لفترة طويلة، كلّم متخصص. مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p></aside>
+      {ba.share_block(SITE + "/challenges/", "تحديات نفسية قصيرة: 7 أيام من غير جلد للذات، نوم منتظم، امتنان… — د. ميلاد ميخائيل", "اتحدّى صاحبك")}
+    </div>
+  </section>'''
+    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "تحديات قصيرة", "url": f"{SITE}/challenges/",
+          "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
+    html = page("challenges", "تحديات قصيرة", "تحديات نفسية قصيرة من 3 لـ 7 أيام: من غير جلد للذات، امتنان، نوم منتظم، «لأ» صغيرة، وسوشيال ميديا أقل.", body, ld)
+    html = html.replace('<script src="/assets/share.js" defer></script>', '<script src="/assets/challenges.js" defer></script>\n<script src="/assets/share.js" defer></script>')
+    write("challenges", html)
+
+
 def main():
+    questions_page()
+    challenges_page()
     start_page()
     book_page()
     battery_page()
-    print("pages: start, book, battery")
+    print("pages: questions, challenges, start, book, battery")
 
 
 if __name__ == "__main__":

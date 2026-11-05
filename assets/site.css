@@ -691,3 +691,25 @@ summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; bo
   .gallery { grid-template-columns: 1fr 1fr; }
   .gallery figure:last-child { display: none; }
 }
+/* Questions & challenges */
+.qa-body { padding: 0 18px 16px; }
+.qa-body p { margin: 0 0 10px; color: var(--ink); }
+.qa-when { padding: 10px 14px; border-radius: 10px; background: var(--mist); font-size: 15px; }
+.qa-urgent { background: #fbf1ee; border: 1px solid #e3b7ae; color: #5a2a22; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .qa-urgent { background: #2a1d1d; border-color: #6e3a32; color: #f3d6d0; } }
+.qa-link { font-size: 15px; }
+.adult-gate { border: 1px dashed var(--amber); border-radius: 14px; padding: 4px 14px 10px; background: var(--surface); }
+.adult-gate > summary { cursor: pointer; padding: 10px 4px; font-weight: 700; color: var(--ink); }
+.adult-gate > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 8px; }
+.adult-gate .faq { background: var(--paper); }
+.challenge { margin: 0 0 22px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); scroll-margin-top: 80px; }
+.challenge h2 { margin: 0 0 6px; font-family: var(--display); font-size: clamp(22px, 3vw, 26px); }
+.ch-why { margin: 0 0 12px; color: var(--muted); font-size: 15px; }
+.ch-tasks { list-style: none; margin: 0; padding: 0; }
+.ch-tasks li { border-top: 1px solid var(--line); }
+.ch-tasks label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 2px; cursor: pointer; }
+.ch-tasks input { flex: none; width: 22px; height: 22px; margin-top: 4px; accent-color: var(--eucalyptus); }
+.ch-tasks input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--eucalyptus); }
+.ch-progress { margin: 8px 0 0; font-weight: 600; color: var(--eucalyptus); min-height: 1.5em; }
+.adult-gate { padding-inline: 8px; }
+.adult-gate .qa-body { padding-inline: 12px; }

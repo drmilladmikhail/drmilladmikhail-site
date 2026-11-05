@@ -54,6 +54,8 @@ TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
         <a href="/articles/">المقالات</a>
         <a href="/tests/">اختبارات نفسية</a>
         <a href="/videos/">فيديوهات</a>
+        <a href="/questions/">أسئلة محرجة</a>
+        <a href="/challenges/">تحديات قصيرة</a>
         <a href="/book/">الكتب</a>
         <a href="/#about">نبذة</a>
         <a href="/#credentials">المؤهلات</a>
@@ -376,7 +378,7 @@ def sitemap(items):
             vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
         urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
     # standalone pages built by tools/build_pages.py
-    for slug in ("start", "book", "battery"):
+    for slug in ("start", "questions", "challenges", "book", "battery"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
     parts = []
