@@ -7,6 +7,7 @@ Run:  python3 tools/build_tests.py   (then python3 tools/build_articles.py to re
 import html
 import json
 import os
+import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://drmilladmikhail.com"
@@ -417,5 +418,11 @@ def main():
     print("built tests:", ", ".join(t["slug"] for t in TESTS))
 
 
+
+def _analytics():
+    import subprocess
+    subprocess.run([sys.executable, os.path.join(ROOT, "tools", "add_analytics.py")], check=True)
+
 if __name__ == "__main__":
     main()
+    _analytics()

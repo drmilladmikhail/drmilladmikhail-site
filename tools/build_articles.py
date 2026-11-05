@@ -389,5 +389,11 @@ def main():
     print(f"built {len(items)} article(s): " + ", ".join(a["slug"] for a in items))
 
 
+
+def _analytics():
+    import subprocess
+    subprocess.run([sys.executable, os.path.join(ROOT, "tools", "add_analytics.py")], check=True)
+
 if __name__ == "__main__":
     main()
+    _analytics()

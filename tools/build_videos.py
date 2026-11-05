@@ -381,5 +381,11 @@ def main():
     print(f"videos: {len(vs)} shown ({sum(1 for v in vs if v.get('short'))} short)")
 
 
+
+def _analytics():
+    import subprocess
+    subprocess.run([sys.executable, os.path.join(ROOT, "tools", "add_analytics.py")], check=True)
+
 if __name__ == "__main__":
     main()
+    _analytics()
