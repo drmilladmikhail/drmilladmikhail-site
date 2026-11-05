@@ -5,10 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          for u in https://drmilladmikhail.com/ https://drmilladmikhail.com/videos/ https://drmilladmikhail.com/tests/anxiety-gad7/; do
-            echo "=== $u"; curl -sSIL "$u" | grep -iE '^(HTTP|strict|content-security|x-|referrer|permissions|server|cache-control)' ;
-            curl -sSL "$u" -o page.html; echo "size $(wc -c < page.html)";
-            grep -oiE '(src|href)=["'"'"']https?://[^/"'"'"']+' page.html | sort | uniq -c;
-            grep -oiE 'netlify[^"<>]{0,80}' page.html | sort -u | head;
-            grep -c cloudflareinsights page.html; grep -c skip-link page.html;
-          done
+          set +e
+          curl -sSL https://drmilladmikhail.com/ -o h.html
+          echo "size $(wc -c < h.html)"
+          for m in 'fm=webp' 'auto=format' 'VIDEOS:START' 'skip-link' 'cloudflareinsights' 'vtag' 'love-p09.webp 1000w' 'love-p09.webp 1200w'; do echo "$m: $(grep -c "$m" h.html)"; done
+          grep -oE '<script[^>]*netlify[^>]*>' h.html | head -3
+          grep -oE 'https?://[^"'"'"' ]*netlify[^"'"'"' ]*' h.html | sort -u | head
+          for u in videos/ tests/anxiety-gad7/ assets/videos.js; do echo "$u: $(curl -s -o /dev/null -w '%{http_code}' https://drmilladmikhail.com/$u)"; done
+          curl -sSI https://drmilladmikhail.netlify.app/ | grep -iE '^(HTTP|x-nf|age|last-modified|etag)'
