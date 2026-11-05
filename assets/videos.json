@@ -275,5 +275,90 @@
   "6wgnRERZxtM",
   "Rai5WvcMlBo",
   "_sYKOHUzy74"
- ]
+ ],
+ "categories": [
+  {
+   "slug": "immunity",
+   "name": "المناعة النفسية وقيمة الذات"
+  },
+  {
+   "slug": "anxiety",
+   "name": "القلق والوسواس والاكتئاب"
+  },
+  {
+   "slug": "understanding",
+   "name": "فهم المرض النفسي وإمتى تطلب مساعدة"
+  },
+  {
+   "slug": "behavior",
+   "name": "الإدمان والغضب والسلوك"
+  },
+  {
+   "slug": "success",
+   "name": "التفكير والنجاح"
+  },
+  {
+   "slug": "sexuality",
+   "name": "الاضطرابات الجنسية والمراهقة وحماية الأطفال",
+   "note": "موجّهة للكبار والأهالي."
+  },
+  {
+   "slug": "covid",
+   "name": "كورونا",
+   "note": "فيديوهات من 2021. لأحدث معلومات عن اللقاحات ارجع لطبيبك أو وزارة الصحة."
+  },
+  {
+   "slug": "other",
+   "name": "متنوع"
+  }
+ ],
+ "category_of": {
+  "an3bkN9jpWk": "immunity",
+  "teiGTAEd6To": "immunity",
+  "p290ypWyHSQ": "immunity",
+  "tfp9N0y9yBA": "immunity",
+  "ICDZ6fCb1h0": "immunity",
+  "IarZfy0k1Yo": "immunity",
+  "dPzVtstbNfw": "immunity",
+  "xwxT-ubrw8g": "immunity",
+  "al2_Xa1d9Lw": "immunity",
+  "_B8xJYNbL1U": "anxiety",
+  "BChxCN5Wz2Q": "anxiety",
+  "iQGdJCXYHho": "anxiety",
+  "x9EY9O3E_ME": "anxiety",
+  "Rk3jyIU27wQ": "anxiety",
+  "gf_vKQxtdVI": "anxiety",
+  "fHueXGwz2fI": "anxiety",
+  "jL2vKBojQOc": "anxiety",
+  "6wgnRERZxtM": "understanding",
+  "KMIMqNgSaRE": "understanding",
+  "oG4-9CjwLRM": "understanding",
+  "68E-HYJI3lE": "understanding",
+  "SDNn29-k7ws": "understanding",
+  "0J-wHu95ZxM": "understanding",
+  "hEvJB07-Yd0": "understanding",
+  "A6IsHBmxqAw": "understanding",
+  "_sYKOHUzy74": "behavior",
+  "sA4QhkoxAWo": "behavior",
+  "Rai5WvcMlBo": "behavior",
+  "zo-Ztw7Jvpk": "behavior",
+  "IgfILyYD-TU": "success",
+  "UJkdfVi3sOE": "success",
+  "J6eoKcnJgOA": "success",
+  "AfK9BMwxGis": "success",
+  "OSRtdu8U0lk": "success",
+  "GCnmocNIg6k": "success",
+  "hnDbE9o4xKU": "success",
+  "HRBZR8oMXAY": "success",
+  "1XU-I7vke7k": "sexuality",
+  "a8-x-5jo7Zc": "sexuality",
+  "q24mL9Qxaxw": "sexuality",
+  "ptWkkNnhOSc": "sexuality",
+  "yj_iLIwBzYE": "sexuality",
+  "1wUZjitppHI": "sexuality",
+  "KkRIhuXFJFc": "sexuality",
+  "vDFfwbmVnBg": "sexuality",
+  "5Dy-RilTZSY": "covid",
+  "0vF0mOkTUwY": "covid"
+ }
 }

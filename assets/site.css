@@ -555,3 +555,15 @@ section[id] { scroll-margin-top: 72px; }
   #videos .vcards { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 84%; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; padding-bottom: 10px; margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; scrollbar-width: thin; }
   #videos .vcard { scroll-snap-align: start; }
 }
+/* Video categories (/videos/) */
+.vchips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
+.vchips a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); text-decoration: none; font-size: 15px; line-height: 1.4; }
+.vchips a:hover, .vchips a:focus-visible { border-color: var(--eucalyptus); color: var(--eucalyptus); }
+.vchips a span { min-width: 1.8em; padding: 1px 7px; border-radius: 999px; background: var(--mist); color: var(--ink); font-size: 13px; text-align: center; }
+.vcat { padding-top: 36px; scroll-margin-top: 80px; }
+.vcat h2 { margin: 0 0 6px; font-family: var(--display); font-weight: 700; font-size: clamp(22px, 3vw, 28px); line-height: 1.4; }
+.vcount { color: var(--muted); font-family: inherit; font-weight: 400; font-size: 15px; margin-inline-start: 6px; }
+.vnote { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
+.vcat .vcards { margin-top: 14px; }
+.vtag { align-self: flex-start; padding: 2px 10px; border-radius: 999px; background: var(--mist); color: var(--eucalyptus); font-size: 13px; font-weight: 600; }
+@media (max-width: 640px) { .vchips { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 2px 16px 10px; scrollbar-width: none; } .vchips a { flex: none; } }

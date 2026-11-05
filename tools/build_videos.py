@@ -15,6 +15,9 @@ Everything is merged into assets/videos.json, which keeps growing (a video that
 drops out of the feed is not lost). In that file:
   "hidden":   ids that never show on the site
   "featured": ids shown on the home page, in this order (else the newest)
+  "categories": the sections of /videos/ (slug, name, optional note), in order
+  "category_of": video id -> category slug. A new upload gets a guess from its
+                 title (GUESS below); change it here if the guess is wrong.
 
 What it writes:
   assets/videos.json   the data
@@ -152,6 +155,26 @@ def refresh(data):
     return data
 
 
+# Guess a category for a new upload from words in its title (first match wins).
+GUESS = [
+    ("immunity", r"مناع|قيمة|ثقة|سعاد"),
+    ("anxiety", r"قلق|وسواس|وسواس|اكتئاب|ضغط|توتر|خوف|هلع"),
+    ("sexuality", r"جنس|مراهق|تحرش"),
+    ("behavior", r"[إا]دمان|غضب|عنف|عاد[ةه]"),
+    ("understanding", r"مرض نفس|دكتور نفس|طبيب نفس|معالج|فصام|توحد|علاج"),
+    ("success", r"نجاح|تفكير|شغل|هدف"),
+]
+
+
+def categorize(data):
+    cats = data.setdefault("category_of", {})
+    for v in data["videos"]:
+        if v["id"] not in cats:
+            t = v.get("title", "")
+            cats[v["id"]] = next((slug for slug, rx in GUESS if re.search(rx, t)), "other")
+    return data
+
+
 # ---------------------------------------------------------------- rendering
 PLAY = '<span class="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path class="bg" d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2.4 34 .4 34 .4s-21.2 0-26.5 1.3a8.5 8.5 0 0 0-6 6C.2 13 .2 24 .2 24s0 11 1.3 16.3a8.5 8.5 0 0 0 6 6c5.3 1.3 26.5 1.3 26.5 1.3s21.2 0 26.5-1.3a8.5 8.5 0 0 0 6-6C67.8 35 67.8 24 67.8 24s0-11-1.3-16.3Z"/><path class="fg" d="M45 24 27 14v20"/></svg></span>'
 
@@ -167,7 +190,7 @@ def en_date(iso):
     return f"{m[int(mo) - 1]} {int(d)}, {y}"
 
 
-def vcard(v, heading="h3", lang="ar"):
+def vcard(v, heading="h3", lang="ar", tag=""):
     vid, t = v["id"], v["title"]
     label = (f"شغّل الفيديو: {t}" if lang == "ar" else f"Play video: {t}")
     date = ""
@@ -181,6 +204,7 @@ def vcard(v, heading="h3", lang="ar"):
             {PLAY}
           </a>
           <span class="card-body">
+            {f'<span class="vtag">{esc(tag)}</span>' if tag else ""}
             <{heading}{title_attr}>{esc(t)}</{heading}>
             {date}
           </span>
@@ -197,8 +221,9 @@ def pick_home(vs, n, featured=()):
     return out
 
 
-def home_block_ar(vs, featured=()):
-    cards = "\n        ".join(vcard(v) for v in pick_home(vs, 6, featured))
+def home_block_ar(vs, featured=(), names=None, cat_of=None):
+    names, cat_of = names or {}, cat_of or {}
+    cards = "\n        ".join(vcard(v, tag=names.get(cat_of.get(v["id"]), "")) for v in pick_home(vs, 6, featured))
     return f'''<!-- VIDEOS:START -->
   <section class="section" id="videos" aria-labelledby="vid-h">
     <div class="wrap">
@@ -264,15 +289,35 @@ def ld_video(v):
     return d
 
 
-def page(vs):
-    longs = [v for v in vs if not v.get("short")]
-    shorts = [v for v in vs if v.get("short")]
-    sec = ""
-    if longs:
-        sec += '<ul class="vcards">\n        ' + "\n        ".join(vcard(v, "h2") for v in longs) + "\n      </ul>"
-    if shorts:
-        sec += ('\n      <h2 class="plain-h v-sub">فيديوهات قصيرة</h2>\n      <ul class="vcards vcards-short">\n        '
-                + "\n        ".join(vcard(v, "h3") for v in shorts) + "\n      </ul>")
+def page(vs, data=None):
+    data = data or {}
+    cats = data.get("categories") or [{"slug": "other", "name": "فيديوهات"}]
+    cat_of = data.get("category_of", {})
+    known = {c["slug"] for c in cats}
+    groups = {c["slug"]: [] for c in cats}
+    groups.setdefault("other", [])
+    for v in vs:
+        groups[cat_of.get(v["id"]) if cat_of.get(v["id"]) in known else "other"].append(v)
+    if "other" not in known:
+        cats = cats + [{"slug": "other", "name": "متنوع"}]
+    cats = [c for c in cats if groups.get(c["slug"])]
+    chips = "\n        ".join(f'<a href="#{c["slug"]}">{esc(c["name"])} <span>{len(groups[c["slug"]])}</span></a>' for c in cats)
+    sec = f'<nav class="vchips" aria-label="تصنيفات الفيديوهات">\n        {chips}\n      </nav>' if len(cats) > 1 else ""
+    for c in cats:
+        items = groups[c["slug"]]
+        longs = [v for v in items if not v.get("short")]
+        shorts = [v for v in items if v.get("short")]
+        note = f'\n        <p class="vnote">{esc(c["note"])}</p>' if c.get("note") else ""
+        body = ""
+        if longs:
+            body += '<ul class="vcards">\n          ' + "\n          ".join(vcard(v, "h3") for v in longs) + "\n        </ul>"
+        if shorts:
+            body += '\n        <ul class="vcards vcards-short">\n          ' + "\n          ".join(vcard(v, "h3") for v in shorts) + "\n        </ul>"
+        sec += f'''
+      <section class="vcat" id="{c["slug"]}" aria-labelledby="h-{c["slug"]}">
+        <h2 id="h-{c["slug"]}">{esc(c["name"])} <span class="vcount">{len(items)} فيديو</span></h2>{note}
+        {body}
+      </section>'''
     if not vs:
         sec = f'<p>الفيديوهات هتظهر هنا قريب. لحد ما تظهر، تقدر تتفرّج على <a href="{HANDLE}">القناة على يوتيوب</a>.</p>'
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "فيديوهات د. ميلاد منير ميخائيل",
@@ -303,7 +348,7 @@ def page(vs):
   <section class="section videos-index">
     <div class="wrap">
       <h1>فيديوهات «جلسة شيزلونج»</h1>
-      <p class="section-intro">دوس على أي فيديو يشتغل هنا على طول. الفيديوهات الجديدة بتظهر هنا لوحدها أول ما تنزل على القناة.</p>
+      <p class="section-intro">{len(vs)} فيديو مقسّمين حسب الموضوع. اختار الموضوع اللي يهمك، ودوس على أي فيديو يشتغل هنا على طول. الفيديوهات الجديدة بتظهر لوحدها أول ما تنزل على القناة.</p>
       {sec}
       <div class="actions"><a class="btn" href="{HANDLE}?sub_confirmation=1" target="_blank" rel="noopener">اشترك في القناة على يوتيوب</a></div>
     </div>
@@ -321,15 +366,16 @@ def main():
     data = load_data()
     if "--offline" not in sys.argv:
         data = refresh(data)
+    categorize(data)
     with open(DATA, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
         f.write("\n")
     vs = visible(data)
     os.makedirs(os.path.join(ROOT, "videos"), exist_ok=True)
     with open(os.path.join(ROOT, "videos", "index.html"), "w", encoding="utf-8") as f:
-        f.write(page(vs))
+        f.write(page(vs, data))
     if vs:
-        put_block(os.path.join(ROOT, "index.html"), home_block_ar(vs, data.get("featured", [])), '<section class="book-feature" id="book"')
+        put_block(os.path.join(ROOT, "index.html"), home_block_ar(vs, data.get("featured", []), {c["slug"]: c["name"] for c in data.get("categories", [])}, data.get("category_of")), '<section class="book-feature" id="book"')
         put_block(os.path.join(ROOT, "en", "index.html"), home_block_en(vs, data.get("featured", [])), '<section class="section" id="blog"')
     ba.sitemap(ba.load())
     print(f"videos: {len(vs)} shown ({sum(1 for v in vs if v.get('short'))} short)")
