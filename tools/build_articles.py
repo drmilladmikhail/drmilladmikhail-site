@@ -250,6 +250,7 @@ def article_page(a, prev_items):
   </article>
 </main>
 {FOOTER}
+<script src="/assets/helper.js" defer></script>
 </body>
 </html>
 '''
@@ -303,6 +304,7 @@ def index_page(items):
   </section>
 </main>
 {FOOTER}
+<script src="/assets/helper.js" defer></script>
 </body>
 </html>
 '''
@@ -375,6 +377,10 @@ def main():
         f.write(index_page(items))
     update_home(items)
     sitemap(items)
+    # small public index used by the on-site helper (assets/helper.js)
+    with open(os.path.join(ROOT, "assets", "articles-index.json"), "w", encoding="utf-8") as f:
+        json.dump([{"slug": a["slug"], "title": a["title"], "ch": chapter_no(a) + 1, "date": a["date"]} for a in items],
+                  f, ensure_ascii=False, indent=0)
     print(f"built {len(items)} article(s): " + ", ".join(a["slug"] for a in items))
 
 

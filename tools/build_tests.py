@@ -364,6 +364,7 @@ def test_page(t):
 {FOOTER}
 <script type="application/json" id="quiz-config">{json.dumps(cfg, ensure_ascii=False)}</script>
 <script src="/assets/quiz.js" defer></script>
+<script src="/assets/helper.js" defer></script>
 </body>
 </html>
 '''
@@ -396,6 +397,7 @@ def index_page():
   </section>
 </main>
 {FOOTER}
+<script src="/assets/helper.js" defer></script>
 </body>
 </html>
 '''
