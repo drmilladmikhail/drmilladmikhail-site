@@ -118,9 +118,9 @@ def start_page():
           <div class="actions"><a class="btn" href="/book/">عن الكتب</a></div>
         </li>
       </ol>
-      <aside class="safety-note">
+      <div class="safety-note" role="note">
         <p><b>لو حاسس إنك مش بخير دلوقتي:</b> الموقع ده للتوعية ومش بديل عن متخصص. لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:105">105</a> (الخط الساخن للدعم النفسي) · أمريكا <a href="tel:988">988</a>.</p>
-      </aside>
+      </div>
       {ba.share_block(SITE + "/start/", "مكتبة مجانية بالعربي عن الحب والتعلق والصحة النفسية — د. ميلاد ميخائيل", "شارك الموقع")}
     </div>
   </section>'''
@@ -299,9 +299,9 @@ def questions_page():
     <div class="wrap narrow">
       <nav class="vchips" aria-label="أقسام الأسئلة">{chips}</nav>
       {blocks}
-      <aside class="safety-note">
+      <div class="safety-note" role="note">
         <p><b>تنبيه:</b> الإجابات دي للتوعية، ومش تشخيص ولا بديل عن دكتور أو معالج. لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p>
-      </aside>
+      </div>
       {ba.share_block(SITE + "/questions/", "أسئلة محرجة وإجابات علمية بالمصري — د. ميلاد ميخائيل", "شارك الصفحة")}
     </div>
   </section>'''
@@ -338,7 +338,7 @@ def challenges_page():
   <section class="section">
     <div class="wrap narrow">
       {cards}
-      <aside class="safety-note"><p>التحديات دي للتجربة وتحسين المزاج، ومش علاج. لو حاسس إنك مش بخير لفترة طويلة، كلّم متخصص. مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p></aside>
+      <div class="safety-note" role="note"><p>التحديات دي للتجربة وتحسين المزاج، ومش علاج. لو حاسس إنك مش بخير لفترة طويلة، كلّم متخصص. مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p></div>
       {ba.share_block(SITE + "/challenges/", "تحديات نفسية قصيرة: 7 أيام من غير جلد للذات، نوم منتظم، امتنان… — د. ميلاد ميخائيل", "اتحدّى صاحبك")}
     </div>
   </section>'''
