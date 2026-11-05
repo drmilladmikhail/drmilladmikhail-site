@@ -14,22 +14,13 @@ on:
       days:
         description: "How many days back"
         default: "15"
-      probe:
-        description: "Only look up the account id"
-        default: "no"
 
 jobs:
   stats:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Look up account id
-        if: ${{ github.event.inputs.probe == 'yes' }}
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        run: python3 tools/probe_account.py
       - name: Fetch from Cloudflare
-        if: ${{ github.event.inputs.probe != 'yes' }}
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID || vars.CF_ACCOUNT_ID }}
