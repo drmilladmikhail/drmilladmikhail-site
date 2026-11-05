@@ -349,13 +349,78 @@ def challenges_page():
     write("challenges", html)
 
 
+# ------------------------------------------------------------------ worksheets
+def worksheets_page():
+    """Library of printable worksheets. PDFs are made by tools/build_worksheets.py."""
+    data = load("content/worksheets.json", {"categories": [], "items": []})
+    man = load("worksheets/manifest.json", {})
+    items = [w for w in data["items"] if w["slug"] in man and os.path.exists(os.path.join(ROOT, "worksheets", w["slug"] + ".pdf"))]
+    if not items:
+        return
+    items.sort(key=lambda w: w.get("added", ""), reverse=True)
+    pages_ar = {1: "صفحة واحدة", 2: "صفحتين"}
+
+    def card(w):
+        m = man[w["slug"]]
+        pdf = f'/worksheets/{w["slug"]}.pdf'
+        rel = (f'<p class="ws-rel">مرتبط بـ: <a href="{w["related"][0]}">{esc(w["related"][1])}</a></p>' if w.get("related") else "")
+        return f'''<li class="ws-card" id="{w["slug"]}">
+          <a class="ws-thumb" href="{pdf}" tabindex="-1" aria-hidden="true"><img src="/worksheets/{w["slug"]}.webp" width="{m["w"]}" height="{m["h"]}" alt="" loading="lazy" decoding="async"></a>
+          <div class="ws-body">
+            <h3>{esc(w["title"])}</h3>
+            <p>{esc(w["desc"])}</p>
+            <p class="ws-meta">PDF · {pages_ar.get(m["pages"], str(m["pages"]) + " صفحات")} · <bdi dir="ltr">{m["kb"]} KB</bdi></p>
+            {rel}
+            <div class="ws-actions"><a class="btn primary" href="{pdf}" download>حمّل واطبع</a><a class="btn" href="{pdf}" target="_blank" rel="noopener">افتحه<span class="sr-only"> ({esc(w["title"])})</span></a></div>
+          </div>
+        </li>'''
+
+    cats = [c for c in data["categories"] if any(w["category"] == c["slug"] for w in items)]
+    chips = "\n".join(f'<a href="#sec-{c["slug"]}">{esc(c["name"])} <span>{sum(1 for w in items if w["category"] == c["slug"])}</span></a>' for c in cats)
+    blocks = ""
+    for c in cats:
+        cards = "\n".join(card(w) for w in items if w["category"] == c["slug"])
+        blocks += f'''
+      <section class="vcat" id="sec-{c["slug"]}" aria-labelledby="h-{c["slug"]}">
+        <h2 id="h-{c["slug"]}">{esc(c["name"])}</h2>
+        <ul class="ws-cards">{cards}</ul>
+      </section>'''
+    body = f'''  <section class="page-hero">
+    <div class="wrap narrow">
+      <p class="kicker-g">اطبع واكتب بإيدك</p>
+      <h1>مكتبة أوراق التمرين</h1>
+      <p class="lead">تمارين نفسية مجانية تطبعها وتكتب فيها، عن الحب والعلاقات والمشاعر والعناية بالنفس. كل ورقة صفحتين، بالعامية، ومن غير تسجيل ولا إيميل.</p>
+      <p class="privacy">✍️ الكتابة بالإيد بتخليك تبطّأ وتفكر. اطبعها، أو افتحها على التابلت واكتب عليها.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <nav class="vchips" aria-label="أقسام الأوراق">{chips}</nav>
+      {blocks}
+      <aside class="safety-note">
+        <p><b>تنبيه:</b> الأوراق دي للتأمل وفهم النفس، ومش تشخيص ولا بديل عن العلاج. لو حاسس بضيق جامد أو خايف على نفسك، كلّم حد فورًا: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p>
+      </aside>
+      {ba.share_block(SITE + "/worksheets/", "أوراق تمرين نفسية مجانية تطبعها وتكتب فيها — د. ميلاد ميخائيل", "شارك المكتبة")}
+    </div>
+  </section>'''
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "مكتبة أوراق التمرين", "url": f"{SITE}/worksheets/",
+          "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
+          "hasPart": [{"@type": "DigitalDocument", "name": w["title"], "description": w["desc"], "encodingFormat": "application/pdf",
+                       "url": f'{SITE}/worksheets/{w["slug"]}.pdf', "inLanguage": "ar", "isAccessibleForFree": True,
+                       "author": {"@id": f"{SITE}/#person"}, "dateCreated": w.get("added")} for w in items]}
+    write("worksheets", page("worksheets", "مكتبة أوراق التمرين (PDF مجاني)",
+                             "أوراق تمرين نفسية مجانية بالعامية تطبعها وتكتب فيها: حدودك في الحب، القلق لما محدش يرد، يوميات المشاعر، خطة اليوم الصعب، وأكتر.",
+                             body, ld))
+
+
 def main():
+    worksheets_page()
     questions_page()
     challenges_page()
     start_page()
     book_page()
     battery_page()
-    print("pages: questions, challenges, start, book, battery")
+    print("pages: worksheets, questions, challenges, start, book, battery")
 
 
 if __name__ == "__main__":
