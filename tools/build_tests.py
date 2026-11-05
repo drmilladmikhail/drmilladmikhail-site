@@ -9,6 +9,9 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from build_articles import share_block as ba_share  # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://drmilladmikhail.com"
 BOOK_AR = "https://www.amazon.com/dp/B0HPNCYWWS"
@@ -217,7 +220,7 @@ TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
     <nav class="nav" aria-label="أقسام الموقع">
       <a href="/articles/">المقالات</a>
       <a href="/tests/">اختبارات نفسية</a>
-      <a href="/#book">الكتب</a>
+      <a href="/book/">الكتب</a>
       <a href="/#about">نبذة</a>
       <a href="/#credentials">المؤهلات</a>
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
@@ -225,9 +228,11 @@ TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
     <details class="menu">
       <summary aria-label="القائمة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
       <nav aria-label="القائمة">
+        <a href="/start/">ابدأ من هنا</a>
         <a href="/articles/">المقالات</a>
         <a href="/tests/">اختبارات نفسية</a>
-        <a href="/#book">الكتب</a>
+        <a href="/videos/">فيديوهات</a>
+        <a href="/book/">الكتب</a>
         <a href="/#about">نبذة</a>
         <a href="/#credentials">المؤهلات</a>
         <a href="https://blog.drmilladmikhail.com/">المدونة</a>
@@ -249,7 +254,7 @@ FOOTER = '''<footer class="footer">
       <ul>
         <li><a href="/articles/">المقالات</a></li>
         <li><a href="/tests/">اختبارات نفسية</a></li>
-        <li><a href="/#book">الكتب</a></li>
+        <li><a href="/book/">الكتب</a></li>
         <li><a href="https://blog.drmilladmikhail.com/" target="_blank" rel="noopener">المدونة</a></li>
       </ul>
     </div>
@@ -340,6 +345,7 @@ def test_page(t):
         <button class="btn primary big" type="submit">اعرض النتيجة</button>
       </form>
       <div id="result" class="result" hidden tabindex="-1" aria-live="polite"></div>
+      {ba_share(SITE + "/tests/" + t["slug"] + "/", t["title"], "شارك الاختبار")}
       {safety_block}
       <details class="about-test">
         <summary>عن المقياس ده ومصدره العلمي</summary>
@@ -366,6 +372,7 @@ def test_page(t):
 {FOOTER}
 <script type="application/json" id="quiz-config">{json.dumps(cfg, ensure_ascii=False)}</script>
 <script src="/assets/quiz.js" defer></script>
+<script src="/assets/share.js" defer></script>
 <script src="/assets/helper.js" defer></script>
 </body>
 </html>

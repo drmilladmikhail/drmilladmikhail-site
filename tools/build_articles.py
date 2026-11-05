@@ -42,7 +42,7 @@ TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
     <nav class="nav" aria-label="أقسام الموقع">
       <a href="/articles/">المقالات</a>
       <a href="/tests/">اختبارات نفسية</a>
-      <a href="/#book">الكتب</a>
+      <a href="/book/">الكتب</a>
       <a href="/#about">نبذة</a>
       <a href="/#credentials">المؤهلات</a>
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
@@ -50,9 +50,11 @@ TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
     <details class="menu">
       <summary aria-label="القائمة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
       <nav aria-label="القائمة">
+        <a href="/start/">ابدأ من هنا</a>
         <a href="/articles/">المقالات</a>
         <a href="/tests/">اختبارات نفسية</a>
-        <a href="/#book">الكتب</a>
+        <a href="/videos/">فيديوهات</a>
+        <a href="/book/">الكتب</a>
         <a href="/#about">نبذة</a>
         <a href="/#credentials">المؤهلات</a>
         <a href="https://blog.drmilladmikhail.com/">المدونة</a>
@@ -74,7 +76,7 @@ FOOTER = '''<footer class="footer">
       <ul>
         <li><a href="/articles/">المقالات</a></li>
         <li><a href="/tests/">اختبارات نفسية</a></li>
-        <li><a href="/#book">الكتب</a></li>
+        <li><a href="/book/">الكتب</a></li>
         <li><a href="https://blog.drmilladmikhail.com/" target="_blank" rel="noopener">المدونة</a></li>
       </ul>
     </div>
@@ -245,6 +247,7 @@ def article_page(a, prev_items):
         <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد منير ميخائيل" loading="lazy">
         <p><strong>د. ميلاد منير ميخائيل</strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
       </aside>
+      {share_block(url, a["title"])}
       {tests_block}
       {more_block}
     </div>
@@ -255,6 +258,23 @@ def article_page(a, prev_items):
 </body>
 </html>
 '''
+
+
+def share_block(url, title, label="شارك المقال"):
+    """Share buttons: plain links (work without JS); assets/share.js adds copy + phone share sheet."""
+    from urllib.parse import quote
+    u, t = quote(url, safe=""), quote(title + " " + url, safe="")
+    return f'''<aside class="share" data-url="{esc(url)}" data-title="{esc(title)}" aria-label="{esc(label)}">
+        <p class="share-title">{esc(label)} مع حد ممكن يحتاجه</p>
+        <div class="share-row">
+          <a class="sh sh-wa" href="https://wa.me/?text={t}" target="_blank" rel="noopener">واتساب</a>
+          <a class="sh sh-fb" href="https://www.facebook.com/sharer/sharer.php?u={u}" target="_blank" rel="noopener">فيسبوك</a>
+          <a class="sh sh-tg" href="https://t.me/share/url?url={u}&amp;text={quote(title, safe="")}" target="_blank" rel="noopener">تيليجرام</a>
+          <a class="sh sh-x" href="https://x.com/intent/post?text={t}" target="_blank" rel="noopener">X</a>
+          <button type="button" class="sh sh-copy" hidden>انسخ اللينك</button>
+          <button type="button" class="sh sh-native" hidden>مشاركة…</button>
+        </div>
+      </aside>'''
 
 
 def card(a, heading="h2"):
@@ -355,6 +375,10 @@ def sitemap(items):
         with open(vj, encoding="utf-8") as f:
             vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
         urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
+    # standalone pages built by tools/build_pages.py
+    for slug in ("start", "book", "battery"):
+        if os.path.exists(os.path.join(ROOT, slug, "index.html")):
+            urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
     parts = []
     for loc, mod, alt in urls:
         alts = ""
@@ -388,6 +412,10 @@ def main():
         json.dump([{"slug": a["slug"], "title": a["title"], "ch": chapter_no(a) + 1, "date": a["date"]} for a in items],
                   f, ensure_ascii=False, indent=0)
     print(f"built {len(items)} article(s): " + ", ".join(a["slug"] for a in items))
+    # start / book / battery pages list the latest articles and tests
+    if os.path.exists(os.path.join(ROOT, "tools", "build_pages.py")):
+        subprocess.run([sys.executable, os.path.join(ROOT, "tools", "build_pages.py")], check=True)
+        sitemap(items)
 
 
 

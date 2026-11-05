@@ -48,7 +48,7 @@
     <nav class="nav" aria-label="أقسام الموقع">
       <a href="/articles/">المقالات</a>
       <a href="/tests/">اختبارات نفسية</a>
-      <a href="/#book">الكتب</a>
+      <a href="/book/">الكتب</a>
       <a href="/#about">نبذة</a>
       <a href="/#credentials">المؤهلات</a>
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
@@ -56,9 +56,11 @@
     <details class="menu">
       <summary aria-label="القائمة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
       <nav aria-label="القائمة">
+        <a href="/start/">ابدأ من هنا</a>
         <a href="/articles/">المقالات</a>
         <a href="/tests/">اختبارات نفسية</a>
-        <a href="/#book">الكتب</a>
+        <a href="/videos/">فيديوهات</a>
+        <a href="/book/">الكتب</a>
         <a href="/#about">نبذة</a>
         <a href="/#credentials">المؤهلات</a>
         <a href="https://blog.drmilladmikhail.com/">المدونة</a>
@@ -110,6 +112,17 @@
         <button class="btn primary big" type="submit">اعرض النتيجة</button>
       </form>
       <div id="result" class="result" hidden tabindex="-1" aria-live="polite"></div>
+      <aside class="share" data-url="https://drmilladmikhail.com/tests/self-esteem-rosenberg/" data-title="اختبار تقدير الذات (روزنبرج): انت شايف نفسك إزاي؟" aria-label="شارك الاختبار">
+        <p class="share-title">شارك الاختبار مع حد ممكن يحتاجه</p>
+        <div class="share-row">
+          <a class="sh sh-wa" href="https://wa.me/?text=%D8%A7%D8%AE%D8%AA%D8%A8%D8%A7%D8%B1%20%D8%AA%D9%82%D8%AF%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B0%D8%A7%D8%AA%20%28%D8%B1%D9%88%D8%B2%D9%86%D8%A8%D8%B1%D8%AC%29%3A%20%D8%A7%D9%86%D8%AA%20%D8%B4%D8%A7%D9%8A%D9%81%20%D9%86%D9%81%D8%B3%D9%83%20%D8%A5%D8%B2%D8%A7%D9%8A%D8%9F%20https%3A%2F%2Fdrmilladmikhail.com%2Ftests%2Fself-esteem-rosenberg%2F" target="_blank" rel="noopener">واتساب</a>
+          <a class="sh sh-fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdrmilladmikhail.com%2Ftests%2Fself-esteem-rosenberg%2F" target="_blank" rel="noopener">فيسبوك</a>
+          <a class="sh sh-tg" href="https://t.me/share/url?url=https%3A%2F%2Fdrmilladmikhail.com%2Ftests%2Fself-esteem-rosenberg%2F&amp;text=%D8%A7%D8%AE%D8%AA%D8%A8%D8%A7%D8%B1%20%D8%AA%D9%82%D8%AF%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B0%D8%A7%D8%AA%20%28%D8%B1%D9%88%D8%B2%D9%86%D8%A8%D8%B1%D8%AC%29%3A%20%D8%A7%D9%86%D8%AA%20%D8%B4%D8%A7%D9%8A%D9%81%20%D9%86%D9%81%D8%B3%D9%83%20%D8%A5%D8%B2%D8%A7%D9%8A%D8%9F" target="_blank" rel="noopener">تيليجرام</a>
+          <a class="sh sh-x" href="https://x.com/intent/post?text=%D8%A7%D8%AE%D8%AA%D8%A8%D8%A7%D8%B1%20%D8%AA%D9%82%D8%AF%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B0%D8%A7%D8%AA%20%28%D8%B1%D9%88%D8%B2%D9%86%D8%A8%D8%B1%D8%AC%29%3A%20%D8%A7%D9%86%D8%AA%20%D8%B4%D8%A7%D9%8A%D9%81%20%D9%86%D9%81%D8%B3%D9%83%20%D8%A5%D8%B2%D8%A7%D9%8A%D8%9F%20https%3A%2F%2Fdrmilladmikhail.com%2Ftests%2Fself-esteem-rosenberg%2F" target="_blank" rel="noopener">X</a>
+          <button type="button" class="sh sh-copy" hidden>انسخ اللينك</button>
+          <button type="button" class="sh sh-native" hidden>مشاركة…</button>
+        </div>
+      </aside>
       
       <details class="about-test">
         <summary>عن المقياس ده ومصدره العلمي</summary>
@@ -145,7 +158,7 @@
       <ul>
         <li><a href="/articles/">المقالات</a></li>
         <li><a href="/tests/">اختبارات نفسية</a></li>
-        <li><a href="/#book">الكتب</a></li>
+        <li><a href="/book/">الكتب</a></li>
         <li><a href="https://blog.drmilladmikhail.com/" target="_blank" rel="noopener">المدونة</a></li>
       </ul>
     </div>
@@ -163,6 +176,7 @@
 </footer>
 <script type="application/json" id="quiz-config">{"kind": "sum", "max": 30, "multiplier": 1, "bands": [[0, 14, "تقدير ذات منخفض", "صورتك عن نفسك محتاجة اهتمام. ده مش عيب فيك، ده حاجة اتعلمناها وممكن تتغير، والكلام مع متخصص بيساعد."], [15, 25, "تقدير ذات في المدى الطبيعي", "صورتك عن نفسك متوازنة في أغلبها."], [26, 30, "تقدير ذات عالي", "عندك نظرة قوية وإيجابية لنفسك."]], "styles": null, "safety": false}</script>
 <script src="/assets/quiz.js" defer></script>
+<script src="/assets/share.js" defer></script>
 <script src="/assets/helper.js" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49dc5ec3f58f4825b6e04626f92dd475"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
