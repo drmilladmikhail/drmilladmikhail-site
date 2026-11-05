@@ -241,3 +241,49 @@ html[lang="en"] .thesis .translated { font-family: var(--display-ar); font-style
 .cover-img img { width: 100%; height: auto; border-radius: 4px 12px 12px 4px; box-shadow: 0 18px 34px -20px rgba(24,35,58,.6); }
 .badge { display: inline-block; margin: 0 0 10px; padding: 2px 12px; border-radius: 999px; background: var(--amber); color: #fff; font-size: 14px; font-weight: 600; }
 @media (max-width: 640px) { .cover, .cover-img { max-width: 180px; } }
+
+/* ---------- articles ---------- */
+.wrap.narrow { max-width: 760px; }
+.post { padding-block: 36px 56px; }
+.crumbs { margin: 0 0 10px; font-size: 14.5px; color: var(--muted); }
+.crumbs a { color: var(--eucalyptus); text-decoration: none; font-weight: 600; }
+.post h1 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(28px, 5.4vw, 42px); line-height: 1.45; }
+.post-meta { margin: 12px 0 24px; color: var(--muted); font-size: 15px; }
+.post-hero { margin: 0 0 28px; }
+.post-hero img, .post-body figure img { width: 100%; height: auto; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
+.post-body { font-size: 18.5px; line-height: 1.95; }
+.post-body p { margin: 0 0 16px; }
+.post-body h2 { margin: 36px 0 12px; font-family: var(--display); font-weight: 700; font-size: clamp(22px, 3.4vw, 27px); line-height: 1.5; color: var(--eucalyptus); }
+.post-body figure { margin: 6px 0 18px; }
+.post-body ul, .post-body ol { margin: 0 0 16px; padding-inline-start: 22px; }
+.post-body li { margin-bottom: 6px; }
+.exercise { background: var(--mist); border-radius: 14px; padding: 20px 22px; margin: 30px 0; }
+.exercise p:last-child { margin-bottom: 0; }
+.exercise-title { font-weight: 700; color: var(--eucalyptus); }
+.safety { font-size: 15.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin-top: 26px; }
+.book-box { display: grid; grid-template-columns: 120px 1fr; gap: 22px; align-items: center; margin: 36px 0 20px; padding: 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.book-box p { margin: 0 0 10px; }
+.book-box-title { font-weight: 700; font-size: 17.5px; }
+.book-box .actions { margin-top: 12px; }
+.book-box .cover-img { max-width: 120px; }
+@media (max-width: 520px) { .book-box { grid-template-columns: 1fr; } .book-box .cover-img { max-width: 140px; } }
+.author-box { display: flex; gap: 16px; align-items: center; padding: 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: 15.5px; }
+.author-box img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex: none; }
+.author-box p { margin: 0; }
+.author-box a { color: var(--eucalyptus); }
+.more h2 { font-family: var(--display); font-size: 22px; margin: 30px 0 10px; }
+.more ul { margin: 0; padding-inline-start: 20px; }
+.more li { margin-bottom: 8px; }
+.more a { color: var(--ink); }
+
+.articles-index { border-top: 0; }
+.articles-index h1 { margin: 0 0 12px; font-family: var(--display); font-size: clamp(30px, 5vw, 42px); }
+.articles-index .section-intro { margin: 0 0 28px; }
+.cards { list-style: none; margin: 0 0 24px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.card a { display: flex; flex-direction: column; height: 100%; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.card a:hover { border-color: var(--eucalyptus); }
+.card img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; background: #fff; border-bottom: 1px solid var(--line); }
+.card-body { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px 18px; }
+.card h2, .card h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 20px; line-height: 1.55; }
+.card-desc { color: var(--muted); font-size: 15px; line-height: 1.7; }
+.card-date { color: var(--amber); font-size: 14px; font-weight: 600; margin-top: auto; }
