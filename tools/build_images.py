@@ -141,7 +141,7 @@ def main():
     n_webp = webp_variants()
     with open(os.path.join(ROOT, "articles", "articles.json"), encoding="utf-8") as f:
         items = json.load(f)
-    me = "د. ميلاد منير ميخائيل"
+    me = "د. ميلاد ميخائيل"
     jobs = []
     for a in items:
         src = os.path.join(BOOK, a["image"] + ".jpg")
@@ -150,7 +150,7 @@ def main():
     portrait = os.path.join(ROOT, "assets", "millad.jpg")
     jobs += [
         (os.path.join(OG, "home.jpg"), portrait, "حاصل على الدكتوراه في الصحة النفسية",
-         "د. ميلاد منير ميخائيل: مقالات واختبارات وكتب عن الحب والعلاقات والصحة النفسية", "جامعة قناة السويس · عضو APA", True),
+         "د. ميلاد ميخائيل: مقالات واختبارات وكتب عن الحب والعلاقات والصحة النفسية", "جامعة قناة السويس · عضو APA", True),
         (os.path.join(OG, "articles.jpg"), os.path.join(BOOK, "love-p09.jpg"), "المقالات",
          "مقالات بالعامية عن الحب والتعلق والعلاقات المؤذية واختيار شريك الحياة", me, True),
         (os.path.join(OG, "tests.jpg"), os.path.join(BOOK, "love-p16.jpg"), "اختبارات مجانية",

@@ -67,7 +67,7 @@
     ctx.direction = "ltr";
     ctx.fillText("drmilladmikhail.com" + location.pathname.replace(/\/$/, ""), W / 2, H - 160);
     ctx.direction = "rtl"; ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.font = "400 36px " + F;
-    ctx.fillText("د. ميلاد منير ميخائيل", W / 2, H - 95);
+    ctx.fillText("د. ميلاد ميخائيل", W / 2, H - 95);
     return cv;
   }
   function addCardButton(title, line) {

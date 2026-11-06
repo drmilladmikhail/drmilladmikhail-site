@@ -38,7 +38,7 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
 TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="/">د. ميلاد منير ميخائيل</a>
+    <a class="brand" href="/">د. ميلاد ميخائيل</a>
     <nav class="nav" aria-label="أقسام الموقع">
       <a href="/articles/">المقالات</a>
       <a href="/tests/">اختبارات نفسية</a>
@@ -73,7 +73,7 @@ TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
 FOOTER = '''<footer class="footer">
   <div class="wrap footer-grid">
     <div>
-      <p class="names">د. ميلاد منير ميخائيل <span lang="en" dir="ltr">· Dr. Millad Mikhail</span></p>
+      <p class="names">د. ميلاد ميخائيل <span lang="en" dir="ltr">· Dr. Millad Mikhail</span></p>
       <p>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA).</p>
       <p class="fine">© 2026. المحتوى لأغراض التوعية والتثقيف، ومش تشخيص ولا بديل عن العلاج النفسي.</p>
     </div>
@@ -140,7 +140,7 @@ def related(a, others, n=3):
 
 
 def social(url, title, desc, image, alt, kind="article"):
-    return f'''<meta property="og:site_name" content="د. ميلاد منير ميخائيل">
+    return f'''<meta property="og:site_name" content="د. ميلاد ميخائيل">
 <meta property="og:type" content="{kind}">
 <meta property="og:url" content="{url}">
 <meta property="og:title" content="{esc(title)}">
@@ -193,7 +193,7 @@ def article_page(a, prev_items):
         "inLanguage": "ar",
         "mainEntityOfPage": url,
         "author": {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail",
-                   "alternateName": "د. ميلاد منير ميخائيل", "url": f"{SITE}/"},
+                   "alternateName": "د. ميلاد ميخائيل", "url": f"{SITE}/"},
         "publisher": {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail"},
         "isBasedOn": {"@type": "Book", "name": "ليه بنحب اللي بيوجعنا؟", "url": BOOK_AR},
     }
@@ -230,7 +230,7 @@ def article_page(a, prev_items):
     <div class="wrap narrow">
       <p class="crumbs"><a href="/articles/">المقالات</a>{(" · " + esc(a["chapter"])) if a.get("chapter") else ""}</p>
       <h1>{esc(a["title"])}</h1>
-      <p class="post-meta">د. ميلاد منير ميخائيل · {meta}</p>
+      <p class="post-meta">د. ميلاد ميخائيل · {meta}</p>
       <figure class="post-hero">{pic(a["image"], a["image_alt"], eager=True)}</figure>
       <div class="post-body">
 {body}
@@ -250,8 +250,8 @@ def article_page(a, prev_items):
         </div>
       </div>
       <div class="author-box">
-        <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد منير ميخائيل" loading="lazy">
-        <p><strong>د. ميلاد منير ميخائيل</strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
+        <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد ميخائيل" loading="lazy">
+        <p><strong>د. ميلاد ميخائيل</strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
       </div>
       {share_block(url, a["title"])}
       {tests_block}
@@ -307,10 +307,10 @@ def index_page(items):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>مقالات | د. ميلاد منير ميخائيل</title>
-<meta name="description" content="مقالات بالعامية عن الحب والتعلق والعلاقات المؤذية واختيار شريك الحياة، من كتب د. ميلاد منير ميخائيل.">
+<title>مقالات | د. ميلاد ميخائيل</title>
+<meta name="description" content="مقالات بالعامية عن الحب والتعلق والعلاقات المؤذية واختيار شريك الحياة، من كتب د. ميلاد ميخائيل.">
 <link rel="canonical" href="{SITE}/articles/">
-{social(SITE + "/articles/", "مقالات د. ميلاد منير ميخائيل", "مقالات بالعامية عن الحب والتعلق والعلاقات المؤذية واختيار شريك الحياة.", SITE + "/assets/og/articles.jpg", "مقالات د. ميلاد منير ميخائيل", "website")}
+{social(SITE + "/articles/", "مقالات د. ميلاد ميخائيل", "مقالات بالعامية عن الحب والتعلق والعلاقات المؤذية واختيار شريك الحياة.", SITE + "/assets/og/articles.jpg", "مقالات د. ميلاد ميخائيل", "website")}
 <meta name="theme-color" content="#2f6f62">
 {FONTS}
 <script type="application/ld+json">
@@ -408,16 +408,16 @@ def llms_txt(items):
         with open(tp, encoding="utf-8") as f:
             tests = json.load(f)
     L = [
-        "# Dr. Millad Mikhail | د. ميلاد منير ميخائيل",
+        "# Dr. Millad Mikhail | د. ميلاد ميخائيل",
         "",
-        "> Dr. Millad Mikhail (Arabic: د. ميلاد منير ميخائيل; also known as Dr. Milad Mounir / د. ميلاد منير) "
+        "> Dr. Millad Mikhail (Arabic: د. ميلاد ميخائيل; also known as Dr. Milad Mounir / د. ميلاد منير) "
         "is a mental health educator and author. He holds a Ph.D. in Mental Health from Suez Canal University, Egypt (2022), "
         "and is a member of the American Psychological Association (APA). He is the author of the book "
         "«ليه بنحب اللي بيوجعنا؟» (Why Do We Love What Hurts Us?) and runs the Arabic YouTube channel "
         "جلسة شيزلونج (Glset Shezlong). This site publishes his articles and free psychological self-tests in simple Arabic.",
         "",
         "Key facts:",
-        "- Full name: Millad Mounir Hakim Bekheet Mikhail. Same person as: Dr. Milad Mounir, Milad Mounir, د. ميلاد منير, ميلاد منير حكيم.",
+        "- Full name: Millad Mounir Hakim Bekheet Mikhail. Same person as: Dr. Milad Mounir, Milad Mounir, د. ميلاد منير, د. ميلاد منير ميخائيل, ميلاد منير حكيم (older name forms, e.g. in older YouTube videos).",
         "- Ph.D. in Mental Health, Suez Canal University, 2022. Dissertation: \"Effectiveness of Logo Counselling on Reducing the Level of Existential Anxiety and Improving Psychological Immunity for University Students\".",
         "- Master's in Education (Mental Health), Suez Canal University, 2018. Specialized Diploma in Counseling and Clinical Psychology, Tanta University, 2021.",
         "- Credentials evaluated by World Education Services (WES). Visiting graduate student, JFK School of Psychology, National University (USA).",

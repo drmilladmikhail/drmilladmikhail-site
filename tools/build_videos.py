@@ -320,10 +320,10 @@ def page(vs, data=None):
       </section>'''
     if not vs:
         sec = f'<p>الفيديوهات هتظهر هنا قريب. لحد ما تظهر، تقدر تتفرّج على <a href="{HANDLE}">القناة على يوتيوب</a>.</p>'
-    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "فيديوهات د. ميلاد منير ميخائيل",
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "فيديوهات د. ميلاد ميخائيل",
           "url": f"{SITE}/videos/", "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
           "hasPart": [ld_video(v) for v in vs if v.get("published")]}
-    desc = "فيديوهات بالعامية عن الحب والتعلق والقلق والبحث عن المعنى، من قناة «جلسة شيزلونج» لـ د. ميلاد منير ميخائيل."
+    desc = "فيديوهات بالعامية عن الحب والتعلق والقلق والبحث عن المعنى، من قناة «جلسة شيزلونج» لـ د. ميلاد ميخائيل."
     first = vs[0]["id"] if vs else None
     og = f"https://i.ytimg.com/vi/{first}/hqdefault.jpg" if first else f"{SITE}/assets/og/home.jpg"
     return f'''<!doctype html>
@@ -331,10 +331,10 @@ def page(vs, data=None):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>فيديوهات «جلسة شيزلونج» | د. ميلاد منير ميخائيل</title>
+<title>فيديوهات «جلسة شيزلونج» | د. ميلاد ميخائيل</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{SITE}/videos/">
-{ba.social(SITE + "/videos/", "فيديوهات د. ميلاد منير ميخائيل", desc, f"{SITE}/assets/og/home.jpg", "د. ميلاد منير ميخائيل", "website")}
+{ba.social(SITE + "/videos/", "فيديوهات د. ميلاد ميخائيل", desc, f"{SITE}/assets/og/home.jpg", "د. ميلاد ميخائيل", "website")}
 <meta name="theme-color" content="#2f6f62">
 <link rel="preconnect" href="https://i.ytimg.com">
 {ba.FONTS}

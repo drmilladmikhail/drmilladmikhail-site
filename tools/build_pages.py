@@ -35,7 +35,7 @@ def page(slug, title, desc, body, ld, og=f"{SITE}/assets/og/home.jpg"):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)} | د. ميلاد منير ميخائيل</title>
+<title>{esc(title)} | د. ميلاد ميخائيل</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{url}">
 {ba.social(url, title, desc, og, title, "website")}
@@ -129,7 +129,7 @@ def start_page():
   </section>'''
     ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "ابدأ من هنا", "url": f"{SITE}/start/",
           "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
-          "description": "دليل لكل المحتوى المجاني على موقع د. ميلاد منير ميخائيل: اختبارات ومقالات وفيديوهات."}
+          "description": "دليل لكل المحتوى المجاني على موقع د. ميلاد ميخائيل: اختبارات ومقالات وفيديوهات."}
     write("start", page("start", "ابدأ من هنا", "دليل لكل المحتوى المجاني: اختبارات نفسية، مقالات بالعامية، وفيديوهات عن الحب والتعلق والقلق.", body, ld))
 
 
