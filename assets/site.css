@@ -821,3 +821,11 @@ summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; bo
 .faq-item[open] summary::after { content: "−"; }
 .faq-item p { margin: 0 0 16px; padding: 0; line-height: 1.9; }
 .hero .aka.who { max-width: 620px; line-height: 1.8; }
+
+/* CSBD page: the cycle */
+.cycle { list-style: none; padding: 0 !important; margin: 8px 0 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; counter-reset: cyc; }
+.cycle li { counter-increment: cyc; position: relative; margin: 0 !important; padding: 14px 14px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); display: flex; flex-direction: column; gap: 2px; line-height: 1.6; }
+.cycle li::before { content: counter(cyc, arabic-indic); position: absolute; top: -10px; inset-inline-start: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--eucalyptus); color: #fff; font-size: 13px; display: grid; place-items: center; }
+.cycle li b { color: var(--eucalyptus); }
+.cycle li span { font-size: 15px; color: var(--muted); }
+.cycle li:nth-child(5) { border-color: #e3b7ae; }

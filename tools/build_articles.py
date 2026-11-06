@@ -382,7 +382,7 @@ def sitemap(items):
             vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
         urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
     # standalone pages built by tools/build_pages.py
-    for slug in ("start", "ask", "feelings", "relationship-check", "questions", "challenges", "worksheets", "book", "battery"):
+    for slug in ("start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
     parts = []
