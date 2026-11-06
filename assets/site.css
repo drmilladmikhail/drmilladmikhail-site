@@ -829,3 +829,10 @@ summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; bo
 .cycle li b { color: var(--eucalyptus); }
 .cycle li span { font-size: 15px; color: var(--muted); }
 .cycle li:nth-child(5) { border-color: #e3b7ae; }
+
+/* sessions (AR home) */
+.sessions-box { max-width: 820px; padding: 24px 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); border-inline-start: 5px solid var(--eucalyptus); }
+.sessions-box p { margin: 0 0 12px; line-height: 1.9; }
+.ses-topics { margin: 0 0 18px; padding-inline-start: 22px; line-height: 1.9; }
+.ses-note { font-size: 15px; color: var(--muted); margin: 14px 0 0 !important; }
+.test-cta { background: var(--mist); border-radius: 12px; padding: 12px 16px; }

@@ -187,6 +187,34 @@ TESTS = [
         "related": None,
         "safety": True,
     },
+    {
+        "slug": "porn-use-bps",
+        "title": "اختبار مشاهدة الإباحية (BPS): الموضوع بقى مشكلة ولا لأ؟",
+        "short": "مشاهدة الإباحية",
+        "description": "مقياس Brief Pornography Screen العلمي من 5 أسئلة، بيساعدك تعرف هل مشاهدة الإباحية بقت خارج سيطرتك في آخر 6 شهور.",
+        "icon": "loop",
+        "minutes": 1,
+        "kind": "sum",
+        "intro": "في آخر 6 شهور، حصلت معاك المواقف دي قد إيه بخصوص مشاهدة الإباحية؟",
+        "options": [("خالص", 0), ("أحياناً", 1), ("كتير جداً", 2)],
+        "items": [
+            "بتلاقي نفسك بتتفرج على إباحية أكتر من ما انت عايز.",
+            "حاولت تقلل أو توقف مشاهدة الإباحية، ومقدرتش.",
+            "بتلاقي صعوبة إنك تقاوم رغبة قوية إنك تتفرج على إباحية.",
+            "بتتفرج على إباحية عشان تتعامل مع مشاعر قوية (زي الحزن أو الغضب أو الوحدة).",
+            "بتكمّل تتفرج على إباحية رغم إنك بتحس بالذنب بسببها.",
+        ],
+        "max": 10,
+        "bands": [
+            [0, 3, "مفيش مؤشر واضح على مشكلة", "نتيجتك أقل من الحد اللي الباحثين حطوه للفحص المبدئي. بس المقياس ده قصير وممكن ميلقطش كل الحالات، فلو انت حاسس إن الموضوع مضايقك أو خارج سيطرتك، صدّق إحساسك واقرا صفحة التعافي."],
+            [4, 10, "النتيجة إيجابية في الفحص المبدئي", "الدرجة 4 أو أكتر معناها إن الموضوع يستاهل تقييم أعمق مع متخصص نفسي، عشان يشوف هل ده استخدام مُشكِل ولا لأ. ده مش تشخيص، ومش حكم عليك، وفيه طرق حقيقية بتساعد. ابدأ بصفحة التعافي."],
+        ],
+        "source": "Kraus, S. W., Gola, M., Grubbs, J. B., Kowalewska, E., Hoff, R. A., Lew-Starowicz, M., Martino, S., Shirk, S. D., & Potenza, M. N. (2020). Validation of a Brief Pornography Screen across multiple samples. <em>Journal of Behavioral Addictions, 9</em>(2), 259–271. https://doi.org/10.1556/2006.2020.00038 — المقال منشور برخصة <a href=\"https://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\" rel=\"noopener\">CC BY-NC 4.0</a>، والمقياس مستخدم هنا للتوعية من غير أي مقابل. الأسئلة مترجمة ومبسّطة للعربي (تعديل على الأصل).",
+        "note": "كل سؤال: خالص = 0، أحياناً = 1، كتير جداً = 2. المجموع من 0 لـ 10. الباحثين اقترحوا إن 4 أو أكتر يبقى «فحص إيجابي» يستاهل تقييم أعمق، وقالوا إن الحد ده لسه محتاج دراسات أكتر، ومش بيلقط كل الحالات. المقياس عن المشاهدة بس، ومش بيقيس كل أنواع السلوك الجنسي القهري.",
+        "related": ("/porn-addiction/", "التعافي من إدمان الإباحية والسلوك الجنسي القهري"),
+        "safety": False,
+        "private": True,  # no story card for this sensitive topic
+    },
 ]
 
 ICONS = {
@@ -194,6 +222,7 @@ ICONS = {
     "cloud": '<path d="M12 27h16a6 6 0 0 0 0-12 9 9 0 0 0-17 2 5 5 0 0 0 1 10Z"/><path d="M15 31v3M21 31v3M27 31v3"/>',
     "wave": '<path d="M5 16c4-4 8-4 12 0s8 4 12 0 5-2 6-1M5 25c4-4 8-4 12 0s8 4 12 0 5-2 6-1"/>',
     "mirror": '<ellipse cx="20" cy="17" rx="9" ry="12"/><path d="M20 29v6M14 35h12M16 12c1-2 3-3 5-3"/>',
+    "loop": '<path d="M31 15a12 12 0 1 0 1.5 8"/><path d="M32 7v8h-8"/>',
     "sun": '<circle cx="20" cy="20" r="6"/><path d="M20 5v4M20 31v4M5 20h4M31 20h4M9 9l3 3M28 28l3 3M31 9l-3 3M12 28l-3 3"/>',
 }
 
@@ -331,7 +360,8 @@ def test_page(t):
           <div class="opts opts-{n}">{"".join(opts)}</div>
         </fieldset>''')
     cfg = {"kind": t["kind"], "max": t.get("max"), "multiplier": t.get("multiplier", 1),
-           "bands": t.get("bands"), "styles": t.get("styles"), "safety": t["safety"]}
+           "bands": t.get("bands"), "styles": t.get("styles"), "safety": t["safety"],
+           "private": t.get("private", False)}
     related = ""
     if t.get("related"):
         related = f'<p class="related">اقرأ كمان: <a href="{t["related"][0]}">{esc(t["related"][1])}</a></p>'

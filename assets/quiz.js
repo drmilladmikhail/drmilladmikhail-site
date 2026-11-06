@@ -71,7 +71,7 @@
     return cv;
   }
   function addCardButton(title, line) {
-    if (cfg.safety || !document.createElement("canvas").getContext) return;
+    if (cfg.safety || cfg.private || !document.createElement("canvas").getContext) return;
     var box = document.createElement("div");
     box.className = "rcard";
     box.innerHTML = '<button type="button" class="btn primary rcard-make">📸 اعمل كارت نتيجتي للستوري</button>';

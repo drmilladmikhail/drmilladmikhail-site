@@ -2,6 +2,7 @@
 
 Done:
 - 2026-11-04 attachment-style (ECR-RS), depression-phq8 (PHQ-8), anxiety-gad7 (GAD-7), self-esteem-rosenberg (RSES), wellbeing-who5 (WHO-5)
+- 2026-11-05 porn-use-bps (Brief Pornography Screen, Kraus et al. 2020, CC BY-NC 4.0) — his request, linked from /porn-addiction/
 
 Next (verify the free-use permission and exact items from the official source before building; skip any that can't be verified):
 1. Meaning in Life Questionnaire — MLQ (Steger, Frazier, Oishi & Kaler, 2006): Presence + Search subscales. Fits his logotherapy specialty.
