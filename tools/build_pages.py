@@ -679,7 +679,7 @@ def csbd_page():
 <li>لو السلوك فيه مخاطرة على صحتك، زي علاقات مش آمنة. هنا كمان اعمل الكشف والتحاليل اللازمة عند دكتور.</li>
 </ul>
 <p><strong>العلاج المعرفي السلوكي</strong> و<strong>علاج القبول والالتزام</strong> من أكتر الطرق اللي بتساعد. وفيه حالات دكتور نفسي بيقرر فيها علاج دوائي، وده <strong>بيتاخد بس تحت إشراف دكتور</strong>، ومتاخدش أي دوا من نفسك.</p>
-<p>ولو حابب تتكلم مع متخصص، أنا بقدّم <a href="/#sessions">جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي</a>، وكل اللي بيتقال فيها سري.</p>
+<p>ولو حابب تتكلم مع متخصص، أنا بقدّم <a href="/sessions/">جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي</a>، وكل اللي بيتقال فيها سري.</p>
 <p class="safety"><strong>وقفة أمان:</strong> لو عندك أفكار تأذي بيها نفسك، كلّم حد فوراً: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>. ولو عندك أي أفكار أو رغبات ناحية أطفال، حتى لو عمرك ما عملت حاجة، اطلب مساعدة متخصصة سرية فوراً. فيه جهات متخصصة في ده زي <a href="https://www.stopitnow.org/" target="_blank" rel="noopener">Stop It Now</a>.</p>
       </div>
 
@@ -712,6 +712,8 @@ def csbd_page():
 
 
 def main():
+    import pages_trust
+    pages_trust.build_all(ba, page, write, SITE)
     ask_page()
     feelings_page()
     relationship_check_page()
@@ -722,7 +724,7 @@ def main():
     start_page()
     book_page()
     battery_page()
-    print("pages: feelings, relationship-check, worksheets, questions, porn-addiction, challenges, start, book, battery")
+    print("pages: sessions, contact, help-now, privacy, terms, feelings, relationship-check, worksheets, questions, porn-addiction, challenges, start, book, battery")
 
 
 if __name__ == "__main__":

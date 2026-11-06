@@ -76,6 +76,7 @@ FOOTER = '''<footer class="footer">
       <p class="names">د. ميلاد ميخائيل <span lang="en" dir="ltr">· Dr. Millad Mikhail</span></p>
       <p>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA).</p>
       <p class="fine">© 2026. المحتوى لأغراض التوعية والتثقيف، ومش تشخيص ولا بديل عن العلاج النفسي.</p>
+      <p class="fine footer-links"><a href="/sessions/">الجلسات</a> · <a href="/contact/">تواصل</a> · <a href="/help-now/">محتاج مساعدة دلوقتي</a> · <a href="/privacy/">الخصوصية</a> · <a href="/terms/">الشروط</a></p>
     </div>
     <div>
       <h2>اقرأ وجرّب</h2>
@@ -382,7 +383,7 @@ def sitemap(items):
             vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
         urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
     # standalone pages built by tools/build_pages.py
-    for slug in ("start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery"):
+    for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
     parts = []
