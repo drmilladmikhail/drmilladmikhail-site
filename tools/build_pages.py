@@ -535,7 +535,42 @@ def worksheets_page():
                              body, ld))
 
 
+# ------------------------------------------------------------------ ask anonymously
+def ask_page():
+    """«اسأل من غير اسمك». Built only when content/ask.json has a form_url (a Google Form he owns)."""
+    cfg = load("content/ask.json", {})
+    url = cfg.get("form_url", "").strip()
+    if not url.startswith("https://"):
+        return False
+    body = f'''  <section class="page-hero">
+    <div class="wrap narrow">
+      <p class="kicker-g">من غير كسوف ومن غير اسم</p>
+      <h1>اسأل من غير اسمك</h1>
+      <p class="lead">فيه سؤال محرج مش قادر تسأله لحد؟ ابعته هنا. مش هنطلب اسمك ولا إيميلك ولا رقمك، ومحدش هيعرف مين بعت.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap narrow">
+      <ol class="ask-steps">
+        <li><b>اكتب سؤالك</b><span>زي ما بتقوله لنفسك، بالعامية. ماتكتبش اسمك أو أي حاجة تعرّف بيك.</span></li>
+        <li><b>اختار إذا كنت موافق ننشره</b><span>لو وافقت، ممكن نجاوبه في صفحة «أسئلة محرجة» من غير أي بيانات عنك.</span></li>
+        <li><b>تابع صفحة الأسئلة</b><span>بنضيف إجابات جديدة كل أسبوع، مبنية على العلم ومن غير حكم.</span></li>
+      </ol>
+      <div class="actions"><a class="btn primary big" href="{esc(url)}" target="_blank" rel="noopener">اكتب سؤالك دلوقتي</a>
+        <a class="btn" href="/questions/">شوف الأسئلة اللي اتجاوبت</a></div>
+      <p class="privacy">🔒 الفورم على Google Forms ومش بيجمع إيميلات. لو فاتح بحساب جوجل، اسمك مش بيوصلنا.</p>
+      <div class="safety-note" role="note"><p><b>الصندوق ده مش للطوارئ</b>، والرد ممكن ياخد أسابيع، ومش كل سؤال هيتنشر. ولا هو بديل عن استشارة شخصية. لو حاسس إنك في خطر أو بتفكر تأذي نفسك، كلّم حد دلوقتي: مصر <a href="tel:105">105</a> أو <a href="tel:122">122</a> · أمريكا <a href="tel:988">988</a> أو <a href="tel:911">911</a>.</p></div>
+      {ba.share_block(SITE + "/ask/", "اسأل د. ميلاد من غير اسمك: سؤالك المحرج ليه إجابة علمية", "شارك الصفحة")}
+    </div>
+  </section>'''
+    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "اسأل من غير اسمك", "url": f"{SITE}/ask/",
+          "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
+    write("ask", page("ask", "اسأل من غير اسمك", "ابعت سؤالك المحرج عن المشاعر أو العلاقات أو الجنس من غير اسمك، وممكن نجاوبه علميًا في صفحة «أسئلة محرجة».", body, ld))
+    return True
+
+
 def main():
+    ask_page()
     feelings_page()
     relationship_check_page()
     worksheets_page()
