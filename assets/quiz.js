@@ -25,6 +25,80 @@
     out.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+
+  // ---- shareable result card (only for tests without a safety flag: attachment style, self-esteem)
+  function wrap(ctx, text, maxW) {
+    var words = text.split(/\s+/), lines = [], line = "";
+    words.forEach(function (w) {
+      var t = line ? line + " " + w : w;
+      if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t;
+    });
+    if (line) lines.push(line);
+    return lines;
+  }
+  function makeCard(title, line) {
+    var W = 1080, H = 1350, cv = document.createElement("canvas");
+    cv.width = W; cv.height = H;
+    var ctx = cv.getContext("2d");
+    var g = ctx.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, "#18233a"); g.addColorStop(1, "#2f6f62");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "rgba(226,179,90,.14)";
+    ctx.beginPath(); ctx.arc(W - 120, 170, 260, 0, Math.PI * 2); ctx.fill();
+    ctx.direction = "rtl"; ctx.textAlign = "center";
+    var F = '"IBM Plex Sans Arabic", system-ui, sans-serif';
+    var testName = (document.querySelector("h1") || {}).textContent || "";
+    testName = testName.split(/[:(：]/)[0].trim();
+    ctx.fillStyle = "rgba(255,255,255,.75)"; ctx.font = "500 46px " + F;
+    ctx.fillText("نتيجتي في", W / 2, 300);
+    ctx.fillStyle = "#e2b35a"; ctx.font = "600 56px " + F;
+    ctx.fillText(testName, W / 2, 380);
+    ctx.fillStyle = "#ffffff"; ctx.font = "700 104px " + F;
+    var y = 600;
+    wrap(ctx, title, W - 160).forEach(function (l) { ctx.fillText(l, W / 2, y); y += 130; });
+    if (line) {
+      ctx.fillStyle = "rgba(255,255,255,.85)"; ctx.font = "400 44px " + F;
+      y += 10;
+      wrap(ctx, line, W - 200).slice(0, 3).forEach(function (l) { ctx.fillText(l, W / 2, y); y += 66; });
+    }
+    ctx.fillStyle = "#e2b35a"; ctx.font = "600 50px " + F;
+    ctx.fillText("وانت؟ اعرف نتيجتك مجانًا", W / 2, H - 230);
+    ctx.fillStyle = "#ffffff"; ctx.font = "500 40px " + F;
+    ctx.direction = "ltr";
+    ctx.fillText("drmilladmikhail.com" + location.pathname.replace(/\/$/, ""), W / 2, H - 160);
+    ctx.direction = "rtl"; ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.font = "400 36px " + F;
+    ctx.fillText("د. ميلاد منير ميخائيل", W / 2, H - 95);
+    return cv;
+  }
+  function addCardButton(title, line) {
+    if (cfg.safety || !document.createElement("canvas").getContext) return;
+    var box = document.createElement("div");
+    box.className = "rcard";
+    box.innerHTML = '<button type="button" class="btn primary rcard-make">📸 اعمل كارت نتيجتي للستوري</button>';
+    var again = out.querySelector(".again");
+    out.insertBefore(box, again);
+    box.querySelector(".rcard-make").addEventListener("click", function () {
+      var ready = document.fonts && document.fonts.load ? document.fonts.load('700 40px "IBM Plex Sans Arabic"') : Promise.resolve();
+      ready.catch(function () {}).then(function () {
+        var cv = makeCard(title, line), url = cv.toDataURL("image/png");
+        box.innerHTML = '<img class="rcard-img" alt="كارت نتيجتك: ' + title.replace(/"/g, "") + '" width="1080" height="1350" src="' + url + '">' +
+          '<div class="actions"><a class="btn primary rcard-dl" download="natiga-drmilladmikhail.png" href="' + url + '">نزّل الكارت</a></div>' +
+          '<p class="result-note">نزّله وحطه ستوري أو ابعته لصاحبك. الكارت بيتعمل على جهازك ومش بيتبعت لأي حد.</p>';
+        cv.toBlob(function (blob) {
+          if (!blob || !navigator.canShare) return;
+          var file = new File([blob], "natiga.png", { type: "image/png" });
+          if (!navigator.canShare({ files: [file] })) return;
+          var b = document.createElement("button");
+          b.type = "button"; b.className = "btn"; b.textContent = "شارك الكارت";
+          b.addEventListener("click", function () {
+            navigator.share({ files: [file], text: "اعمل الاختبار انت كمان: " + location.origin + location.pathname }).catch(function () {});
+          });
+          box.querySelector(".actions").appendChild(b);
+        });
+      });
+    });
+  }
+
   form.addEventListener('change', function (e) {
     var fs = e.target.closest('.q');
     if (fs) fs.classList.add('done');
@@ -60,6 +134,7 @@
         bar('قلق التعلق (الخوف من الرفض والهجر)', an, 1, 7, an.toFixed(1) + ' من 7') +
         bar('تجنب التعلق (البعد عن القرب والاعتماد)', av, 1, 7, av.toFixed(1) + ' من 7') +
         '<p class="result-note">نمط التعلق مش حكم نهائي ولا عيب فيك، وممكن يتغير مع الوعي والعلاقات الآمنة. معظمنا فيه حاجة من أكتر من نمط.</p>');
+      addCardButton(s[0], (s[1].split(/[.،!؟]/)[0] || '').trim());
       return;
     }
 
@@ -73,5 +148,6 @@
       '<p>' + band[3] + '</p>' +
       (high ? '<p class="result-alert">لو حاسس إنك مش قادر تتحمل، أو عندك أفكار إنك تأذي نفسك، اطلب مساعدة دلوقتي: في مصر الخط الساخن للدعم النفسي 105، وفي أمريكا 988، أو أقرب طوارئ.</p>' : '') +
       '<p class="result-note">النتيجة دي مؤشر مش تشخيص. لو قلقان من نتيجتك، أحسن خطوة إنك تتكلم مع متخصص نفسي.</p>');
+    addCardButton(band[2], '');
   });
 })();

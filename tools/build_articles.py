@@ -56,6 +56,8 @@ TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
         <a href="/videos/">فيديوهات</a>
         <a href="/questions/">أسئلة محرجة</a>
         <a href="/challenges/">تحديات قصيرة</a>
+        <a href="/feelings/">عجلة المشاعر</a>
+        <a href="/relationship-check/">علاقتك صحية؟</a>
         <a href="/worksheets/">أوراق تمرين</a>
         <a href="/book/">الكتب</a>
         <a href="/#about">نبذة</a>
@@ -196,12 +198,12 @@ def article_page(a, prev_items):
     }
     rel = related(a, prev_items)
     more = "\n        ".join(card(p, "h3") for p in rel)
-    more_block = (f'<aside class="more"><h2>مقالات ممكن تعجبك</h2><ul class="cards">\n        {more}\n      </ul></aside>' if more else "")
-    tests_block = ('''<aside class="tests-cta">
+    more_block = (f'<div class="more"><h2>مقالات ممكن تعجبك</h2><ul class="cards">\n        {more}\n      </ul></div>' if more else "")
+    tests_block = ('''<div class="tests-cta">
         <p class="tests-cta-title">عايز تعرف نمط تعلقك؟</p>
         <p>جرّب اختبار نمط التعلق المجاني على الموقع. بياخد دقيقتين، والنتيجة بتطلعلك على طول ومش بتتحفظ في أي مكان.</p>
         <div class="actions"><a class="btn primary" href="/tests/attachment-style/">ابدأ الاختبار</a> <a class="btn" href="/tests/">كل الاختبارات</a></div>
-      </aside>''')
+      </div>''')
     meta = ar_date(a["date"]) + (f" · {a['minutes']} دقايق قراءة" if a.get("minutes") else "")
     return f'''<!doctype html>
 <html lang="ar" dir="rtl">
@@ -232,7 +234,7 @@ def article_page(a, prev_items):
       <div class="post-body">
 {body}
       </div>
-      <aside class="book-box">
+      <div class="book-box">
         <picture class="cover-img">
           <source srcset="/assets/love-cover-ar.webp" type="image/webp">
           <img src="/assets/love-cover-ar.jpg" width="480" height="768" alt="غلاف كتاب ليه بنحب اللي بيوجعنا؟" loading="lazy">
@@ -245,11 +247,11 @@ def article_page(a, prev_items):
             <a class="btn" href="{BOOK_EN}" target="_blank" rel="noopener" lang="en">English edition</a>
           </div>
         </div>
-      </aside>
-      <aside class="author-box">
+      </div>
+      <div class="author-box">
         <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد منير ميخائيل" loading="lazy">
         <p><strong>د. ميلاد منير ميخائيل</strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
-      </aside>
+      </div>
       {share_block(url, a["title"])}
       {tests_block}
       {more_block}
@@ -379,7 +381,7 @@ def sitemap(items):
             vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
         urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
     # standalone pages built by tools/build_pages.py
-    for slug in ("start", "questions", "challenges", "worksheets", "book", "battery"):
+    for slug in ("start", "feelings", "relationship-check", "questions", "challenges", "worksheets", "book", "battery"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
     parts = []

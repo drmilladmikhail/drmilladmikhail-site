@@ -76,6 +76,8 @@ def start_page():
     vid_chips = "\n".join(f'<a href="/videos/#{c["slug"]}">{esc(c["name"])}</a>' for c in cats)
     extra = []
     for slug, label, note in (("questions", "أسئلة محرجة وإجابات علمية", "اللي بتتكسف تسأله، من غير حكم."),
+                              ("feelings", "عجلة المشاعر", "مش عارف تسمّي إحساسك؟ اختار لونه."),
+                              ("relationship-check", "علاقتك صحية؟", "علامات خضرا وحمرا في العلاقة، في دقيقتين."),
                               ("challenges", "تحديات قصيرة", "مهمة صغيرة كل يوم من 3 لـ 7 أيام."),("glossary", "القاموس النفسي", "مصطلحات نفسية بشرح بسيط بالمصري."),
                               ("worksheets", "أوراق تمرين مجانية", "تمارين تطبعها وتكتب فيها."),
                               ("roundup", "خلاصة كل شهر", "كل اللي نزل في الشهر في صفحة واحدة.")):
@@ -349,6 +351,126 @@ def challenges_page():
     write("challenges", html)
 
 
+# ------------------------------------------------------------------ feelings wheel
+def feelings_page():
+    data = load("content/feelings.json", {"families": []})
+    fams = data["families"]
+    wheel = "\n".join(f'<button type="button" class="fw-fam hue-{f["hue"]}" style="--i:{n}" data-fam="{f["id"]}" aria-pressed="false">'
+                      f'<span class="fw-emo" aria-hidden="true">{f["emoji"]}</span><span>{esc(f["name"])}</span></button>'
+                      for n, f in enumerate(fams))
+    groups = ""
+    for f in fams:
+        cards = ""
+        for it in f["items"]:
+            sos = ('<p class="fw-sos">لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:105">105</a>'
+                   ' أو الطوارئ <a href="tel:122">122</a> · أمريكا <a href="tel:988">988</a> أو <a href="tel:911">911</a>.</p>') if it.get("safety") else ""
+            cards += f'''
+          <article class="fw-card hue-{f["hue"]}" id="f-{it["id"]}" data-fam="{f["id"]}" data-name="{esc(it["name"])}" tabindex="-1">
+            <p class="fw-kicker"><span aria-hidden="true">{f["emoji"]}</span> {esc(f["name"])}</p>
+            <h2 class="fw-title">حاسس إني {esc(it["name"])}</h2>
+            <dl>
+              <dt>يعني إيه؟</dt><dd>{esc(it["means"])}</dd>
+              <dt>بيبان في جسمك إزاي؟</dt><dd>{esc(it["body"])}</dd>
+              <dt>الإحساس ده بيقولك إيه؟</dt><dd>{esc(it["says"])}</dd>
+              <dt>جرّب دلوقتي</dt><dd class="fw-try">{esc(it["try"])}</dd>
+            </dl>{sos}
+          </article>'''
+        groups += f'''
+        <section class="fw-group" data-fam="{f["id"]}" aria-labelledby="g-{f["id"]}">
+          <h2 id="g-{f["id"]}"><span aria-hidden="true">{f["emoji"]}</span> {esc(f["name"])}</h2>{cards}
+        </section>'''
+    body = f'''  <section class="page-hero">
+    <div class="wrap narrow">
+      <p class="kicker-g">سمّيه… يهدى</p>
+      <h1>عجلة المشاعر</h1>
+      <p class="lead">ساعات بنقول «أنا مش كويس» وبس. لما تعرف تسمّي إحساسك بالظبط، بتفهم نفسك أكتر وبتعرف تتصرف. اختار أقرب لون لإحساسك دلوقتي.</p>
+      <p class="privacy">🔒 مفيش حاجة بتتسجل أو بتتبعت لحد.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap narrow">
+      <div class="fw" id="fw">
+        <div class="fw-pick" hidden>
+          <p class="fw-step" id="fw-q1"><span class="step">1</span> حاسس بإيه دلوقتي؟</p>
+          <div class="fw-wheel" role="group" aria-labelledby="fw-q1">
+            {wheel}
+            <span class="fw-hub" aria-hidden="true">إحساسك<br>إيه؟</span>
+          </div>
+          <div class="fw-sub" hidden>
+            <p class="fw-step" id="fw-q2"><span class="step">2</span> أقرب كلمة لإحساسك؟</p>
+            <div class="fw-chips" role="group" aria-labelledby="fw-q2"></div>
+          </div>
+        </div>
+        <div class="fw-groups">{groups}
+        </div>
+        <div class="fw-after" hidden>
+          <div class="actions">
+            <button type="button" class="btn fw-again">اختار إحساس تاني</button>
+            <a class="btn primary fw-wa" href="#" target="_blank" rel="noopener">ابعته لحد بتثق فيه</a>
+          </div>
+        </div>
+      </div>
+      <div class="note-box">
+        <h2>ليه تسمية الإحساس بتفرق؟</h2>
+        <p>دراسة مشهورة من جامعة UCLA (ليبرمان وزملاؤه، 2007) لقت إن لما الناس بيسمّوا إحساسهم بكلمة، نشاط اللوزة الدماغية (جرس الإنذار في المخ) بيقل. وأبحاث «دقة المشاعر» بتقول إن اللي بيعرف يفرّق بين «زعلان» و«مخذول» و«وحيد» بيعرف يتعامل مع مشاعره أحسن.</p>
+        <p>المشاعر مش حلوة ووحشة، كلها رسايل. الفكرة إنك تسمع الرسالة، مش إنك تكتمها أو تمشي وراها من غير تفكير.</p>
+      </div>
+      <div class="safety-note" role="note"><p>العجلة دي للتوعية وفهم النفس، ومش تشخيص. لو إحساس صعب مكمّل معاك أكتر من أسبوعين أو مأثر على حياتك، كلّم متخصص. ولو حاسس إنك في خطر: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p></div>
+      {ba.share_block(SITE + "/feelings/", "عجلة المشاعر: مش عارف تسمّي إحساسك؟ اختار لونه — د. ميلاد ميخائيل", "شارك العجلة")}
+    </div>
+  </section>'''
+    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "عجلة المشاعر", "url": f"{SITE}/feelings/",
+          "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
+          "description": "أداة تفاعلية بالعامية المصرية تساعدك تسمّي إحساسك بالظبط وتعرف رسالته وتعمل خطوة صغيرة."}
+    html = page("feelings", "عجلة المشاعر: سمّي إحساسك", "مش عارف تسمّي إحساسك؟ عجلة المشاعر بالمصري: اختار اللون، وبعدين الكلمة، واعرف الإحساس ده بيقولك إيه وتعمل إيه دلوقتي.", body, ld)
+    html = html.replace('<script src="/assets/share.js" defer></script>', '<script src="/assets/feelings.js" defer></script>\n<script src="/assets/share.js" defer></script>')
+    write("feelings", html)
+
+
+# ------------------------------------------------------------------ relationship check
+def relationship_check_page():
+    data = load("content/relationship-check.json", {"items": []})
+    qs = ""
+    for n, it in enumerate(data["items"], 1):
+        opts = "".join(f'<label class="opt"><input type="radio" name="{it["id"]}" value="{v}" required><span>{lab}</span></label>'
+                       for v, lab in (("2", "أيوه"), ("1", "ساعات"), ("0", "لأ")))
+        qs += f'''<fieldset class="q" data-type="{it["type"]}" data-text="{esc(it["t"])}">
+          <legend><span class="qn">{n}</span> {esc(it["t"])}</legend>
+          <div class="opts opts-3">{opts}</div>
+        </fieldset>'''
+    body = f'''  <a class="quick-exit" href="https://www.google.com/" rel="noreferrer">✕ اخرج بسرعة</a>
+  <section class="page-hero">
+    <div class="wrap narrow">
+      <p class="kicker-g">في دقيقتين</p>
+      <h1>علاقتك صحية؟</h1>
+      <p class="lead">{len(data["items"])} جملة عن علاقتك (خطوبة، جواز، أو ارتباط). جاوب بصراحة عن آخر كام شهر، وهتشوف العلامات الخضرا اللي عندك، والعلامات اللي محتاجة تقف عندها.</p>
+      <p class="privacy">🔒 الإجابات مش بتتبعت لأي حد ومش بتتحفظ. وزرار «اخرج بسرعة» بيقفل الصفحة فورًا لو حد دخل عليك.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap narrow">
+      <form id="rc" class="quiz" novalidate>
+        {qs}
+        <p class="quiz-error" hidden>فاضل جمل ماجاوبتهاش، اتعلّمت باللون الأحمر.</p>
+        <button type="submit" class="btn primary big">شوف النتيجة</button>
+      </form>
+      <noscript><p>الصفحة دي محتاجة JavaScript عشان تحسب النتيجة.</p></noscript>
+      <div id="rc-result" class="result" hidden tabindex="-1" aria-live="polite"></div>
+      <div class="note-box">
+        <h2>يعني إيه علاقة صحية؟</h2>
+        <p>مفيش علاقة مثالية، وكل الناس بتختلف وبتتخانق. الفرق إن العلاقة الصحية فيها احترام وأمان وكلام مفتوح، والاختلاف فيها مش بيتحول لخوف أو تحكم أو إهانة. القايمة دي مبنية على علامات الإنذار اللي بتنشرها جهات زي loveisrespect ومراكز السيطرة على الأمراض الأمريكية (CDC) ومنظمة الصحة العالمية، وهي للتوعية ومش مقياس تشخيصي.</p>
+      </div>
+      {ba.share_block(SITE + "/relationship-check/", "علاقتك صحية؟ علامات خضرا وحمرا في دقيقتين — د. ميلاد ميخائيل", "شارك الصفحة")}
+    </div>
+  </section>'''
+    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "علاقتك صحية؟", "url": f"{SITE}/relationship-check/",
+          "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
+          "description": "قايمة توعية بالعامية المصرية عن علامات العلاقة الصحية وعلامات الإنذار."}
+    html = page("relationship-check", "علاقتك صحية؟ علامات خضرا وحمرا", "علاقتك صحية ولا لأ؟ جمل بسيطة بالمصري تعرف منها العلامات الخضرا والحمرا في علاقتك، من غير ما حاجة تتسجل.", body, ld)
+    html = html.replace('<script src="/assets/share.js" defer></script>', '<script src="/assets/relcheck.js" defer></script>\n<script src="/assets/share.js" defer></script>')
+    write("relationship-check", html)
+
+
 # ------------------------------------------------------------------ worksheets
 def worksheets_page():
     """Library of printable worksheets. PDFs are made by tools/build_worksheets.py."""
@@ -414,13 +536,15 @@ def worksheets_page():
 
 
 def main():
+    feelings_page()
+    relationship_check_page()
     worksheets_page()
     questions_page()
     challenges_page()
     start_page()
     book_page()
     battery_page()
-    print("pages: worksheets, questions, challenges, start, book, battery")
+    print("pages: feelings, relationship-check, worksheets, questions, challenges, start, book, battery")
 
 
 if __name__ == "__main__":

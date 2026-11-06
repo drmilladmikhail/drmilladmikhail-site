@@ -234,6 +234,8 @@ TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
         <a href="/videos/">فيديوهات</a>
         <a href="/questions/">أسئلة محرجة</a>
         <a href="/challenges/">تحديات قصيرة</a>
+        <a href="/feelings/">عجلة المشاعر</a>
+        <a href="/relationship-check/">علاقتك صحية؟</a>
         <a href="/worksheets/">أوراق تمرين</a>
         <a href="/book/">الكتب</a>
         <a href="/#about">نبذة</a>
@@ -357,7 +359,7 @@ def test_page(t):
         <p>الترجمة العربية مبسّطة لأغراض التوعية، ومش النسخة العربية المقننة رسمياً، فالنتيجة تقريبية. الاختبار ده أداة تساعدك تفهم نفسك، ومش تشخيص. التشخيص بيكون بس من متخصص بعد تقييم كامل.</p>
       </details>
       {related}
-      <aside class="book-box">
+      <div class="book-box">
         <picture class="cover-img">
           <source srcset="/assets/love-cover-ar.webp" type="image/webp">
           <img src="/assets/love-cover-ar.jpg" width="480" height="768" alt="غلاف كتاب ليه بنحب اللي بيوجعنا؟" loading="lazy">
@@ -367,7 +369,7 @@ def test_page(t):
           <p>كتاب «ليه بنحب اللي بيوجعنا؟» دليل عملي فيه تمارين واختبارات عن نمط التعلق واختيار شريك الحياة.</p>
           <div class="actions"><a class="btn primary" href="{BOOK_AR}" target="_blank" rel="noopener">اقرأ الكتاب على أمازون</a></div>
         </div>
-      </aside>
+      </div>
       <p class="more-tests"><a class="btn" href="/tests/">جرّب اختبارات تانية</a></p>
     </div>
   </section>

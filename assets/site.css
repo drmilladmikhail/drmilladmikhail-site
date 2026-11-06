@@ -734,3 +734,72 @@ summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; bo
 .post-body th { background: var(--eucalyptus); color: #fff; text-align: start; padding: 10px 12px; font-weight: 700; }
 .post-body td { padding: 10px 12px; border-bottom: 1px solid var(--line); }
 .post-body tbody tr:nth-child(even) td { background: var(--mist); }
+
+/* ---------- shared: note box ---------- */
+.note-box { margin: 32px 0 0; padding: 20px 22px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.note-box h2 { margin: 0 0 8px; font-family: var(--display); font-size: 22px; }
+.note-box p { margin: 0 0 10px; }
+.note-box p:last-child { margin: 0; }
+
+/* ---------- feelings wheel (/feelings/) ---------- */
+.hue-blue   { --h-bg: #e3edf9; --h-ink: #1d3f6e; --h-strong: #2f6bb3; }
+.hue-violet { --h-bg: #ece6f7; --h-ink: #43306e; --h-strong: #6a4fb0; }
+.hue-red    { --h-bg: #fae4df; --h-ink: #7a2618; --h-strong: #c2482f; }
+.hue-rose   { --h-bg: #f9e3ee; --h-ink: #74224a; --h-strong: #b2457b; }
+.hue-slate  { --h-bg: #e6eaee; --h-ink: #2f3c4a; --h-strong: #5b6b7c; }
+.hue-gold   { --h-bg: #f8eed6; --h-ink: #5f4410; --h-strong: #b9862a; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hue-blue { --h-bg: #1b2c45; --h-ink: #cfe0f7; } :root:not([data-theme="light"]) .hue-violet { --h-bg: #2a2342; --h-ink: #ddd3f5; } :root:not([data-theme="light"]) .hue-red { --h-bg: #3a201b; --h-ink: #f6d2ca; } :root:not([data-theme="light"]) .hue-rose { --h-bg: #3a1f2d; --h-ink: #f5d0e2; } :root:not([data-theme="light"]) .hue-slate { --h-bg: #232c36; --h-ink: #d6dde5; } :root:not([data-theme="light"]) .hue-gold { --h-bg: #352a14; --h-ink: #f3e2b8; } }
+:root[data-theme="dark"] .hue-blue { --h-bg: #1b2c45; --h-ink: #cfe0f7; } :root[data-theme="dark"] .hue-violet { --h-bg: #2a2342; --h-ink: #ddd3f5; } :root[data-theme="dark"] .hue-red { --h-bg: #3a201b; --h-ink: #f6d2ca; } :root[data-theme="dark"] .hue-rose { --h-bg: #3a1f2d; --h-ink: #f5d0e2; } :root[data-theme="dark"] .hue-slate { --h-bg: #232c36; --h-ink: #d6dde5; } :root[data-theme="dark"] .hue-gold { --h-bg: #352a14; --h-ink: #f3e2b8; }
+
+.fw-step { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; font-weight: 600; font-size: 19px; }
+.fw-wheel { position: relative; width: min(100%, 440px); aspect-ratio: 1; margin: 8px auto 28px; border-radius: 50%;
+  background: conic-gradient(from -30deg, #e3edf9 0 60deg, #ece6f7 0 120deg, #fae4df 0 180deg, #f9e3ee 0 240deg, #e6eaee 0 300deg, #f8eed6 0 360deg); }
+.fw-fam { position: absolute; top: 50%; left: 50%; width: 31%; aspect-ratio: 1; margin: 0; border-radius: 50%; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  background: var(--h-bg); color: var(--h-ink); border: 3px solid var(--surface); box-shadow: 0 6px 18px rgba(24,35,58,.12);
+  font: inherit; font-weight: 700; font-size: clamp(15px, 3.6vw, 18px);
+  transform: translate(-50%, -50%) rotate(calc(var(--i) * 60deg)) translateY(-105%) rotate(calc(var(--i) * -60deg));
+  transition: transform .25s ease, box-shadow .25s ease; }
+.fw-fam .fw-emo { font-size: 1.6em; line-height: 1.1; }
+.fw-fam:hover { box-shadow: 0 10px 26px rgba(24,35,58,.22); }
+.fw-fam[aria-pressed="true"] { border-color: var(--h-strong); box-shadow: 0 0 0 4px var(--h-strong); }
+.fw-fam:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.fw-hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 26%; aspect-ratio: 1; border-radius: 50%;
+  display: grid; place-items: center; text-align: center; background: var(--surface); color: var(--muted); font-size: 14px; line-height: 1.4; box-shadow: inset 0 0 0 1px var(--line); }
+.fw[data-fam] .fw-wheel { margin-bottom: 18px; }
+.fw-chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 18px; }
+.fw-chip { font: inherit; font-size: 17px; font-weight: 600; padding: 10px 18px; min-height: 46px; border-radius: 999px; cursor: pointer;
+  border: 2px solid var(--line); background: var(--surface); color: var(--ink); }
+.fw-chip:hover { border-color: var(--eucalyptus); }
+.fw-chip[aria-pressed="true"] { background: var(--eucalyptus); border-color: var(--eucalyptus); color: var(--eucalyptus-ink); }
+.fw-group h2 { font-family: var(--display); margin: 28px 0 10px; }
+.fw-card { scroll-margin-top: 84px; background: var(--h-bg); color: var(--h-ink); border-radius: 18px; padding: 20px 22px; margin: 0 0 14px; border-inline-start: 6px solid var(--h-strong); outline: none; }
+.fw-card .fw-title { margin: 0 0 12px; font-family: var(--display); font-size: clamp(24px, 4.5vw, 30px); }
+.fw-kicker { margin: 0 0 2px; font-size: 14.5px; font-weight: 600; opacity: .85; }
+.fw-card dl { margin: 0; }
+.fw-card dt { font-weight: 700; margin: 12px 0 2px; font-size: 15px; }
+.fw-card dd { margin: 0; line-height: 1.75; }
+.fw-card dd.fw-try { background: var(--surface); color: var(--ink); border-radius: 12px; padding: 10px 14px; margin-top: 4px; }
+.fw-sos { margin: 14px 0 0; padding: 10px 14px; border-radius: 10px; background: var(--surface); color: var(--ink); border-inline-start: 4px solid #c0392b; }
+.fw-sos a { color: inherit; font-weight: 700; }
+.fw.js .fw-group h2, .fw.js .fw-card { display: none; }
+.fw.js .fw-card.on { display: block; animation: fw-in .3s ease; }
+.fw-after .actions { margin-top: 6px; }
+@keyframes fw-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .fw-fam { transition: none; } .fw.js .fw-card.on { animation: none; } }
+
+/* ---------- relationship check (/relationship-check/) ---------- */
+.opts-3 { grid-template-columns: repeat(3, 1fr); }
+.quick-exit { position: fixed; z-index: 50; bottom: 16px; inset-inline-start: 16px; padding: 10px 16px; border-radius: 999px;
+  background: #18233a; color: #fff; font-weight: 700; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,.25); font-size: 15px; }
+.quick-exit:hover, .quick-exit:focus-visible { background: #c0392b; color: #fff; }
+.rc-h { margin: 18px 0 6px; font-size: 18px; }
+.result ul { margin: 0 0 12px; padding-inline-start: 22px; }
+.result li { margin: 0 0 6px; }
+.result-alert a { color: inherit; font-weight: 700; }
+
+/* ---------- result card (tests) ---------- */
+.rcard { margin: 6px 0 16px; }
+.rcard-img { display: block; width: min(100%, 320px); height: auto; border-radius: 14px; box-shadow: 0 10px 28px rgba(24,35,58,.25); margin: 0 0 4px; }
+.rcard .actions { margin-top: 12px; }
+.nowrap { white-space: nowrap; unicode-bidi: isolate; }
