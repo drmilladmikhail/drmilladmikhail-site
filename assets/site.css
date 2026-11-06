@@ -727,3 +727,10 @@ summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; bo
 .ws-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .ws-actions .btn { min-height: 42px; padding: 8px 16px; font-size: 15px; }
 @media (prefers-reduced-motion: reduce) { .ws-thumb, .ws-thumb:hover { transition: none; transform: none; } }
+
+/* article tables */
+.table-wrap { overflow-x: auto; margin: 8px 0 20px; }
+.post-body table { width: 100%; border-collapse: collapse; font-size: 16px; line-height: 1.7; }
+.post-body th { background: var(--eucalyptus); color: #fff; text-align: start; padding: 10px 12px; font-weight: 700; }
+.post-body td { padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.post-body tbody tr:nth-child(even) td { background: var(--mist); }
