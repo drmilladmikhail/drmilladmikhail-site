@@ -233,6 +233,7 @@ TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
         <a href="/tests/">اختبارات نفسية</a>
         <a href="/videos/">فيديوهات</a>
         <a href="/questions/">أسئلة محرجة</a>
+        <a href="/ask/">اسأل من غير اسمك</a>
         <a href="/challenges/">تحديات قصيرة</a>
         <a href="/feelings/">عجلة المشاعر</a>
         <a href="/relationship-check/">علاقتك صحية؟</a>

@@ -76,6 +76,7 @@ def start_page():
     vid_chips = "\n".join(f'<a href="/videos/#{c["slug"]}">{esc(c["name"])}</a>' for c in cats)
     extra = []
     for slug, label, note in (("questions", "أسئلة محرجة وإجابات علمية", "اللي بتتكسف تسأله، من غير حكم."),
+                              ("ask", "اسأل من غير اسمك", "ابعت سؤالك المحرج، ومحدش هيعرف مين بعت."),
                               ("feelings", "عجلة المشاعر", "مش عارف تسمّي إحساسك؟ اختار لونه."),
                               ("relationship-check", "علاقتك صحية؟", "علامات خضرا وحمرا في العلاقة، في دقيقتين."),
                               ("challenges", "تحديات قصيرة", "مهمة صغيرة كل يوم من 3 لـ 7 أيام."),("glossary", "القاموس النفسي", "مصطلحات نفسية بشرح بسيط بالمصري."),
@@ -301,6 +302,7 @@ def questions_page():
     <div class="wrap narrow">
       <nav class="vchips" aria-label="أقسام الأسئلة">{chips}</nav>
       {blocks}
+      <div class="note-box ask-cta"><h2>سؤالك مش موجود؟</h2><p>ابعته من غير اسمك، وممكن نجاوبه هنا في الأسابيع الجاية.</p><div class="actions"><a class="btn primary" href="/ask/">اسأل من غير اسمك</a></div></div>
       <div class="safety-note" role="note">
         <p><b>تنبيه:</b> الإجابات دي للتوعية، ومش تشخيص ولا بديل عن دكتور أو معالج. لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p>
       </div>
