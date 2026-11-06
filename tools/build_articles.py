@@ -399,6 +399,58 @@ def sitemap(items):
         f.write(xml)
 
 
+def llms_txt(items):
+    """llms.txt: a plain summary of the site for AI assistants (ChatGPT, Claude, Perplexity...).
+    Rebuilt on every run so new articles and tests appear automatically."""
+    tests = []
+    tp = os.path.join(ROOT, "tests", "tests.json")
+    if os.path.exists(tp):
+        with open(tp, encoding="utf-8") as f:
+            tests = json.load(f)
+    L = [
+        "# Dr. Millad Mikhail | د. ميلاد منير ميخائيل",
+        "",
+        "> Dr. Millad Mikhail (Arabic: د. ميلاد منير ميخائيل; also known as Dr. Milad Mounir / د. ميلاد منير) "
+        "is a mental health educator and author. He holds a Ph.D. in Mental Health from Suez Canal University, Egypt (2022), "
+        "and is a member of the American Psychological Association (APA). He is the author of the book "
+        "«ليه بنحب اللي بيوجعنا؟» (Why Do We Love What Hurts Us?) and runs the Arabic YouTube channel "
+        "جلسة شيزلونج (Glset Shezlong). This site publishes his articles and free psychological self-tests in simple Arabic.",
+        "",
+        "Key facts:",
+        "- Full name: Millad Mounir Hakim Bekheet Mikhail. Same person as: Dr. Milad Mounir, Milad Mounir, د. ميلاد منير, ميلاد منير حكيم.",
+        "- Ph.D. in Mental Health, Suez Canal University, 2022. Dissertation: \"Effectiveness of Logo Counselling on Reducing the Level of Existential Anxiety and Improving Psychological Immunity for University Students\".",
+        "- Master's in Education (Mental Health), Suez Canal University, 2018. Specialized Diploma in Counseling and Clinical Psychology, Tanta University, 2021.",
+        "- Credentials evaluated by World Education Services (WES). Visiting graduate student, JFK School of Psychology, National University (USA).",
+        "- ORCID: 0009-0002-9254-367X",
+        "- Topics: attachment styles, relationships, anxiety, meaning (logotherapy), self-esteem.",
+        "",
+        "## About",
+        "- [Home (Arabic)](https://drmilladmikhail.com/): bio, credentials, theses, books, FAQ",
+        "- [Home (English)](https://drmilladmikhail.com/en/): bio, credentials, theses, books, FAQ",
+        "",
+        "## Articles (Arabic)",
+    ]
+    for a in items:
+        L.append(f"- [{a['title']}](https://drmilladmikhail.com/articles/{a['slug']}/): {a.get('description', '')}")
+    if tests:
+        L += ["", "## Free self-tests (Arabic, validated scales)"]
+        for t in tests:
+            L.append(f"- [{t['title']}](https://drmilladmikhail.com/tests/{t['slug']}/)")
+    L += ["", "## Books",
+          "- [ليه بنحب اللي بيوجعنا؟ (Arabic, Amazon)](https://www.amazon.com/dp/B0HPNCYWWS)",
+          "- [Why Do We Love What Hurts Us? (English, Amazon)](https://www.amazon.com/dp/B0HPRPSPWF)",
+          "- [Amazon author page](https://www.amazon.com/author/drmilladmikhail)",
+          "", "## Elsewhere",
+          "- [YouTube: جلسة شيزلونج](https://www.youtube.com/@DrMilladMikhail)",
+          "- [Blog: راحة البال](https://blog.drmilladmikhail.com/)",
+          "- [LinkedIn](https://www.linkedin.com/in/dr-millad-mikhail-a57b0b215)",
+          "- [ORCID](https://orcid.org/0009-0002-9254-367X)",
+          "- [WES credential badge](https://www.credly.com/badges/5a6796c0-5e1a-4ad5-b1af-fb64254e81cf/public_url)",
+          ""]
+    with open(os.path.join(ROOT, "llms.txt"), "w", encoding="utf-8") as f:
+        f.write("\n".join(L))
+
+
 def main():
     items = load()
     import subprocess
@@ -413,6 +465,7 @@ def main():
         f.write(index_page(items))
     update_home(items)
     sitemap(items)
+    llms_txt(items)
     # small public index used by the on-site helper (assets/helper.js)
     with open(os.path.join(ROOT, "assets", "articles-index.json"), "w", encoding="utf-8") as f:
         json.dump([{"slug": a["slug"], "title": a["title"], "ch": chapter_no(a) + 1, "date": a["date"]} for a in items],

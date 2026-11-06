@@ -811,3 +811,13 @@ summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; bo
 .ask-steps b { display: block; margin-bottom: 2px; }
 .ask-steps span { color: var(--muted); }
 .sessions-note { font-size: 15px; color: var(--muted); }
+
+/* FAQ */
+.faq { display: grid; gap: 10px; max-width: 820px; }
+.faq-item { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 0 18px; }
+.faq-item summary { cursor: pointer; font-weight: 700; padding: 16px 0; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; color: var(--eucalyptus); font-size: 22px; line-height: 1; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-item p { margin: 0 0 16px; padding: 0; line-height: 1.9; }
+.hero .aka.who { max-width: 620px; line-height: 1.8; }
