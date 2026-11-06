@@ -1,5 +1,8 @@
 # How to add a weekly self-test (for the scheduled run)
 
+> **Name rule (2026-11-05, his request):** his display name is **د. ميلاد ميخائيل** / Dr. Millad Mikhail — never write «د. ميلاد منير ميخائيل» in new text. Older forms (د. ميلاد منير، د. ميلاد منير ميخائيل) stay ONLY as aliases (JSON-LD alternateName, the home-page FAQ, llms.txt) and in YouTube video titles.
+
+
 Rules (non-negotiable):
 - Only add **published, validated scales whose authors allow free use** (public domain or "free for non-commercial / educational use"). Before adding, open the scale's official source (author/lab page or the original paper) and confirm (1) the exact items, (2) the response options, (3) reverse-keyed items, (4) scoring and any published cut-offs, (5) the permission statement. If any of these cannot be confirmed from a reliable source, skip that scale and take the next one in ROADMAP.md.
 - Never invent items, cut-offs or norms. If the scale has no official cut-offs, show the score and its meaning in plain words without labels like "شديد".

@@ -1,5 +1,8 @@
 # How to add an article (for the twice-weekly scheduled run)
 
+> **Name rule (2026-11-05, his request):** his display name is **د. ميلاد ميخائيل** / Dr. Millad Mikhail — never write «د. ميلاد منير ميخائيل» in new text. Older forms (د. ميلاد منير، د. ميلاد منير ميخائيل) stay ONLY as aliases (JSON-LD alternateName, the home-page FAQ, llms.txt) and in YouTube video titles.
+
+
 1. Read `articles/articles.json` to see what is already published. Never repeat a topic.
 2. Write the body as an HTML fragment in `articles/content/<slug>.html`
    - slug: short English words, a-z 0-9 and `-` only (e.g. `four-attachment-styles`)
