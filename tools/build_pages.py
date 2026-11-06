@@ -544,6 +544,17 @@ def ask_page():
     url = cfg.get("form_url", "").strip()
     if not url.startswith("https://"):
         return False
+    wa = "".join(ch for ch in cfg.get("whatsapp", "") if ch.isdigit())
+    sessions = ""
+    if wa:
+        from urllib.parse import quote
+        msg = quote("أهلًا د. ميلاد، أنا جاي من الموقع وعايز أحجز جلسة إرشاد نفسي أونلاين. أنا مقيم في: ")
+        sessions = f'''<div class="note-box sessions-box">
+        <h2>عايز جلسة مع د. ميلاد؟</h2>
+        <p>لو محتاج حد يسمعك ويتابع معاك بشكل شخصي، فيه جلسات إرشاد نفسي أونلاين. ابعت رسالة على واتساب، واكتب انت مقيم في أنهي بلد.</p>
+        <p class="sessions-note">⚠️ الجلسات للمقيمين خارج الولايات المتحدة الأمريكية بس (مصر والدول العربية وغيرها)، ومش متاحة للمقيمين في أمريكا.</p>
+        <div class="actions"><a class="btn primary" href="https://wa.me/{wa}?text={msg}" target="_blank" rel="noopener">كلّمني على واتساب</a></div>
+      </div>'''
     body = f'''  <section class="page-hero">
     <div class="wrap narrow">
       <p class="kicker-g">من غير كسوف ومن غير اسم</p>
@@ -556,11 +567,17 @@ def ask_page():
       <ol class="ask-steps">
         <li><b>اكتب سؤالك</b><span>زي ما بتقوله لنفسك، بالعامية. ماتكتبش اسمك أو أي حاجة تعرّف بيك.</span></li>
         <li><b>اختار إذا كنت موافق ننشره</b><span>لو وافقت، ممكن نجاوبه في صفحة «أسئلة محرجة» من غير أي بيانات عنك.</span></li>
+        <li><b>عايز رد ليك انت؟ (اختياري)</b><span>اكتب إيميلك في آخر خانة في الفورم. لو سيبتها فاضية، سؤالك يفضل من غير أي بيانات عنك خالص.</span></li>
         <li><b>تابع صفحة الأسئلة</b><span>بنضيف إجابات جديدة كل أسبوع، مبنية على العلم ومن غير حكم.</span></li>
       </ol>
       <div class="actions"><a class="btn primary big" href="{esc(url)}" target="_blank" rel="noopener">اكتب سؤالك دلوقتي</a>
         <a class="btn" href="/questions/">شوف الأسئلة اللي اتجاوبت</a></div>
-      <p class="privacy">🔒 الفورم على Google Forms ومش بيجمع إيميلات. لو فاتح بحساب جوجل، اسمك مش بيوصلنا.</p>
+      <p class="privacy">🔒 الفورم على Google Forms. مش بيطلب تسجيل دخول، واسمك مش بيوصلنا. الإيميل بيوصل بس لو انت كتبته بنفسك.</p>
+      <div class="note-box">
+        <h2>الرد الشخصي بيبقى إزاي؟</h2>
+        <p>لو كتبت إيميلك، بنحاول نبعتلك رد قصير بإيميل. الرد ده توعوي وعام، ومش استشارة ولا تشخيص، وممكن ياخد وقت.</p>
+      </div>
+      {sessions}
       <div class="safety-note" role="note"><p><b>الصندوق ده مش للطوارئ</b>، والرد ممكن ياخد أسابيع، ومش كل سؤال هيتنشر. ولا هو بديل عن استشارة شخصية. لو حاسس إنك في خطر أو بتفكر تأذي نفسك، كلّم حد دلوقتي: مصر <a href="tel:105">105</a> أو <a href="tel:122">122</a> · أمريكا <a href="tel:988">988</a> أو <a href="tel:911">911</a>.</p></div>
       {ba.share_block(SITE + "/ask/", "اسأل د. ميلاد من غير اسمك: سؤالك المحرج ليه إجابة علمية", "شارك الصفحة")}
     </div>

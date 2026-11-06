@@ -810,3 +810,4 @@ summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; bo
 .ask-steps li::before { content: counter(s); position: absolute; inset-inline-start: 16px; top: 16px; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--eucalyptus); color: var(--eucalyptus-ink); font-weight: 700; }
 .ask-steps b { display: block; margin-bottom: 2px; }
 .ask-steps span { color: var(--muted); }
+.sessions-note { font-size: 15px; color: var(--muted); }
