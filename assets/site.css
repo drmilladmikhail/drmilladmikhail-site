@@ -1068,3 +1068,15 @@ details.fold[open] .fold-hint { display: none; }
 .shelf-h { margin: 22px 0 0; font-family: var(--display); }
 .bk-spine svg { width: 30px; height: 30px; color: #f3e3bd; }
 [hidden] { display: none !important; }
+
+/* Seven-day self-connection journey */
+.featured-journey { border:2px solid var(--eucalyptus); background:linear-gradient(145deg,var(--surface),#eef4f1); }
+.journey-label { display:inline-block; margin:0 0 8px; color:var(--eucalyptus); font-weight:700; }
+.journey-progress { margin:16px 0; }
+.journey-track { height:10px; overflow:hidden; border-radius:99px; background:var(--line); }
+.journey-track span { display:block; width:0; height:100%; border-radius:99px; background:var(--eucalyptus); transition:width .2s ease; }
+.journey-progress .ch-progress { margin:8px 0; font-weight:600; color:var(--eucalyptus); }
+.journey-badge { display:inline-block; margin:6px 0; padding:10px 14px; border:1px solid var(--line); border-radius:12px; background:var(--surface); font-weight:700; }
+.journey-private { margin:16px 0 8px; color:var(--muted); font-size:14px; }
+.journey-reset { font:inherit; cursor:pointer; }
+@media(prefers-reduced-motion:reduce) { .journey-track span { transition:none; } }
