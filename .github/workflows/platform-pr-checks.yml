@@ -1,0 +1,45 @@
+name: Platform PR checks
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out pull request
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Compile Python build tools
+        run: python -m compileall -q tools
+
+      - name: Check platform routes and sitemap
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          required = ["platform", "paths", "experts", "join-us"]
+          missing = [route for route in required if not (Path(route) / "index.html").is_file()]
+          if missing:
+              raise SystemExit("Missing platform pages: " + ", ".join(missing))
+
+          root = ET.parse("sitemap.xml").getroot()
+          urls = {node.text for node in root.iter() if node.tag.endswith("loc")}
+          absent = [f"https://drmilladmikhail.com/{route}/" for route in required
+                    if f"https://drmilladmikhail.com/{route}/" not in urls]
+          if absent:
+              raise SystemExit("Missing sitemap URLs: " + ", ".join(absent))
+
+          print("Platform pages and sitemap entries are present.")
+          PY
