@@ -230,3 +230,63 @@ Include authors, public speakers, and science communicators with verifiable book
 4. Define author/speaker evidence rules.
 5. Build distinct profile labels and filters only after these rules are approved.
 6. Pilot each track separately using synthetic records before inviting real applicants.
+
+
+## 13. Public profile card and profile-page specification
+
+The directory must use a shared visual system but category-specific fields. The following is the approved content model for design; it does not create live profiles or authorize publication.
+
+### Shared public card fields
+- Display name and optional professional portrait, only with explicit consent.
+- One primary directory track label.
+- Exact approved role/title; no invented honorifics.
+- City/governorate or service area, only if the person chooses to publish it.
+- One concise, evidence-aligned summary.
+- One or two relevant tags, not broad unsupported expertise claims.
+- "Profile reviewed" date or a neutral verification label only where the relevant checks were completed.
+- Link to a detailed profile page, only after approval and consent.
+
+### Clinical practitioner profile
+- Approved professional title and category.
+- Academic qualifications and awarding institutions.
+- Applicable license/registration status, issuing authority, and last verification date; no public license number by default.
+- Verified scope and service setting/location.
+- Languages and areas of focus only where supported.
+- Clear statement that directory listing is not an endorsement or guarantee.
+- No treatment outcome claims, patient testimonials, or claims outside verified scope.
+
+### Researcher / academic profile
+- Academic degree, discipline, awarding institution, and year if confirmed.
+- Current/former institutional role with accurate dates.
+- Research topics and methods.
+- Selected publications with DOI, journal/publisher, or repository links.
+- Verified academic affiliation marker only after source review.
+- Explicit notice: academic listing does not indicate authorization to provide clinical services.
+
+### Trainer / psychoeducation profile
+- Trainer role and non-clinical category label.
+- Training credentials with issuer and date where verified.
+- Workshop/program topics, audience, learning objectives, and format.
+- Relevant delivery experience and references if checked.
+- Explicit non-clinical boundary: educational activity is not diagnosis, psychotherapy, or treatment.
+
+### Author / speaker profile
+- Author/speaker category label.
+- Published books/articles and publisher/ISBN/DOI where available.
+- Verified talks, conferences, or public educational events.
+- Topic areas grounded in actual published work.
+- No implied clinical endorsement.
+
+### Profile publishing rules
+- Every field must have a source or applicant attestation plus reviewer decision; high-impact professional claims require independent evidence.
+- Applicant must approve the final public profile before publication.
+- Use only a professional contact channel selected by the person; no scraping of personal contact details.
+- No star ratings, public reviews, paid placement, popularity ranking, or unverifiable testimonials in the first release.
+- A person with multiple roles receives separate track-specific sections and independent review for each.
+- A researcher or trainer must never be presented in a clinical search result unless separately verified for the relevant clinical activity.
+
+### Empty and unavailable states
+- Do not create fictional sample profiles or stock placeholder people.
+- If a category has no approved profiles, show a clear empty state rather than fake content.
+- If a verification is pending or expired, do not show a verification badge. Suspend clinical service discovery until status is rechecked.
+- Missing data should be omitted or labeled "not provided"; never infer credentials or experience.
