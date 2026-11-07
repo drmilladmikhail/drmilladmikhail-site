@@ -612,3 +612,8 @@ html[lang="ar"] body.home-redesign .concern-note{margin:18px 0 0;color:#737d75;f
 @media(max-width:760px){html[lang="ar"] body.home-redesign .concern-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:500px){html[lang="ar"] body.home-redesign .concern-grid{grid-template-columns:1fr}html[lang="ar"] body.home-redesign .concern-card{min-height:160px}}
 @media(prefers-reduced-motion:reduce){html[lang="ar"] body.home-redesign .concern-card{transition:none}html[lang="ar"] body.home-redesign .concern-card:hover{transform:none}}
+
+/* Quick route from the homepage to the visitor's saved progress */
+html[lang="ar"] body.home-redesign .space-cta-wrap{display:flex;justify-content:center;margin-top:22px}
+html[lang="ar"] body.home-redesign .space-cta{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 20px;border:1px solid #47766a;border-radius:999px;background:#fffdf8;color:#315f55;text-decoration:none;font-weight:700}
+html[lang="ar"] body.home-redesign .space-cta:hover{background:#e6eee8}
