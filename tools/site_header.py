@@ -94,7 +94,9 @@ TOPBAR = f'''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
       <a href="/">الصفحة الرئيسية</a>
       <a href="/articles/">المقالات</a>
       <a href="/tests/">اختبارات نفسية</a>
-      <a href="/videos/">فيديوهات</a>\n      <a href="/platform/">المنصة</a>\n      <a href="/paths/">مسارات التعلّم</a>
+      <a href="/videos/">فيديوهات</a>
+      <a href="/platform/">المنصة</a>
+      <a href="/paths/">مسارات التعلّم</a>
 {_dropdown("تمارين وأدوات", GROUPS[1][1][1:])}
 {_dropdown("مكتبتي", [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6)])}
 {_dropdown("عن د. ميلاد", GROUPS[2][1])}
