@@ -44,33 +44,74 @@
 <a class="skip-link" href="#main">تخطّى للمحتوى</a>
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="/">د. ميلاد ميخائيل</a>
+    <a class="brand" href="/" aria-label="د. ميلاد ميخائيل، استشاري العلاج النفسي وتطوير الذات، الصفحة الرئيسية">
+      <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect width="44" height="44" rx="13" fill="#2f6f62"/><path d="M9 31a13 13 0 0 1 26 0" fill="none" stroke="#e2b35a" stroke-width="2.6" stroke-linecap="round"/><circle cx="22" cy="12.5" r="2.4" fill="#e2b35a"/><text x="22" y="31" text-anchor="middle" font-family="Noto Naskh Arabic, serif" font-weight="700" font-size="19" fill="#fff">م</text></svg>
+      <span class="brand-text"><b>د. ميلاد ميخائيل</b><small>استشاري العلاج النفسي وتطوير الذات</small></span>
+    </a>
     <nav class="nav" aria-label="أقسام الموقع">
+      <a href="/">الصفحة الرئيسية</a>
       <a href="/articles/">المقالات</a>
-      <a href="/tests/">اختبارات نفسية</a>
-      <a href="/book/">الكتب</a>
-      <a href="/#about">نبذة</a>
-      <a href="/#credentials">المؤهلات</a>
+      <a href="/tests/" aria-current="page">اختبارات نفسية</a>
+      <a href="/videos/">فيديوهات</a>
+      <details class="dd">
+        <summary>تمارين وأدوات</summary>
+        <div class="dd-panel">
+          <a href="/exercise/">تمرين الأسبوع</a>
+          <a href="/challenges/">تحديات قصيرة</a>
+          <a href="/feelings/">عجلة المشاعر</a>
+          <a href="/relationship-check/">علاقتك صحية؟</a>
+          <a href="/worksheets/">أوراق تمرين</a>
+        </div>
+      </details>
+      <details class="dd">
+        <summary>مكتبتي</summary>
+        <div class="dd-panel">
+          <a href="/questions/">أسئلة محرجة</a>
+          <a href="/stories/">حكايات التعافي</a>
+          <a href="/shelf/">رفّ الترشيحات</a>
+          <a href="/book/">كتبي</a>
+          <a href="https://blog.drmilladmikhail.com/">المدونة</a>
+        </div>
+      </details>
+      <details class="dd">
+        <summary>عن د. ميلاد</summary>
+        <div class="dd-panel">
+          <a href="/#about">نبذة</a>
+          <a href="/#credentials">المؤهلات</a>
+          <a href="/sessions/">الجلسات</a>
+          <a href="/ask/">اسأل من غير اسمك</a>
+          <a href="/contact/">تواصل</a>
+        </div>
+      </details>
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
     </nav>
     <details class="menu">
       <summary aria-label="القائمة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
       <nav aria-label="القائمة">
-        <a href="/start/">ابدأ من هنا</a>
+        <a class="m-home" href="/">الصفحة الرئيسية</a>
+        <a class="m-start" href="/start/">ابدأ من هنا</a>
+        <p class="m-group">اقرأ واتفرّج</p>
         <a href="/articles/">المقالات</a>
-        <a href="/tests/">اختبارات نفسية</a>
         <a href="/videos/">فيديوهات</a>
         <a href="/questions/">أسئلة محرجة</a>
-        <a href="/ask/">اسأل من غير اسمك</a>
+        <a href="/stories/">حكايات التعافي</a>
+        <a href="/shelf/">رفّ الترشيحات</a>
+        <a href="/book/">كتبي</a>
+        <a href="https://blog.drmilladmikhail.com/">المدونة</a>
+        <p class="m-group">اختبر نفسك واتمرّن</p>
+        <a href="/tests/" aria-current="page">اختبارات نفسية</a>
+        <a href="/exercise/">تمرين الأسبوع</a>
         <a href="/challenges/">تحديات قصيرة</a>
         <a href="/feelings/">عجلة المشاعر</a>
         <a href="/relationship-check/">علاقتك صحية؟</a>
         <a href="/worksheets/">أوراق تمرين</a>
-        <a href="/book/">الكتب</a>
+        <p class="m-group">عن د. ميلاد</p>
         <a href="/#about">نبذة</a>
         <a href="/#credentials">المؤهلات</a>
-        <a href="https://blog.drmilladmikhail.com/">المدونة</a>
-        <a href="/en/" hreflang="en" lang="en">English</a>
+        <a href="/sessions/">الجلسات</a>
+        <a href="/ask/">اسأل من غير اسمك</a>
+        <a href="/contact/">تواصل</a>
+        <a class="m-lang" href="/en/" hreflang="en" lang="en">English</a>
       </nav>
     </details>
   </div>
@@ -78,10 +119,15 @@
 <main id="main">
   <section class="section test">
     <div class="wrap narrow">
-      <p class="crumbs"><a href="/tests/">اختبارات نفسية</a> · 1 دقيقة تقريباً</p>
-      <h1>اختبار مشاهدة الإباحية (BPS): الموضوع بقى مشكلة ولا لأ؟</h1>
+      <div class="test-head">
+        <p class="crumbs"><a href="/tests/">اختبارات نفسية</a></p>
+        <p class="test-kicker">مقياس علمي · 5 أسئلة · 1 دقايق تقريباً</p>
+        <h1>اختبار مشاهدة الإباحية (BPS): الموضوع بقى مشكلة ولا لأ؟</h1>
+        <p class="test-ref-chip">📚 المرجع: Kraus وزملاؤه (2020)</p>
+      </div>
       <p class="test-intro">في آخر 6 شهور، حصلت معاك المواقف دي قد إيه بخصوص مشاهدة الإباحية؟</p>
       <p class="privacy">🔒 إجاباتك بتتحسب على جهازك بس، ومش بتتبعت أو تتحفظ في أي مكان.</p>
+      <div class="q-progress" aria-hidden="true"><span class="qp-text">جاوبت <b class="qp-n">0</b> من 5</span><span class="qp-track"><span class="qp-bar"></span></span></div>
       <form id="quiz" novalidate>
         <fieldset class="q">
           <legend><span class="qn">1</span> بتلاقي نفسك بتتفرج على إباحية أكتر من ما انت عايز.</legend>
@@ -115,12 +161,12 @@
         </div>
       </aside>
       
-      <details class="about-test">
-        <summary>عن المقياس ده ومصدره العلمي</summary>
-        <p>Kraus, S. W., Gola, M., Grubbs, J. B., Kowalewska, E., Hoff, R. A., Lew-Starowicz, M., Martino, S., Shirk, S. D., & Potenza, M. N. (2020). Validation of a Brief Pornography Screen across multiple samples. <em>Journal of Behavioral Addictions, 9</em>(2), 259–271. https://doi.org/10.1556/2006.2020.00038 — المقال منشور برخصة <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>، والمقياس مستخدم هنا للتوعية من غير أي مقابل. الأسئلة مترجمة ومبسّطة للعربي (تعديل على الأصل).</p>
+      <section class="test-refs" aria-labelledby="refs-h">
+        <h2 id="refs-h">📚 المرجع العلمي وطريقة الحساب</h2>
+        <p class="ref">Kraus, S. W., Gola, M., Grubbs, J. B., Kowalewska, E., Hoff, R. A., Lew-Starowicz, M., Martino, S., Shirk, S. D., & Potenza, M. N. (2020). Validation of a Brief Pornography Screen across multiple samples. <em>Journal of Behavioral Addictions, 9</em>(2), 259–271. https://doi.org/10.1556/2006.2020.00038 — المقال منشور برخصة <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>، والمقياس مستخدم هنا للتوعية من غير أي مقابل. الأسئلة مترجمة ومبسّطة للعربي (تعديل على الأصل).</p>
         <p>كل سؤال: خالص = 0، أحياناً = 1، كتير جداً = 2. المجموع من 0 لـ 10. الباحثين اقترحوا إن 4 أو أكتر يبقى «فحص إيجابي» يستاهل تقييم أعمق، وقالوا إن الحد ده لسه محتاج دراسات أكتر، ومش بيلقط كل الحالات. المقياس عن المشاهدة بس، ومش بيقيس كل أنواع السلوك الجنسي القهري.</p>
-        <p>الترجمة العربية مبسّطة لأغراض التوعية، ومش النسخة العربية المقننة رسمياً، فالنتيجة تقريبية. الاختبار ده أداة تساعدك تفهم نفسك، ومش تشخيص. التشخيص بيكون بس من متخصص بعد تقييم كامل.</p>
-      </details>
+        <p class="ref-fine">الترجمة العربية مبسّطة لأغراض التوعية، ومش النسخة العربية المقننة رسمياً، فالنتيجة تقريبية. الاختبار ده أداة تساعدك تفهم نفسك، ومش تشخيص. التشخيص بيكون بس من متخصص بعد تقييم كامل.</p>
+      </section>
       <p class="related">اقرأ كمان: <a href="/porn-addiction/">التعافي من إدمان الإباحية والسلوك الجنسي القهري</a></p>
       <div class="book-box">
         <picture class="cover-img">
@@ -166,10 +212,11 @@
     </div>
   </div>
 </footer>
-<script type="application/json" id="quiz-config">{"kind": "sum", "max": 10, "multiplier": 1, "bands": [[0, 3, "مفيش مؤشر واضح على مشكلة", "نتيجتك أقل من الحد اللي الباحثين حطوه للفحص المبدئي. بس المقياس ده قصير وممكن ميلقطش كل الحالات، فلو انت حاسس إن الموضوع مضايقك أو خارج سيطرتك، صدّق إحساسك واقرا صفحة التعافي."], [4, 10, "النتيجة إيجابية في الفحص المبدئي", "الدرجة 4 أو أكتر معناها إن الموضوع يستاهل تقييم أعمق مع متخصص نفسي، عشان يشوف هل ده استخدام مُشكِل ولا لأ. ده مش تشخيص، ومش حكم عليك، وفيه طرق حقيقية بتساعد. ابدأ بصفحة التعافي."]], "styles": null, "safety": false, "private": true}</script>
+<script type="application/json" id="quiz-config">{"kind": "sum", "max": 10, "multiplier": 1, "bands": [[0, 3, "مفيش مؤشر واضح على مشكلة", "نتيجتك أقل من الحد اللي الباحثين حطوه للفحص المبدئي. بس المقياس ده قصير وممكن ميلقطش كل الحالات، فلو انت حاسس إن الموضوع مضايقك أو خارج سيطرتك، صدّق إحساسك واقرا صفحة التعافي."], [4, 10, "النتيجة إيجابية في الفحص المبدئي", "الدرجة 4 أو أكتر معناها إن الموضوع يستاهل تقييم أعمق مع متخصص نفسي، عشان يشوف هل ده استخدام مُشكِل ولا لأ. ده مش تشخيص، ومش حكم عليك، وفيه طرق حقيقية بتساعد. ابدأ بصفحة التعافي."]], "styles": null, "safety": false, "private": true, "scales": null, "card": null, "result_title": null}</script>
 <script src="/assets/quiz.js" defer></script>
 <script src="/assets/share.js" defer></script>
 <script src="/assets/helper.js" defer></script>
+<script src="/assets/nav.js" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49dc5ec3f58f4825b6e04626f92dd475"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

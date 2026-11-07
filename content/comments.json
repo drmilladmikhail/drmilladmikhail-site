@@ -1,0 +1,6 @@
+{
+  "_how": "Comments use Cusdis (cusdis.com): free, no ads, visitors comment with any nickname (no account), and every comment waits for Dr. Millad's approval before it shows. Put the App ID from the Cusdis dashboard in app_id and run: python3 tools/build_articles.py. Empty app_id = comments off (pages show the discussion question and say comments open soon).",
+  "provider": "cusdis",
+  "host": "https://cusdis.com",
+  "app_id": ""
+}

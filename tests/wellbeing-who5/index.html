@@ -44,33 +44,74 @@
 <a class="skip-link" href="#main">تخطّى للمحتوى</a>
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="/">د. ميلاد ميخائيل</a>
+    <a class="brand" href="/" aria-label="د. ميلاد ميخائيل، استشاري العلاج النفسي وتطوير الذات، الصفحة الرئيسية">
+      <svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false"><rect width="44" height="44" rx="13" fill="#2f6f62"/><path d="M9 31a13 13 0 0 1 26 0" fill="none" stroke="#e2b35a" stroke-width="2.6" stroke-linecap="round"/><circle cx="22" cy="12.5" r="2.4" fill="#e2b35a"/><text x="22" y="31" text-anchor="middle" font-family="Noto Naskh Arabic, serif" font-weight="700" font-size="19" fill="#fff">م</text></svg>
+      <span class="brand-text"><b>د. ميلاد ميخائيل</b><small>استشاري العلاج النفسي وتطوير الذات</small></span>
+    </a>
     <nav class="nav" aria-label="أقسام الموقع">
+      <a href="/">الصفحة الرئيسية</a>
       <a href="/articles/">المقالات</a>
-      <a href="/tests/">اختبارات نفسية</a>
-      <a href="/book/">الكتب</a>
-      <a href="/#about">نبذة</a>
-      <a href="/#credentials">المؤهلات</a>
+      <a href="/tests/" aria-current="page">اختبارات نفسية</a>
+      <a href="/videos/">فيديوهات</a>
+      <details class="dd">
+        <summary>تمارين وأدوات</summary>
+        <div class="dd-panel">
+          <a href="/exercise/">تمرين الأسبوع</a>
+          <a href="/challenges/">تحديات قصيرة</a>
+          <a href="/feelings/">عجلة المشاعر</a>
+          <a href="/relationship-check/">علاقتك صحية؟</a>
+          <a href="/worksheets/">أوراق تمرين</a>
+        </div>
+      </details>
+      <details class="dd">
+        <summary>مكتبتي</summary>
+        <div class="dd-panel">
+          <a href="/questions/">أسئلة محرجة</a>
+          <a href="/stories/">حكايات التعافي</a>
+          <a href="/shelf/">رفّ الترشيحات</a>
+          <a href="/book/">كتبي</a>
+          <a href="https://blog.drmilladmikhail.com/">المدونة</a>
+        </div>
+      </details>
+      <details class="dd">
+        <summary>عن د. ميلاد</summary>
+        <div class="dd-panel">
+          <a href="/#about">نبذة</a>
+          <a href="/#credentials">المؤهلات</a>
+          <a href="/sessions/">الجلسات</a>
+          <a href="/ask/">اسأل من غير اسمك</a>
+          <a href="/contact/">تواصل</a>
+        </div>
+      </details>
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
     </nav>
     <details class="menu">
       <summary aria-label="القائمة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
       <nav aria-label="القائمة">
-        <a href="/start/">ابدأ من هنا</a>
+        <a class="m-home" href="/">الصفحة الرئيسية</a>
+        <a class="m-start" href="/start/">ابدأ من هنا</a>
+        <p class="m-group">اقرأ واتفرّج</p>
         <a href="/articles/">المقالات</a>
-        <a href="/tests/">اختبارات نفسية</a>
         <a href="/videos/">فيديوهات</a>
         <a href="/questions/">أسئلة محرجة</a>
-        <a href="/ask/">اسأل من غير اسمك</a>
+        <a href="/stories/">حكايات التعافي</a>
+        <a href="/shelf/">رفّ الترشيحات</a>
+        <a href="/book/">كتبي</a>
+        <a href="https://blog.drmilladmikhail.com/">المدونة</a>
+        <p class="m-group">اختبر نفسك واتمرّن</p>
+        <a href="/tests/" aria-current="page">اختبارات نفسية</a>
+        <a href="/exercise/">تمرين الأسبوع</a>
         <a href="/challenges/">تحديات قصيرة</a>
         <a href="/feelings/">عجلة المشاعر</a>
         <a href="/relationship-check/">علاقتك صحية؟</a>
         <a href="/worksheets/">أوراق تمرين</a>
-        <a href="/book/">الكتب</a>
+        <p class="m-group">عن د. ميلاد</p>
         <a href="/#about">نبذة</a>
         <a href="/#credentials">المؤهلات</a>
-        <a href="https://blog.drmilladmikhail.com/">المدونة</a>
-        <a href="/en/" hreflang="en" lang="en">English</a>
+        <a href="/sessions/">الجلسات</a>
+        <a href="/ask/">اسأل من غير اسمك</a>
+        <a href="/contact/">تواصل</a>
+        <a class="m-lang" href="/en/" hreflang="en" lang="en">English</a>
       </nav>
     </details>
   </div>
@@ -78,10 +119,15 @@
 <main id="main">
   <section class="section test">
     <div class="wrap narrow">
-      <p class="crumbs"><a href="/tests/">اختبارات نفسية</a> · 1 دقيقة تقريباً</p>
-      <h1>مؤشر الرفاهية النفسية (WHO-5) من منظمة الصحة العالمية</h1>
+      <div class="test-head">
+        <p class="crumbs"><a href="/tests/">اختبارات نفسية</a></p>
+        <p class="test-kicker">مقياس علمي · 5 أسئلة · 1 دقايق تقريباً</p>
+        <h1>مؤشر الرفاهية النفسية (WHO-5) من منظمة الصحة العالمية</h1>
+        <p class="test-ref-chip">📚 المرجع: Topp وزملاؤه (2015)</p>
+      </div>
       <p class="test-intro">في آخر أسبوعين، قد إيه الجمل دي كانت بتوصف حالك؟</p>
       <p class="privacy">🔒 إجاباتك بتتحسب على جهازك بس، ومش بتتبعت أو تتحفظ في أي مكان.</p>
+      <div class="q-progress" aria-hidden="true"><span class="qp-text">جاوبت <b class="qp-n">0</b> من 5</span><span class="qp-track"><span class="qp-bar"></span></span></div>
       <form id="quiz" novalidate>
         <fieldset class="q">
           <legend><span class="qn">1</span> كنت مبسوط ومزاجي حلو.</legend>
@@ -115,12 +161,12 @@
         </div>
       </aside>
       <p class="safety test-safety">لو عندك أفكار إنك تأذي نفسك أو إن الحياة مالهاش لازمة، متستناش: كلّم حد بتثق فيه دلوقتي، أو اتصل بالخط الساخن للدعم النفسي في مصر <strong>105</strong>، أو في أمريكا اتصل أو ابعت رسالة على <strong>988</strong>، أو روح أقرب طوارئ.</p>
-      <details class="about-test">
-        <summary>عن المقياس ده ومصدره العلمي</summary>
-        <p>Topp, C. W., Østergaard, S. D., Søndergaard, S., & Bech, P. (2015). The WHO-5 Well-Being Index: A systematic review of the literature. <em>Psychotherapy and Psychosomatics, 84</em>(3), 167–176. (WHO Collaborating Centre in Mental Health، 1998)</p>
+      <section class="test-refs" aria-labelledby="refs-h">
+        <h2 id="refs-h">📚 المرجع العلمي وطريقة الحساب</h2>
+        <p class="ref">Topp, C. W., Østergaard, S. D., Søndergaard, S., & Bech, P. (2015). The WHO-5 Well-Being Index: A systematic review of the literature. <em>Psychotherapy and Psychosomatics, 84</em>(3), 167–176. (WHO Collaborating Centre in Mental Health، 1998)</p>
         <p>الدرجة الخام (من 0 لـ 25) بتتضرب في 4 عشان تبقى من 0 لـ 100، زي الطريقة الرسمية.</p>
-        <p>الترجمة العربية مبسّطة لأغراض التوعية، ومش النسخة العربية المقننة رسمياً، فالنتيجة تقريبية. الاختبار ده أداة تساعدك تفهم نفسك، ومش تشخيص. التشخيص بيكون بس من متخصص بعد تقييم كامل.</p>
-      </details>
+        <p class="ref-fine">الترجمة العربية مبسّطة لأغراض التوعية، ومش النسخة العربية المقننة رسمياً، فالنتيجة تقريبية. الاختبار ده أداة تساعدك تفهم نفسك، ومش تشخيص. التشخيص بيكون بس من متخصص بعد تقييم كامل.</p>
+      </section>
       
       <div class="book-box">
         <picture class="cover-img">
@@ -166,10 +212,11 @@
     </div>
   </div>
 </footer>
-<script type="application/json" id="quiz-config">{"kind": "sum", "max": 100, "multiplier": 4, "bands": [[0, 28, "رفاهية نفسية منخفضة جداً", "الدرجة دي بتستاهل جداً إنك تتكلم مع متخصص نفسي يقيّم حالتك، لأنها ممكن تكون علامة على اكتئاب.", true], [29, 50, "رفاهية نفسية منخفضة", "حالتك النفسية مش في أحسن أحوالها. ممكن تعمل اختبار الاكتئاب (PHQ-8)، ولو الحال استمر كلّم متخصص."], [51, 100, "رفاهية نفسية كويسة", "حالتك النفسية العامة في المدى الكويس."]], "styles": null, "safety": true, "private": false}</script>
+<script type="application/json" id="quiz-config">{"kind": "sum", "max": 100, "multiplier": 4, "bands": [[0, 28, "رفاهية نفسية منخفضة جداً", "الدرجة دي بتستاهل جداً إنك تتكلم مع متخصص نفسي يقيّم حالتك، لأنها ممكن تكون علامة على اكتئاب.", true], [29, 50, "رفاهية نفسية منخفضة", "حالتك النفسية مش في أحسن أحوالها. ممكن تعمل اختبار الاكتئاب (PHQ-8)، ولو الحال استمر كلّم متخصص."], [51, 100, "رفاهية نفسية كويسة", "حالتك النفسية العامة في المدى الكويس."]], "styles": null, "safety": true, "private": false, "scales": null, "card": null, "result_title": null}</script>
 <script src="/assets/quiz.js" defer></script>
 <script src="/assets/share.js" defer></script>
 <script src="/assets/helper.js" defer></script>
+<script src="/assets/nav.js" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49dc5ec3f58f4825b6e04626f92dd475"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -521,9 +521,9 @@ def worksheets_page():
     <div class="wrap">
       <nav class="vchips" aria-label="أقسام الأوراق">{chips}</nav>
       {blocks}
-      <aside class="safety-note">
+      <div class="safety-note" role="note">
         <p><b>تنبيه:</b> الأوراق دي للتأمل وفهم النفس، ومش تشخيص ولا بديل عن العلاج. لو حاسس بضيق جامد أو خايف على نفسك، كلّم حد فورًا: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p>
-      </aside>
+      </div>
       {ba.share_block(SITE + "/worksheets/", "أوراق تمرين نفسية مجانية تطبعها وتكتب فيها — د. ميلاد ميخائيل", "شارك المكتبة")}
     </div>
   </section>'''
@@ -714,6 +714,8 @@ def csbd_page():
 def main():
     import pages_trust
     pages_trust.build_all(ba, page, write, SITE)
+    import build_extras
+    build_extras.build_all(ba, page, write, SITE)
     ask_page()
     feelings_page()
     relationship_check_page()
@@ -724,7 +726,7 @@ def main():
     start_page()
     book_page()
     battery_page()
-    print("pages: sessions, contact, help-now, privacy, terms, feelings, relationship-check, worksheets, questions, porn-addiction, challenges, start, book, battery")
+    print("pages: exercise, stories, shelf, sessions, contact, help-now, privacy, terms, feelings, relationship-check, worksheets, questions, porn-addiction, challenges, start, book, battery")
 
 
 if __name__ == "__main__":

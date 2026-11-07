@@ -35,40 +35,7 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">\n'
          '<link rel="stylesheet" href="/assets/site.css">')
 
-TOPBAR = '''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="/">د. ميلاد ميخائيل</a>
-    <nav class="nav" aria-label="أقسام الموقع">
-      <a href="/articles/">المقالات</a>
-      <a href="/tests/">اختبارات نفسية</a>
-      <a href="/book/">الكتب</a>
-      <a href="/#about">نبذة</a>
-      <a href="/#credentials">المؤهلات</a>
-      <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
-    </nav>
-    <details class="menu">
-      <summary aria-label="القائمة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
-      <nav aria-label="القائمة">
-        <a href="/start/">ابدأ من هنا</a>
-        <a href="/articles/">المقالات</a>
-        <a href="/tests/">اختبارات نفسية</a>
-        <a href="/videos/">فيديوهات</a>
-        <a href="/questions/">أسئلة محرجة</a>
-        <a href="/ask/">اسأل من غير اسمك</a>
-        <a href="/challenges/">تحديات قصيرة</a>
-        <a href="/feelings/">عجلة المشاعر</a>
-        <a href="/relationship-check/">علاقتك صحية؟</a>
-        <a href="/worksheets/">أوراق تمرين</a>
-        <a href="/book/">الكتب</a>
-        <a href="/#about">نبذة</a>
-        <a href="/#credentials">المؤهلات</a>
-        <a href="https://blog.drmilladmikhail.com/">المدونة</a>
-        <a href="/en/" hreflang="en" lang="en">English</a>
-      </nav>
-    </details>
-  </div>
-</header>'''
+from site_header import TOPBAR  # noqa: E402  (one shared header for all Arabic pages)
 
 FOOTER = '''<footer class="footer">
   <div class="wrap footer-grid">
@@ -232,6 +199,7 @@ def article_page(a, prev_items):
       <p class="crumbs"><a href="/articles/">المقالات</a>{(" · " + esc(a["chapter"])) if a.get("chapter") else ""}</p>
       <h1>{esc(a["title"])}</h1>
       <p class="post-meta">د. ميلاد ميخائيل · {meta}</p>
+      <div class="listen" hidden><button type="button" class="btn listen-btn" aria-pressed="false"><span aria-hidden="true">🎧</span> <span class="listen-label">استمع لهذا المقال</span></button><button type="button" class="btn listen-stop" hidden>إيقاف</button><label class="listen-rate">السرعة <select><option value="0.85">أبطأ</option><option value="1" selected>عادي</option><option value="1.2">أسرع</option></select></label><p class="listen-msg" role="status"></p></div>
       <figure class="post-hero">{pic(a["image"], a["image_alt"], eager=True)}</figure>
       <div class="post-body">
 {body}
@@ -255,16 +223,52 @@ def article_page(a, prev_items):
         <p><strong>د. ميلاد ميخائيل</strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
       </div>
       {share_block(url, a["title"])}
+      {discussion_block("article-" + a["slug"], url, a["title"], a.get("discuss"))}
       {tests_block}
       {more_block}
     </div>
   </article>
 </main>
 {FOOTER}
+<script src="/assets/listen.js" defer></script>
+<script src="/assets/share.js" defer></script>
 <script src="/assets/helper.js" defer></script>
 </body>
 </html>
 '''
+
+
+def comments_cfg():
+    p = os.path.join(ROOT, "content", "comments.json")
+    if os.path.exists(p):
+        with open(p, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+
+DISCUSS_DEFAULT = "إيه رأيك في الفكرة دي؟ مرّيت بتجربة شبيهة؟ وإيه اللي ساعدك؟"
+
+
+def discussion_block(page_id, url, title, question=None, intro="سؤال للنقاش"):
+    """Discussion question + comments (Cusdis, moderated; turned on by content/comments.json app_id)."""
+    cfg = comments_cfg()
+    q = esc(question or DISCUSS_DEFAULT)
+    if cfg.get("app_id"):
+        host = cfg.get("host", "https://cusdis.com")
+        thread = (f'<div id="cusdis_thread" data-host="{host}" data-app-id="{esc(cfg["app_id"])}" data-page-id="{esc(page_id)}" '
+                  f'data-page-url="{esc(url)}" data-page-title="{esc(title)}" data-theme="auto"></div>\n'
+                  f'        <script async defer src="{host}/js/cusdis.es.js"></script>')
+        note = "اكتب باسم مستعار لو تحب. كل تعليق بيتراجع قبل ما يظهر، عشان المكان يفضل آمن ومحترم للكل."
+    else:
+        thread = ""
+        note = "مساحة التعليقات بتتجهز وهتفتح قريب. لحد ما تفتح، فكّر في السؤال ده مع نفسك، أو اكتب إجابتك في ورقة."
+    return f'''<section class="discuss" aria-labelledby="disc-{esc(page_id)}">
+        <p class="discuss-kicker">💬 {esc(intro)}</p>
+        <h2 id="disc-{esc(page_id)}">{q}</h2>
+        <p class="discuss-note">{note}</p>
+        <ul class="discuss-rules"><li>اتكلم عن تجربتك انت، من غير نصايح جارحة أو أحكام.</li><li>متكتبش اسمك الحقيقي أو رقمك أو أي بيانات شخصية.</li><li>لو انت في خطر دلوقتي، متكتبش هنا: كلّم <a href="/help-now/">خطوط المساعدة</a>.</li></ul>
+        {thread}
+      </section>'''
 
 
 def share_block(url, title, label="شارك المقال"):
@@ -383,7 +387,7 @@ def sitemap(items):
             vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
         urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
     # standalone pages built by tools/build_pages.py
-    for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery"):
+    for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery", "exercise", "stories", "shelf"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
     parts = []

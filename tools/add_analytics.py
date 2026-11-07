@@ -29,12 +29,28 @@ CSP = ("default-src 'self'; script-src 'self' https://static.cloudflareinsights.
        "img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; "
        "frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; "
        "object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests")
+# Comments (Cusdis) are allowed only after content/comments.json has an app_id.
+try:
+    import json as _json
+    with open(os.path.join(ROOT, "content", "comments.json"), encoding="utf-8") as _f:
+        _c = _json.load(_f)
+    if _c.get("app_id"):
+        _h = _c.get("host", "https://cusdis.com")
+        CSP = (CSP.replace("script-src 'self' ", f"script-src 'self' {_h} ")
+                  .replace("frame-src ", f"frame-src {_h} ")
+                  .replace("connect-src 'self' ", f"connect-src 'self' {_h} "))
+except (OSError, ValueError):
+    pass
 SECURITY = (f'<meta http-equiv="Content-Security-Policy" content="{CSP}">\n'
             '<meta name="referrer" content="strict-origin-when-cross-origin">\n')
 SKIP_DIRS = {".git", ".github", "tools", "node_modules", "content"}
 
 
 def main():
+    import sys
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import site_header
+    site_header.sync()  # same header + menus on every Arabic page
     changed = []
     for dirpath, dirnames, filenames in os.walk(ROOT):
         dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]

@@ -223,7 +223,7 @@ def pick_home(vs, n, featured=()):
 
 def home_block_ar(vs, featured=(), names=None, cat_of=None):
     names, cat_of = names or {}, cat_of or {}
-    cards = "\n        ".join(vcard(v, tag=names.get(cat_of.get(v["id"]), "")) for v in pick_home(vs, 6, featured))
+    cards = "\n        ".join(vcard(v, tag=names.get(cat_of.get(v["id"]), "")) for v in pick_home(vs, 3, featured))
     return f'''<!-- VIDEOS:START -->
   <section class="section" id="videos" aria-labelledby="vid-h">
     <div class="wrap">

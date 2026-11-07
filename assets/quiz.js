@@ -71,7 +71,7 @@
     return cv;
   }
   function addCardButton(title, line) {
-    if (cfg.safety || cfg.private || !document.createElement("canvas").getContext) return;
+    if ((cfg.safety && cfg.kind !== 'multi') || cfg.private || !document.createElement("canvas").getContext) return;
     var box = document.createElement("div");
     box.className = "rcard";
     box.innerHTML = '<button type="button" class="btn primary rcard-make">📸 اعمل كارت نتيجتي للستوري</button>';
@@ -99,10 +99,27 @@
     });
   }
 
+  var qpN = document.querySelector('.qp-n'), qpBar = document.querySelector('.qp-bar');
+  function progress() {
+    var all = form.querySelectorAll('.q').length, done = form.querySelectorAll('.q.done').length;
+    if (qpN) qpN.textContent = done;
+    if (qpBar) qpBar.style.width = Math.round(done / all * 100) + '%';
+  }
   form.addEventListener('change', function (e) {
     var fs = e.target.closest('.q');
-    if (fs) fs.classList.add('done');
+    if (fs) {
+      fs.classList.add('done'); fs.classList.remove('missing');
+      // gently move to the next unanswered question
+      var next = fs.nextElementSibling;
+      if (next && next.classList.contains('q') && !next.classList.contains('done') && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+        setTimeout(function () { next.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 180);
+      }
+    }
     if (err) err.hidden = true;
+    progress();
+  });
+  form.addEventListener('reset', function () {
+    setTimeout(function () { form.querySelectorAll('.q').forEach(function (q) { q.classList.remove('done', 'missing'); }); progress(); }, 0);
   });
 
   form.addEventListener('submit', function (e) {
@@ -135,6 +152,42 @@
         bar('تجنب التعلق (البعد عن القرب والاعتماد)', av, 1, 7, av.toFixed(1) + ' من 7') +
         '<p class="result-note">نمط التعلق مش حكم نهائي ولا عيب فيك، وممكن يتغير مع الوعي والعلاقات الآمنة. معظمنا فيه حاجة من أكتر من نمط.</p>');
       addCardButton(s[0], (s[1].split(/[.،!؟]/)[0] || '').trim());
+      return;
+    }
+
+    if (cfg.kind === 'multi') {
+      var acc = {};
+      qs.forEach(function (q) {
+        var k = q.dataset.sub, v = parseFloat(q.querySelector('input:checked').value);
+        acc[k] = acc[k] || { s: 0, n: 0 }; acc[k].s += v; acc[k].n += 1;
+      });
+      var res = cfg.scales.map(function (sc) {
+        var a = acc[sc.key], v = sc.agg === 'sum' ? a.s : a.s / a.n;
+        var band = sc.bands.filter(function (b) { return v >= b[0] - 1e-9; }).pop();
+        return { sc: sc, v: v, band: band, rel: (v - sc.min) / (sc.max - sc.min) };
+      });
+      var anyHigh = res.some(function (r) { return r.band[3] === true; });
+      var html;
+      if (res.length === 1) {
+        var r0 = res[0];
+        html = '<p class="result-kicker">نتيجتك</p><h2>' + r0.band[1] + '</h2>' +
+          bar(r0.sc.name, r0.v, r0.sc.min, r0.sc.max, r0.v.toFixed(r0.sc.dec) + ' من ' + r0.sc.max) +
+          '<p>' + r0.band[2] + '</p>';
+      } else {
+        html = '<p class="result-kicker">نتيجتك</p><h2>' + (cfg.result_title || 'نتيجتك') + '</h2>' +
+          res.map(function (r) {
+            return '<div class="scale-res">' + bar(r.sc.name, r.v, r.sc.min, r.sc.max, r.band[1] + ' · ' + r.v.toFixed(r.sc.dec) + ' من ' + r.sc.max) +
+              '<p>' + r.band[2] + '</p></div>';
+          }).join('');
+      }
+      if (anyHigh && cfg.safety) html += '<p class="result-alert">لو حاسس إنك مش قادر تتحمل، أو عندك أفكار إنك تأذي نفسك، اطلب مساعدة دلوقتي: في مصر الخط الساخن للدعم النفسي 105، وفي أمريكا 988، أو أقرب طوارئ.</p>';
+      html += '<p class="result-note">النتيجة دي مؤشر يساعدك تفهم نفسك، مش تشخيص. لو قلقان من نتيجتك، أحسن خطوة إنك تتكلم مع متخصص نفسي.</p>';
+      render(html);
+      if (cfg.card === 'first') addCardButton(res[0].band[1], (res[0].band[2].split(/[.،!؟]/)[0] || '').trim());
+      else if (cfg.card === 'top') {
+        var top = res.slice().sort(function (a, b) { return b.rel - a.rel; })[0];
+        addCardButton('أعلى سمة عندي: ' + top.sc.name, (top.band[2].split(/[.،!؟]/)[0] || '').trim());
+      }
       return;
     }
 
