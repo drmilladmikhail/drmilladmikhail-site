@@ -290,3 +290,30 @@ The directory must use a shared visual system but category-specific fields. The 
 - If a category has no approved profiles, show a clear empty state rather than fake content.
 - If a verification is pending or expired, do not show a verification badge. Suspend clinical service discovery until status is rechecked.
 - Missing data should be omitted or labeled "not provided"; never infer credentials or experience.
+
+
+## 14. Directory search and filtering behavior
+
+The first public directory release should support the following search dimensions once approved profiles exist:
+- Name or keyword.
+- Governorate / service area within Egypt.
+- One of the four independent directory tracks.
+- Language, only when confirmed by the profile owner.
+- Clinical specialty or focus area only within the clinical track and only when supported by the approved profile.
+
+### Search integrity rules
+- Clinical results must be limited to profiles whose relevant clinical authorization, current status, and scope have been verified for the activity being searched.
+- Selecting researchers/academics, trainers/psychoeducation, or authors/speakers must never place those profiles in clinical-care results.
+- A person with multiple approved roles may appear in each relevant track, but each role must retain its own evidence and approval.
+- Do not rank by payment, popularity, ratings, testimonials, or unverified outcomes.
+- Empty results must say that no matching verified profiles are currently available; do not fill the page with sample people.
+- Filters must not imply that the directory has comprehensive coverage of every professional in Egypt.
+
+### Pre-launch interface state
+While there are no approved public profiles, the public page may show a clearly labeled, disabled preview of the planned filters. It must state why controls are unavailable and must not imply that a search request was submitted or that a live database exists. Enable controls only when the verified directory dataset and tested search implementation are actually available.
+
+### Accessibility and quality checks
+- Use native labeled controls, keyboard-operable interactions, visible focus states, and clear disabled-state explanation.
+- Preserve Arabic RTL layout and usable mobile stacking.
+- Test combinations across all four tracks, especially that non-clinical tracks cannot leak into clinical search.
+- Test empty, no-match, pending, expired, and suspended profile states.
