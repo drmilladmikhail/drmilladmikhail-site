@@ -32,6 +32,18 @@
 .experts-track p{color:var(--muted);margin:0}
 .experts-track .track-note{display:block;font-size:13px;margin-top:12px;color:var(--muted)}
 .experts-empty-state{padding:18px;border:1px dashed var(--line);border-radius:14px;background:var(--mist);margin-top:20px}
+
+.directory-search{margin:24px 0 18px;padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.directory-search>p{color:var(--muted);margin:6px 0 16px}
+.directory-search fieldset{border:0;padding:0;margin:0;min-width:0}
+.directory-search-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.directory-search label{display:grid;gap:6px;font-weight:600;font-size:14px}
+.directory-search input,.directory-search select{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper);font:inherit;color:var(--ink)}
+.directory-search fieldset:disabled{opacity:.72}
+.directory-search button{margin-top:14px;cursor:not-allowed}
+.directory-search-note{font-size:13px!important;margin:12px 0 0!important}
+@media(max-width:600px){.directory-search-grid{grid-template-columns:1fr}}
+
 .experts-empty-state strong{display:block;margin-bottom:5px}
 .experts-empty-state p{margin:0}
 .experts-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
@@ -56,7 +68,21 @@
 <section class="experts-track"><h3>المدربون والتثقيف النفسي</h3><p>مدربو المهارات وورش العمل وبرامج الوعي والتثقيف النفسي والتطوير الشخصي.</p><span class="track-note">مسار تعليمي غير علاجي — لا تشخيص ولا علاج.</span></section>
 <section class="experts-track"><h3>المؤلفون والمتحدثون</h3><p>مؤلفو الكتب والأبحاث والمحاضرون وصناع المحتوى العلمي المتخصص.</p><span class="track-note">مسار معرفي — تُراجع الأعمال المنشورة والمشاركات.</span></section>
 </div>
-<div class="experts-empty-state"><strong>الدليل لم يبدأ نشر الملفات بعد</strong><p>لا توجد ملفات مهنية منشورة حاليًا. ستظهر الملفات بعد استكمال التحقق الخاص بكل مسار وموافقة أصحابها على النشر.</p></div>
+<section class="directory-search" aria-labelledby="directory-search-title">
+<h3 id="directory-search-title">البحث داخل الدليل</h3>
+<p>ستساعدك عوامل التصفية التالية على الوصول إلى الملفات المناسبة بعد بدء النشر والتحقق منها.</p>
+<fieldset disabled aria-describedby="directory-search-note">
+<div class="directory-search-grid">
+<label>الاسم أو كلمة مفتاحية<input type="search" placeholder="ابحث بالاسم أو المجال"></label>
+<label>المحافظة<select><option value="">كل المحافظات</option><option>القاهرة</option><option>الجيزة</option><option>الإسكندرية</option><option>محافظات أخرى</option></select></label>
+<label>مسار الدليل<select><option value="">كل المسارات</option><option>ممارسون صحيون</option><option>باحثون وأكاديميون</option><option>مدربون وتثقيف نفسي</option><option>مؤلفون ومتحدثون</option></select></label>
+<label>اللغة<select><option value="">كل اللغات</option><option>العربية</option><option>الإنجليزية</option></select></label>
+</div>
+<button class="btn primary" type="button">بحث</button>
+</fieldset>
+<p id="directory-search-note" class="directory-search-note">عوامل البحث معطّلة حاليًا لأن الدليل لم ينشر ملفات معتمدة بعد. لن تظهر نتائج إلا بعد اكتمال المراجعة وموافقة أصحاب الملفات.</p>
+</section>
+<div class="experts-empty-state"><strong>لا توجد ملفات منشورة حتى الآن</strong><p>لا توجد نتائج متاحة حاليًا. ستظهر الملفات بعد استكمال التحقق الخاص بكل مسار وموافقة أصحابها على النشر.</p></div>
 <h3>ما الذي ستوضحه الملفات عند إطلاق الدليل؟</h3>
 <ul class="experts-checks"><li>المؤهل الأكاديمي والجهة المانحة</li><li>الترخيص أو التسجيل المهني والجهة المُصدرة</li><li>مصر ونطاق الممارسة المسموح وفق القواعد المنظمة</li><li>مجالات العمل والخبرة كما يصرّح بها المتخصص</li></ul>
 <div class="experts-notice"><strong>مهم:</strong> الدرجة الأكاديمية وحدها لا تثبت حق ممارسة مهنة منظمة أو استخدام مسمى مهني محمي. سنراجع كل فئة وفق الجهة المختصة والقواعد السارية في مصر، ونميز بين المؤهل العلمي والترخيص أو التسجيل المهني. لن تُعرض أرقام التراخيص أو المستندات الحساسة للعامة.</div>
