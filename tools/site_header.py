@@ -40,6 +40,8 @@ GROUPS = [
         ("https://blog.drmilladmikhail.com/", "المدونة"),
     ]),
     ("اختبر نفسك واتمرّن", [
+        ("/paths/", "مسارات التعلّم"),
+        ("/experts/", "دليل المتخصصين"),
         ("/tests/", "اختبارات نفسية"),
         ("/exercise/", "تمرين الأسبوع"),
         ("/challenges/", "تحديات قصيرة"),
@@ -53,6 +55,7 @@ GROUPS = [
         ("/sessions/", "الجلسات"),
         ("/ask/", "اسأل من غير اسمك"),
         ("/contact/", "تواصل"),
+        ("/join-us/", "انضم للمنصة"),
     ]),
 ]
 
@@ -92,6 +95,8 @@ TOPBAR = f'''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
       <a href="/articles/">المقالات</a>
       <a href="/tests/">اختبارات نفسية</a>
       <a href="/videos/">فيديوهات</a>
+      <a href="/platform/">المنصة</a>
+      <a href="/paths/">مسارات التعلّم</a>
 {_dropdown("تمارين وأدوات", GROUPS[1][1][1:])}
 {_dropdown("مكتبتي", [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6)])}
 {_dropdown("عن د. ميلاد", GROUPS[2][1])}
