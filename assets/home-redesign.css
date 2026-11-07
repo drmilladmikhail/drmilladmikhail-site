@@ -595,3 +595,20 @@ html[lang="ar"] body.home-redesign .discovery-watch { background:linear-gradient
 .home-redesign .about-portrait figcaption{margin-top:12px;color:var(--muted,#65736c);font-size:.9rem}
 .home-redesign .about-grid{align-items:center}
 @media(max-width:640px){.home-redesign .about-portrait{max-width:210px}}
+
+/* Topic-based homepage discovery */
+html[lang="ar"] body.home-redesign .concern-finder{background:#f7f3ea}
+html[lang="ar"] body.home-redesign .concern-heading{max-width:720px;margin:0 auto 28px;text-align:center}
+html[lang="ar"] body.home-redesign .concern-heading h2{margin:0 0 8px;font-size:clamp(29px,4vw,40px)}
+html[lang="ar"] body.home-redesign .concern-heading>p:last-child{margin:0;color:var(--home-muted);line-height:1.9}
+html[lang="ar"] body.home-redesign .concern-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+html[lang="ar"] body.home-redesign .concern-card{display:flex;min-height:190px;flex-direction:column;align-items:flex-start;padding:20px;border:1px solid #d8ded5;border-radius:19px;background:#fffdf8;color:#29443c;text-decoration:none;box-shadow:0 9px 24px rgba(37,58,50,.045);transition:transform .18s ease,box-shadow .18s ease}
+html[lang="ar"] body.home-redesign .concern-card:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(37,58,50,.1)}
+html[lang="ar"] body.home-redesign .concern-card>span{display:grid;place-items:center;width:38px;height:38px;margin-bottom:12px;border-radius:12px;background:#e8efe8;color:#38685b;font-size:24px}
+html[lang="ar"] body.home-redesign .concern-card b{font-size:19px}
+html[lang="ar"] body.home-redesign .concern-card small{margin-top:6px;color:#65746d;font-size:14px;line-height:1.7}
+html[lang="ar"] body.home-redesign .concern-card i{margin-top:auto;padding-top:12px;color:#38685b;font-size:14px;font-style:normal;font-weight:700}
+html[lang="ar"] body.home-redesign .concern-note{margin:18px 0 0;color:#737d75;font-size:13px;text-align:center}
+@media(max-width:760px){html[lang="ar"] body.home-redesign .concern-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){html[lang="ar"] body.home-redesign .concern-grid{grid-template-columns:1fr}html[lang="ar"] body.home-redesign .concern-card{min-height:160px}}
+@media(prefers-reduced-motion:reduce){html[lang="ar"] body.home-redesign .concern-card{transition:none}html[lang="ar"] body.home-redesign .concern-card:hover{transform:none}}
