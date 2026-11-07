@@ -28,4 +28,11 @@
     });
   });
   document.querySelectorAll(".challenge").forEach(function (c) { progress(c.id); });
+  var reset = document.querySelector("[data-journey-reset]");
+  if (reset) reset.addEventListener("click", function () {
+    for (var n = 1; n <= 7; n++) delete state["seven-day-journey-" + n];
+    save();
+    document.querySelectorAll('#seven-day-journey input[type="checkbox"]').forEach(function (box) { box.checked = false; });
+    progress("seven-day-journey");
+  });
 })();
