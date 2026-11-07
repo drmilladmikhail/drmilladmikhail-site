@@ -517,3 +517,8 @@ html[lang="ar"] body.home-redesign .quiz-feedback { margin:16px 0 0; padding:14p
 html[lang="ar"] body.home-redesign .quiz-next { display:inline-block; margin-top:12px; color:var(--home-blue-dark); font-weight:700; text-decoration:underline; text-underline-offset:4px; }
 @media(max-width:700px) { html[lang="ar"] body.home-redesign .quiz-panel { grid-template-columns:1fr; } }
 @media(prefers-reduced-motion:reduce) { html[lang="ar"] body.home-redesign .quiz-option { transition:none; } html[lang="ar"] body.home-redesign .quiz-option:hover:not(:disabled) { transform:none; } }
+
+/* Daily psychology question: sharing action */
+html[lang="ar"] body.home-redesign .quiz-share { display:inline-block; margin:14px 0 0; padding:10px 16px; border:1px solid var(--home-blue); border-radius:12px; background:transparent; color:var(--home-blue-dark); font:inherit; font-weight:700; cursor:pointer; }
+html[lang="ar"] body.home-redesign .quiz-share:hover { background:#eef4f6; }
+html[lang="ar"] body.home-redesign .quiz-share:focus-visible { outline:3px solid #8aa9b8; outline-offset:3px; }
