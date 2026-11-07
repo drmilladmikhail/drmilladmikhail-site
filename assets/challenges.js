@@ -35,4 +35,50 @@
     document.querySelectorAll('#seven-day-journey input[type="checkbox"]').forEach(function (box) { box.checked = false; });
     progress("seven-day-journey");
   });
+
+  // Build a shareable achievement card locally. No image or progress is uploaded.
+  var shareButton = document.querySelector("[data-journey-share]");
+  var shareHint = document.querySelector("[data-journey-share-hint]");
+  if (shareButton) shareButton.addEventListener("click", function () {
+    var done = 0;
+    for (var n = 1; n <= 7; n++) if (state["seven-day-journey-" + n]) done++;
+    if (!done) return;
+    shareButton.disabled = true;
+    shareButton.textContent = "بنجهّز بطاقتك...";
+    var canvas = document.createElement("canvas");
+    canvas.width = 1200; canvas.height = 630;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) { shareButton.disabled = false; shareButton.textContent = "حاول تاني"; return; }
+    var gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+    gradient.addColorStop(0, "#173f3b"); gradient.addColorStop(1, "#315f58");
+    ctx.fillStyle = gradient; ctx.fillRect(0, 0, 1200, 630);
+    ctx.strokeStyle = "rgba(239,218,174,.35)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(1030, 120, 210, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(110, 560, 150, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = "#e8c987"; ctx.font = "600 30px 'IBM Plex Sans Arabic', sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("رحلتي مع نفسي", 600, 145);
+    ctx.fillStyle = "#fffaf0"; ctx.font = "700 58px 'Noto Naskh Arabic', serif";
+    ctx.fillText("7 أيام أقرب لنفسي", 600, 245);
+    ctx.fillStyle = "#f3dfb8"; ctx.font = "600 42px 'IBM Plex Sans Arabic', sans-serif";
+    ctx.fillText(done + " من 7 خطوات", 600, 345);
+    ctx.fillStyle = "#fffaf0"; ctx.font = "400 27px 'IBM Plex Sans Arabic', sans-serif";
+    ctx.fillText(done === 7 ? "أنهيت الرحلة.. وكل خطوة تستحق التقدير" : "كل خطوة صغيرة بتفرق.. وأنا مكمل", 600, 425);
+    ctx.fillStyle = "rgba(255,250,240,.82)"; ctx.font = "500 24px 'IBM Plex Sans Arabic', sans-serif";
+    ctx.fillText("د. ميلاد ميخائيل  ·  drmilladmikhail.com", 600, 545);
+    canvas.toBlob(async function (blob) {
+      shareButton.disabled = false; shareButton.textContent = "صمّم بطاقة إنجازك وشاركها";
+      if (!blob) { if (shareHint) shareHint.textContent = "المتصفح مش قادر ينشئ الصورة. جرّب متصفحًا أحدث."; return; }
+      var file = new File([blob], "my-seven-day-journey.png", { type: "image/png" });
+      var canShareFile = navigator.canShare && navigator.canShare({ files: [file] });
+      if (canShareFile && navigator.share) {
+        try { await navigator.share({ files: [file], title: "رحلتي مع نفسي", text: "خطوة صغيرة كل يوم. drmilladmikhail.com/challenges/" }); if (shareHint) shareHint.textContent = "اختار واتساب أو فيسبوك من قائمة المشاركة."; }
+        catch (error) { if (error && error.name !== "AbortError" && shareHint) shareHint.textContent = "ممكن تحفظ الصورة وتضيفها للمنشور بنفسك."; }
+      } else {
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a"); link.href = url; link.download = "my-seven-day-journey.png"; link.click();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        if (shareHint) shareHint.textContent = "الصورة اتحفظت على جهازك. افتح واتساب أو فيسبوك وأرفقها في المنشور.";
+      }
+    }, "image/png");
+  });
 })();
