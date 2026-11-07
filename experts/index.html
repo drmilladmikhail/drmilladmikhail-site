@@ -26,9 +26,17 @@
 .experts-empty p{color:var(--muted)}
 .experts-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0;list-style:none}
 .experts-checks li{padding:14px;border-radius:12px;background:var(--mist)}
+.experts-tracks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0}
+.experts-track{border:1px solid var(--line);border-radius:15px;padding:20px;background:var(--surface)}
+.experts-track h3{font-family:var(--display-ar);font-size:21px;margin:0 0 8px}
+.experts-track p{color:var(--muted);margin:0}
+.experts-track .track-note{display:block;font-size:13px;margin-top:12px;color:var(--muted)}
+.experts-empty-state{padding:18px;border:1px dashed var(--line);border-radius:14px;background:var(--mist);margin-top:20px}
+.experts-empty-state strong{display:block;margin-bottom:5px}
+.experts-empty-state p{margin:0}
 .experts-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 .experts-notice{border-inline-start:4px solid var(--eucalyptus);padding:14px 18px;background:var(--mist);margin-top:22px}
-@media(max-width:600px){.experts-checks{grid-template-columns:1fr}}
+@media(max-width:600px){.experts-checks,.experts-tracks{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"دليل المتخصصين","url":"https://drmilladmikhail.com/experts/","inLanguage":"ar","description":"دليل مهني قيد الإعداد، ولا يتضمن حاليًا ملفات منشورة."}</script>
 </head>
@@ -41,13 +49,14 @@
 <article class="experts-empty">
 <h2>الدليل المصري قيد الإعداد</h2>
 <p>لا توجد ملفات مهنية منشورة حاليًا. المرحلة الأولى مخصصة لمصر فقط. لن نضيف أي اسم قبل مراجعة المؤهلات والتحقق من المسمى المهني وأي ترخيص أو تسجيل مطلوب للفئة ومكان الممارسة.</p>
-<h3>أقسام الدليل المقترحة</h3>
-<div class="experts-checks">
-<li><strong>الممارسون الصحيون:</strong> الأطباء النفسيون والأخصائيون والمعالجون، وفق التحقق من الترخيص والمسمى ونطاق الممارسة.</li>
-<li><strong>الباحثون والأكاديميون:</strong> أصحاب المؤهلات والانتماءات والأبحاث العلمية القابلة للتحقق، دون إضفاء صفة علاجية.</li>
-<li><strong>المدربون ومقدمو التثقيف النفسي:</strong> أصحاب الخبرة والبرامج التدريبية، مع توضيح أن النشاط تعليمي غير علاجي.</li>
-<li><strong>المؤلفون والمتحدثون:</strong> أصحاب الكتب والأبحاث والمحاضرات والمحتوى العلمي الموثق.</li>
+<h3>استكشف أقسام الدليل</h3>
+<div class="experts-tracks">
+<section class="experts-track"><h3>الممارسون الصحيون</h3><p>الأطباء النفسيون والأخصائيون والمعالجون النفسيون، بعد التحقق من المسمى والترخيص أو التسجيل ونطاق الممارسة حسب القواعد المصرية.</p><span class="track-note">مسار مهني علاجي — يخضع لتحقق قانوني ومهني مستقل.</span></section>
+<section class="experts-track"><h3>الباحثون والأكاديميون</h3><p>الباحثون وأعضاء هيئة التدريس وأصحاب الإنتاج العلمي الموثق في علم النفس والصحة النفسية.</p><span class="track-note">مسار علمي — المؤهل الأكاديمي لا يعني ترخيصًا للعلاج.</span></section>
+<section class="experts-track"><h3>المدربون والتثقيف النفسي</h3><p>مدربو المهارات وورش العمل وبرامج الوعي والتثقيف النفسي والتطوير الشخصي.</p><span class="track-note">مسار تعليمي غير علاجي — لا تشخيص ولا علاج.</span></section>
+<section class="experts-track"><h3>المؤلفون والمتحدثون</h3><p>مؤلفو الكتب والأبحاث والمحاضرون وصناع المحتوى العلمي المتخصص.</p><span class="track-note">مسار معرفي — تُراجع الأعمال المنشورة والمشاركات.</span></section>
 </div>
+<div class="experts-empty-state"><strong>الدليل لم يبدأ نشر الملفات بعد</strong><p>لا توجد ملفات مهنية منشورة حاليًا. ستظهر الملفات بعد استكمال التحقق الخاص بكل مسار وموافقة أصحابها على النشر.</p></div>
 <h3>ما الذي ستوضحه الملفات عند إطلاق الدليل؟</h3>
 <ul class="experts-checks"><li>المؤهل الأكاديمي والجهة المانحة</li><li>الترخيص أو التسجيل المهني والجهة المُصدرة</li><li>مصر ونطاق الممارسة المسموح وفق القواعد المنظمة</li><li>مجالات العمل والخبرة كما يصرّح بها المتخصص</li></ul>
 <div class="experts-notice"><strong>مهم:</strong> الدرجة الأكاديمية وحدها لا تثبت حق ممارسة مهنة منظمة أو استخدام مسمى مهني محمي. سنراجع كل فئة وفق الجهة المختصة والقواعد السارية في مصر، ونميز بين المؤهل العلمي والترخيص أو التسجيل المهني. لن تُعرض أرقام التراخيص أو المستندات الحساسة للعامة.</div>
