@@ -232,3 +232,135 @@ html[lang="ar"] body.home-redesign .guide-grid > li > ul li {
   html[lang="ar"] body.home-redesign .guide-grid > li { transition: none; }
   html[lang="ar"] body.home-redesign .guide-grid > li:hover { transform: none; }
 }
+
+/* ---------- supporting visual elements for tests, sessions and research ---------- */
+html[lang="ar"] body.home-redesign .tb-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 22px;
+  border: 1px solid rgba(49,86,111,.14);
+  box-shadow: 0 14px 30px rgba(38,49,61,.09);
+}
+html[lang="ar"] body.home-redesign .tb-list li a {
+  position: relative;
+  display: block;
+  padding: 13px 48px 13px 16px;
+  border: 1px solid rgba(49,86,111,.13);
+  border-radius: 15px;
+  background: rgba(255,250,243,.8);
+  transition: background .18s ease, transform .18s ease, border-color .18s ease;
+}
+html[lang="ar"] body.home-redesign .tb-list li a::before {
+  content: "✓";
+  position: absolute;
+  inset-inline-start: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--home-blue);
+  font: 600 14px/1 system-ui, sans-serif;
+}
+html[lang="ar"] body.home-redesign .tb-list li a:hover {
+  background: #fff;
+  border-color: #b8cbd6;
+  transform: translateX(-2px);
+}
+html[lang="ar"] body.home-redesign .sessions-box {
+  display: grid;
+  grid-template-columns: minmax(220px,.78fr) minmax(0,1.22fr);
+  align-items: center;
+  gap: clamp(22px,4vw,44px);
+  padding: clamp(20px,3vw,34px);
+  border: 1px solid var(--home-line);
+  border-radius: 26px;
+  background: var(--home-card);
+  box-shadow: 0 14px 36px rgba(38,49,61,.055);
+}
+html[lang="ar"] body.home-redesign .sessions-visual { margin: 0; }
+html[lang="ar"] body.home-redesign .sessions-visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+html[lang="ar"] body.home-redesign .sessions-visual figcaption {
+  margin-top: 10px;
+  text-align: center;
+  color: var(--home-muted);
+  font-size: 14px;
+}
+html[lang="ar"] body.home-redesign .sessions-box > div > p:first-child {
+  color: var(--home-muted);
+  font-size: 17px;
+  line-height: 1.9;
+}
+html[lang="ar"] body.home-redesign .ses-topics li {
+  position: relative;
+  padding: 8px 34px 8px 0;
+  border-bottom: 1px solid rgba(228,216,198,.7);
+}
+html[lang="ar"] body.home-redesign .ses-topics li::before {
+  content: "✓";
+  position: absolute;
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+  top: 9px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: var(--home-blue);
+  background: #e5edf1;
+  font: 700 13px/1 system-ui,sans-serif;
+}
+html[lang="ar"] body.home-redesign .sessions-box .btn.primary {
+  border-radius: 999px;
+  background: var(--home-blue);
+  border-color: var(--home-blue);
+}
+html[lang="ar"] body.home-redesign .research-visual {
+  margin: 18px 0 24px;
+  overflow: hidden;
+  border: 1px solid var(--home-line);
+  border-radius: 20px;
+  background: #e9eef0;
+}
+html[lang="ar"] body.home-redesign .research-visual img {
+  display: block;
+  width: 100%;
+  max-height: 190px;
+  object-fit: cover;
+}
+html[lang="ar"] body.home-redesign .fold > summary.section-head {
+  padding: 14px 16px;
+  border: 1px solid var(--home-line);
+  border-radius: 16px;
+  background: var(--home-card);
+  cursor: pointer;
+}
+html[lang="ar"] body.home-redesign .fold[open] > summary.section-head {
+  border-radius: 16px 16px 0 0;
+  border-bottom-color: transparent;
+}
+html[lang="ar"] body.home-redesign .timeline > li,
+html[lang="ar"] body.home-redesign .thesis {
+  border-color: var(--home-line);
+  background: var(--home-card);
+  border-radius: 16px;
+  padding: 18px;
+}
+@media (max-width: 760px) {
+  html[lang="ar"] body.home-redesign .sessions-box { grid-template-columns: 1fr; }
+  html[lang="ar"] body.home-redesign .sessions-visual { max-width: 360px; margin-inline: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[lang="ar"] body.home-redesign .tb-list li a { transition: none; }
+}
