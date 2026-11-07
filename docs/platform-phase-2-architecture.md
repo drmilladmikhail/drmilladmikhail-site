@@ -115,3 +115,73 @@ No public launch until:
 No member accounts, therapy journals, symptom histories, clinical records, diagnosis, automated treatment recommendations, emergency chat, community forums, comments, direct messaging, or appointment/payment flows in this launch.
 
 These require separate product approval and additional privacy, legal, security, moderation, and safety review.
+
+
+## 10. Egypt-first category and regulatory-source map — preliminary research
+
+This section is a screening aid for product design, not a legal opinion and not a substitute for written confirmation from the competent Egyptian authorities. The directory must not infer permission to practice from a degree, job title, association membership, or self-description.
+
+### A. Psychiatrist (طبيب نفسي)
+
+- Treat as a medical-doctor category, not as interchangeable with a non-physician psychotherapist.
+- Before publication, verify the underlying medical practice eligibility and the relevant specialty/registration status through the competent Ministry of Health and Egyptian Medical Syndicate channels, as applicable.
+- The Egyptian Medical Syndicate's published registration service describes professional registration and specialist/consultant records, and lists supporting requirements for foreign qualifications. Use the official service as a starting point, then confirm the exact lookup and verification procedure directly with the Syndicate.
+- Public profile must state the medical qualification and specialty accurately; do not use "psychiatrist" based only on a psychology degree.
+
+Starting reference: https://ems.org.eg/services/registration
+
+### B. Non-physician psychotherapist (معالج نفسي من غير الأطباء النفسيين)
+
+- This is a distinct regulated practice route under Law 71/2009 on Care of Psychiatric Patients, as amended by Law 210/2020.
+- The amended provisions establish a committee to regulate practice by non-psychiatrists and state that a non-psychiatrist may not practice psychotherapy without a Ministry of Health and Population license; the law also specifies direct supervision by a specialist physician and qualification/training conditions.
+- Therefore, an academic degree, foreign credential evaluation, association membership, or psychotherapy course alone must never be presented as the required practice license.
+- For directory publication, require direct confirmation of the current Ministry-issued license, validity/status, and the permitted scope, and record the official source and date checked.
+- The executive regulations were amended after the 2020 law; the precise current application checklist and implementation instructions must be confirmed with the Ministry committee/technical secretariat before this category is opened for applications.
+
+Starting legal references:
+- Law 71/2009 and amendments: https://manshurat.org/node/14473
+- Executive regulations, Ministerial Decree 128/2010 (status amended): https://manshurat.org/node/71205
+- Ministry/SIS announcement on formation of the committee (8 Jan 2026): https://mediadr.sis.gov.eg/handle/123456789/118279
+- Ministry/SIS announcement on committee meeting and licensing (10 Feb 2026): https://mediadr.sis.gov.eg/xmlui/handle/123456789/120850
+
+### C. Psychologist / clinical psychologist (أخصائي نفسي / أخصائي نفسي إكلينيكي)
+
+- Do not treat this title as automatically equivalent to a licensed non-physician psychotherapist.
+- The 2020 amendment's psychotherapy-license route refers to specified clinical psychology academic qualifications and additional conditions, but those qualifications are not themselves the Ministry license to practice psychotherapy.
+- Until category-specific legal review confirms the title, activities, and any registration requirements, profiles may describe verified academic qualifications only and must not imply independent authority to provide psychotherapy.
+- Do not publish "clinical psychologist", "psychotherapist", "therapist", or equivalent treatment claims unless the title and activity have been separately verified against the current rules and relevant authorization.
+
+### D. Counselor, life coach, trainer, researcher, and educator
+
+- These should not be grouped under a clinical-treatment category by default.
+- If included later, use separate non-clinical labels and narrowly describe educational, coaching, training, or research services.
+- Do not imply diagnosis, psychotherapy, treatment, or clinical competence without the relevant authorization.
+- Consider excluding these categories from the first public pilot until a reviewer-approved scope and consumer-protection wording are established.
+
+### E. Regulatory developments to re-check before pilot
+
+The State Information Service's media portal published Ministry of Health announcements dated 8 January 2026 about forming the committee for regulating psychotherapy by non-psychiatrists, and 10 February 2026 about a committee meeting and licenses granted to applicants. These announcements indicate active implementation activity; they do not replace checking the current law, executive regulations, official licensing records, or obtaining direct written confirmation from the Ministry.
+
+### F. Mandatory verification record for each listed professional
+
+For every profile, retain privately:
+- category and exact approved title;
+- legal/regulatory basis and competent authority;
+- official source or direct authority confirmation;
+- credential/license or registration identifier in restricted storage only, if genuinely necessary;
+- status and expiry date, where applicable;
+- date checked, reviewer, independent approver, and decision;
+- permitted service scope and any restrictions;
+- applicant's explicit approval of the public profile.
+
+Public-facing profiles should show only the minimum verified summary. Do not expose license numbers, identity documents, certificates, or internal review notes by default.
+
+### G. Gate before enabling any application intake
+
+1. Obtain current written guidance from the Ministry of Health and Population committee/technical secretariat for non-physician psychotherapist licensing.
+2. Obtain category-specific confirmation for psychiatrist and psychologist titles/registration from the relevant competent bodies.
+3. Have qualified Egyptian counsel review the directory's categories, descriptions, disclaimers, advertising, and liability model.
+4. Approve a reviewer checklist and a second-person approval policy.
+5. Only then design a secure, private application intake flow.
+
+No live application form or document upload should be activated before these gates are met.
