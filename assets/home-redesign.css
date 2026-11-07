@@ -584,3 +584,14 @@ html[lang="ar"] body.home-redesign .discovery-watch { background:linear-gradient
 @media(max-width:850px){html[lang="ar"] body.home-redesign .discovery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){html[lang="ar"] body.home-redesign .discovery-grid{grid-template-columns:1fr}html[lang="ar"] body.home-redesign .discovery-card{min-height:190px;padding:20px}}
 @media(prefers-reduced-motion:reduce){html[lang="ar"] body.home-redesign .discovery-card{transition:none}html[lang="ar"] body.home-redesign .discovery-card:hover{transform:none}}
+
+/* Visitor-first homepage: keep the opening focused on the visitor, not the author's profile. */
+.home-redesign .hero .wrap:first-child{grid-template-columns:minmax(0,1fr)!important}
+.home-redesign .hero-text{max-width:850px}
+.home-redesign .hero-name{max-width:760px}
+.home-redesign .about-portrait{margin:0;max-width:260px;justify-self:center;text-align:center}
+.home-redesign .about-portrait picture{display:block;overflow:hidden;border-radius:24px;background:#e8e1d4;box-shadow:0 16px 38px rgba(31,55,47,.12)}
+.home-redesign .about-portrait img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+.home-redesign .about-portrait figcaption{margin-top:12px;color:var(--muted,#65736c);font-size:.9rem}
+.home-redesign .about-grid{align-items:center}
+@media(max-width:640px){.home-redesign .about-portrait{max-width:210px}}
