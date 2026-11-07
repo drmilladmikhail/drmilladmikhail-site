@@ -730,3 +730,70 @@ html[lang="ar"] body.home-redesign .credentials-facts li .fact-copy>span {displa
 @media(max-width:760px){html[lang="ar"] body.home-redesign .credentials-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){html[lang="ar"] body.home-redesign .credentials-facts{grid-template-columns:1fr}html[lang="ar"] body.home-redesign .credentials-facts li{min-height:0}}
 @media(prefers-reduced-motion:reduce){html[lang="ar"] body.home-redesign .daily *{scroll-behavior:auto}}
+
+
+/* Stronger personal identity and a welcoming colored hero on the Arabic homepage. */
+html[lang="ar"] body.home-redesign .topbar,
+html[lang="ar"] body.home-redesign .topbar.topbar-dark {
+  background: linear-gradient(115deg,#173f3b 0%,#20584f 58%,#285f57 100%);
+  color: #fff;
+  border-bottom: 1px solid rgba(231,195,123,.48);
+  box-shadow: 0 8px 26px rgba(19,54,49,.18);
+}
+html[lang="ar"] body.home-redesign .brand { color: #fff; gap: 13px; }
+html[lang="ar"] body.home-redesign .brand-mark.brand-portrait {
+  display:block; width:58px; height:58px; flex:none; object-fit:cover;
+  border-radius:50%; border:3px solid #e5bd72;
+  box-shadow:0 0 0 3px rgba(255,255,255,.16),0 5px 16px rgba(0,0,0,.2);
+  background:#dce8df;
+}
+html[lang="ar"] body.home-redesign .brand-text b {
+  color:#fff; font-family:"IBM Plex Sans Arabic",sans-serif;
+  font-size:clamp(23px,2.4vw,29px); font-weight:700;
+  text-shadow:0 1px 2px rgba(0,0,0,.18);
+}
+html[lang="ar"] body.home-redesign .brand-text small {
+  color:#e4eee8; font-size:14px; font-weight:500;
+}
+html[lang="ar"] body.home-redesign .nav a,
+html[lang="ar"] body.home-redesign .nav summary { color:#e6efea; }
+html[lang="ar"] body.home-redesign .nav a:hover,
+html[lang="ar"] body.home-redesign .nav summary:hover { color:#f0cc83; }
+html[lang="ar"] body.home-redesign .menu summary {
+  color:#fff; border-color:rgba(255,255,255,.42);
+  background:rgba(255,255,255,.08);
+}
+html[lang="ar"] body.home-redesign .menu summary svg { stroke:#fff; }
+html[lang="ar"] body.home-redesign .hero,
+html[lang="ar"] body.home-redesign .hero.hero-dark {
+  position:relative; overflow:hidden;
+  background:
+    radial-gradient(ellipse at 12% 18%,rgba(255,255,255,.58),transparent 42%),
+    radial-gradient(ellipse at 88% 82%,rgba(231,195,123,.24),transparent 36%),
+    linear-gradient(125deg,#dcece4 0%,#dce8ed 48%,#eee3d5 100%);
+  color:#183c36; border-bottom:1px solid #c4d7ce;
+}
+html[lang="ar"] body.home-redesign .hero::before {
+  content:""; position:absolute; width:340px; height:340px; border-radius:50%;
+  inset-inline-start:-150px; top:-180px; border:1px solid rgba(43,103,89,.13);
+  box-shadow:0 0 0 24px rgba(43,103,89,.035),0 0 0 50px rgba(43,103,89,.025);
+  pointer-events:none;
+}
+html[lang="ar"] body.home-redesign .hero .wrap { position:relative; z-index:1; }
+html[lang="ar"] body.home-redesign .hero .quiz-kicker { color:#356c5d; font-weight:700; }
+html[lang="ar"] body.home-redesign .hero-name { color:#173e37; }
+html[lang="ar"] body.home-redesign .slogan { color:#286b5d; }
+html[lang="ar"] body.home-redesign .statement { color:#405e58; }
+html[lang="ar"] body.home-redesign .hero .btn-gold,
+html[lang="ar"] body.home-redesign .hero .btn.primary {
+  background:#205c50; border-color:#205c50; color:#fff;
+  box-shadow:0 8px 18px rgba(32,92,80,.17);
+}
+html[lang="ar"] body.home-redesign .hero .btn-ghost {
+  background:rgba(255,255,255,.45); border-color:#7ca497; color:#205c50;
+}
+@media(max-width:640px) {
+ html[lang="ar"] body.home-redesign .brand-mark.brand-portrait {width:50px;height:50px}
+ html[lang="ar"] body.home-redesign .brand-text b {font-size:22px}
+ html[lang="ar"] body.home-redesign .brand-text small {font-size:12px}
+}
