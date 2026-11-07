@@ -185,3 +185,48 @@ Public-facing profiles should show only the minimum verified summary. Do not exp
 5. Only then design a secure, private application intake flow.
 
 No live application form or document upload should be activated before these gates are met.
+
+
+## 12. Approved multi-track directory taxonomy
+
+The Egypt directory will include four distinct tracks. These categories are not interchangeable, and a profile must never appear in a clinical-care search solely because the person is an academic, researcher, trainer, author, or speaker.
+
+### Track 1 — Clinical and regulated practitioners
+Psychiatrists, psychologists, and non-physician psychotherapists may be listed only after category-specific review of title, qualifications, applicable license/registration, current status, scope, and official verification source. The legal route for non-physician psychotherapy must be confirmed directly with the Ministry of Health and Population.
+
+### Track 2 — Researchers and academics
+Include researchers, university faculty, lecturers, and academic contributors whose qualifications and claims can be checked. Review:
+- Degree, field, awarding institution, and year where relevant.
+- Current or former institutional affiliation, accurately dated.
+- Research interests and methods, without overstating expertise.
+- Publications and research output through DOI, journal/publisher, institutional repository, ISBN, or conference records where available.
+- Academic titles and appointments only when supported by institutional evidence.
+
+This track is scientific/academic discovery, not clinical authorization. An academic title or publication record does not establish permission to provide psychotherapy or other regulated clinical services.
+
+### Track 3 — Trainers and psychoeducation providers
+Include trainers and providers of workshops, awareness sessions, educational programs, and personal-development training when their experience and program claims can be substantiated. Review:
+- Training credentials and issuing organizations.
+- Program outline, intended audience, learning objectives, and delivery format.
+- Relevant teaching/training experience and references where appropriate.
+- Clear boundaries: educational content is not diagnosis, psychotherapy, treatment, or emergency care.
+
+Do not permit claims of diagnosing or treating mental disorders unless the person independently holds the required authorization for that activity. Do not use "therapist", "psychotherapist", or clinical titles as a marketing synonym for trainer.
+
+### Track 4 — Authors and speakers
+Include authors, public speakers, and science communicators with verifiable books, articles, talks, or educational work. Verify publisher/ISBN, journal, event, or institutional records where possible. Describe contributions factually and do not imply clinical endorsement.
+
+### Cross-track rules
+- A person may appear in multiple tracks only when each role is independently evidenced and separately approved.
+- Clinical service filters must return only profiles with verified legal authorization and approved scope.
+- Academic and training profiles must be excluded from clinical treatment search results unless their separate clinical credentials and authorization are verified.
+- No ratings, testimonials, paid ranking, or clinical outcome claims in the first release.
+- Public profile fields must be minimal, accurate, consented, and separated from restricted evidence and reviewer notes.
+
+### Launch sequence for the four tracks
+1. Define and legally review the clinical category checklist.
+2. Define academic evidence and publication-quality rules.
+3. Define trainer eligibility, prohibited claims, and educational disclaimer.
+4. Define author/speaker evidence rules.
+5. Build distinct profile labels and filters only after these rules are approved.
+6. Pilot each track separately using synthetic records before inviting real applicants.
