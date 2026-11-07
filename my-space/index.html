@@ -15,7 +15,18 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <style>
-.space-hero{padding:34px 0 24px}.space-panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0}.space-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}.space-stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}.space-stat strong{display:block;font-size:30px;color:var(--eucalyptus)}.space-track{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin:14px 0}.space-track span{display:block;height:100%;width:0;background:var(--eucalyptus);transition:width .2s ease}.space-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.space-links a{display:inline-block;padding:11px 16px;border-radius:12px;background:var(--eucalyptus);color:white;text-decoration:none;font-weight:600}.space-links a.secondary{background:transparent;color:var(--eucalyptus);border:1px solid var(--eucalyptus)}.space-note{font-size:14px;color:var(--muted)}@media(prefers-reduced-motion:reduce){.space-track span{transition:none}}
+.space-hero{padding:34px 0 24px}.space-panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0}.space-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}.space-stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}.space-stat strong{display:block;font-size:30px;color:var(--eucalyptus)}.space-track{height:12px;border-radius:99px;background:var(--line);overflow:hidden;margin:14px 0}.space-track span{display:block;height:100%;width:0;background:var(--eucalyptus);transition:width .2s ease}.space-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.space-links a{display:inline-block;padding:11px 16px;border-radius:12px;background:var(--eucalyptus);color:white;text-decoration:none;font-weight:600}.space-links a.secondary{background:transparent;color:var(--eucalyptus);border:1px solid var(--eucalyptus)}.space-note{font-size:14px;color:var(--muted)}
+.space-challenges{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.space-challenges h3{margin:0;font-size:20px}
+.space-challenge-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.space-challenge-item{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
+.space-challenge-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:14px}
+.space-challenge-heading span{color:var(--eucalyptus);font-weight:700;white-space:nowrap}
+.space-mini-track{height:8px;margin-top:10px;overflow:hidden;border-radius:99px;background:var(--line)}
+.space-mini-track span{display:block;height:100%;border-radius:99px;background:var(--eucalyptus)}
+.space-empty{grid-column:1/-1;margin:0;padding:18px;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}
+@media(max-width:560px){.space-challenge-list{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.space-track span{transition:none}}
 </style>
 </head>
 <body>
