@@ -39,6 +39,13 @@
   }
 }
 </script>
+<style>
+/* Locally generated achievement card controls */
+.journey-share-wrap{margin:16px 0;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--mist)}
+.journey-share-image{min-height:48px;padding:10px 18px;border:0;border-radius:999px;background:var(--eucalyptus);color:var(--eucalyptus-ink);font:inherit;font-weight:700;cursor:pointer}
+.journey-share-image:disabled{opacity:.65;cursor:wait}
+.journey-share-hint{margin:8px 0 0;color:var(--muted);font-size:13px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">تخطّى للمحتوى</a>
@@ -230,6 +237,10 @@
           <li><label><input type="checkbox" data-key="seven-day-journey-7"> <span><b>اليوم 7 · راجع:</b> إيه الخطوة اللي حابب تكمل عليها الأسبوع الجاي؟</span></label></li>
         </ol>
         <p class="journey-private">🔒 تقدمك بيتحفظ على جهازك فقط. مفيش حساب، ومفيش إجابات شخصية بتتبعت للموقع.</p>
+        <div class="journey-share-wrap" data-journey-share-wrap hidden>
+          <button type="button" class="journey-share-image" data-journey-share>صمّم بطاقة إنجازك وشاركها</button>
+          <p class="journey-share-hint" data-journey-share-hint role="status" aria-live="polite">الصورة بتتجهز على جهازك فقط؛ مفيش بيانات بتتبعت للموقع.</p>
+        </div>
         <button type="button" class="sh journey-reset" data-journey-reset>ابدأ الرحلة من جديد</button>
       </article>
       <div class="safety-note" role="note"><p>التحديات دي للتجربة وتحسين المزاج، ومش علاج. لو حاسس إنك مش بخير لفترة طويلة، كلّم متخصص. مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p></div>
