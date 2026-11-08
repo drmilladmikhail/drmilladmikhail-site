@@ -133,7 +133,7 @@ TESTS = [
         ],
         "source": 'Radloff, L. S. (1977). The CES-D Scale: A self-report depression scale for research in the general population. <em>Applied Psychological Measurement, 1</em>(3), 385–401. https://doi.org/10.1177/014662167700100306 — المقياس متاح في الملكية العامة وفق <a href="https://www.apa.org/depression-guideline/assessment" target="_blank" rel="noopener">الجمعية الأمريكية لعلم النفس</a>، وتعرضه <a href="https://www.ncbi.nlm.nih.gov/sites/books/NBK572958/" target="_blank" rel="noopener">SAMHSA عبر مكتبة NCBI</a> ضمن مادة متاحة بترخيص الملكية العامة.',
         "note": "كل بند بيتحسب من 0 إلى 3، والبنود 4 و8 و12 و16 بتتحسب بالعكس. المجموع من 0 إلى 60. الدرجة 16 أو أكتر تُستخدم كحد فحص شائع، لكن الحدود قد تختلف حسب المجتمع والسياق؛ والترجمة هنا مبسطة وليست نسخة عربية مقننة.",
-        "related": null,
+        "related": None,
         "safety": True,
     },
     {
