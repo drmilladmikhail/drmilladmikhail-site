@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Finalize pages with shared navigation, security, analytics and sitemap policy.
-
-Run: python3 tools/add_analytics.py
-Existing build scripts call this at the end of generation.
-"""
+"""Finalize navigation, security, analytics, sitemap and growth pages."""
 import os
 import re
 
@@ -16,7 +12,6 @@ CSP = ("default-src 'self'; script-src 'self' https://static.cloudflareinsights.
        "img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; "
        "frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; "
        "object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests")
-# Comments are allowed only after content/comments.json has an app_id.
 try:
     import json as _json
     with open(os.path.join(ROOT, "content", "comments.json"), encoding="utf-8") as _f:
@@ -60,10 +55,11 @@ def main():
             with open(path, "w", encoding="utf-8") as f:
                 f.write(t)
             changed.append(os.path.relpath(path, ROOT))
-    print(f"analytics/security: updated {len(changed)} page(s)" + (": " + ", ".join(changed) if changed else ""))
+    print(f"analytics/security: updated {len(changed)} page(s)")
     import sitemap_policy
-    sitemap_changed = sitemap_policy.apply(ROOT)
-    print(f"sitemap policy: changed={sitemap_changed}")
+    print(f"sitemap policy: changed={sitemap_policy.apply(ROOT)}")
+    import growth_package
+    growth_package.apply_pages(ROOT)
 
 
 if __name__ == "__main__":

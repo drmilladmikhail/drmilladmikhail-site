@@ -2,32 +2,114 @@ name: Site checks
 
 on:
   push:
+    branches: [main, growth/site-growth-package]
+    paths: ['**.html', 'articles/articles.json', 'sitemap.xml', 'tools/**', '.github/workflows/site-checks.yml']
+  pull_request:
     branches: [main]
-    paths: ["**.html", "sitemap.xml", "tools/add_analytics.py", "tools/sitemap_policy.py"]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  analytics:
+  growth-validation:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Finalize pages and sitemap
-        run: python3 tools/add_analytics.py
-      - name: Commit if anything changed
+      - name: Install test dependencies
         run: |
+          pip install pillow playwright
+          python -m playwright install --with-deps chromium
+      - name: Prepare and build package
+        run: |
+          python -m compileall -q tools
+          python tools/growth_package.py
+          python tools/build_articles.py
+      - name: Verify package and mobile pages
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          import sys
+          import time
+          import xml.etree.ElementTree as ET
+          from playwright.sync_api import sync_playwright
+          sys.path.insert(0, 'tools')
+          import growth_package
+          root = Path('.')
+          first = {p: p.read_bytes() for p in [Path('index.html'), Path('start/index.html')]}
+          growth_package.apply_pages(root)
+          assert all(p.read_bytes() == data for p, data in first.items()), 'Non-idempotent pages'
+          sm = ET.parse('sitemap.xml')
+          ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          assert not sm.findall('.//s:lastmod', ns)
+          assert any(n.text == 'https://drmilladmikhail.com/myth-fact/' for n in sm.findall('.//s:loc', ns))
+          article = Path('articles/four-attachment-styles/index.html').read_text(encoding='utf-8')
+          assert 'GROWTH-NOTES:BEGIN' in article and 'health.clevelandclinic.org' in article
+          Path('test-artifacts').mkdir(exist_ok=True)
+          server = subprocess.Popen(['python', '-m', 'http.server', '8765', '--bind', '127.0.0.1'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+          try:
+              time.sleep(2)
+              with sync_playwright() as p:
+                  browser = p.chromium.launch()
+                  page = browser.new_page(viewport={'width': 390, 'height': 844})
+                  for slug, name in [('/', 'home'), ('/start/', 'start'), ('/articles/four-attachment-styles/', 'attachment')]:
+                      response = page.goto('http://127.0.0.1:8765' + slug, wait_until='load')
+                      assert response.status == 200, slug
+                      assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth'), slug
+                      if name == 'start':
+                          cards = page.locator('[aria-labelledby="journey-title"] .link-grid a')
+                          assert cards.count() == 4
+                          for link in cards.all():
+                              assert page.request.get('http://127.0.0.1:8765' + link.get_attribute('href')).status == 200
+                          details = page.locator('details.journey-tests')
+                          assert not details.evaluate('(el) => el.open')
+                          details.locator('summary').click()
+                          assert details.locator('.plain-list').is_visible()
+                          assert page.locator('.safety-note').count() >= 1
+                      page.screenshot(path='test-artifacts/' + name + '-mobile.png', full_page=True)
+                  browser.close()
+          finally:
+              server.terminate()
+              server.wait(timeout=10)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: growth-package-preview
+          path: |
+            test-artifacts/
+            index.html
+            start/index.html
+            articles/
+            sitemap.xml
+          retention-days: 7
+
+  commit-generated:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: growth-validation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow
+      - name: Build and save reviewed package
+        run: |
+          python tools/growth_package.py
+          python tools/build_articles.py
           git config user.name "site-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -A -- '*.html' sitemap.xml
-          if git diff --cached --quiet; then
-            echo "Pages and sitemap already up to date."
-          else
-            git commit -m "Finalize site pages and sitemap"
-            git pull --rebase --quiet origin main
+          git add -A -- '*.html' articles/articles.json sitemap.xml llms.txt assets/articles-index.json assets/og
+          if ! git diff --cached --quiet; then
+            git commit -m "Build reviewed visitor growth package"
+            git pull --rebase origin main
             git push
           fi
