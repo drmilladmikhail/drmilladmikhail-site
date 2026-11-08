@@ -1,0 +1,164 @@
+name: Build and publish verified site
+on:
+  push:
+    branches: [main, feature/research-library]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: verified-site-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install build and browser dependencies
+        run: |
+          pip install pillow playwright
+          python -m playwright install --with-deps chromium
+      - name: Restore approved homepage sources from immutable commit
+        run: |
+          curl --fail --silent --show-error --retry 3 https://raw.githubusercontent.com/drmilladmikhail/drmilladmikhail-site/188870a6cb6b293e7f94b5090fa346c6b96d058d/tools/home_clarity.py -o tools/home_clarity.py
+          curl --fail --silent --show-error --retry 3 https://raw.githubusercontent.com/drmilladmikhail/drmilladmikhail-site/188870a6cb6b293e7f94b5090fa346c6b96d058d/assets/home-clarity.css -o assets/home-clarity.css
+      - name: Build all reviewed changes without committing generated files
+        run: |
+          python -m compileall -q tools
+          python tools/growth_package.py
+          python tools/build_articles.py
+          python tools/home_clarity.py
+          python tools/build_research.py
+      - name: Verify preservation, repeatability and responsive pages
+        run: |
+          python - <<'PY'
+          import re
+          import subprocess
+          import sys
+          import time
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          sys.path.insert(0, 'tools')
+          import home_clarity
+          import build_research
+          import site_header
+          paths = [Path(p) for p in ['index.html', 'research/index.html', 'sitemap.xml']]
+          first = {p: p.read_bytes() for p in paths}
+          home = paths[0].read_text()
+          header = site_header.HEADER_RE.search(home).group(0)
+          home_clarity.apply(Path('.'))
+          build_research.build(Path('.'))
+          assert all(p.read_bytes() == v for p, v in first.items()), 'Non-idempotent build'
+          assert site_header.HEADER_RE.search(paths[0].read_text()).group(0) == header
+          assert 'home-clarity.css' in home and 'clarity-hero' in home
+          assert all('id="' + k + '"' in home for k in ['about', 'credentials', 'articles'])
+          assert site_header.header_for('research/index.html') in paths[1].read_text()
+          assert home.count('<h1') == 1
+          Path('test-artifacts').mkdir(exist_ok=True)
+          server = subprocess.Popen(['python', '-m', 'http.server', '8765', '--bind', '127.0.0.1'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+          try:
+              time.sleep(2)
+              with sync_playwright() as p:
+                  browser = p.chromium.launch()
+                  for width in [390, 1280]:
+                      page = browser.new_page(viewport={'width': width, 'height': 900})
+                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start')]:
+                          response = page.goto('http://127.0.0.1:8765' + slug, wait_until='domcontentloaded')
+                          assert response.status == 200, slug
+                          assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), slug
+                          assert page.locator('header.topbar').count() == 1
+                          if name == 'research':
+                              assert page.locator('main details').count() == 3
+                              panel = page.locator('main details').nth(1)
+                              panel.locator('summary').click()
+                              assert panel.evaluate('(el) => el.open')
+                          page.screenshot(path=f'test-artifacts/{name}-{width}.png', full_page=True)
+                      page.close()
+                  browser.close()
+          finally:
+              server.terminate()
+              server.wait(timeout=10)
+          PY
+      - name: Prepare public files only
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+          root = Path('.')
+          target = root / '_site'
+          target.mkdir(exist_ok=True)
+          skip = {'.git', '.github', 'tools', 'content', 'docs', 'node_modules', 'test-artifacts', '_site', '__pycache__', 'output'}
+          for p in root.iterdir():
+              if p.name in skip or p.suffix in {'.py', '.pyc', '.md'}:
+                  continue
+              if p.is_dir():
+                  shutil.copytree(p, target / p.name, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'), dirs_exist_ok=True)
+              else:
+                  shutil.copy2(p, target / p.name)
+          assert (target / 'research/index.html').is_file()
+          assert (target / 'CNAME').read_text().strip() == 'drmilladmikhail.com'
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verified-site-preview
+          path: test-artifacts/
+          retention-days: 7
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Verify existing custom domain before changing Pages source
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          current=$(gh api repos/drmilladmikhail/drmilladmikhail-site/pages --jq '.cname')
+          if [ "$current" != 'drmilladmikhail.com' ]; then
+            echo 'Existing GitHub Pages domain not verified. No hosting or DNS change made.'
+            exit 1
+          fi
+          gh api --method PUT repos/drmilladmikhail/drmilladmikhail-site/pages -f build_type=workflow
+      - uses: actions/configure-pages@v5
+      - name: Deploy tested artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Check public research and homepage
+        run: |
+          python - <<'PY'
+          import time
+          from urllib.request import Request, urlopen
+          expected = {'https://drmilladmikhail.com/research/': 'مرصد الأبحاث النفسية', 'https://drmilladmikhail.com/': 'home-clarity.css'}
+          pending = dict(expected)
+          for attempt in range(12):
+              for url, marker in list(pending.items()):
+                  try:
+                      request = Request(url, headers={'Cache-Control': 'no-cache', 'User-Agent': 'SiteReleaseCheck/1.0'})
+                      with urlopen(request, timeout=15) as response:
+                          text = response.read().decode('utf-8')
+                          if response.status == 200 and marker in text:
+                              del pending[url]
+                  except Exception as exc:
+                      print(url, type(exc).__name__)
+              if not pending:
+                  break
+              time.sleep(10)
+          if pending:
+              raise SystemExit('Public verification incomplete: ' + ', '.join(pending))
+          PY
