@@ -1,0 +1,76 @@
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const form = $("research-query"), button = $("research-submit");
+  const status = $("research-status"), results = $("research-results");
+  const count = $("results-count"), title = $("results-title");
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const terms = (q) => q.trim().split(/\s+/).filter(Boolean).slice(0,8);
+  function card(source, heading, description, url, meta="") {
+    return '<article class="research-card"><span class="source-tag">'+esc(source)+'</span><h3>'+esc(heading)+'</h3>' +
+      (description ? '<p>'+esc(description)+'</p>' : '') + (meta ? '<p>'+esc(meta)+'</p>' : '') +
+      '<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">افتح المصدر الأصلي ↗</a></article>';
+  }
+  async function searchSite(q) {
+    const sitemap = await fetch("/sitemap.xml",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("تعذر قراءة فهرس الموقع");return r.text();});
+    const doc = new DOMParser().parseFromString(sitemap,"application/xml");
+    const urls = [...doc.querySelectorAll("loc")].map(n=>n.textContent.trim()).filter(u=>new URL(u).origin===location.origin);
+    const selected = urls.filter(u=>/\/articles\/|\/tests\/|\/paths\/|\/platform\//.test(new URL(u).pathname)).slice(0,35);
+    const words = terms(q).map(w=>w.toLowerCase());
+    const pages = await Promise.all(selected.map(async url=>{
+      try {
+        const html=await fetch(url,{signal:AbortSignal.timeout(7000)}).then(r=>r.ok?r.text():"");
+        const d=new DOMParser().parseFromString(html,"text/html");
+        const heading=d.querySelector("h1")?.textContent?.trim() || d.title;
+        const desc=d.querySelector('meta[name="description"]')?.content || "";
+        const body=(d.querySelector("main")?.textContent || d.body.textContent || "").replace(/\s+/g," ").slice(0,600);
+        const hay=(heading+" "+desc+" "+body).toLowerCase();
+        const score=words.reduce((n,w)=>n+(hay.includes(w)?1:0),0);
+        return score?{heading,desc,url,score}:null;
+      } catch { return null; }
+    }));
+    return pages.filter(Boolean).sort((a,b)=>b.score-a.score).slice(0,8)
+      .map(x=>card("محتوى الموقع",x.heading,x.desc,x.url));
+  }
+  async function searchPubMed(q) {
+    const base="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+    const ids=await fetch(base+"esearch.fcgi?db=pubmed&retmode=json&retmax=8&sort=relevance&term="+encodeURIComponent(q))
+      .then(r=>{if(!r.ok)throw Error("PubMed غير متاح مؤقتًا");return r.json();});
+    const list=ids.esearchresult?.idlist||[];
+    if(!list.length)return [];
+    const data=await fetch(base+"esummary.fcgi?db=pubmed&retmode=json&id="+list.join(",")).then(r=>r.json());
+    return list.map(id=>{const x=data.result?.[id];if(!x)return "";const authors=(x.authors||[]).slice(0,3).map(a=>a.name).join(", ");
+      return card("PubMed",x.title||"Untitled study","", "https://pubmed.ncbi.nlm.nih.gov/"+id+"/", [x.fulljournalname||x.source,x.pubdate,authors].filter(Boolean).join(" · "));}).filter(Boolean);
+  }
+  async function searchCrossref(q) {
+    const data=await fetch("https://api.crossref.org/works?rows=8&select=title,author,published,container-title,DOI,type&query.bibliographic="+encodeURIComponent(q),{headers:{"Accept":"application/json"}})
+      .then(r=>{if(!r.ok)throw Error("Crossref غير متاح مؤقتًا");return r.json();});
+    return (data.message?.items||[]).map(x=>{
+      const heading=x.title?.[0]||"Untitled publication", authors=(x.author||[]).slice(0,3).map(a=>[a.given,a.family].filter(Boolean).join(" ")).join(", ");
+      const date=x.published?.["date-parts"]?.[0]?.join("-")||"";
+      const doi=x.DOI;
+      return card("Crossref",heading,"",doi?"https://doi.org/"+doi:"https://search.crossref.org/?q="+encodeURIComponent(heading),[x["container-title"]?.[0],date,authors].filter(Boolean).join(" · "));
+    });
+  }
+  async function run() {
+    const q=form.value.trim();
+    if(q.length<3){status.textContent="اكتب سؤالًا أو موضوعًا من 3 أحرف على الأقل.";form.focus();return;}
+    button.disabled=true;button.textContent="جارٍ البحث…";results.innerHTML="";status.className="research-status";status.textContent="بنبحث في المصادر المحددة. قد يستغرق الأمر عدة ثوانٍ.";
+    const scope=$("research-scope").value;
+    const tasks=[];
+    if(scope!=="papers")tasks.push(searchSite(q).then(x=>({name:"site",items:x})).catch(e=>({name:"site",error:e.message,items:[]})));
+    if(scope!=="site"){tasks.push(searchPubMed(q).then(x=>({name:"pubmed",items:x})).catch(e=>({name:"pubmed",error:e.message,items:[]})));
+      tasks.push(searchCrossref(q).then(x=>({name:"crossref",items:x})).catch(e=>({name:"crossref",error:e.message,items:[]})));}
+    const settled=await Promise.all(tasks);
+    const html=settled.flatMap(x=>x.items);
+    results.innerHTML=html.join("");
+    count.textContent=html.length+" نتيجة";
+    title.textContent="نتائج البحث عن: "+q;
+    const errors=settled.filter(x=>x.error).map(x=>x.error);
+    if(html.length)status.textContent="تم العثور على نتائج. راجع كل مصدر وافتح الدراسة الأصلية؛ لا تعرض هذه النسخة التجريبية ملخصًا مولّدًا بالذكاء الاصطناعي بعد.";
+    else status.textContent=errors.length?"لم نتمكن من جلب نتائج من بعض المصادر. حاول مرة أخرى أو غيّر صياغة البحث.":"لم نعثر على نتائج مطابقة. جرّب كلمات مفتاحية أوسع أو باللغة الإنجليزية.";
+    if(errors.length)status.textContent+=" ("+errors.join("؛ ")+")";
+    button.disabled=false;button.textContent="ابدأ البحث";
+  }
+  button.addEventListener("click",run);
+  form.addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();run();}});
+})();
