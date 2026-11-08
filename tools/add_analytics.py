@@ -60,6 +60,8 @@ def main():
     print(f"sitemap policy: changed={sitemap_policy.apply(ROOT)}")
     import growth_package
     growth_package.apply_pages(ROOT)
+    import home_clarity
+    print(f"homepage clarity: changed={home_clarity.apply(ROOT)}")
 
 
 if __name__ == "__main__":
