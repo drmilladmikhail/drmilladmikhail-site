@@ -33,7 +33,7 @@ jobs:
           python3 tools/build_tests.py
           python3 tools/build_articles.py
       - name: Verify generated files are committed
-        run: git diff --exit-code -- tests/index.html tests/tests.json tests/depression-cesd/index.html sitemap.xml
+        run: git diff --exit-code -- tests/index.html tests/tests.json tests/depression-cesd/index.html sitemap.xml llms.txt
       - name: Run scoring and mobile smoke tests
         run: |
           python -m http.server 8765 >/tmp/site-http.log 2>&1 &
