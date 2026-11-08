@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url><loc>https://drmilladmikhail.com/</loc><xhtml:link rel="alternate" hreflang="ar" href="https://drmilladmikhail.com/"/><xhtml:link rel="alternate" hreflang="en" href="https://drmilladmikhail.com/en/"/></url>
-  <url><loc>https://drmilladmikhail.com/en/</loc><xhtml:link rel="alternate" hreflang="ar" href="https://drmilladmikhail.com/"/><xhtml:link rel="alternate" hreflang="en" href="https://drmilladmikhail.com/en/"/></url>
+<?xml version='1.0' encoding='utf-8'?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:html="http://www.w3.org/1999/xhtml">
+  <url><loc>https://drmilladmikhail.com/</loc><html:link rel="alternate" hreflang="ar" href="https://drmilladmikhail.com/" /><html:link rel="alternate" hreflang="en" href="https://drmilladmikhail.com/en/" /></url>
+  <url><loc>https://drmilladmikhail.com/en/</loc><html:link rel="alternate" hreflang="ar" href="https://drmilladmikhail.com/" /><html:link rel="alternate" hreflang="en" href="https://drmilladmikhail.com/en/" /></url>
   <url><loc>https://drmilladmikhail.com/articles/</loc></url>
   <url><loc>https://drmilladmikhail.com/articles/four-attachment-styles/</loc></url>
   <url><loc>https://drmilladmikhail.com/articles/why-we-choose-the-same-person/</loc></url>
@@ -42,4 +42,4 @@
   <url><loc>https://drmilladmikhail.com/stories/</loc></url>
   <url><loc>https://drmilladmikhail.com/shelf/</loc></url>
   <url><loc>https://drmilladmikhail.com/myth-fact/</loc></url>
-</urlset>
+<url><loc>https://drmilladmikhail.com/research/</loc></url></urlset>
