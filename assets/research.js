@@ -1,6 +1,7 @@
 (() => {
   const $ = (id) => document.getElementById(id);
-  const isEn = document.documentElement.lang === "en";\n  const tr = (ar, en) => isEn ? en : ar;
+  const isEn = document.documentElement.lang === "en";
+  const tr = (ar, en) => isEn ? en : ar;
   const form = $("research-query"), button = $("research-submit");
   const status = $("research-status"), results = $("research-results");
   const count = $("results-count"), title = $("results-title");
