@@ -30,6 +30,78 @@
   openHash();
 })();
 
+/* Site-wide announcement ticker for the latest published self-assessment. */
+(function () {
+  var header = document.querySelector('.topbar');
+  if (!header || document.querySelector('.site-announcement')) return;
+
+  try {
+    if (sessionStorage.getItem('siteAnnouncementDismissed') === 'cesd-2026-11') return;
+  } catch (e) {}
+
+  var isEnglish = document.documentElement.lang === 'en';
+  var bar = document.createElement('aside');
+  bar.className = 'site-announcement';
+  bar.setAttribute('aria-label', isEnglish ? 'New on the site' : 'إعلان جديد على الموقع');
+
+  var label = document.createElement('span');
+  label.className = 'site-announcement-label';
+  label.textContent = isEnglish ? 'NEW' : 'جديد';
+
+  var viewport = document.createElement('div');
+  viewport.className = 'site-announcement-viewport';
+
+  var message = isEnglish
+    ? 'New today: the CES-D depression symptoms scale is now available (20 questions). Start the self-assessment.'
+    : 'تمت إضافة مقياس أعراض الاكتئاب CES-D اليوم — 20 سؤالًا — ابدأ التقييم الآن.';
+
+  var track = document.createElement('div');
+  track.className = 'site-announcement-track';
+  for (var i = 0; i < 2; i++) {
+    var link = document.createElement('a');
+    link.className = 'site-announcement-link';
+    link.href = '/tests/depression-cesd/';
+    link.textContent = message;
+    if (i === 1) link.setAttribute('aria-hidden', 'true');
+    track.appendChild(link);
+  }
+  viewport.appendChild(track);
+
+  var close = document.createElement('button');
+  close.className = 'site-announcement-close';
+  close.type = 'button';
+  close.setAttribute('aria-label', isEnglish ? 'Dismiss announcement' : 'إخفاء الإعلان');
+  close.textContent = '×';
+  close.addEventListener('click', function () {
+    bar.remove();
+    try { sessionStorage.setItem('siteAnnouncementDismissed', 'cesd-2026-11'); } catch (e) {}
+  });
+
+  bar.appendChild(label);
+  bar.appendChild(viewport);
+  bar.appendChild(close);
+  header.insertAdjacentElement('afterend', bar);
+
+  var style = document.createElement('style');
+  style.textContent = [
+    '.site-announcement{position:relative;z-index:20;display:flex;align-items:center;gap:12px;min-height:46px;padding:7px max(16px,calc((100% - 1080px)/2));background:#173f38;color:#fff;border-bottom:1px solid rgba(255,255,255,.14);overflow:hidden;font:600 14px/1.5 inherit}',
+    '.site-announcement-label{flex:none;padding:3px 10px;border-radius:999px;background:#e2b35a;color:#20352f;font-size:12px;font-weight:700}',
+    '.site-announcement-viewport{flex:1;min-width:0;overflow:hidden}',
+    '.site-announcement-track{display:flex;width:max-content;direction:rtl;animation:site-announcement-scroll 24s linear infinite}',
+    '.site-announcement-link{display:block;flex:none;padding-inline:32px;color:#fff;text-decoration:none;white-space:nowrap}',
+    '.site-announcement-link:hover{text-decoration:underline}',
+    '.site-announcement-close{flex:none;width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font:400 22px/1 Arial,sans-serif;cursor:pointer}',
+    '.site-announcement-close:hover{background:rgba(255,255,255,.22)}',
+    '@keyframes site-announcement-scroll{from{transform:translateX(0)}to{transform:translateX(50%)}}',
+    'html[lang="en"] .site-announcement-track{direction:ltr;animation-name:site-announcement-scroll-en}',
+    '@keyframes site-announcement-scroll-en{from{transform:translateX(-50%)}to{transform:translateX(0)}}',
+    '@media(hover:hover){.site-announcement-viewport:hover .site-announcement-track{animation-play-state:paused}}',
+    '@media(max-width:480px){.site-announcement{gap:8px;min-height:44px;padding-inline:10px;font-size:12px}.site-announcement-link{padding-inline:22px}}',
+    '@media(prefers-reduced-motion:reduce){.site-announcement-track{animation:none!important;width:100%}.site-announcement-link[aria-hidden="true"]{display:none}.site-announcement-link{white-space:normal;padding:2px 8px}}'
+  ].join('');
+  document.head.appendChild(style);
+})();
+
 /* Persistent, accessible route back to the homepage on every page using the shared navigation script. */
 (function () {
   if (document.querySelector(".floating-home")) return;
