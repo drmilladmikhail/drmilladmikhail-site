@@ -1,22 +1,5 @@
 #!/usr/bin/env python3
-"""Add the Cloudflare Web Analytics snippet and the security meta tags to every HTML page.
-
-Security (the site is hosted on GitHub Pages, which can't send custom HTTP headers):
-a Content-Security-Policy meta tag lists exactly which outside services a page may
-load from (Google Fonts, Unsplash and YouTube images, the YouTube player, Cloudflare
-analytics) and forbids inline scripts, plus a Referrer-Policy meta tag. If you add a
-new outside service (e.g. an AI chat API), add its host to CSP below and run this.
-
-Cloudflare Web Analytics counts visits and page views without cookies and
-without tracking individual visitors, so no cookie banner is needed.
-Dashboard: dash.cloudflare.com → Web Analytics → drmilladmikhail.com
-
-Run:  python3 tools/add_analytics.py
-The build scripts (build_articles.py, build_tests.py, build_videos.py) call it
-at the end, and the GitHub Action .github/workflows/site-checks.yml runs it
-after every push, so any new page gets the snippet automatically.
-It only touches full pages (with </body>) that don't have the snippet yet.
-"""
+"""Finalize shared navigation, security, analytics and the start journey."""
 import os
 import re
 
@@ -29,7 +12,6 @@ CSP = ("default-src 'self'; script-src 'self' https://static.cloudflareinsights.
        "img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; "
        "frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; "
        "object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests")
-# Comments (Cusdis) are allowed only after content/comments.json has an app_id.
 try:
     import json as _json
     with open(os.path.join(ROOT, "content", "comments.json"), encoding="utf-8") as _f:
@@ -50,7 +32,7 @@ def main():
     import sys
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import site_header
-    site_header.sync()  # same header + menus on every Arabic page
+    site_header.sync()
     changed = []
     for dirpath, dirnames, filenames in os.walk(ROOT):
         dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
@@ -74,6 +56,8 @@ def main():
                 f.write(t)
             changed.append(os.path.relpath(path, ROOT))
     print(f"analytics/security: updated {len(changed)} page(s)" + (": " + ", ".join(changed) if changed else ""))
+    import start_journey
+    print(f"start journey: changed={start_journey.apply(ROOT)}")
 
 
 if __name__ == "__main__":

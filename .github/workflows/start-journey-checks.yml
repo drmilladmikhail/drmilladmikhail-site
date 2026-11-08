@@ -1,0 +1,90 @@
+name: Start journey checks
+
+on:
+  push:
+    branches: [growth/start-page-needs-first]
+  pull_request:
+    branches: [main]
+    paths: ['start/**', 'tools/start_journey.py', 'tools/add_analytics.py', 'assets/**', '.github/workflows/start-journey-checks.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  start-journey:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser test tools
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Transform real page and check invariants
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, 'tools')
+          import start_journey
+
+          page = Path('start/index.html')
+          original = page.read_text(encoding='utf-8')
+          updated = start_journey.transform(original)
+          assert start_journey.transform(updated) == updated, 'Transform is not idempotent'
+          assert updated.count('id="journey-title"') == 1
+          assert updated.count('class="journey-tests"') == 1
+          safety = original.split('<div class="safety-note"', 1)[1].split('</div>', 1)[0]
+          assert '<div class="safety-note"' + safety + '</div>' in updated, 'Safety note changed'
+          assert original.count('<li><a href="/tests/') == updated.count('<li><a href="/tests/'), 'Test links changed'
+          page.write_text(updated, encoding='utf-8')
+          print('Real-page transformation checks passed.')
+          PY
+      - name: Test mobile layout and navigation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+          import time
+          from playwright.sync_api import sync_playwright
+
+          Path('test-artifacts').mkdir(exist_ok=True)
+          server = subprocess.Popen(['python', '-m', 'http.server', '8765', '--bind', '127.0.0.1'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+          try:
+              time.sleep(2)
+              with sync_playwright() as p:
+                  browser = p.chromium.launch()
+                  page = browser.new_page(viewport={'width': 390, 'height': 844})
+                  response = page.goto('http://127.0.0.1:8765/start/', wait_until='load')
+                  assert response.status == 200
+                  cards = page.locator('[aria-labelledby="journey-title"] .link-grid a')
+                  assert cards.count() == 4
+                  for link in cards.all():
+                      href = link.get_attribute('href')
+                      assert href.startswith('/')
+                      assert page.request.get('http://127.0.0.1:8765' + href).status == 200, href
+                  details = page.locator('details.journey-tests')
+                  assert not details.evaluate('(el) => el.open')
+                  details.locator('summary').click()
+                  assert details.evaluate('(el) => el.open')
+                  assert details.locator('.plain-list').is_visible()
+                  details.locator('summary').click()
+                  assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth'), 'Horizontal overflow at 390px'
+                  page.screenshot(path='test-artifacts/start-mobile.png', full_page=True)
+                  browser.close()
+          finally:
+              server.terminate()
+              server.wait(timeout=10)
+          PY
+      - name: Save page and screenshot for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: start-journey-preview
+          path: |
+            start/index.html
+            test-artifacts/
+          retention-days: 7
