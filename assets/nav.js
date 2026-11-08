@@ -118,3 +118,23 @@
   document.head.appendChild(style);
   document.body.appendChild(link);
 })();
+
+/* Bound the Arabic navigation without removing links or clipping the page. */
+(function () {
+  if (document.documentElement.lang !== 'ar' || document.getElementById('nav-layout-fix')) return;
+  var style = document.createElement('style');
+  style.id = 'nav-layout-fix';
+  style.textContent = [
+    'html[lang] body .topbar .wrap{flex-wrap:wrap;min-width:0;row-gap:8px;padding-block:10px}',
+    'html[lang] body .topbar .brand{max-width:100%;min-width:0}',
+    'html[lang] body .topbar .brand-text{min-width:0;white-space:normal;overflow-wrap:anywhere}',
+    'html[lang] body .topbar .nav{flex:1 1 680px;min-width:0;max-width:100%;flex-wrap:wrap;justify-content:flex-end;gap:8px 14px}',
+    'html[lang] body .topbar .nav>*,html[lang] body .topbar .dd{min-width:0;max-width:100%}',
+    'html[lang] body .topbar .dd:not([open])>.dd-panel{display:none}',
+    'html[lang] body .topbar .dd[open]>.dd-panel{position:fixed;left:20px;right:20px;inset-inline:20px;top:auto;width:auto;min-width:0;max-width:none;max-height:70vh;overflow-y:auto;white-space:normal;transform:none;margin-inline:0}',
+    'html[lang] body .topbar .dd-panel a{white-space:normal;overflow-wrap:anywhere}',
+    'html[lang] body .topbar .menu nav{position:fixed;left:16px;right:16px;inset-inline:16px;top:auto;width:auto;min-width:0;max-width:none;max-height:75vh;overflow-y:auto}',
+    '@media(max-width:1100px){html[lang] body .topbar .nav{display:none}html[lang] body .topbar .menu{display:block}}'
+  ].join('');
+  document.head.appendChild(style);
+})();
