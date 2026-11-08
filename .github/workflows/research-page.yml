@@ -1,0 +1,59 @@
+name: Research page preview and build
+on:
+  push:
+    branches: [main, feature/research-library]
+    paths: ['content/research-body.html', 'tools/build_research.py', '.github/workflows/research-page.yml']
+  pull_request:
+    branches: [main]
+    paths: ['content/research-body.html', 'tools/build_research.py', '.github/workflows/research-page.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: research-page-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build and test
+        run: |
+          python -m py_compile tools/build_research.py
+          python tools/build_research.py
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'tools')
+          from build_research import build
+          from site_header import header_for
+          paths = [Path(p) for p in ['research/index.html', 'index.html', 'sitemap.xml']]
+          before = {p: p.read_bytes() for p in paths}
+          page = build()
+          assert all(p.read_bytes() == data for p, data in before.items())
+          assert header_for('research/index.html') in page
+          assert page.count('<h1>') == 1
+          assert page.count('<details open>') == 1
+          assert 'https://pubmed.ncbi.nlm.nih.gov/40238104/' in page
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: research-page-preview
+          path: research/index.html
+          retention-days: 7
+      - name: Save generated page after approved merge only
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name 'research-page-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -- research/index.html index.html sitemap.xml
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build reviewed research page'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
