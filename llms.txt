@@ -21,6 +21,7 @@ Key facts:
 ## Free self-tests (Arabic, validated scales)
 - [اختبار نمط التعلق: انت آمن ولا قلقان ولا متجنب؟](https://drmilladmikhail.com/tests/attachment-style/)
 - [اختبار الاكتئاب (PHQ-8): مزاجك عامل إيه آخر أسبوعين؟](https://drmilladmikhail.com/tests/depression-phq8/)
+- [اختبار أعراض الاكتئاب (CES-D): آخر أسبوع](https://drmilladmikhail.com/tests/depression-cesd/)
 - [اختبار القلق (GAD-7): قلقك طبيعي ولا زيادة؟](https://drmilladmikhail.com/tests/anxiety-gad7/)
 - [اختبار تقدير الذات (روزنبرج): انت شايف نفسك إزاي؟](https://drmilladmikhail.com/tests/self-esteem-rosenberg/)
 - [مؤشر الرفاهية النفسية (WHO-5) من منظمة الصحة العالمية](https://drmilladmikhail.com/tests/wellbeing-who5/)

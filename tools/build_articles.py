@@ -386,6 +386,10 @@ def sitemap(items):
         with open(vj, encoding="utf-8") as f:
             vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
         urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
+    # Core platform routes (keep them discoverable in the sitemap).
+    for slug in ("platform", "paths", "experts", "join-us"):
+        if os.path.exists(os.path.join(ROOT, slug, "index.html")):
+            urls.append((f"{SITE}/{slug}/", "2026-11-07", False))
     # standalone pages built by tools/build_pages.py
     for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery", "exercise", "stories", "shelf"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
