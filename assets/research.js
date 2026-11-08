@@ -1,5 +1,5 @@
 (() => {
-  const $ = (id) => document.getElementById(id);
+  const $ = (id) => document.getElementById(id);\n  const isEn = document.documentElement.lang === "en";\n  const tr = (ar, en) => isEn ? en : ar;
   const form = $("research-query"), button = $("research-submit");
   const status = $("research-status"), results = $("research-results");
   const count = $("results-count"), title = $("results-title");
@@ -29,7 +29,7 @@
       } catch { return null; }
     }));
     return pages.filter(Boolean).sort((a,b)=>b.score-a.score).slice(0,8)
-      .map(x=>card("محتوى الموقع",x.heading,x.desc,x.url));
+      .map(x=>card(tr("محتوى الموقع","Site content"),x.heading,x.desc,x.url));
   }
   async function searchPubMed(q) {
     const base="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
@@ -53,8 +53,8 @@
   }
   async function run() {
     const q=form.value.trim();
-    if(q.length<3){status.textContent="اكتب سؤالًا أو موضوعًا من 3 أحرف على الأقل.";form.focus();return;}
-    button.disabled=true;button.textContent="جارٍ البحث…";results.innerHTML="";status.className="research-status";status.textContent="بنبحث في المصادر المحددة. قد يستغرق الأمر عدة ثوانٍ.";
+    if(q.length<3){status.textContent=tr("اكتب سؤالًا أو موضوعًا من 3 أحرف على الأقل.","Enter a topic or question with at least 3 characters.");form.focus();return;}
+    button.disabled=true;button.textContent=tr("جارٍ البحث…","Searching…");results.innerHTML="";status.className="research-status";status.textContent=tr("بنبحث في المصادر المحددة. قد يستغرق الأمر عدة ثوانٍ.","Searching the selected sources. This may take a few seconds.");
     const scope=$("research-scope").value;
     const tasks=[];
     if(scope!=="papers")tasks.push(searchSite(q).then(x=>({name:"site",items:x})).catch(e=>({name:"site",error:e.message,items:[]})));
@@ -63,13 +63,13 @@
     const settled=await Promise.all(tasks);
     const html=settled.flatMap(x=>x.items);
     results.innerHTML=html.join("");
-    count.textContent=html.length+" نتيجة";
-    title.textContent="نتائج البحث عن: "+q;
+    count.textContent=html.length+(isEn?" results":" نتيجة");
+    title.textContent=tr("نتائج البحث عن: ","Search results for: ")+q;
     const errors=settled.filter(x=>x.error).map(x=>x.error);
-    if(html.length)status.textContent="تم العثور على نتائج. راجع كل مصدر وافتح الدراسة الأصلية؛ لا تعرض هذه النسخة التجريبية ملخصًا مولّدًا بالذكاء الاصطناعي بعد.";
-    else status.textContent=errors.length?"لم نتمكن من جلب نتائج من بعض المصادر. حاول مرة أخرى أو غيّر صياغة البحث.":"لم نعثر على نتائج مطابقة. جرّب كلمات مفتاحية أوسع أو باللغة الإنجليزية.";
-    if(errors.length)status.textContent+=" ("+errors.join("؛ ")+")";
-    button.disabled=false;button.textContent="ابدأ البحث";
+    if(html.length)status.textContent=tr("تم العثور على نتائج. راجع كل مصدر وافتح الدراسة الأصلية؛ لا تعرض هذه النسخة التجريبية ملخصًا مولّدًا بالذكاء الاصطناعي بعد.","Results found. Review each source and open the original publication. AI-generated summaries are not included in this prototype yet.");
+    else status.textContent=errors.length?tr("لم نتمكن من جلب نتائج من بعض المصادر. حاول مرة أخرى أو غيّر صياغة البحث.","Some sources could not be reached. Try again or rephrase your search."):tr("لم نعثر على نتائج مطابقة. جرّب كلمات مفتاحية أوسع أو باللغة الإنجليزية.","No matching results. Try broader keywords or search in English.");
+    if(errors.length)status.textContent+=" ("+errors.join(isEn?"; ":"؛ ")+")";
+    button.disabled=false;button.textContent=tr("ابدأ البحث","Search");
   }
   button.addEventListener("click",run);
   form.addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();run();}});
