@@ -1,0 +1,71 @@
+name: Daily psychology research drafts
+on:
+  push:
+    branches: [main, feature/research-library]
+    paths: ['tools/daily_research.py', 'tools/test_daily_research.py', '.github/workflows/daily-research.yml']
+  pull_request:
+    branches: [main]
+    paths: ['tools/daily_research.py', 'tools/test_daily_research.py', '.github/workflows/daily-research.yml']
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: daily-psychology-research
+  cancel-in-progress: false
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tools -p test_daily_research.py -v
+  daily:
+    if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: drmilladmikhail/drmilladmikhail-site
+      RESEARCH_OPENAI_API_KEY: ${{ secrets.RESEARCH_OPENAI_API_KEY }}
+      RESEARCH_MODEL: ${{ vars.RESEARCH_MODEL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preserve editorial draft history
+        run: |
+          git config user.name 'research-drafts-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git fetch origin main
+          if git ls-remote --exit-code --heads origin research/daily; then
+            git fetch origin research/daily
+            git switch -C research/daily origin/research/daily
+            git merge origin/main --no-edit
+          else
+            git switch -c research/daily origin/main
+          fi
+      - name: Collect one source and optionally prepare unapproved bilingual drafts
+        run: python tools/daily_research.py
+      - name: Save drafts without publishing the website
+        run: |
+          if ! find content/research-drafts -type f -name '*.json' | grep -q .; then exit 0; fi
+          git add -- content/research-drafts
+          if ! git diff --cached --quiet; then
+            git commit -m 'Prepare daily psychology research source or draft'
+            git push -u origin research/daily
+            count=$(gh pr list --head research/daily --base main --state open --json number --jq 'length')
+            if [ "$count" = '0' ]; then
+              gh pr create --head research/daily --base main --draft --title 'Daily psychology research: editorial review required' --body 'Source-only records are not translated. AI-assisted drafts are not scientifically approved. Configure repository secret RESEARCH_OPENAI_API_KEY and variable RESEARCH_MODEL for paid drafting; do not put keys in code or chat. Verify source, publication date precision, study design, numbers, comparator, uncertainty, translation, retraction status and rights before publishing through a separate reviewed website update. These JSON files are public in the repository, not private storage, and are excluded from the current site artifact. This workflow does not publish new research to the site or activate itself before merge to main. GitHub Actions must be permitted to create pull requests.'
+            fi
+          fi
