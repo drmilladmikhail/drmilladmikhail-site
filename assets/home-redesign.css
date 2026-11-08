@@ -894,3 +894,81 @@ html[lang="ar"] body.home-redesign .concern-card i { color:#286b5d; }
  html[lang="ar"] body.home-redesign .hero-invitation .actions {gap:9px}
  html[lang="ar"] body.home-redesign .hero-invitation .btn {width:100%;justify-content:center}
 }
+
+
+/* Homepage hero invitation card + compact personal brand portrait */
+html[lang="ar"] body.home-redesign .brand-mark.brand-avatar {
+  display:block;
+  width:54px;
+  height:54px;
+  flex:none;
+  object-fit:cover;
+  object-position:center 34%;
+  border-radius:50%;
+  border:2px solid #d6b36b;
+  box-shadow:0 3px 12px rgba(32,48,58,.16);
+}
+html[lang="ar"] body.home-redesign .hero-invitation {
+  margin-top:24px;
+  padding:clamp(22px,3.5vw,36px);
+  border:1px solid rgba(255,255,255,.38);
+  border-radius:28px;
+  background:linear-gradient(135deg,#244e49 0%,#376f69 52%,#527f88 100%);
+  color:#fff;
+  box-shadow:0 20px 48px rgba(31,66,68,.20);
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+html[lang="ar"] body.home-redesign .hero-invitation::before {
+  content:"";
+  position:absolute;
+  width:220px;height:220px;
+  inset-inline-end:-70px;top:-110px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 0 0 22px rgba(255,255,255,.045),0 0 0 48px rgba(255,255,255,.035);
+  z-index:-1;
+}
+html[lang="ar"] body.home-redesign .hero-invitation .invitation-kicker {
+  display:inline-flex;
+  align-items:center;
+  padding:6px 13px;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:999px;
+  color:#fff4d7;
+  background:rgba(255,255,255,.10);
+  font-size:14px;
+  font-weight:600;
+}
+html[lang="ar"] body.home-redesign .hero-invitation .slogan {
+  margin-top:16px;
+  color:#fff;
+  font-size:clamp(25px,3.2vw,36px);
+}
+html[lang="ar"] body.home-redesign .hero-invitation .gold {color:#ffe2a0;}
+html[lang="ar"] body.home-redesign .hero-invitation .statement {
+  max-width:38em;
+  color:rgba(255,255,255,.91);
+}
+html[lang="ar"] body.home-redesign .hero-invitation .btn-gold {
+  background:#f2c66d;
+  border-color:#f2c66d;
+  color:#263d3b;
+  font-weight:700;
+}
+html[lang="ar"] body.home-redesign .hero-invitation .btn-ghost {
+  color:#fff;
+  border-color:rgba(255,255,255,.55);
+  background:rgba(255,255,255,.09);
+}
+html[lang="ar"] body.home-redesign .hero-invitation .btn-ghost:hover {
+  background:rgba(255,255,255,.18);
+  border-color:#fff;
+}
+@media(max-width:640px) {
+  html[lang="ar"] body.home-redesign .brand-mark.brand-avatar {width:46px;height:46px;}
+  html[lang="ar"] body.home-redesign .hero-invitation {border-radius:22px;padding:22px 18px;}
+  html[lang="ar"] body.home-redesign .hero-invitation .actions {display:grid;grid-template-columns:1fr;}
+  html[lang="ar"] body.home-redesign .hero-invitation .btn {justify-content:center;}
+}
