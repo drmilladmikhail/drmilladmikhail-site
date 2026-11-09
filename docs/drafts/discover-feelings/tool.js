@@ -2,6 +2,7 @@
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
+  var PATHS = window.DF_PATHS || {};
   var FE = window.DF_FEELINGS || [], GROUPS = window.DF_GROUPS || [], BODY = window.DF_BODY || [];
   var statusEl = $('status');
   var state = {};
@@ -108,7 +109,7 @@
   // ---------- choosing a feeling ----------
   function choose(f) {
     state.feeling = f;
-    if (f.p === 'anxiety') { show('s-agree'); return; }
+    if (f.p && PATHS[f.p]) { state.path = PATHS[f.p]; applyPath(state.path); show('s-agree'); return; }
     $('soon-name').textContent = f.n; $('soon-desc').textContent = f.d;
     var ul = $('soon-links'); clear(ul);
     function add(h, t) { var li = el('li'); var a = el('a', t); a.href = h; li.appendChild(a); ul.appendChild(li); }
@@ -165,20 +166,15 @@
     });
   });
 
-  // station: name
-  Array.prototype.forEach.call(document.querySelectorAll('input[name="nm"]'), function (r) {
-    r.addEventListener('change', function () { state.named = r.value; $('nm-ok').hidden = false; complete('name'); });
-  });
+  // station: name (options built per path)
+  function onNameChange(v) { state.named = v; $('nm-ok').hidden = false; complete('name'); }
   // station: rate
-  var bodyChecks = ['شد في جسمي', 'ضربات قلب سريعة', 'تنفس سريع', 'صعوبة في النوم', 'دماغي مش بتهدا'];
-  var urgeChecks = ['أبعت أو أسأل كتير', 'أتجنب الموضوع', 'أفضل أفكر فيه', 'أتحرك كتير'];
-  function fillChecks(id, prefix, list) {
-    var box = $(id); list.forEach(function (t, i) {
+    function fillChecks(id, prefix, list) {
+    var box = $(id); clear(box); list.forEach(function (t, i) {
       var d = el('div', '', 'df-opt'); var c = el('input'); c.type = 'checkbox'; c.id = prefix + i; c.value = t;
       var l = el('label', t); l.setAttribute('for', c.id); d.appendChild(c); d.appendChild(l); box.appendChild(d);
     });
   }
-  fillChecks('rate-body', 'rb', bodyChecks); fillChecks('rate-urge', 'ru', urgeChecks);
   $('r1').addEventListener('input', function () { $('r1o').textContent = ar($('r1').value); });
   $('r2').addEventListener('input', function () { $('r2o').textContent = ar($('r2').value); });
   $('r1-save').addEventListener('click', function () {
@@ -186,6 +182,32 @@
     var p = $('r1-saved'); p.hidden = false; p.textContent = 'اتسجّل تقديرك: ' + ar(state.r1) + ' من ١٠.';
     complete('rate');
   });
+  function radioRow(name, id, value, label, onchange) {
+    var d = el('div', '', 'df-opt'); var i = el('input'); i.type = 'radio'; i.name = name; i.id = id; i.value = value;
+    var l = el('label', label); l.setAttribute('for', id); d.appendChild(i); d.appendChild(l);
+    i.addEventListener('change', function () { onchange(value); }); return d;
+  }
+  function applyPath(p) {
+    $('h-agree').textContent = p.title; $('nm-ok').textContent = p.ack;
+    var no = $('nm-opts'); clear(no);
+    p.names.forEach(function (n, i) { no.appendChild(radioRow('nm', 'nm' + (i + 1), n[0], n[1], onNameChange)); });
+    $('r1-l').textContent = p.word + ' شدته كام عندك دلوقتي؟ (٠ = مش موجود، ١٠ = أقصى شدة تتخيلها)';
+    $('r2-l').textContent = p.word + ' شدته كام دلوقتي؟ (٠ = مش موجود، ١٠ = أقصى شدة)';
+    $('urge-l').textContent = '(اختياري) ' + p.word + ' بيخليك عايز تعمل إيه؟';
+    fillChecks('rate-body', 'rb', p.bodies); fillChecks('rate-urge', 'ru', p.urges);
+    $('h-train').textContent = p.trainTitle; $('train-intro').textContent = p.trainIntro;
+    var ts = $('train-steps'); clear(ts); p.trainSteps.forEach(function (t) { ts.appendChild(el('li', t)); });
+    var ap = $('train-altp'); clear(ap); ap.appendChild(el('b', 'بديل: ')); ap.appendChild(document.createTextNode(p.trainAlt));
+    $('h-learn').textContent = p.learnTitle;
+    var ll = $('learn-list'); clear(ll); p.learn.forEach(function (t) { ll.appendChild(el('li', t)); });
+    var so = $('ns-opts'); clear(so);
+    p.steps.forEach(function (t, i) { so.appendChild(radioRow('ns', 'ns' + (i + 1), t, t, function (v) { own.hidden = true; state.step = v; complete('learn'); })); });
+    var kl = $('kit-links'); clear(kl);
+    function kadd(h, t) { var li = el('li'); var a = el('a', t); a.href = h; li.appendChild(a); kl.appendChild(li); }
+    kadd('/glossary/' + p.gl + '/', p.word + ' في قاموس المصطلحات');
+    p.tryLinks.forEach(function (x) { kadd(x[0], x[1]); });
+    kadd('/worksheets/', 'أوراق تمرين للطباعة'); kadd(p.scale[0], p.scale[1]);
+  }
   // station: understand
   function doneUnderstand(alt) {
     state.sit = $('u-sit').value.trim(); state.th = $('u-th').value.trim(); state.ev = $('u-ev').value.trim(); state.bal = $('u-bal').value.trim();
@@ -194,10 +216,10 @@
   $('u-done').addEventListener('click', function () { doneUnderstand(false); });
   $('u-alt').addEventListener('click', function () { doneUnderstand(true); });
   // station: train
-  var TRAIN = { done: 'الرجوع للحاضر بالحواس', alt: 'تنفس بزفير أطول', no: 'جرّبت ومكملتش (مش مرتاح)' };
+  var TRAIN = {};
   Array.prototype.forEach.call(document.querySelectorAll('[data-train]'), function (b) {
     b.addEventListener('click', function () {
-      var v = b.getAttribute('data-train'); state.train = TRAIN[v];
+      var v = b.getAttribute('data-train'); state.train = v === 'done' ? state.path.trainMainName : v === 'alt' ? state.path.trainAltName : 'جرّبت ومكملتش (مش مرتاح)';
       var m = $('train-msg'); m.hidden = false;
       $('train-alt').hidden = v !== 'alt';
       m.textContent = v === 'done' ? 'تمام. لاحظ إن مش لازم القلق يختفي، المهم إنك جرّبت.'
@@ -211,18 +233,13 @@
   Array.prototype.forEach.call(document.querySelectorAll('input[name="lm"]'), function (r) {
     r.addEventListener('change', function () {
       clear(lr); lr.hidden = false;
-      if (r.value === 'read') { link(lr, '/glossary/anxiety/', 'اقرأ عن القلق في قاموس المصطلحات'); link(lr, '/articles/', 'المقالات'); }
-      else if (r.value === 'try') { link(lr, '/life-tools/situation-thought-feeling/', 'موقف، فكرة، إحساس'); link(lr, '/life-tools/within-my-control/', 'إيه اللي في إيدي؟'); }
+      if (r.value === 'read') { link(lr, '/glossary/' + state.path.gl + '/', 'اقرأ عن ' + state.path.word + ' في قاموس المصطلحات'); link(lr, '/articles/', 'المقالات'); }
+      else if (r.value === 'try') { state.path.tryLinks.forEach(function (x) { link(lr, x[0], x[1]); }); }
       else lr.appendChild(el('p', 'التسجيل الصوتي لسه مش متاح. لحد ما ينزل، جرّب القراءة أو التمرين.'));
     });
   });
   var own = $('ns-own');
-  Array.prototype.forEach.call(document.querySelectorAll('input[name="ns"]'), function (r) {
-    r.addEventListener('change', function () {
-      if (r.value === 'own') { own.hidden = false; own.focus(); state.step = own.value.trim(); if (state.step) complete('learn'); }
-      else { own.hidden = true; state.step = r.value; complete('learn'); }
-    });
-  });
+  $('ns4').addEventListener('change', function () { own.hidden = false; own.focus(); state.step = own.value.trim(); if (state.step) complete('learn'); });
   own.addEventListener('input', function () { state.step = own.value.trim(); if (state.step) complete('learn'); });
   $('learn-skip').addEventListener('click', function () { state.step = state.step || ''; complete('learn'); });
   // station: progress
@@ -234,7 +251,7 @@
   $('r2-save').addEventListener('click', function () {
     state.r2 = Number($('r2').value); var c = $('compare'); clear(c); c.hidden = false;
     c.appendChild(meter('قبل', state.r1)); c.appendChild(meter('دلوقتي', state.r2));
-    c.appendChild(el('p', 'تقديرك لشدة القلق كان ' + ar(state.r1) + ' من ١٠، وبقى ' + ar(state.r2) + ' من ١٠ حسب تقديرك دلوقتي. ده وصف للتغيّر اللي لاحظته، مش نسبة تعافٍ ولا ضمان إن الإحساس مش هيرجع.'));
+    c.appendChild(el('p', 'تقديرك لشدة ' + state.path.word + ' كان ' + ar(state.r1) + ' من ١٠، وبقى ' + ar(state.r2) + ' من ١٠ حسب تقديرك دلوقتي. ده وصف للتغيّر اللي لاحظته، مش نسبة تعافٍ ولا ضمان إن الإحساس مش هيرجع.'));
     if (state.r2 >= state.r1) c.appendChild(el('p', 'مش لازم الإحساس يقل في كل مرة. تقدر توقف، تجرّب بديلًا، أو تطلب دعمًا.', 'df-ok'));
     c.appendChild(el('p', 'سؤال أخير لنفسك: هل بقيت فاهم إحساسك أكتر؟ وهل طلعت بخطوة تقدر تعملها؟', 'hint'));
     complete('progress');
@@ -246,7 +263,7 @@
     if (state.r2 !== undefined) rows.push(['شدته بعد المحطات (تقدير شخصي)', ar(state.r2) + ' من ١٠']);
     rows.push(['الموقف', state.sit || '—'], ['الفكرة اللي لاحظتها', state.th || '—'], ['تفسير أكتر اتزانًا', state.bal || '—']);
     rows.push(['المهارة اللي جرّبتها', state.train || '—'], ['خطوتي الجاية', state.step || '—']);
-    rows.push(['متابعة', 'لو حبيت تتابع بمقياس GAD-7، الأحسن تعيده بعد أسبوعين.']);
+    rows.push(['متابعة', 'لو حبيت تتابع بمقياس ' + state.path.scaleName + '، الأحسن تعيده بعد أسبوعين.']);
     return rows;
   }
   function buildSummary() {

@@ -83,7 +83,7 @@
   <!-- اتفاق -->
   <section class="df-screen" id="s-agree" aria-labelledby="h-agree" hidden>
     <div class="card">
-      <h2 id="h-agree" tabindex="-1">هنبدأ من القلق</h2>
+      <h2 id="h-agree" tabindex="-1">هنبدأ من القلق</h2><p id="agree-sub" hidden></p>
       <p>ولو اكتشفت إن في إحساس تاني أقرب، تقدر تغيّره أثناء الخطوات.</p>
       <p class="df-agree">دي مساحة لفهم مشاعرك وتجربة مهارة، مش تشخيص ولا بديلًا عن العلاج. تقدر تقف أو ترجع في أي وقت، ومش لازم تكتب تفاصيل شخصية.</p>
       <p><b>تحب نبدأ بإيه؟</b></p>
@@ -99,22 +99,17 @@
 
     <article class="card df-station" id="st-name" aria-labelledby="h-name" hidden>
       <h2 id="h-name" tabindex="-1">نسمّي الإحساس</h2>
-      <fieldset class="field"><legend>ممكن يكون جواك أكتر من إحساس. إيه الأقرب ليك؟</legend>
-        <div class="df-opt"><input type="radio" name="nm" id="nm1" value="قلق (خوف من حاجة جاية)"><label for="nm1">قلق: خوف من حاجة جاية</label></div>
-        <div class="df-opt"><input type="radio" name="nm" id="nm2" value="ضغط وتوتر"><label for="nm2">ضغط وتوتر: حمل أكبر من طاقتي</label></div>
-        <div class="df-opt"><input type="radio" name="nm" id="nm3" value="خوف من حاجة محددة"><label for="nm3">خوف من حاجة محددة حصلت أو بتحصل</label></div>
-        <div class="df-opt"><input type="radio" name="nm" id="nm4" value="مش متأكد"><label for="nm4">مش متأكد، هبدأ بالقلق</label></div>
-      </fieldset>
+      <fieldset class="field"><legend>ممكن يكون جواك أكتر من إحساس. إيه الأقرب ليك؟</legend><div id="nm-opts"></div></fieldset>
       <p id="nm-ok" class="df-ok" hidden>إحساسك مفهوم. القلق بيمرّ بيه أغلب الناس في وقت أو التاني، ومش معناه إن فيك حاجة غلط.</p>
     </article>
 
     <article class="card df-station" id="st-rate" aria-labelledby="h-rate" hidden>
       <h2 id="h-rate" tabindex="-1">إحساسك عامل إزاي دلوقتي؟</h2>
-      <div class="field"><label for="r1">القلق شدته كام عندك دلوقتي؟ (٠ = مش موجود، ١٠ = أقصى شدة تتخيلها)</label>
+      <div class="field"><label for="r1" id="r1-l">القلق شدته كام عندك دلوقتي؟ (٠ = مش موجود، ١٠ = أقصى شدة تتخيلها)</label>
         <div class="df-range"><input type="range" id="r1" min="0" max="10" step="1" value="5"><output id="r1o" for="r1">٥</output></div></div>
       <p class="hint">ده تقدير شدة الشعور الآن حسب إحساسك إنت، مش اختبار ولا نسبة مرض.</p>
       <fieldset class="field"><legend>(اختياري) بتلاحظ إيه في جسمك؟</legend><div id="rate-body"></div></fieldset>
-      <fieldset class="field"><legend>(اختياري) القلق بيخليك عايز تعمل إيه؟</legend><div id="rate-urge"></div></fieldset>
+      <fieldset class="field"><legend id="urge-l">(اختياري) القلق بيخليك عايز تعمل إيه؟</legend><div id="rate-urge"></div></fieldset>
       <button type="button" class="btn" id="r1-save">سجّل تقديري</button>
       <p id="r1-saved" class="df-ok" hidden></p>
     </article>
@@ -133,14 +128,8 @@
 
     <article class="card df-station" id="st-train" aria-labelledby="h-train" hidden>
       <h2 id="h-train" tabindex="-1">نجرّب مهارة: الرجوع للحاضر</h2>
-      <p>التمرين ده بيوجّه انتباهك لحواسك وللمكان اللي إنت فيه. مش هدفه يلغي القلق، هدفه يهدّي الاستنفار شوية ويفتح مساحة للتفكير.</p>
-      <ol class="df-list">
-        <li>حط رجليك على الأرض وحس بملمسها.</li>
-        <li>بصّ حواليك وسمّي ٥ حاجات بتشوفها.</li>
-        <li>اسمع وسمّي ٤ أصوات.</li>
-        <li>حس بـ٣ حاجات بتلمسها: هدومك، الكرسي، الأرض.</li>
-        <li>خد نفس بطيء، وخلّي الزفير أطول شوية من الشهيق.</li></ol>
-      <div id="train-alt" class="df-alt" hidden><p><b>بديل:</b> تنفّس بزفير أطول: شهيق من مناخيرك وعدّ لـ٤، زفير بطيء من بقك وعدّ لـ٦، كرّر ٥ مرات. لو حسيت بدوخة أو مش مرتاح، وقّف ورجّع لتنفسك العادي.</p></div>
+      <p id="train-intro"></p><ol class="df-list" id="train-steps"></ol>
+      <div id="train-alt" class="df-alt" hidden><p id="train-altp"><b>بديل:</b> تنفّس بزفير أطول: شهيق من مناخيرك وعدّ لـ٤، زفير بطيء من بقك وعدّ لـ٦، كرّر ٥ مرات. لو حسيت بدوخة أو مش مرتاح، وقّف ورجّع لتنفسك العادي.</p></div>
       <p id="train-msg" class="df-ok" role="status" hidden></p>
       <p><b>هل التمرين مناسب ليك؟</b></p>
       <div class="actions"><button type="button" class="btn" data-train="done">جرّبته</button><button type="button" class="btn btn-quiet" data-train="alt">محتاج بديل</button><button type="button" class="btn btn-quiet" data-train="no">مش مرتاح أكمله</button></div>
@@ -148,21 +137,14 @@
 
     <article class="card df-station" id="st-learn" aria-labelledby="h-learn" hidden>
       <h2 id="h-learn" tabindex="-1">القلق ببساطة</h2>
-      <ul class="df-list">
-        <li>القلق جهاز إنذار طبيعي: بيجهّز جسمك لخطر محتمل، فبيسرّع القلب والتنفس ويشدّ العضلات.</li>
-        <li>المشكلة بتبدأ لما الإنذار يشتغل كتير أو في مواقف مش خطيرة فعلًا.</li>
-        <li>الأفكار بتتوقع، مش بتثبت. «أكيد زهق مني» توقّع، مش معلومة.</li>
-        <li>التجنب بيريّح على المدى القصير، لكن ساعات بيخلّي القلق يكبر مع الوقت.</li>
-        <li>لو القلق مستمر لأسابيع أو بيأثر على نومك وشغلك وعلاقاتك، ده سبب كويس تكلم متخصص.</li></ul>
+      <ul class="df-list" id="learn-list"></ul>
       <fieldset class="field"><legend>تحب تكمّل إزاي؟</legend>
         <div class="df-opt"><input type="radio" name="lm" id="lm1" value="read"><label for="lm1">أحب أقرأ</label></div>
         <div class="df-opt"><input type="radio" name="lm" id="lm2" value="listen"><label for="lm2">أحب أسمع</label></div>
         <div class="df-opt"><input type="radio" name="lm" id="lm3" value="try"><label for="lm3">أحب أجرّب</label></div></fieldset>
       <div id="learn-res" class="df-alt" hidden aria-live="polite"></div>
       <fieldset class="field"><legend>إيه خطوة مناسبة تختارها دلوقتي؟</legend>
-        <div class="df-opt"><input type="radio" name="ns" id="ns1" value="أستنى شوية قبل ما أبعت أو أسأل تاني"><label for="ns1">أستنى شوية قبل ما أبعت أو أسأل تاني</label></div>
-        <div class="df-opt"><input type="radio" name="ns" id="ns2" value="أرجع لحاجة كنت بعملها"><label for="ns2">أرجع لحاجة كنت بعملها</label></div>
-        <div class="df-opt"><input type="radio" name="ns" id="ns3" value="أكتب رسالة هادية وأراجعها قبل الإرسال"><label for="ns3">أكتب رسالة هادية وأراجعها قبل الإرسال</label></div>
+        <div id="ns-opts"></div>
         <div class="df-opt"><input type="radio" name="ns" id="ns4" value="own"><label for="ns4">أختار خطوة بنفسي</label></div>
         <label for="ns-own" class="sr">اكتب خطوتك</label><input id="ns-own" type="text" maxlength="200" placeholder="اكتب خطوتك" hidden></fieldset>
       <button type="button" class="btn btn-quiet" id="learn-skip">مش عايز أختار دلوقتي، كمّل</button>
@@ -170,7 +152,7 @@
 
     <article class="card df-station" id="st-progress" aria-labelledby="h-progress" hidden>
       <h2 id="h-progress" tabindex="-1">إيه اللي اتغيّر؟</h2>
-      <div class="field"><label for="r2">القلق شدته كام دلوقتي؟ (٠ = مش موجود، ١٠ = أقصى شدة)</label>
+      <div class="field"><label for="r2" id="r2-l">القلق شدته كام دلوقتي؟ (٠ = مش موجود، ١٠ = أقصى شدة)</label>
         <div class="df-range"><input type="range" id="r2" min="0" max="10" step="1" value="5"><output id="r2o" for="r2">٥</output></div></div>
       <button type="button" class="btn" id="r2-save">سجّل تقديري الجديد</button>
       <div id="compare" class="df-compare" hidden aria-live="polite"></div>
@@ -181,13 +163,7 @@
       <dl id="kit-sum" class="df-sum"></dl>
       <div class="actions"><button type="button" class="btn" id="kit-print">اطبع أو احفظ PDF</button></div>
       <p class="hint">الملف بيتعمل على جهازك برا الموقع، وممكن يحتوي معلومات حساسة. احذفه لو الجهاز مشترك.</p>
-      <h3>لو حابب تكمّل</h3>
-      <ul class="df-list">
-        <li><a href="/glossary/anxiety/">القلق في قاموس المصطلحات</a></li>
-        <li><a href="/life-tools/situation-thought-feeling/">موقف، فكرة، إحساس</a></li>
-        <li><a href="/life-tools/within-my-control/">إيه اللي في إيدي؟</a></li>
-        <li><a href="/worksheets/">أوراق تمرين للطباعة</a></li>
-        <li><a href="/tests/anxiety-gad7/">مقياس GAD-7 (اختياري، مش تشخيص). لو حبيت تتابع، الأحسن تعيده بعد أسبوعين لأنه بيسأل عن آخر أسبوعين.</a></li></ul>
+      <h3>لو حابب تكمّل</h3><ul class="df-list" id="kit-links"></ul>
       <p class="df-soft">لو حابب تفهم النمط ده بعمق أكبر، تقدر تتعرف على <a href="/sessions/">الجلسات مع د. ميلاد</a> وطبيعتها وهل تناسب احتياجك. ده مش شرط عشان تستفيد من اللي عملته هنا.</p>
     </article>
 
