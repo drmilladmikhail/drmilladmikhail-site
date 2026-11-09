@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>موقف، فكرة، إحساس (مسودة) | د. ميلاد ميخائيل</title>
+<meta name="description" content="أداة تأمل قصيرة تساعدك تفرّق بين اللي حصل فعلًا، والفكرة اللي جت في دماغك، والإحساس اللي حسّيت بيه. مسودة للمراجعة.">
+<link rel="stylesheet" href="tool.css">
+</head>
+<body>
+<a class="skip-link" href="#main">تخطّى للمحتوى</a>
+<div class="draft-banner" role="note"><strong>مسودة غير منشورة.</strong> محتوى لسه ما اتراجعش مهنيًا، ومش ظاهر في الموقع ولا في الـ sitemap.</div>
+
+<main id="main" class="tool">
+  <nav class="crumbs" aria-label="مسار الصفحة"><a href="/">الرئيسية</a> ‹ <a href="/exercise/">تمارين وأدوات</a> ‹ <span aria-current="page">موقف، فكرة، إحساس</span></nav>
+
+  <h1>موقف، فكرة، إحساس</h1>
+  <p class="lede">أداة تأمل قصيرة تساعدك تفرّق بين تلات حاجات بتتلخبط مع بعض: <b>اللي حصل فعلًا</b>، و<b>الفكرة اللي جت في دماغك</b>، و<b>الإحساس اللي حسّيت بيه</b>.</p>
+
+  <section class="card" aria-labelledby="about-h">
+    <h2 id="about-h">قبل ما تبدأ</h2>
+    <ul>
+      <li><b>الغرض:</b> إنك تشوف الموقف بوضوح أكتر، مش إنك تلاقي إجابة «صح».</li>
+      <li><b>مناسبة لـ:</b> مواقف يومية عادية ضايقتك (رسالة ما اتردّش عليها، تعليق في الشغل، خلاف بسيط).</li>
+      <li><b>حدودها:</b> مش تشخيص ومش علاج ومش بديل عن متخصص. لو الإحساس تقيل أو بيستمر أو بيأثر على نومك وشغلك، كلّم متخصص نفسي.</li>
+      <li><b>خصوصيتك:</b> اللي بتكتبه بيفضل في الصفحة دي بس. مش بيتبعت لأي سيرفر، ومش بيتحفظ في المتصفح. لو قفلت الصفحة أو دوست «ابدأ من جديد» بيتمسح.</li>
+    </ul>
+    <p class="safety" role="note"><b>الأداة دي مش خدمة طوارئ.</b> لو بتفكر تأذي نفسك أو في خطر دلوقتي: في مصر كلّم <a href="tel:105">105</a> (الخط الساخن للدعم النفسي)، وفي أمريكا <a href="tel:988">988</a>، أو روح أقرب طوارئ.</p>
+  </section>
+
+  <section class="card" aria-labelledby="ex-h">
+    <h2 id="ex-h">مثال محلول (شخصية خيالية)</h2>
+    <p class="muted">منى شخصية خيالية، مش حد حقيقي.</p>
+    <dl class="example">
+      <dt>الموقف (اللي حصل فعلًا)</dt><dd>بعتّ رسالة لصاحبتي الساعة 9 بالليل، ومردّتش لحد الصبح.</dd>
+      <dt>الإحساس وشدته</dt><dd>قلق وزعل، حوالي 7 من 10.</dd>
+      <dt>الفكرة اللي جت في دماغي</dt><dd>«أكيد زعلت مني أو مبقتش عايزاني».</dd>
+      <dt>نظرة أوسع</dt><dd>اللي حصل إنها ما ردّتش لحد الصبح، ومعرفش السبب. ممكن تكون نايمة بدري أو مشغولة أو تعبانة. لو صاحبتي كانت مكاني كنت هقولها: «ما تحكميش قبل ما تسألي».</dd>
+      <dt>الإحساس بعد التفكير</dt><dd>حوالي 4 من 10. لسه فيه شوية قلق، بس أخف.</dd>
+    </dl>
+  </section>
+
+  <form id="tool-form" class="card" aria-labelledby="form-h" novalidate>
+    <h2 id="form-h">جرّبها بنفسك</h2>
+
+    <div class="field">
+      <label for="situation">1. الموقف: إيه اللي حصل فعلًا؟</label>
+      <p id="situation-hint" class="hint">اكتب اللي كاميرا كانت هتصوّره بس: مين، فين، إمتى، وإيه اللي اتقال أو اتعمل. من غير تفسير.</p>
+      <textarea id="situation" rows="3" aria-describedby="situation-hint" maxlength="1000"></textarea>
+    </div>
+
+    <div class="field">
+      <label for="feeling">2. الإحساس: حسّيت بإيه؟</label>
+      <p id="feeling-hint" class="hint">كلمة أو اتنين (قلق، زعل، إحراج، غضب، خوف، وحدة…).</p>
+      <input id="feeling" type="text" maxlength="80" aria-describedby="feeling-hint" autocomplete="off">
+      <label for="intensity-before">شدة الإحساس: <output id="intensity-before-out" for="intensity-before">5</output> من 10</label>
+      <input id="intensity-before" type="range" min="0" max="10" step="1" value="5">
+    </div>
+
+    <div class="field">
+      <label for="thought">3. الفكرة: إيه اللي جه في دماغك؟</label>
+      <p id="thought-hint" class="hint">الجملة اللي قلتها لنفسك في اللحظة دي، بالظبط زي ما جت.</p>
+      <textarea id="thought" rows="2" aria-describedby="thought-hint" maxlength="500"></textarea>
+    </div>
+
+    <div class="field">
+      <label for="wider">4. نظرة أوسع</label>
+      <p id="wider-hint" class="hint">اسأل نفسك: إيه اللي بيدعم الفكرة دي، وإيه اللي مش بيدعمها؟ فيه تفسير تاني ممكن؟ ولو صاحبك كان مكاني كنت هقوله إيه؟</p>
+      <textarea id="wider" rows="4" aria-describedby="wider-hint" maxlength="1500"></textarea>
+    </div>
+
+    <div class="field">
+      <label for="intensity-after">5. دلوقتي: شدة الإحساس بقت كام؟ <output id="intensity-after-out" for="intensity-after">5</output> من 10</label>
+      <p id="after-hint" class="hint">ممكن تقل، وممكن تفضل زي ما هي، وده عادي. مفيش نتيجة «صح» هنا.</p>
+      <input id="intensity-after" type="range" min="0" max="10" step="1" value="5" aria-describedby="after-hint">
+    </div>
+
+    <div class="actions">
+      <button type="button" id="print-btn" class="btn">اطبع أو احفظ PDF</button>
+      <button type="button" id="reset-btn" class="btn btn-quiet">ابدأ من جديد</button>
+    </div>
+    <p class="hint">لما بتطبع أو بتحفظ PDF، بيتعمل ملف على جهازك برا الموقع. مسح بيانات المتصفح مش بيمسح الملف ده. احذفه بنفسك لو الجهاز مشترك.</p>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+  </form>
+
+  <section class="print-copy" id="print-copy" aria-hidden="true">
+    <h2>موقف، فكرة، إحساس</h2>
+    <div id="print-body"></div>
+  </section>
+
+  <section class="card" aria-labelledby="more-h">
+    <h2 id="more-h">كمّل من هنا</h2>
+    <ul>
+      <li><a href="/feelings/">عجلة المشاعر</a> لو محتاج كلمة أدق لإحساسك.</li>
+      <li><a href="/exercise/">تمرين الأسبوع</a></li>
+      <li><a href="/articles/">المقالات</a></li>
+    </ul>
+  </section>
+
+  <section class="card meta" aria-labelledby="meta-h">
+    <h2 id="meta-h">عن الأداة</h2>
+    <ul>
+      <li><b>الكاتب:</b> د. ميلاد ميخائيل.</li>
+      <li><b>حالة المراجعة:</b> مسودة، لم تُراجَع مهنيًا بعد.</li>
+      <li><b>تاريخ آخر تعديل:</b> 2026-11-09.</li>
+      <li><b>المرجع العلمي للفكرة العامة:</b> Beck, J. S. (2011). <i lang="en" dir="ltr">Cognitive Behavior Therapy: Basics and Beyond</i> (2nd ed.). Guilford Press. الصياغة والمثال والأسئلة هنا أصلية، ومش نسخة من أي ورقة تمرين منشورة.</li>
+    </ul>
+  </section>
+</main>
+<script src="tool.js" defer></script>
+</body>
+</html>
