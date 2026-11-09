@@ -206,7 +206,7 @@
     function kadd(h, t) { var li = el('li'); var a = el('a', t); a.href = h; li.appendChild(a); kl.appendChild(li); }
     kadd('/glossary/' + p.gl + '/', p.word + ' في قاموس المصطلحات');
     p.tryLinks.forEach(function (x) { kadd(x[0], x[1]); });
-    kadd('/worksheets/', 'أوراق تمرين للطباعة'); kadd(p.scale[0], p.scale[1]);
+    kadd('/worksheets/', 'أوراق تمرين للطباعة'); if (p.scale) kadd(p.scale[0], p.scale[1]);
   }
   // station: understand
   function doneUnderstand(alt) {
@@ -263,7 +263,7 @@
     if (state.r2 !== undefined) rows.push(['شدته بعد المحطات (تقدير شخصي)', ar(state.r2) + ' من ١٠']);
     rows.push(['الموقف', state.sit || '—'], ['الفكرة اللي لاحظتها', state.th || '—'], ['تفسير أكتر اتزانًا', state.bal || '—']);
     rows.push(['المهارة اللي جرّبتها', state.train || '—'], ['خطوتي الجاية', state.step || '—']);
-    rows.push(['متابعة', 'لو حبيت تتابع بمقياس ' + state.path.scaleName + '، الأحسن تعيده بعد أسبوعين.']);
+    rows.push(['متابعة', state.path.scaleName ? 'لو حبيت تتابع بمقياس ' + state.path.scaleName + '، الأحسن تعيده بعد أسبوعين.' : 'ممكن تعيد التقدير بعد كام يوم وتقارن بنفسك.']);
     return rows;
   }
   function buildSummary() {
