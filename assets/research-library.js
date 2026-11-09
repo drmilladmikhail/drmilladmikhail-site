@@ -3,7 +3,13 @@
   'use strict';
   var DATA = window.RESEARCH_LIBRARY_DATA || [];
   var PER_PAGE = 10;
-  var state = { lang: 'ar', q: '', journal: 'all', sort: 'journal', page: 1 };
+  var state = { lang: 'ar', q: '', journal: 'all', sort: 'journal', page: 1, todayOnly: false };
+
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function isNewToday(r) { return r.added && r.added === todayStr(); }
 
   var LABELS = {
     ar: {
@@ -26,7 +32,17 @@
       pmid: 'PMID',
       toggle: 'English',
       count: function (n, t) { return 'عرض ' + n + ' من ' + t + ' بحثًا'; },
-      reset: 'مسح البحث والفلاتر'
+      reset: 'مسح البحث والفلاتر',
+      todayNotice: function (n) {
+        if (n === 1) return 'بحث جديد واحد أُضيف اليوم';
+        if (n === 2) return 'بحثان جديدان أُضيفا اليوم';
+        if (n <= 10) return n + ' أبحاث جديدة أُضيفت اليوم';
+        return n + ' بحثًا جديدًا أُضيف اليوم';
+      },
+      showToday: 'عرض الجديد',
+      showAll: 'عرض المكتبة كلها',
+      newBadge: 'جديد اليوم',
+      totalCount: function (n) { return 'المكتبة تضم الآن ' + n + ' بحثًا محكّمًا'; }
     },
     en: {
       search: 'Search in Arabic or English',
@@ -48,7 +64,12 @@
       pmid: 'PMID',
       toggle: 'العربية',
       count: function (n, t) { return 'Showing ' + n + ' of ' + t + ' papers'; },
-      reset: 'Clear search and filters'
+      reset: 'Clear search and filters',
+      todayNotice: function (n) { return n + ' new ' + (n === 1 ? 'study' : 'studies') + ' added today'; },
+      showToday: 'Show new',
+      showAll: 'Show all papers',
+      newBadge: 'New today',
+      totalCount: function (n) { return 'The library now holds ' + n + ' peer-reviewed papers'; }
     }
   };
 
@@ -63,6 +84,7 @@
   }
 
   function matches(r) {
+    if (state.todayOnly && !isNewToday(r)) return false;
     if (state.journal !== 'all' && r.journal !== state.journal) return false;
     if (!state.q) return true;
     var q = norm(state.q);
@@ -105,13 +127,16 @@
     var absArFirst = ar;
     var absAr = '<div class="abs-block" dir="rtl" lang="ar"><h4>' + esc(LABELS.ar.abstractAr) + '</h4><p>' + esc(r.abstract_ar) + '</p></div>';
     var absEn = '<div class="abs-block" dir="ltr" lang="en"><h4>' + esc(LABELS.en.abstractEn) + '</h4><p>' + esc(r.abstract) + '</p></div>';
-    return '<article class="lib-card" id="p' + esc(r.pmid) + '">' +
-      '<p class="tag">' + esc(journalName) + ' · ' + esc(L.vol) + ' ' + esc(r.volume) + ' · ' + esc(L.issue) + ' ' + esc(r.issue) + ' · ' + esc(issueTxt) + '</p>' +
+    return '<article class="lib-card" id="p' + esc(r.pmid || r.doi) + '">' +
+      '<p class="tag">' + esc(journalName) + ' · ' + esc(L.vol) + ' ' + esc(r.volume) + ' · ' + esc(L.issue) + ' ' + esc(r.issue) + ' · ' + esc(issueTxt) +
+      (isNewToday(r) ? '<span class="new-badge">' + esc(L.newBadge) + '</span>' : '') + '</p>' +
       '<h3>' + esc(mainTitle) + '</h3>' +
       '<p class="alt-title" dir="' + (ar ? 'ltr' : 'rtl') + '" lang="' + (ar ? 'en' : 'ar') + '">' + esc(secondTitle) + '</p>' +
       '<p class="authors"><b>' + esc(L.authors) + ':</b> <span dir="ltr" lang="en">' + esc(authorsLine(r)) + '</span></p>' +
       '<details class="abs"><summary>' + esc(L.abstracts) + '</summary>' + (absArFirst ? absAr + absEn : absEn + absAr) + '</details>' +
-      '<p class="src"><b>' + esc(L.source) + ':</b> <a href="https://pubmed.ncbi.nlm.nih.gov/' + esc(r.pmid) + '/">' + esc(L.pmid) + ' ' + esc(r.pmid) + '</a> · <a href="https://doi.org/' + esc(r.doi) + '" dir="ltr">DOI: ' + esc(r.doi) + '</a></p>' +
+      '<p class="src"><b>' + esc(L.source) + ':</b> ' +
+      (r.pmid ? '<a href="https://pubmed.ncbi.nlm.nih.gov/' + esc(r.pmid) + '/">' + esc(L.pmid) + ' ' + esc(r.pmid) + '</a> · ' : '') +
+      '<a href="https://doi.org/' + esc(r.doi) + '" dir="ltr">DOI: ' + esc(r.doi) + '</a></p>' +
       '</article>';
   }
 
@@ -141,6 +166,32 @@
     el('lib-sort').options[1].textContent = L.sortTitle;
     el('lib-lang').textContent = L.toggle;
     el('lib-count').textContent = L.count(slice.length, list.length);
+
+    var intro = el('lib-intro-count');
+    if (intro) intro.textContent = L.totalCount(DATA.length);
+
+    var todayBox = el('lib-today');
+    if (todayBox) {
+      var fresh = DATA.filter(isNewToday);
+      if (fresh.length) {
+        todayBox.hidden = false;
+        todayBox.innerHTML = '<span class="today-text"><span class="today-dot" aria-hidden="true"></span>' +
+          esc(L.todayNotice(fresh.length)) + '</span>' +
+          '<button type="button" id="lib-today-btn">' + esc(state.todayOnly ? L.showAll : L.showToday) + '</button>';
+        var tb = document.getElementById('lib-today-btn');
+        if (tb) tb.addEventListener('click', function () {
+          state.todayOnly = !state.todayOnly;
+          state.page = 1;
+          render();
+          var top = document.getElementById('lib-results');
+          if (top) window.scrollTo({ top: top.offsetTop - 90, behavior: 'smooth' });
+        });
+      } else {
+        todayBox.hidden = true;
+        todayBox.innerHTML = '';
+        state.todayOnly = false;
+      }
+    }
     el('lib-results').innerHTML = slice.length
       ? slice.map(card).join('')
       : '<p class="notice">' + esc(L.noResults) + '</p>';
@@ -186,7 +237,7 @@
     el('lib-journal').addEventListener('change', function (e) { state.journal = e.target.value; state.page = 1; render(); });
     el('lib-sort').addEventListener('change', function (e) { state.sort = e.target.value; state.page = 1; render(); });
     el('lib-search-btn').addEventListener('click', function () {
-      state.q = ''; state.journal = 'all'; state.page = 1;
+      state.q = ''; state.journal = 'all'; state.page = 1; state.todayOnly = false;
       el('lib-search').value = ''; el('lib-journal').value = 'all'; el('lib-sort').value = 'journal';
       render();
     });
