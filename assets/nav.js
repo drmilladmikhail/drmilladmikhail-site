@@ -18,13 +18,19 @@
     });
   });
 })();
-// Open a folded home-page section (<details class="fold">) when its link (#credentials, #research) is used.
+// Open a folded home-page section (<details class="fold">) when its link (#about, #credentials, #research) is used.
 (function () {
   function openHash() {
     if (!location.hash) return;
     var el = document.getElementById(location.hash.slice(1));
-    var d = el && el.querySelector('details.fold');
-    if (d && !d.open) { d.open = true; el.scrollIntoView(); }
+    if (!el) return;
+    var changed = false;
+    for (var p = el.parentElement; p; p = p.parentElement) {
+      if (p.tagName === 'DETAILS' && !p.open) { p.open = true; changed = true; }
+    }
+    var d = el.querySelector('details.fold');
+    if (d && !d.open) { d.open = true; changed = true; }
+    if (changed) el.scrollIntoView();
   }
   window.addEventListener('hashchange', openHash);
   openHash();

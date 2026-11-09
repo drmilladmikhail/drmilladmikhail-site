@@ -35,3 +35,4 @@ html[lang="ar"] body.home-redesign .vcard .card-date{color:#7a5a12}
 html[lang="ar"] body.home-redesign .about-facts{list-style:none;margin:16px 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 html[lang="ar"] body.home-redesign .about-facts li{font-size:14.5px;line-height:1.6;color:#244d43;background:#e5ebe3;border-radius:999px;padding:4px 12px}
 html[lang="ar"] body.home-redesign .about-more{display:grid;gap:12px;margin-top:28px}
+html[lang="ar"] body.home-redesign .about-fold[open]>.about-grid{margin-top:20px}
