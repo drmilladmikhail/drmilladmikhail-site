@@ -74,6 +74,25 @@ jobs:
                               assert page.locator('.clarity-hero').count() == 1
                               assert page.locator('.discovery-hub, .guide, .quick-quiz, .myth-promo, .tests-band, .quote-band').count() == 0
                               assert page.request.get('http://127.0.0.1:8765/assets/home-clarity.css').status == 200
+                              for scheme in ['light', 'dark']:
+                                  page.emulate_media(color_scheme=scheme)
+                                  contrast = page.evaluate("""() => {
+                                      const luminance = color => {
+                                          const rgb = color.match(/[\\d.]+/g).slice(0, 3).map(v => {
+                                              v = Number(v) / 255;
+                                              return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4;
+                                          });
+                                          return rgb[0] * .2126 + rgb[1] * .7152 + rgb[2] * .0722;
+                                      };
+                                      return ['.daily-text', '.daily-kicker', '.daily-date',
+                                          '.daily figcaption', '.daily-copy', '.weekly > span'].flatMap(selector =>
+                                          [...document.querySelectorAll(selector)].map(el =>
+                                              [selector, 1.05 / (luminance(getComputedStyle(el).color) + .05)]));
+                                  }""")
+                                  assert all(ratio >= 4.5 for _, ratio in contrast), contrast
+                                  assert page.locator('.daily').evaluate("(el) => getComputedStyle(el).backgroundColor") == 'rgb(255, 255, 255)'
+                                  assert page.locator('.weekly').evaluate("(el) => getComputedStyle(el).backgroundColor") == 'rgb(255, 255, 255)'
+                              page.emulate_media(color_scheme='light')
                           if name == 'research':
                               assert page.locator('main details').count() == 3
                               panel = page.locator('main details').nth(1)
