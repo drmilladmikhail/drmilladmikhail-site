@@ -1080,3 +1080,14 @@ details.fold[open] .fold-hint { display: none; }
 .journey-private { margin:16px 0 8px; color:var(--muted); font-size:14px; }
 .journey-reset { font:inherit; cursor:pointer; }
 @media(prefers-reduced-motion:reduce) { .journey-track span { transition:none; } }
+
+/* Mobile menu on the dark header: links inherited white text on the light panel (invisible). */
+.topbar-dark .menu nav a { color: var(--ink); }
+.topbar-dark .menu nav a.m-start { color: var(--amber-text); }
+.topbar-dark .menu nav a[aria-current="page"] { color: var(--eucalyptus); }
+/* Header (and its open menu) must stay above the announcement bar, which is injected after it with the same z-index. */
+.topbar { z-index: 30; }
+/* The home page keeps a white menu panel in every colour scheme, so use fixed dark link colours there. */
+.home-redesign .topbar-dark .menu nav a { color: #18233a; }
+.home-redesign .topbar-dark .menu nav a.m-start { color: #8a6214; }
+.home-redesign .topbar-dark .menu nav a[aria-current="page"] { color: #2f6f62; }
