@@ -1,7 +1,7 @@
 name: Build and publish verified site
 on:
   push:
-    branches: [main, feature/research-library]
+    branches: [main, feature/research-library, fix/homepage-build-and-release]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -16,6 +16,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -23,21 +25,17 @@ jobs:
         run: |
           pip install pillow playwright
           python -m playwright install --with-deps chromium
-      - name: Restore approved homepage sources from immutable commit
-        run: |
-          curl --fail --silent --show-error --retry 3 https://raw.githubusercontent.com/drmilladmikhail/drmilladmikhail-site/188870a6cb6b293e7f94b5090fa346c6b96d058d/tools/home_clarity.py -o tools/home_clarity.py
-          curl --fail --silent --show-error --retry 3 https://raw.githubusercontent.com/drmilladmikhail/drmilladmikhail-site/188870a6cb6b293e7f94b5090fa346c6b96d058d/assets/home-clarity.css -o assets/home-clarity.css
-      - name: Build all reviewed changes without committing generated files
+      - name: Test tracked sources and build reviewed pages
         run: |
           python -m compileall -q tools
+          python -m unittest discover -s tools -p test_home_clarity.py -v
           python tools/growth_package.py
           python tools/build_articles.py
           python tools/home_clarity.py
           python tools/build_research.py
-      - name: Verify preservation, repeatability and responsive pages
+      - name: Verify repeatability, navigation and responsive pages
         run: |
           python - <<'PY'
-          import re
           import subprocess
           import sys
           import time
@@ -49,15 +47,15 @@ jobs:
           import site_header
           paths = [Path(p) for p in ['index.html', 'research/index.html', 'sitemap.xml']]
           first = {p: p.read_bytes() for p in paths}
-          home = paths[0].read_text()
+          home = paths[0].read_text(encoding='utf-8')
           header = site_header.HEADER_RE.search(home).group(0)
           home_clarity.apply(Path('.'))
           build_research.build(Path('.'))
           assert all(p.read_bytes() == v for p, v in first.items()), 'Non-idempotent build'
-          assert site_header.HEADER_RE.search(paths[0].read_text()).group(0) == header
+          assert site_header.HEADER_RE.search(paths[0].read_text(encoding='utf-8')).group(0) == header
           assert 'home-clarity.css' in home and 'clarity-hero' in home
           assert all('id="' + k + '"' in home for k in ['about', 'credentials', 'articles'])
-          assert site_header.header_for('research/index.html') in paths[1].read_text()
+          assert site_header.header_for('research/index.html') in paths[1].read_text(encoding='utf-8')
           assert home.count('<h1') == 1
           Path('test-artifacts').mkdir(exist_ok=True)
           server = subprocess.Popen(['python', '-m', 'http.server', '8765', '--bind', '127.0.0.1'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -68,10 +66,14 @@ jobs:
                   for width in [390, 1280]:
                       page = browser.new_page(viewport={'width': width, 'height': 900})
                       for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start')]:
-                          response = page.goto('http://127.0.0.1:8765' + slug, wait_until='domcontentloaded')
+                          response = page.goto('http://127.0.0.1:8765' + slug, wait_until='load')
                           assert response.status == 200, slug
                           assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), slug
                           assert page.locator('header.topbar').count() == 1
+                          if name == 'home':
+                              assert page.locator('.clarity-hero').count() == 1
+                              assert page.locator('.discovery-hub, .guide, .quick-quiz, .myth-promo, .tests-band, .quote-band').count() == 0
+                              assert page.request.get('http://127.0.0.1:8765/assets/home-clarity.css').status == 200
                           if name == 'research':
                               assert page.locator('main details').count() == 3
                               panel = page.locator('main details').nth(1)
@@ -84,24 +86,39 @@ jobs:
               server.terminate()
               server.wait(timeout=10)
           PY
-      - name: Prepare public files only
+      - name: Prepare public files and identify the exact release
         run: |
           python - <<'PY'
           from pathlib import Path
+          import hashlib
+          import json
+          import os
           import shutil
           root = Path('.')
           target = root / '_site'
-          target.mkdir(exist_ok=True)
-          skip = {'.git', '.github', 'tools', 'content', 'docs', 'node_modules', 'test-artifacts', '_site', '__pycache__', 'output'}
+          if target.exists():
+              shutil.rmtree(target)
+          target.mkdir()
+          skip = {'tools', 'content', 'docs', 'node_modules', 'test-artifacts', '_site', '__pycache__', 'output'}
           for p in root.iterdir():
-              if p.name in skip or p.suffix in {'.py', '.pyc', '.md'}:
+              if p.name in skip or (p.name.startswith('.') and p.name != '.nojekyll') or p.is_symlink() or p.suffix in {'.py', '.pyc', '.md'}:
                   continue
               if p.is_dir():
-                  shutil.copytree(p, target / p.name, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'), dirs_exist_ok=True)
+                  shutil.copytree(p, target / p.name, ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.git', '.env', '.env.*'), dirs_exist_ok=True)
               else:
                   shutil.copy2(p, target / p.name)
-          assert (target / 'research/index.html').is_file()
+          revision = os.environ['GITHUB_SHA']
+          stamp = '<meta name="site-revision" content="' + revision + '">'
+          for slug in ['index.html', 'research/index.html']:
+              page = target / slug
+              text = page.read_text(encoding='utf-8')
+              assert '</head>' in text
+              page.write_text(text.replace('</head>', stamp + '</head>', 1), encoding='utf-8')
+          css = target / 'assets/home-clarity.css'
+          assert css.is_file()
           assert (target / 'CNAME').read_text().strip() == 'drmilladmikhail.com'
+          release = {'revision': revision, 'homepage_css_sha256': hashlib.sha256(css.read_bytes()).hexdigest()}
+          (target / 'site-release.json').write_text(json.dumps(release) + '\n', encoding='utf-8')
           PY
       - uses: actions/upload-artifact@v4
         if: always()
@@ -116,7 +133,7 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     permissions:
       contents: read
       pages: write
@@ -125,40 +142,58 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Verify existing custom domain before changing Pages source
+      - name: Verify existing Pages settings without changing hosting
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          current=$(gh api repos/drmilladmikhail/drmilladmikhail-site/pages --jq '.cname')
-          if [ "$current" != 'drmilladmikhail.com' ]; then
-            echo 'Existing GitHub Pages domain not verified. No hosting or DNS change made.'
-            exit 1
-          fi
-          gh api --method PUT repos/drmilladmikhail/drmilladmikhail-site/pages -f build_type=workflow
+          gh api repos/drmilladmikhail/drmilladmikhail-site/pages > "$RUNNER_TEMP/pages-settings.json"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          settings = json.loads((Path(os.environ['RUNNER_TEMP']) / 'pages-settings.json').read_text())
+          if settings.get('cname') != 'drmilladmikhail.com':
+              raise SystemExit('Existing custom domain differs. No hosting or DNS change made.')
+          if settings.get('build_type') != 'workflow':
+              raise SystemExit('Pages source is not GitHub Actions. An administrator must approve that setting separately; this workflow will not change it.')
+          PY
       - uses: actions/configure-pages@v5
+        with:
+          enablement: false
       - name: Deploy tested artifact
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Check public research and homepage
+      - name: Verify this exact revision on the public website
+        env:
+          EXPECTED_REVISION: ${{ github.sha }}
         run: |
           python - <<'PY'
+          import hashlib
+          import json
+          import os
           import time
           from urllib.request import Request, urlopen
-          expected = {'https://drmilladmikhail.com/research/': 'مرصد الأبحاث النفسية', 'https://drmilladmikhail.com/': 'home-clarity.css'}
-          pending = dict(expected)
+          revision = os.environ['EXPECTED_REVISION']
+          base = 'https://drmilladmikhail.com'
+          stamp = '<meta name="site-revision" content="' + revision + '">'
+          def get(path):
+              request = Request(base + path + '?release=' + revision, headers={'Cache-Control': 'no-cache', 'User-Agent': 'SiteReleaseCheck/1.0'})
+              with urlopen(request, timeout=10) as response:
+                  if response.status != 200:
+                      raise ValueError('Unexpected HTTP status for ' + path)
+                  return response.read()
           for attempt in range(12):
-              for url, marker in list(pending.items()):
-                  try:
-                      request = Request(url, headers={'Cache-Control': 'no-cache', 'User-Agent': 'SiteReleaseCheck/1.0'})
-                      with urlopen(request, timeout=15) as response:
-                          text = response.read().decode('utf-8')
-                          if response.status == 200 and marker in text:
-                              del pending[url]
-                  except Exception as exc:
-                      print(url, type(exc).__name__)
-              if not pending:
+              try:
+                  release = json.loads(get('/site-release.json'))
+                  assert release['revision'] == revision, 'Stale release metadata'
+                  for path, marker in [('/', 'clarity-hero'), ('/research/', 'مرصد الأبحاث النفسية')]:
+                      text = get(path).decode('utf-8')
+                      assert stamp in text and marker in text, 'Stale or incomplete page: ' + path
+                  assert hashlib.sha256(get('/assets/home-clarity.css')).hexdigest() == release['homepage_css_sha256'], 'Stylesheet mismatch'
                   break
-              time.sleep(10)
-          if pending:
-              raise SystemExit('Public verification incomplete: ' + ', '.join(pending))
+              except Exception as exc:
+                  print('Release verification attempt', attempt + 1, type(exc).__name__, str(exc))
+                  if attempt == 11:
+                      raise SystemExit('Public verification failed for revision ' + revision) from exc
+                  time.sleep(10)
           PY

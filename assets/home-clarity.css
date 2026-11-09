@@ -1,0 +1,18 @@
+/* Loaded last on the Arabic homepage only. */
+html[lang="ar"] body.home-redesign{--home-paper:#f7f5ef;--home-card:#fff;--home-ink:#243731;--home-muted:#52645d;--home-line:#dbe3dc;--home-blue:#326356;--home-blue-dark:#234c42;background:var(--home-paper)}
+html[lang="ar"] body.home-redesign main,html[lang="ar"] body.home-redesign .section,html[lang="ar"] body.home-redesign .section:nth-of-type(even){background:var(--home-paper)}
+html[lang="ar"] body.home-redesign .clarity-hero{background:#eef3ed;border-bottom:1px solid var(--home-line);padding-block:clamp(36px,7vw,80px)}
+html[lang="ar"] body.home-redesign .clarity-hero .wrap:first-child{display:block;max-width:850px;text-align:center}
+html[lang="ar"] body.home-redesign .clarity-hero .statement{max-width:38em;margin:18px auto 26px}
+html[lang="ar"] body.home-redesign .clarity-hero .actions{justify-content:center}
+html[lang="ar"] body.home-redesign .section{padding-block:clamp(30px,5vw,52px)}
+html[lang="ar"] body.home-redesign .concern-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+html[lang="ar"] body.home-redesign .concern-card{min-width:0;padding:24px;border:1px solid var(--home-line);border-radius:18px;background:#fff;box-shadow:none}
+html[lang="ar"] body.home-redesign .concern-card b{color:var(--home-ink)}
+html[lang="ar"] body.home-redesign .concern-card small{color:var(--home-muted);line-height:1.9}
+html[lang="ar"] body.home-redesign .daily,html[lang="ar"] body.home-redesign .weekly,html[lang="ar"] body.home-redesign #articles .card a{border:1px solid var(--home-line);border-radius:18px;background:#fff;box-shadow:none}
+html[lang="ar"] body.home-redesign .book-feature{background:var(--home-blue-dark)}
+html[lang="ar"] body.home-redesign .concern-card:hover,html[lang="ar"] body.home-redesign #articles .card a:hover{transform:none;box-shadow:none;border-color:var(--home-blue)}
+html[lang="ar"] body.home-redesign a:focus-visible,html[lang="ar"] body.home-redesign summary:focus-visible,html[lang="ar"] body.home-redesign button:focus-visible{outline:3px solid #326356;outline-offset:4px}
+@media(max-width:900px){html[lang="ar"] body.home-redesign .concern-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){html[lang="ar"] body.home-redesign .concern-grid{grid-template-columns:1fr}html[lang="ar"] body.home-redesign .clarity-hero .hero-name{font-size:36px}html[lang="ar"] body.home-redesign .concern-card{padding:20px}html[lang="ar"] body.home-redesign .clarity-hero .btn{width:100%;max-width:340px}}
