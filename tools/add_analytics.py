@@ -62,6 +62,8 @@ def main():
     growth_package.apply_pages(ROOT)
     import home_clarity
     home_clarity.apply(ROOT)
+    import breadcrumbs
+    breadcrumbs.apply(ROOT)
 
 
 if __name__ == "__main__":
