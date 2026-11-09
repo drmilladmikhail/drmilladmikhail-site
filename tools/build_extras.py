@@ -168,3 +168,5 @@ def build_all(ba, page, write, SITE):
     shelf_page(ba, page, write, SITE)
     import build_life_tools
     build_life_tools.build(ba, page, write, SITE)
+    import build_discover_feelings
+    build_discover_feelings.build(ba, page, write, SITE)

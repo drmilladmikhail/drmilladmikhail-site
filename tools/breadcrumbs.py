@@ -19,6 +19,9 @@ def targets(root):
     for sec in SECTIONS:
         for p in sorted(glob.glob(os.path.join(root, sec, "*", "index.html"))):
             yield p, sec
+    df = os.path.join(root, "discover-feelings", "index.html")
+    if os.path.exists(df):
+        yield df, "life-tools"  # «اكتشاف مشاعرك» sits under «أدوات لحياتك»
     lib = os.path.join(root, "research", "library", "index.html")
     if os.path.exists(lib):
         yield lib, "library"

@@ -146,6 +146,12 @@ def build(ba, page, write, SITE):
           </span>
         </a>
       </li>''')
+    try:
+        import build_discover_feelings as bdf
+        if bdf.available():
+            cards.append(bdf.card_html(esc))
+    except ImportError:
+        pass
     body = f'''  <section class="section articles-index">
     <div class="wrap">
       <h1>أدوات لحياتك</h1>
