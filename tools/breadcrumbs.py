@@ -11,7 +11,8 @@ import re
 
 SITE = "https://drmilladmikhail.com"
 LABEL = "مسار التصفح"
-SECTIONS = {"articles": ("المقالات", "/articles/"), "tests": ("اختبارات نفسية", "/tests/")}
+SECTIONS = {"articles": ("المقالات", "/articles/"), "tests": ("اختبارات نفسية", "/tests/"),
+            "life-tools": ("أدوات لحياتك", "/life-tools/")}
 
 
 def targets(root):
@@ -52,7 +53,7 @@ def process(path, sec, root):
     else:
         name, url = SECTIONS[sec]
         items = [home, (name, url), (title, rel)]
-        t = re.sub(r'<p class="crumbs"><a href="/(?:articles|tests)/">(.*?)</a>(.*?)</p>',
+        t = re.sub(r'<p class="crumbs"><a href="/(?:articles|tests|life-tools)/">(.*?)</a>(.*?)</p>',
                    lambda m: f'<nav class="crumbs" aria-label="{LABEL}"><a href="/">الرئيسية</a> · '
                              f'<a href="{url}">{m.group(1)}</a>{m.group(2)}</nav>',
                    t, count=1, flags=re.S)

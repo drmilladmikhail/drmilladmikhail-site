@@ -61,6 +61,7 @@ def exercise_page(ba, page, write, SITE):
       <h1>تمرين الأسبوع النفسي</h1>
       <p class="section-intro">كل أسبوع تمرين عملي قصير من العلاج النفسي: تدوين المشاعر، الحدود الصحية، التنفس الواعي، والبحث عن المعنى. اقرا الخطوات، جرّبها، واكتب تأملاتك لنفسك.</p>
       {"".join(arts)}
+      <p class="related">عايز أدوات قصيرة تانية؟ شوف <a href="/life-tools/">أدوات لحياتك</a>.</p>
       <details class="ex-archive"><summary>كل التمارين (تقدر ترجع لأي تمرين)</summary><ol>{archive}</ol></details>
       <p class="safety">التمارين دي للعناية بالنفس، ومش بديل عن العلاج. لو حاسس إنك في خطر دلوقتي، روح لصفحة <a href="/help-now/">محتاج مساعدة دلوقتي</a>.</p>
     </div>
@@ -165,3 +166,5 @@ def build_all(ba, page, write, SITE):
     exercise_page(ba, page, write, SITE)
     stories_page(ba, page, write, SITE)
     shelf_page(ba, page, write, SITE)
+    import build_life_tools
+    build_life_tools.build(ba, page, write, SITE)
