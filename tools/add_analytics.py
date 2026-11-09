@@ -25,7 +25,7 @@ except (OSError, ValueError):
     pass
 SECURITY = (f'<meta http-equiv="Content-Security-Policy" content="{CSP}">\n'
             '<meta name="referrer" content="strict-origin-when-cross-origin">\n')
-SKIP_DIRS = {".git", ".github", "tools", "node_modules", "content"}
+SKIP_DIRS = {".git", ".github", "tools", "node_modules", "content", "docs"}
 
 
 def main():
