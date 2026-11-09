@@ -1010,5 +1010,61 @@
   "issue": "11",
   "issue_ar": "نوفمبر 2026",
   "issue_en": "November 2026"
+ },
+ {
+  "pmid": "42956238",
+  "doi": "10.1037/cou0000900",
+  "title": "An intervention based on acceptance and commitment therapy for people experiencing work- or career-related difficulties: A randomized controlled trial",
+  "title_ar": "تدخل قائم على العلاج بالقبول والالتزام للأشخاص الذين يواجهون صعوبات متعلقة بالعمل أو المسار المهني: تجربة معشاة مضبوطة",
+  "abstract": "This randomized controlled trial assessed the effectiveness of a group intervention based on acceptance and commitment therapy designed for people facing work- or career-related difficulties (e.g., job loss, burnout). Participants were recruited with the assistance of community organizations providing career counseling services, and they were randomly assigned to either an intervention group (n = 82) or a waitlist group (n = 82). They completed questionnaires aimed at measuring process (i.e., psychological flexibility and inflexibility) and outcome variables (i.e., psychological well-being, psychological distress, meaning in life, and career engagement) on three occasions (baseline, postintervention, and follow-up). Participants took part in seven 2.5-hr sessions offered online during a 7-week period. Results of mixed-effects models on intention-to-treat data showed that the intervention led to an increase in psychological flexibility (d = .64), well-being (d = .32), and meaning in life (d = .42) and a decrease in psychological inflexibility (d = -.51) and distress (d = -.36). These effects were maintained at follow-up (17 weeks later), moderated by participants' initial levels of distress and precarity (for some outcomes). Indirect effect analyses showed that changes in psychological flexibility/inflexibility statistically accounted for these effects. The intervention had no significant effect on career engagement. Overall, this trial suggests that the intervention helped promote well-being and flourishing among people struggling with work- or career-related difficulties. (PsycInfo Database Record (c) 2026 APA, all rights reserved).",
+  "abstract_ar": "قيّمت هذه التجربة المعشاة المضبوطة فاعلية تدخل جماعي قائم على العلاج بالقبول والالتزام، صُمم للأشخاص الذين يواجهون صعوبات متعلقة بالعمل أو المسار المهني، مثل فقدان الوظيفة أو الاحتراق الوظيفي. جرى تجنيد المشاركين بمساعدة منظمات مجتمعية تقدم خدمات الإرشاد المهني، ووُزعوا عشوائيًا إما على مجموعة التدخل (n = 82) أو مجموعة قائمة الانتظار (n = 82). وأكملوا استبيانات لقياس متغيرات العملية، أي المرونة النفسية وعدم المرونة النفسية، ومتغيرات النتائج، أي الرفاه النفسي والضيق النفسي ومعنى الحياة والانخراط المهني، في ثلاث مناسبات: عند خط الأساس، وبعد التدخل، وفي المتابعة. وشاركوا في سبع جلسات قُدمت عبر الإنترنت، مدة كل منها ساعتان ونصف، خلال فترة امتدت سبعة أسابيع. وأظهرت نتائج نماذج التأثيرات المختلطة المطبقة على بيانات تحليل نية العلاج أن التدخل أدى إلى زيادة المرونة النفسية (d = .64)، والرفاه (d = .32)، ومعنى الحياة (d = .42)، وإلى انخفاض عدم المرونة النفسية (d = -.51) والضيق (d = -.36). واستمرت هذه التأثيرات في المتابعة، بعد 17 أسبوعًا، وتفاوتت بعض هذه التأثيرات بحسب المستويات الأولية للضيق وعدم الاستقرار لدى المشاركين. وأظهرت تحليلات التأثيرات غير المباشرة أن التغيرات في المرونة النفسية وعدم المرونة النفسية فسّرت هذه التأثيرات إحصائيًا. ولم يكن للتدخل تأثير دال إحصائيًا في الانخراط المهني. وبوجه عام، تشير هذه التجربة إلى أن التدخل ساعد على تعزيز الرفاه والازدهار لدى الأشخاص الذين يعانون صعوبات متعلقة بالعمل أو المسار المهني. (سجل قاعدة بيانات PsycInfo، حقوق النشر © 2026 APA، جميع الحقوق محفوظة).",
+  "authors": [
+   "Damecour Maryse",
+   "Doucerain Marina M",
+   "Lachance Lise",
+   "Grégoire Simon"
+  ],
+  "journal": "Journal of Counseling Psychology",
+  "journal_ar": "مجلة علم النفس الإرشادي",
+  "volume": "73",
+  "issue": "6",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "881-895",
+  "source_urls": [
+   "https://pubmed.ncbi.nlm.nih.gov/42956238/",
+   "https://psycnet.apa.org/journals/cou.rss"
+  ],
+  "added": "2026-11-09"
+ },
+ {
+  "pmid": "42275015",
+  "doi": "10.1037/cou0000886",
+  "title": "Bias in follow-up assessment of psychotherapy: Are certain patients more likely to participate?",
+  "title_ar": "التحيز في تقييمات متابعة العلاج النفسي: هل يزداد احتمال مشاركة مرضى معينين؟",
+  "abstract": "Follow-up (FU) assessments are a key component in evaluating the long-term effectiveness of psychotherapy, but participation is often incomplete. Therefore, with this study, we aimed to examine what patient characteristics predict follow-up participation and to estimate the potential bias this may introduce into treatment effectiveness estimates. We analyzed data from 586 patients who received cognitive-behavioral therapy. A random forest feature selection algorithm (Boruta) was applied in order to identify particularly important predictors of follow-up participation, 1-year posttreatment. To approximate the bias introduced by nonrandom follow-up participation, we conducted a post hoc propensity score matching analysis using the identified important predictors. Follow-up participation (38.2%) was associated with higher treatment satisfaction, a stronger therapeutic alliance at the end of treatment, and greater reductions of interpersonal sensitivity over the course of treatment. Older age was also linked to greater follow-up participation, while education, comorbidity, and baseline symptom severity were not. Patients with less improvement in somatization and interpersonal difficulties were more likely to respond. Propensity score matching revealed that treatment effectiveness (as measured by symptom reduction) may be overestimated by approximately 21% when relying solely on follow-up completers, relative to patients resembling nonparticipants. Our findings highlight a potential bias in psychotherapy outcome evaluations due to nonrandom follow-up participation. Strategies that may help improve follow-up response rates in routine care are discussed. (PsycInfo Database Record (c) 2026 APA, all rights reserved).",
+  "abstract_ar": "تُعد تقييمات المتابعة عنصرًا أساسيًا في تقييم فاعلية العلاج النفسي على المدى الطويل، لكن المشاركة فيها تكون غير مكتملة في كثير من الأحيان. لذلك، هدفت هذه الدراسة إلى فحص خصائص المرضى التي تتنبأ بالمشاركة في المتابعة، وتقدير التحيز المحتمل الذي قد يترتب على ذلك في تقديرات فاعلية العلاج. حللنا بيانات 586 مريضًا تلقوا العلاج المعرفي السلوكي. وطُبقت خوارزمية بوروتا لاختيار السمات باستخدام الغابة العشوائية، لتحديد المتنبئات المهمة على نحو خاص بالمشاركة في المتابعة بعد عام من انتهاء العلاج. ولتقدير التحيز الناجم عن المشاركة غير العشوائية في المتابعة، أجرينا تحليلًا لاحقًا للمطابقة بدرجات الميل، باستخدام المتنبئات المهمة التي جرى تحديدها. وارتبطت المشاركة في المتابعة، التي بلغت 38.2%، بارتفاع الرضا عن العلاج، وقوة التحالف العلاجي في نهاية العلاج، وانخفاض أكبر في الحساسية في العلاقات مع الآخرين خلال مسار العلاج. كما ارتبط التقدم في العمر بزيادة المشاركة في المتابعة، بينما لم يرتبط بها التعليم أو الاضطرابات المصاحبة أو شدة الأعراض عند خط الأساس. وكان المرضى الذين أظهروا تحسنًا أقل في الجسدنة والصعوبات في العلاقات مع الآخرين أكثر احتمالًا للاستجابة. وكشفت المطابقة بدرجات الميل أن فاعلية العلاج، مقاسة بانخفاض الأعراض، قد يُبالغ في تقديرها بنحو 21% عند الاعتماد فقط على من أكملوا المتابعة، مقارنةً بمرضى يشبهون غير المشاركين. وتسلط نتائجنا الضوء على تحيز محتمل في تقييم نتائج العلاج النفسي بسبب المشاركة غير العشوائية في المتابعة. وتُناقش استراتيجيات قد تساعد على تحسين معدلات الاستجابة للمتابعة في الرعاية المعتادة. (سجل قاعدة بيانات PsycInfo، حقوق النشر © 2026 APA، جميع الحقوق محفوظة).",
+  "authors": [
+   "Iovoli Flavio",
+   "Peña Loray Juan Segundo",
+   "Lütgendorf Tobias",
+   "Cordes Martin",
+   "Fritz Jessica",
+   "Günther Franziska",
+   "Schöttke Henning",
+   "Rubel Julian A"
+  ],
+  "journal": "Journal of Counseling Psychology",
+  "journal_ar": "مجلة علم النفس الإرشادي",
+  "volume": "73",
+  "issue": "6",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "829-835",
+  "source_urls": [
+   "https://pubmed.ncbi.nlm.nih.gov/42275015/",
+   "https://psycnet.apa.org/journals/cou.rss"
+  ],
+  "added": "2026-11-09"
  }
 ]
