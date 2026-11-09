@@ -36,41 +36,78 @@
     if (line) lines.push(line);
     return lines;
   }
-  function makeCard(title, line) {
+  function rrect(ctx, x, y, w, h, r) {
+    if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); return; }
+    ctx.beginPath();
+    ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+  }
+  // spec: {title, line, bars:[{label, pct (0..1), val}]}
+  function makeCard(title, line, bars) {
     var W = 1080, H = 1350, cv = document.createElement("canvas");
     cv.width = W; cv.height = H;
     var ctx = cv.getContext("2d");
     var g = ctx.createLinearGradient(0, 0, W, H);
-    g.addColorStop(0, "#18233a"); g.addColorStop(1, "#2f6f62");
+    g.addColorStop(0, "#141f33"); g.addColorStop(1, "#2f6f62");
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = "rgba(226,179,90,.14)";
-    ctx.beginPath(); ctx.arc(W - 120, 170, 260, 0, Math.PI * 2); ctx.fill();
+    // decorative shapes
+    ctx.fillStyle = "rgba(226,179,90,.10)";
+    ctx.beginPath(); ctx.arc(W + 40, 120, 300, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,.05)";
+    ctx.beginPath(); ctx.arc(-60, H - 380, 240, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = "rgba(226,179,90,.35)"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(90, H - 330); ctx.lineTo(W - 90, H - 330); ctx.stroke();
     ctx.direction = "rtl"; ctx.textAlign = "center";
     var F = '"IBM Plex Sans Arabic", system-ui, sans-serif';
     var testName = (document.querySelector("h1") || {}).textContent || "";
     testName = testName.split(/[:(：]/)[0].trim();
-    ctx.fillStyle = "rgba(255,255,255,.75)"; ctx.font = "500 46px " + F;
-    ctx.fillText("نتيجتي في", W / 2, 300);
-    ctx.fillStyle = "#e2b35a"; ctx.font = "600 56px " + F;
-    ctx.fillText(testName, W / 2, 380);
-    ctx.fillStyle = "#ffffff"; ctx.font = "700 104px " + F;
-    var y = 600;
-    wrap(ctx, title, W - 160).forEach(function (l) { ctx.fillText(l, W / 2, y); y += 130; });
-    if (line) {
-      ctx.fillStyle = "rgba(255,255,255,.85)"; ctx.font = "400 44px " + F;
-      y += 10;
-      wrap(ctx, line, W - 200).slice(0, 3).forEach(function (l) { ctx.fillText(l, W / 2, y); y += 66; });
+    // header
+    ctx.fillStyle = "rgba(255,255,255,.75)"; ctx.font = "500 44px " + F;
+    ctx.fillText("نتيجتي في", W / 2, 250);
+    ctx.fillStyle = "#e2b35a"; ctx.font = "600 58px " + F;
+    ctx.fillText(testName, W / 2, 335);
+    // title (up to 2 lines)
+    var y = 500;
+    ctx.fillStyle = "#ffffff"; ctx.font = "700 96px " + F;
+    var tl = wrap(ctx, title, W - 180).slice(0, 2);
+    tl.forEach(function (l) { ctx.fillText(l, W / 2, y); y += 120; });
+    // bars
+    if (bars && bars.length) {
+      y += 40;
+      bars.slice(0, 2).forEach(function (b) {
+        ctx.textAlign = "right"; ctx.fillStyle = "rgba(255,255,255,.88)"; ctx.font = "500 40px " + F;
+        ctx.fillText(b.label, W - 90, y);
+        ctx.textAlign = "left"; ctx.fillStyle = "#e2b35a"; ctx.font = "600 40px " + F;
+        ctx.fillText(b.val, 90, y);
+        ctx.textAlign = "center";
+        var bx = 90, bw = W - 180, by = y + 26, bh = 30;
+        ctx.fillStyle = "rgba(255,255,255,.16)";
+        rrect(ctx, bx, by, bw, bh, 15); ctx.fill();
+        var fg = ctx.createLinearGradient(bx, 0, bx + bw, 0);
+        fg.addColorStop(0, "#c9973f"); fg.addColorStop(1, "#e2b35a");
+        ctx.fillStyle = fg;
+        var fw = Math.max(bh, Math.round(bw * Math.min(1, Math.max(0, b.pct))));
+        rrect(ctx, bx + bw - fw, by, fw, bh, 15); ctx.fill(); // fills from the right (RTL)
+        y += 150;
+      });
     }
-    ctx.fillStyle = "#e2b35a"; ctx.font = "600 50px " + F;
-    ctx.fillText("وانت؟ اعرف نتيجتك مجانًا", W / 2, H - 230);
+    // line
+    if (line) {
+      ctx.fillStyle = "rgba(255,255,255,.85)"; ctx.font = "400 42px " + F;
+      y = Math.max(y + 10, 900);
+      wrap(ctx, line, W - 220).slice(0, 3).forEach(function (l) { ctx.fillText(l, W / 2, y); y += 64; });
+    }
+    // footer
+    ctx.fillStyle = "#e2b35a"; ctx.font = "600 48px " + F;
+    ctx.fillText("وانت؟ اعرف نتيجتك مجانًا", W / 2, H - 235);
     ctx.fillStyle = "#ffffff"; ctx.font = "500 40px " + F;
     ctx.direction = "ltr";
-    ctx.fillText("drmilladmikhail.com" + location.pathname.replace(/\/$/, ""), W / 2, H - 160);
+    ctx.fillText("drmilladmikhail.com" + location.pathname.replace(/\/$/, ""), W / 2, H - 165);
     ctx.direction = "rtl"; ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.font = "400 36px " + F;
-    ctx.fillText("د. ميلاد ميخائيل", W / 2, H - 95);
+    ctx.fillText("د. ميلاد ميخائيل", W / 2, H - 100);
     return cv;
   }
-  function addCardButton(title, line) {
+  function addCardButton(title, line, bars) {
     if ((cfg.safety && cfg.kind !== 'multi') || cfg.private || !document.createElement("canvas").getContext) return;
     var box = document.createElement("div");
     box.className = "rcard";
@@ -80,10 +117,18 @@
     box.querySelector(".rcard-make").addEventListener("click", function () {
       var ready = document.fonts && document.fonts.load ? document.fonts.load('700 40px "IBM Plex Sans Arabic"') : Promise.resolve();
       ready.catch(function () {}).then(function () {
-        var cv = makeCard(title, line), url = cv.toDataURL("image/png");
+        var cv = makeCard(title, line, bars), url = cv.toDataURL("image/png");
         box.innerHTML = '<img class="rcard-img" alt="كارت نتيجتك: ' + title.replace(/"/g, "") + '" width="1080" height="1350" src="' + url + '">' +
-          '<div class="actions"><a class="btn primary rcard-dl" download="natiga-drmilladmikhail.png" href="' + url + '">نزّل الكارت</a></div>' +
+          '<div class="actions"><a class="btn primary rcard-dl" download="natiga-drmilladmikhail.png" href="' + url + '">نزّل الكارت</a>' +
+          '<button type="button" class="btn rcard-link">انسخ رابط الاختبار</button></div>' +
           '<p class="result-note">نزّله وحطه ستوري أو ابعته لصاحبك. الكارت بيتعمل على جهازك ومش بيتبعت لأي حد.</p>';
+        var linkBtn = box.querySelector(".rcard-link");
+        if (linkBtn && navigator.clipboard) linkBtn.addEventListener("click", function () {
+          navigator.clipboard.writeText("اعمل الاختبار انت كمان: " + location.origin + location.pathname).then(function () {
+            linkBtn.textContent = "اتنسخ ✓";
+            setTimeout(function () { linkBtn.textContent = "انسخ رابط الاختبار"; }, 1800);
+          }).catch(function () {});
+        });
         cv.toBlob(function (blob) {
           if (!blob || !navigator.canShare) return;
           var file = new File([blob], "natiga.png", { type: "image/png" });
@@ -151,7 +196,10 @@
         bar('قلق التعلق (الخوف من الرفض والهجر)', an, 1, 7, an.toFixed(1) + ' من 7') +
         bar('تجنب التعلق (البعد عن القرب والاعتماد)', av, 1, 7, av.toFixed(1) + ' من 7') +
         '<p class="result-note">نمط التعلق مش حكم نهائي ولا عيب فيك، وممكن يتغير مع الوعي والعلاقات الآمنة. معظمنا فيه حاجة من أكتر من نمط.</p>');
-      addCardButton(s[0], (s[1].split(/[.،!؟]/)[0] || '').trim());
+      addCardButton(s[0], (s[1].split(/[.،!؟]/)[0] || '').trim(), [
+        { label: 'قلق التعلق', pct: (an - 1) / 6, val: an.toFixed(1) + ' من 7' },
+        { label: 'تجنب التعلق', pct: (av - 1) / 6, val: av.toFixed(1) + ' من 7' }
+      ]);
       return;
     }
 
@@ -183,10 +231,14 @@
       if (anyHigh && cfg.safety) html += '<p class="result-alert">لو حاسس إنك مش قادر تتحمل، أو عندك أفكار إنك تأذي نفسك، اطلب مساعدة دلوقتي: في مصر الخط الساخن للدعم النفسي 105، وفي أمريكا 988، أو أقرب طوارئ.</p>';
       html += '<p class="result-note">النتيجة دي مؤشر يساعدك تفهم نفسك، مش تشخيص. لو قلقان من نتيجتك، أحسن خطوة إنك تتكلم مع متخصص نفسي.</p>';
       render(html);
-      if (cfg.card === 'first') addCardButton(res[0].band[1], (res[0].band[2].split(/[.،!؟]/)[0] || '').trim());
+      if (cfg.card === 'first') addCardButton(res[0].band[1], (res[0].band[2].split(/[.،!؟]/)[0] || '').trim(), [
+        { label: res[0].sc.name, pct: res[0].rel, val: res[0].v.toFixed(res[0].sc.dec) + ' من ' + res[0].sc.max }
+      ]);
       else if (cfg.card === 'top') {
         var top = res.slice().sort(function (a, b) { return b.rel - a.rel; })[0];
-        addCardButton('أعلى سمة عندي: ' + top.sc.name, (top.band[2].split(/[.،!؟]/)[0] || '').trim());
+        addCardButton('أعلى سمة عندي: ' + top.sc.name, (top.band[2].split(/[.،!؟]/)[0] || '').trim(), [
+          { label: top.sc.name, pct: top.rel, val: top.v.toFixed(top.sc.dec) + ' من ' + top.sc.max }
+        ]);
       }
       return;
     }
@@ -201,6 +253,6 @@
       '<p>' + band[3] + '</p>' +
       (high ? '<p class="result-alert">لو حاسس إنك مش قادر تتحمل، أو عندك أفكار إنك تأذي نفسك، اطلب مساعدة دلوقتي: في مصر الخط الساخن للدعم النفسي 105، وفي أمريكا 988، أو أقرب طوارئ.</p>' : '') +
       '<p class="result-note">النتيجة دي مؤشر مش تشخيص. لو قلقان من نتيجتك، أحسن خطوة إنك تتكلم مع متخصص نفسي.</p>');
-    addCardButton(band[2], '');
+    addCardButton(band[2], '', [{ label: 'درجتك', pct: total / cfg.max, val: total + ' من ' + cfg.max }]);
   });
 })();
