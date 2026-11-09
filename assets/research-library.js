@@ -1,0 +1,203 @@
+/* Bilingual research library: search, filter, sort, paginate, AR/EN toggle. */
+(function () {
+  'use strict';
+  var DATA = window.RESEARCH_LIBRARY_DATA || [];
+  var PER_PAGE = 10;
+  var state = { lang: 'ar', q: '', journal: 'all', sort: 'journal', page: 1 };
+
+  var LABELS = {
+    ar: {
+      search: 'ابحث بالعربية أو الإنجليزية',
+      journal: 'كل الدوريات',
+      sortJournal: 'حسب الدورية',
+      sortTitle: 'حسب العنوان',
+      results: 'نتيجة',
+      noResults: 'لا توجد نتائج مطابقة. جرّب كلمة أعم أو أزل الفلاتر.',
+      page: 'صفحة',
+      prev: 'السابق',
+      next: 'التالي',
+      authors: 'المؤلفون',
+      vol: 'المجلد',
+      issue: 'العدد',
+      abstracts: 'الملخصات (عربي + English)',
+      abstractAr: 'الملخص العربي',
+      abstractEn: 'Original abstract (English)',
+      source: 'المصدر',
+      pmid: 'PMID',
+      toggle: 'English',
+      count: function (n, t) { return 'عرض ' + n + ' من ' + t + ' بحثًا'; },
+      reset: 'مسح البحث والفلاتر'
+    },
+    en: {
+      search: 'Search in Arabic or English',
+      journal: 'All journals',
+      sortJournal: 'By journal',
+      sortTitle: 'By title',
+      results: 'results',
+      noResults: 'No matching results. Try a broader term or clear the filters.',
+      page: 'Page',
+      prev: 'Previous',
+      next: 'Next',
+      authors: 'Authors',
+      vol: 'Vol.',
+      issue: 'Issue',
+      abstracts: 'Abstracts (English + العربية)',
+      abstractAr: 'الملخص العربي',
+      abstractEn: 'Original abstract (English)',
+      source: 'Source',
+      pmid: 'PMID',
+      toggle: 'العربية',
+      count: function (n, t) { return 'Showing ' + n + ' of ' + t + ' papers'; },
+      reset: 'Clear search and filters'
+    }
+  };
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function norm(s) {
+    return String(s || '').toLowerCase().replace(/[\u064B-\u0652]/g, '').replace(/\u0640/g, '');
+  }
+
+  function matches(r) {
+    if (state.journal !== 'all' && r.journal !== state.journal) return false;
+    if (!state.q) return true;
+    var q = norm(state.q);
+    var hay = norm(r.title + ' ' + r.title_ar + ' ' + r.abstract + ' ' + r.abstract_ar + ' ' + r.journal + ' ' + r.journal_ar + ' ' + r.authors.join(' ') + ' ' + r.doi + ' ' + r.pmid);
+    return hay.indexOf(q) !== -1;
+  }
+
+  function sorted(list) {
+    var out = list.slice();
+    if (state.sort === 'title') {
+      out.sort(function (a, b) {
+        var x = state.lang === 'ar' ? a.title_ar : a.title;
+        var y = state.lang === 'ar' ? b.title_ar : b.title;
+        return x.localeCompare(y, state.lang === 'ar' ? 'ar' : 'en');
+      });
+    } else {
+      var order = {};
+      DATA.forEach(function (r) { if (!(r.journal in order)) order[r.journal] = Object.keys(order).length; });
+      out.sort(function (a, b) {
+        return order[a.journal] - order[b.journal] || (state.lang === 'ar' ? a.title_ar : a.title).localeCompare(state.lang === 'ar' ? b.title_ar : b.title);
+      });
+    }
+    return out;
+  }
+
+  function authorsLine(r) {
+    var a = r.authors;
+    var shown = a.slice(0, 3).join(', ');
+    if (a.length > 3) shown += ' et al.';
+    return shown;
+  }
+
+  function card(r) {
+    var L = LABELS[state.lang];
+    var ar = state.lang === 'ar';
+    var mainTitle = ar ? r.title_ar : r.title;
+    var secondTitle = ar ? r.title : r.title_ar;
+    var journalName = ar ? r.journal_ar : r.journal;
+    var issueTxt = ar ? r.issue_ar : r.issue_en;
+    var absArFirst = ar;
+    var absAr = '<div class="abs-block" dir="rtl" lang="ar"><h4>' + esc(LABELS.ar.abstractAr) + '</h4><p>' + esc(r.abstract_ar) + '</p></div>';
+    var absEn = '<div class="abs-block" dir="ltr" lang="en"><h4>' + esc(LABELS.en.abstractEn) + '</h4><p>' + esc(r.abstract) + '</p></div>';
+    return '<article class="lib-card" id="p' + esc(r.pmid) + '">' +
+      '<p class="tag">' + esc(journalName) + ' · ' + esc(L.vol) + ' ' + esc(r.volume) + ' · ' + esc(L.issue) + ' ' + esc(r.issue) + ' · ' + esc(issueTxt) + '</p>' +
+      '<h3>' + esc(mainTitle) + '</h3>' +
+      '<p class="alt-title" dir="' + (ar ? 'ltr' : 'rtl') + '" lang="' + (ar ? 'en' : 'ar') + '">' + esc(secondTitle) + '</p>' +
+      '<p class="authors"><b>' + esc(L.authors) + ':</b> <span dir="ltr" lang="en">' + esc(authorsLine(r)) + '</span></p>' +
+      '<details class="abs"><summary>' + esc(L.abstracts) + '</summary>' + (absArFirst ? absAr + absEn : absEn + absAr) + '</details>' +
+      '<p class="src"><b>' + esc(L.source) + ':</b> <a href="https://pubmed.ncbi.nlm.nih.gov/' + esc(r.pmid) + '/">' + esc(L.pmid) + ' ' + esc(r.pmid) + '</a> · <a href="https://doi.org/' + esc(r.doi) + '" dir="ltr">DOI: ' + esc(r.doi) + '</a></p>' +
+      '</article>';
+  }
+
+  function render() {
+    var L = LABELS[state.lang];
+    var el = function (id) { return document.getElementById(id); };
+    var list = sorted(DATA.filter(matches));
+    var pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+    if (state.page > pages) state.page = pages;
+    var start = (state.page - 1) * PER_PAGE;
+    var slice = list.slice(start, start + PER_PAGE);
+
+    document.documentElement.lang = state.lang;
+    document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
+    var swaps = document.querySelectorAll('[data-ar][data-en]');
+    for (var si = 0; si < swaps.length; si++) {
+      swaps[si].textContent = state.lang === 'ar' ? swaps[si].getAttribute('data-ar') : swaps[si].getAttribute('data-en');
+    }
+    el('lib-search').placeholder = L.search;
+    el('lib-search-btn').textContent = L.reset;
+    el('lib-journal').options[0].textContent = L.journal;
+    var jOpts = el('lib-journal').options;
+    for (var oi = 1; oi < jOpts.length; oi++) {
+      jOpts[oi].textContent = state.lang === 'ar' ? jOpts[oi].getAttribute('data-ar') : jOpts[oi].getAttribute('data-en');
+    }
+    el('lib-sort').options[0].textContent = L.sortJournal;
+    el('lib-sort').options[1].textContent = L.sortTitle;
+    el('lib-lang').textContent = L.toggle;
+    el('lib-count').textContent = L.count(slice.length, list.length);
+    el('lib-results').innerHTML = slice.length
+      ? slice.map(card).join('')
+      : '<p class="notice">' + esc(L.noResults) + '</p>';
+
+    var nav = '<div class="lib-pager" role="navigation" aria-label="' + esc(L.page) + '">';
+    nav += state.page > 1 ? '<button type="button" data-go="' + (state.page - 1) + '">' + esc(L.prev) + '</button> ' : '';
+    for (var i = 1; i <= pages; i++) {
+      nav += i === state.page
+        ? '<span aria-current="page"><b>' + i + '</b></span> '
+        : '<button type="button" data-go="' + i + '">' + i + '</button> ';
+    }
+    nav += state.page < pages ? '<button type="button" data-go="' + (state.page + 1) + '">' + esc(L.next) + '</button>' : '';
+    nav += '</div>';
+    el('lib-pager').innerHTML = nav;
+  }
+
+  function go(p) {
+    state.page = p;
+    render();
+    var top = document.getElementById('lib-results');
+    if (top) window.scrollTo({ top: top.offsetTop - 90, behavior: 'smooth' });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!DATA.length) return;
+    var el = function (id) { return document.getElementById(id); };
+
+    var jSel = el('lib-journal');
+    var seen = {};
+    DATA.forEach(function (r) {
+      if (!seen[r.journal]) {
+        seen[r.journal] = 1;
+        var o = document.createElement('option');
+        o.value = r.journal;
+        o.textContent = r.journal;
+        o.setAttribute('data-ar', r.journal_ar);
+        o.setAttribute('data-en', r.journal);
+        jSel.appendChild(o);
+      }
+    });
+
+    el('lib-search').addEventListener('input', function (e) { state.q = e.target.value.trim(); state.page = 1; render(); });
+    el('lib-journal').addEventListener('change', function (e) { state.journal = e.target.value; state.page = 1; render(); });
+    el('lib-sort').addEventListener('change', function (e) { state.sort = e.target.value; state.page = 1; render(); });
+    el('lib-search-btn').addEventListener('click', function () {
+      state.q = ''; state.journal = 'all'; state.page = 1;
+      el('lib-search').value = ''; el('lib-journal').value = 'all'; el('lib-sort').value = 'journal';
+      render();
+    });
+    el('lib-lang').addEventListener('click', function () {
+      state.lang = state.lang === 'ar' ? 'en' : 'ar';
+      render();
+    });
+    el('lib-pager').addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-go]');
+      if (b) go(parseInt(b.getAttribute('data-go'), 10));
+    });
+    render();
+  });
+})();
