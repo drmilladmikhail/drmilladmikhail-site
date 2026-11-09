@@ -153,7 +153,7 @@ def sync():
                 continue
             new = header_for(os.path.relpath(path, ROOT), dark=bool(m.group(1)))
             t2 = t[:m.start()] + new + t[m.end():]
-            if NAV_JS not in t2:
+            if "/assets/nav.js" not in t2:
                 i = t2.rfind("</body>")
                 t2 = t2[:i] + NAV_JS + "\n" + t2[i:]
             if t2 != t:
