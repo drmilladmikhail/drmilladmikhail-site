@@ -1,0 +1,59 @@
+:root{--paper:#f5f7f4;--ink:#18233a;--euc:#2f6f62;--mist:#dfe9e4;--line:#c9d6cf;--amber:#7a5a12;--surface:#fff}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.8 "IBM Plex Sans Arabic","Noto Naskh Arabic",system-ui,sans-serif}
+.skip-link{position:absolute;inset-inline-start:8px;top:-60px;background:var(--ink);color:#fff;padding:8px 12px;border-radius:8px;z-index:10}
+.skip-link:focus{top:8px}
+.draft-banner{background:#fbf4e4;color:var(--amber);border-bottom:1px solid #e8d7a8;padding:8px 16px;text-align:center;font-size:15px}
+.tool{max-width:760px;margin:0 auto;padding:16px}
+.crumbs{font-size:14px;margin:8px 0}
+.crumbs a{color:var(--euc)}
+h1{font-family:"Noto Naskh Arabic",serif;font-size:clamp(28px,6vw,38px);line-height:1.4;margin:12px 0}
+h2{font-size:21px;margin:0 0 10px;color:var(--euc)}
+.lede{font-size:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px;margin:18px 0}
+.muted,.hint{color:#4a5568;font-size:15px;margin:4px 0 8px}
+.safety{background:var(--mist);border-radius:10px;padding:12px 14px;margin:12px 0 0}
+a{color:var(--euc)}
+.example dt{font-weight:700;margin-top:10px}
+.example dd{margin:2px 0 0}
+.field{margin:0 0 20px}
+label{display:block;font-weight:600;margin-bottom:4px}
+textarea,input[type=text]{width:100%;font:inherit;color:var(--ink);background:#fff;border:1.5px solid #7b8b84;border-radius:10px;padding:10px 12px}
+textarea{resize:vertical}
+input[type=range]{width:100%;accent-color:var(--euc);min-height:32px}
+:focus-visible{outline:3px solid #1b4fd8;outline-offset:2px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.btn{font:inherit;font-weight:600;min-height:44px;padding:8px 18px;border-radius:10px;border:1.5px solid var(--euc);background:var(--euc);color:#fff;cursor:pointer}
+.btn-quiet{background:#fff;color:var(--euc)}
+.status{min-height:1.5em;color:var(--ink);font-size:15px}
+.print-copy{display:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{
+  body{background:#fff;font-size:12pt}
+  .draft-banner,.crumbs,.skip-link,.card,.lede,h1{display:none!important}
+  .print-copy{display:block!important}
+  .print-copy h3{margin:12px 0 2px;font-size:13pt}
+  .print-copy p{margin:0;white-space:pre-wrap}
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.step[hidden]{display:none}
+.scn{border:1.5px solid var(--line);border-radius:12px;background:#fafcfb;padding:12px 14px;margin:10px 0}
+.choices{list-style:none;margin:10px 0;padding:0;display:grid;gap:10px}
+.choice{width:100%;text-align:start;font:inherit;background:#fff;color:var(--ink);border:1.5px solid #7b8b84;border-radius:12px;padding:12px 14px;min-height:48px;cursor:pointer}
+.choice:hover{border-color:var(--euc)}
+.choice[aria-pressed=true]{border-color:var(--euc);background:var(--mist);font-weight:600}
+.fb{border-inline-start:5px solid var(--euc);background:#f3f8f5;border-radius:10px;padding:10px 14px;margin:12px 0}
+.fb b.k{color:var(--euc)}
+.alt{border:1.5px dashed var(--euc);border-radius:10px;padding:10px 14px;margin:12px 0}
+.prog{font-size:14px;color:#4a5568}
+.toc{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:10px 0;padding:0}
+.toc a{display:inline-block;padding:8px 12px;border:1.5px solid var(--line);border-radius:999px;text-decoration:none;min-height:44px;line-height:28px}
+.cmp{display:grid;gap:12px}
+@media(min-width:720px){.cmp{grid-template-columns:1fr 1fr}}
+.cmp div{border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;background:#fafcfb}
+.cmp h3{margin:0 0 6px;font-size:18px}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.seg button{font:inherit;min-height:44px;padding:6px 12px;border:1.5px solid #7b8b84;background:#fff;color:var(--ink);border-radius:10px;cursor:pointer}
+.seg button[aria-pressed=true]{border-color:var(--euc);background:var(--mist);font-weight:600}
+.tt{border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:10px 0}
