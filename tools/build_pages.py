@@ -725,6 +725,8 @@ def main():
     questions_page()
     csbd_page()
     challenges_page()
+    import build_glossary
+    build_glossary.build()
     start_page()
     book_page()
     battery_page()

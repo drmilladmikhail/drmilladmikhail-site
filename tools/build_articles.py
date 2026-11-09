@@ -394,6 +394,11 @@ def sitemap(items):
     for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery", "exercise", "stories", "shelf", "newsletter"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
+    # Static glossary pages are generated before the final sitemap pass.
+    from pathlib import Path
+    for path in sorted((Path(ROOT) / "glossary").glob("**/index.html")):
+        slug = path.parent.relative_to(ROOT).as_posix()
+        urls.append((f"{SITE}/{slug}/", "2026-11-08", False))
     parts = []
     for loc, mod, alt in urls:
         alts = ""
