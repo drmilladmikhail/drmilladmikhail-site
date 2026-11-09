@@ -62,7 +62,7 @@
     link.className = 'site-announcement-link';
     link.href = '/tests/depression-cesd/';
     link.textContent = message;
-    if (i === 1) link.setAttribute('aria-hidden', 'true');
+    if (i === 1) { link.setAttribute('aria-hidden', 'true'); link.tabIndex = -1; }
     track.appendChild(link);
   }
   viewport.appendChild(track);
@@ -116,7 +116,10 @@
   var style = document.createElement("style");
   style.textContent = ".floating-home{position:fixed;z-index:999;inset-inline-start:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;gap:9px;min-height:48px;padding:10px 16px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:#28594f;color:#fff;text-decoration:none;font-family:inherit;font-size:14px;font-weight:600;line-height:1.2;box-shadow:0 8px 24px rgba(22,48,41,.25);transition:transform .18s ease,background .18s ease}.floating-home svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.floating-home:hover{background:#1e493f;transform:translateY(-2px)}.floating-home:focus-visible{outline:3px solid #d9ad58;outline-offset:3px}@media(max-width:480px){.floating-home{inset-inline-start:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));min-height:46px;padding:10px 13px;font-size:13px}}@media(prefers-reduced-motion:reduce){.floating-home{transition:none}.floating-home:hover{transform:none}}";
   document.head.appendChild(style);
-  document.body.appendChild(link);
+  var wrap = document.createElement("nav");
+  wrap.setAttribute("aria-label", document.documentElement.lang === "en" ? "Back to home" : "العودة للرئيسية");
+  wrap.appendChild(link);
+  document.body.appendChild(wrap);
 })();
 
 /* Bound the Arabic navigation without removing links or clipping the page. */
