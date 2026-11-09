@@ -1091,3 +1091,7 @@ details.fold[open] .fold-hint { display: none; }
 .home-redesign .topbar-dark .menu nav a { color: #18233a; }
 .home-redesign .topbar-dark .menu nav a.m-start { color: #8a6214; }
 .home-redesign .topbar-dark .menu nav a[aria-current="page"] { color: #2f6f62; }
+/* Home header uses light text, but desktop dropdown panels have a white surface. */
+html[lang="ar"] body.home-redesign .topbar-dark .nav .dd-panel a { color: #18233a; }
+html[lang="ar"] body.home-redesign .topbar-dark .nav .dd-panel a:hover,
+html[lang="ar"] body.home-redesign .topbar-dark .nav .dd-panel a[aria-current="page"] { color: #2f6f62; }
