@@ -100,7 +100,7 @@ jobs:
                               panel.locator('summary').click()
                               assert panel.evaluate('(el) => el.open')
                           if name == 'glossary':
-                              assert page.locator('.g-entry:visible').count() == 8
+                              assert page.locator('.g-entry:visible').count() == 50
                               page.locator('.g-card[data-term="depression"]').click()
                               assert page.locator('#glossary-preview').is_visible()
                               assert page.locator('#glossary-preview').get_by_role('heading', name='الاكتئاب', exact=True).count() == 1
@@ -111,7 +111,7 @@ jobs:
                               page.get_by_label('بتدور على كلمة إيه؟').fill('zzzz')
                               assert page.locator('.g-empty').is_visible()
                               page.get_by_role('button', name='اعرض كل المصطلحات').click()
-                              assert page.locator('.g-entry:visible').count() == 8
+                              assert page.locator('.g-entry:visible').count() == 50
                           if name == 'glossary-term':
                               assert page.get_by_role('heading', name='إيه اللي مش معناه؟').count() == 1
                               assert page.locator('.g-source a').count() == 1

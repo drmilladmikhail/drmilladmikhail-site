@@ -11,8 +11,10 @@ class GlossaryTests(unittest.TestCase):
     def setUp(self):
         self.data = glossary.load()
 
-    def test_first_edition_has_eight_sourced_terms(self):
-        self.assertEqual(len(self.data["items"]), 8)
+    def test_fifty_distinct_sourced_terms(self):
+        self.assertEqual(len(self.data["items"]), 50)
+        self.assertEqual(len({t["slug"] for t in self.data["items"]}), 50)
+        self.assertEqual(len({t["title"] for t in self.data["items"]}), 50)
         for term in self.data["items"]:
             self.assertTrue(term["source"]["url"].startswith("https://"))
             self.assertTrue(term["related"])
@@ -24,7 +26,7 @@ class GlossaryTests(unittest.TestCase):
         self.assertIn('role="status"', index)
         self.assertIn('class="g-controls" hidden', index)
         self.assertIn('<dialog id="glossary-preview"', index)
-        self.assertEqual(index.count('<template id="g-preview-'), 8)
+        self.assertEqual(index.count('<template id="g-preview-'), 50)
         for tone in range(4):
             self.assertIn("g-tone-" + str(tone), index)
         self.assertNotIn("localStorage", index)
@@ -49,7 +51,7 @@ class GlossaryTests(unittest.TestCase):
             (root / "content/glossary.json").write_text(json.dumps(self.data), encoding="utf-8")
             paths = glossary.build(root)
             first = [(root / path / "index.html").read_bytes() for path in paths]
-            self.assertEqual(len(paths), 9)
+            self.assertEqual(len(paths), 51)
             self.assertEqual(paths, glossary.build(root))
             self.assertEqual(first, [(root / path / "index.html").read_bytes() for path in paths])
 

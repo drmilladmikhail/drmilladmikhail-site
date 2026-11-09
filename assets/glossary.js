@@ -22,7 +22,7 @@
         entry.hidden = !matches;
         if (matches) count += 1;
       });
-      document.querySelector('.g-count').textContent = count + ' من ' + entries.length + ' مصطلحات';
+      document.querySelector('.g-count').textContent = count + ' من ' + entries.length + ' مصطلح';
       document.querySelector('.g-empty').hidden = count !== 0;
       filters.forEach(function (button) {
         button.setAttribute('aria-pressed', String(button.dataset.categoryFilter === category));

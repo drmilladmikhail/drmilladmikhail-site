@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url><loc>https://drmilladmikhail.com/</loc><xhtml:link rel="alternate" hreflang="ar" href="https://drmilladmikhail.com/"/><xhtml:link rel="alternate" hreflang="en" href="https://drmilladmikhail.com/en/"/></url>
-  <url><loc>https://drmilladmikhail.com/en/</loc><xhtml:link rel="alternate" hreflang="ar" href="https://drmilladmikhail.com/"/><xhtml:link rel="alternate" hreflang="en" href="https://drmilladmikhail.com/en/"/></url>
+<?xml version='1.0' encoding='utf-8'?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:html="http://www.w3.org/1999/xhtml">
+  <url><loc>https://drmilladmikhail.com/</loc><html:link rel="alternate" hreflang="ar" href="https://drmilladmikhail.com/" /><html:link rel="alternate" hreflang="en" href="https://drmilladmikhail.com/en/" /></url>
+  <url><loc>https://drmilladmikhail.com/en/</loc><html:link rel="alternate" hreflang="ar" href="https://drmilladmikhail.com/" /><html:link rel="alternate" hreflang="en" href="https://drmilladmikhail.com/en/" /></url>
   <url><loc>https://drmilladmikhail.com/articles/</loc></url>
   <url><loc>https://drmilladmikhail.com/articles/four-attachment-styles/</loc></url>
   <url><loc>https://drmilladmikhail.com/articles/why-we-choose-the-same-person/</loc></url>
@@ -42,14 +42,56 @@
   <url><loc>https://drmilladmikhail.com/stories/</loc></url>
   <url><loc>https://drmilladmikhail.com/shelf/</loc></url>
   <url><loc>https://drmilladmikhail.com/newsletter/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/active-listening/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/all-or-nothing-thinking/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/anger/</loc></url>
   <url><loc>https://drmilladmikhail.com/glossary/anxiety/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/anxious-attachment/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/assertiveness/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/attachment/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/avoidance/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/avoidant-attachment/</loc></url>
   <url><loc>https://drmilladmikhail.com/glossary/boundaries/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/burnout/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/catastrophizing/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/cognitive-dissonance/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/cognitive-distortions/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/cognitive-reframing/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/confirmation-bias/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/conflict-resolution/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/coping/</loc></url>
   <url><loc>https://drmilladmikhail.com/glossary/depression/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/emotional-regulation/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/emotional-validation/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/empathy/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/envy/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/fear/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/gaslighting/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/grief/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/grounding/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/guilt/</loc></url>
   <url><loc>https://drmilladmikhail.com/glossary/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/intrusive-thoughts/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/jealousy/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/loneliness/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/mind-reading/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/mindfulness/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/motivation/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/perfectionism/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/procrastination/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/resilience/</loc></url>
   <url><loc>https://drmilladmikhail.com/glossary/rumination/</loc></url>
   <url><loc>https://drmilladmikhail.com/glossary/sadness/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/secure-attachment/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/self-acceptance/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/self-awareness/</loc></url>
   <url><loc>https://drmilladmikhail.com/glossary/self-compassion/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/self-criticism/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/self-efficacy/</loc></url>
   <url><loc>https://drmilladmikhail.com/glossary/self-esteem/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/shame/</loc></url>
   <url><loc>https://drmilladmikhail.com/glossary/stress/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/sympathy/</loc></url>
+  <url><loc>https://drmilladmikhail.com/glossary/trust/</loc></url>
   <url><loc>https://drmilladmikhail.com/myth-fact/</loc></url>
-</urlset>
+<url><loc>https://drmilladmikhail.com/research/</loc></url><url><loc>https://drmilladmikhail.com/research/library/</loc></url></urlset>

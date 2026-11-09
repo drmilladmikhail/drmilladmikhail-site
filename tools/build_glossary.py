@@ -15,8 +15,16 @@ CATEGORIES = ["المشاعر", "التفكير", "علاقتك بنفسك", "ا
 
 def load(root=ROOT):
     data = json.loads((Path(root) / "content/glossary.json").read_text(encoding="utf-8"))
+    expansion = Path(root) / "content/glossary-more.json"
+    if expansion.exists():
+        data["items"].extend(json.loads(expansion.read_text(encoding="utf-8"))["items"])
     seen = set()
     for term in data["items"]:
+        # Many everyday concepts have no clinical threshold. Do not invent one.
+        if "help" not in term:
+            term["help"] = "لو الموضوع بقى متكرر وبيتعبك أو مأثر على حياتك وعلاقاتك، تقدر تتكلم مع مختص. طلب الدعم مش محتاج إنك تشخّص نفسك الأول."
+            term["general_help"] = True
+        term.setdefault("reading", ["/exercise/", "جرّب تمرينًا عمليًا للعناية بنفسك"])
         slug = term["slug"]
         if not re.fullmatch(r"[a-z]+(?:-[a-z]+)*", slug) or slug in seen:
             raise ValueError("Invalid or duplicate glossary slug")
@@ -94,7 +102,7 @@ def index_page(data):
 <p class="g-eyebrow">كلمات بنسمعها كتير. نفهمها بهدوء.</p>
 <h1>القاموس النفسي بالمصري</h1>
 <p class="g-lead">اختار كارت وافهم الكلمة: شرح بسيط، مثال من الحياة، والفرق بين المعنى العلمي والكلام اللي بنستخدمه كل يوم.</p>
-<p class="g-caption">{len(terms)} مصطلحات كبداية · مصادر تقدر ترجع لها · من غير تسجيل</p>
+<p class="g-caption">{len(terms)} مصطلحًا · مصادر تقدر ترجع لها · من غير تسجيل</p>
 </div></section>
 <section class="g-directory"><div class="wrap">
 <div class="g-controls" hidden>
@@ -102,7 +110,7 @@ def index_page(data):
 <div class="g-search-row"><input id="glossary-search" type="search" maxlength="160" placeholder="زي: اكتئاب، حب النفس، بفكر كتير" autocomplete="off" aria-controls="glossary-entries">
 <button type="button" class="g-reset">امسح البحث</button></div>
 <div class="g-filters" role="group" aria-label="تصفية حسب الموضوع"><button type="button" data-category-filter="" aria-pressed="true">الكل</button>{buttons}</div>
-<p class="g-count" role="status" aria-live="polite">{len(terms)} مصطلحات</p>
+<p class="g-count" role="status" aria-live="polite">{len(terms)} مصطلحًا</p>
 </div>
 <ul id="glossary-entries" class="g-entries">{"".join(cards)}</ul>
 <div class="g-empty" hidden><h2>مفيش مصطلح مطابق للبحث ده</h2><p>جرّب كلمة أقصر أو موضوع تاني.</p><button type="button" class="g-reset">اعرض كل المصطلحات</button></div>
@@ -122,6 +130,7 @@ def term_page(term, data):
     slug = "glossary/" + term["slug"]
     url = SITE + "/" + slug + "/"
     ref = f'<a class="g-reference" href="{esc(term["source"]["url"])}" target="_blank" rel="noopener">اقرأ المرجع الأصلي <span class="g-sr-only">في نافذة جديدة</span></a>'
+    help_ref = '<p class="g-caption">إرشاد عام لطلب الدعم، مش معيارًا لتشخيص المصطلح.</p>' if term.get("general_help") else ref
     by_slug = {t["slug"]: t for t in data["items"]}
     related = "".join(f'<li><a href="/glossary/{s}/">{esc(by_slug[s]["title"])} <span aria-hidden="true">←</span></a></li>' for s in term["related"])
     from urllib.parse import quote
@@ -137,7 +146,7 @@ def term_page(term, data):
 <section><h2>مثال من يومك</h2><p class="g-example-label">موقف تخيّلي بالمصري للتوضيح، مش تشخيص</p><p>{esc(term["example"])}</p></section>
 <section><h2>إيه اللي مش معناه؟</h2><p>{esc(term["not"])}</p>{ref}</section>
 <section><h2>الفرق اللي يستاهل نعرفه</h2><p>{esc(term["comparison"])}</p>{ref}</section>
-<section><h2>إمتى أطلب مساعدة؟</h2><p>{esc(term["help"])}</p>{ref}
+<section><h2>إمتى أطلب مساعدة؟</h2><p>{esc(term["help"])}</p>{help_ref}
 <p class="g-safety">لو فيه خطر فوري أو أفكار لإيذاء نفسك، اطلب مساعدة عاجلة من الطوارئ المحلية، وشوف <a href="/help-now/">خيارات المساعدة دلوقتي</a>. ما تستناش مدة معينة أو نتيجة اختبار.</p></section>
 <section class="g-reflection"><h2>سؤال تاخده معاك</h2><p>{esc(term["question"])}</p><p class="g-caption">سؤال للتأمل، ومش مطلوب تكتب إجابتك على الموقع.</p></section>
 </div><aside class="g-side">
