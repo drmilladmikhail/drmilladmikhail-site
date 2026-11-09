@@ -1,4 +1,5 @@
 """Offline content, accessibility and generation regression checks."""
+import copy
 import json
 from pathlib import Path
 import tempfile
@@ -11,10 +12,11 @@ class GlossaryTests(unittest.TestCase):
     def setUp(self):
         self.data = glossary.load()
 
-    def test_fifty_distinct_sourced_terms(self):
-        self.assertEqual(len(self.data["items"]), 50)
-        self.assertEqual(len({t["slug"] for t in self.data["items"]}), 50)
-        self.assertEqual(len({t["title"] for t in self.data["items"]}), 50)
+    def test_growing_collection_has_distinct_sourced_terms(self):
+        count = len(self.data["items"])
+        self.assertGreaterEqual(count, 50)
+        self.assertEqual(len({t["slug"] for t in self.data["items"]}), count)
+        self.assertEqual(len({t["title"] for t in self.data["items"]}), count)
         for term in self.data["items"]:
             self.assertTrue(term["source"]["url"].startswith("https://"))
             self.assertTrue(term["related"])
@@ -26,7 +28,7 @@ class GlossaryTests(unittest.TestCase):
         self.assertIn('role="status"', index)
         self.assertIn('class="g-controls" hidden', index)
         self.assertIn('<dialog id="glossary-preview"', index)
-        self.assertEqual(index.count('<template id="g-preview-'), 50)
+        self.assertEqual(index.count('<template id="g-preview-'), len(self.data["items"]))
         for tone in range(4):
             self.assertIn("g-tone-" + str(tone), index)
         self.assertNotIn("localStorage", index)
@@ -51,7 +53,7 @@ class GlossaryTests(unittest.TestCase):
             (root / "content/glossary.json").write_text(json.dumps(self.data), encoding="utf-8")
             paths = glossary.build(root)
             first = [(root / path / "index.html").read_bytes() for path in paths]
-            self.assertEqual(len(paths), 51)
+            self.assertEqual(len(paths), len(self.data["items"]) + 1)
             self.assertEqual(paths, glossary.build(root))
             self.assertEqual(first, [(root / path / "index.html").read_bytes() for path in paths])
 
@@ -63,6 +65,28 @@ class GlossaryTests(unittest.TestCase):
             (root / "content/glossary.json").write_text(json.dumps(self.data), encoding="utf-8")
             with self.assertRaises(ValueError):
                 glossary.load(root)
+
+    def test_expansion_supports_two_more_terms(self):
+        """Synthetic fixtures prove daily growth without changing public content."""
+        additions = []
+        for suffix in ("one", "two"):
+            term = copy.deepcopy(self.data["items"][0])
+            term["slug"] = "growth-fixture-" + suffix
+            term["title"] += " اختبار " + suffix
+            additions.append(term)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "content").mkdir()
+            (root / "content/glossary.json").write_text(
+                json.dumps(self.data), encoding="utf-8")
+            (root / "content/glossary-more.json").write_text(
+                json.dumps({"items": additions}), encoding="utf-8")
+            expanded = glossary.load(root)
+            count = len(self.data["items"]) + 2
+            self.assertEqual(len(expanded["items"]), count)
+            self.assertEqual(glossary.index_page(expanded).count(
+                '<template id="g-preview-'), count)
+            self.assertEqual(len(glossary.build(root)), count + 1)
 
 
 if __name__ == "__main__":

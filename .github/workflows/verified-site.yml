@@ -45,7 +45,9 @@ jobs:
           sys.path.insert(0, 'tools')
           import home_clarity
           import build_research
+          import build_glossary
           import site_header
+          glossary_count = len(build_glossary.load()["items"])
           paths = [Path(p) for p in ['index.html', 'research/index.html', 'sitemap.xml']]
           first = {p: p.read_bytes() for p in paths}
           home = paths[0].read_text(encoding='utf-8')
@@ -100,18 +102,19 @@ jobs:
                               panel.locator('summary').click()
                               assert panel.evaluate('(el) => el.open')
                           if name == 'glossary':
-                              assert page.locator('.g-entry:visible').count() == 50
+                              assert page.locator('.g-entry:visible').count() == glossary_count
                               page.locator('.g-card[data-term="depression"]').click()
                               assert page.locator('#glossary-preview').is_visible()
                               assert page.locator('#glossary-preview').get_by_role('heading', name='الاكتئاب', exact=True).count() == 1
                               page.get_by_role('button', name='اقفل التعريف').click()
                               assert not page.locator('#glossary-preview').is_visible()
                               page.get_by_label('بتدور على كلمة إيه؟').fill('إكتئاب')
-                              assert page.locator('.g-entry:visible').count() == 1
+                              assert page.locator('.g-entry:visible').count() >= 1
+                              assert page.locator('.g-card[data-term="depression"]').is_visible()
                               page.get_by_label('بتدور على كلمة إيه؟').fill('zzzz')
                               assert page.locator('.g-empty').is_visible()
                               page.get_by_role('button', name='اعرض كل المصطلحات').click()
-                              assert page.locator('.g-entry:visible').count() == 50
+                              assert page.locator('.g-entry:visible').count() == glossary_count
                           if name == 'glossary-term':
                               assert page.get_by_role('heading', name='إيه اللي مش معناه؟').count() == 1
                               assert page.locator('.g-source a').count() == 1
