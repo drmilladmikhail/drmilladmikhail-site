@@ -14,9 +14,9 @@ HERO = """<section class="hero hero-dark clarity-hero">
 REMOVED = ('discovery-hub', 'guide', 'quick-quiz', 'myth-promo', 'tests-band', 'quote-band')
 GLOSSARY = """<section class="section glossary-home" aria-labelledby="glossary-home-title">
   <div class="wrap">
-    <h2 id="glossary-home-title">القاموس النفسي بالمصري</h2>
+    <h2 id="glossary-home-title">القاموس النفسي</h2>
     <p>إيه الفرق بين الحزن والاكتئاب؟ وهل الحنية على نفسك أنانية؟ افهم المصطلحات بمثال بسيط ومرجع تقدر ترجع له.</p>
-    <a class="btn" href="/glossary/">افتح القاموس النفسي بالمصري</a>
+    <a class="btn" href="/glossary/">افتح القاموس النفسي</a>
   </div>
 </section>"""
 
@@ -47,6 +47,11 @@ def transform(text):
     if 'class="section glossary-home"' not in main:
         # Keep existing homepage sections and their relative ordering intact.
         main = main.rstrip() + '\n' + GLOSSARY + '\n'
+    else:
+        matches = list(re.finditer(section_pattern('glossary-home'), main, flags=re.S))
+        if len(matches) != 1 or len(re.findall(r'<section\b', matches[0].group(0))) != 1:
+            raise ValueError('Expected one non-nested glossary homepage section')
+        main = re.sub(section_pattern('glossary-home'), lambda _: GLOSSARY, main, count=1, flags=re.S)
     text = before + '<main id="main">' + main + '</main>' + after
     stylesheet = '<link rel="stylesheet" href="/assets/home-clarity.css">'
     if stylesheet not in text:

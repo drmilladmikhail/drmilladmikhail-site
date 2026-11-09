@@ -55,7 +55,7 @@ def shell(slug, title, description, body, ld):
 {ba.social(url, title, description, SITE + "/assets/og/home.jpg", title, "website")}
 <meta name="theme-color" content="#2f6f62">
 {ba.FONTS}
-<link rel="stylesheet" href="/assets/glossary.css">
+<link rel="stylesheet" href="/assets/glossary.css?v=2">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False).replace("<", chr(92) + "u003c")}</script>
 </head>
 <body class="glossary-page">
@@ -88,9 +88,9 @@ def index_page(data):
 <div class="g-preview-head g-tone-{tone}">
 <p class="g-eyebrow">{esc(term["category"])}</p><h2 id="glossary-preview-title">{esc(term["title"])}</h2>
 <p class="g-preview-english" lang="en" dir="ltr">{esc(term["english"])}</p></div>
-<div class="g-preview-body"><h3>يعني إيه بالمصري؟</h3><p>{esc(term["definition"])}</p>
+<div class="g-preview-body"><h3>المعنى</h3><p>{esc(term["definition"])}</p>
 <a class="g-reference" href="{esc(term["source"]["url"])}" target="_blank" rel="noopener">المرجع الأصلي</a>
-<h3>مثال من يومك</h3><p class="g-caption">موقف تخيّلي بالمصري للتوضيح، مش تشخيص</p><p>{esc(term["example"])}</p>
+<h3>مثال من يومك</h3><p class="g-caption">موقف تخيّلي للتوضيح، مش تشخيص</p><p>{esc(term["example"])}</p>
 <h3>إيه اللي مش معناه؟</h3><p>{esc(term["not"])}</p>
 <a class="g-reference" href="{esc(term["source"]["url"])}" target="_blank" rel="noopener">اقرأ المرجع</a>
 <p class="g-preview-note">للتوعية، مش تشخيصًا ولا بديلًا عن تقييم متخصص.</p>
@@ -100,7 +100,7 @@ def index_page(data):
 <section class="g-hero"><div class="wrap">
 <nav class="g-crumbs" aria-label="مسار الصفحة"><a href="/">الرئيسية</a><span aria-hidden="true">/</span><span>القاموس النفسي</span></nav>
 <p class="g-eyebrow">كلمات بنسمعها كتير. نفهمها بهدوء.</p>
-<h1>القاموس النفسي بالمصري</h1>
+<h1>القاموس النفسي</h1>
 <p class="g-lead">اختار كارت وافهم الكلمة: شرح بسيط، مثال من الحياة، والفرق بين المعنى العلمي والكلام اللي بنستخدمه كل يوم.</p>
 <p class="g-caption">{len(terms)} مصطلحًا · مصادر تقدر ترجع لها · من غير تسجيل</p>
 </div></section>
@@ -117,13 +117,13 @@ def index_page(data):
 <dialog id="glossary-preview" aria-labelledby="glossary-preview-title"></dialog>
 {"".join(previews)}
 <aside class="g-editorial" aria-label="عن محتوى القاموس"><h2>نفهم المصطلح، مش نشخّص نفسنا</h2>
-<p>الشرح مبسّط بالمصري ومبني على المراجع المرفقة بكل صفحة، مش ترجمة حرفية ولا تقييمًا لحالتك. الأمثلة تخيّلية للتوضيح، مش قصص أشخاص حقيقيين.</p>
+<p>الشرح مبسّط ومبني على المراجع المرفقة بكل صفحة، مش ترجمة حرفية ولا تقييمًا لحالتك. الأمثلة تخيّلية للتوضيح، مش قصص أشخاص حقيقيين.</p>
 <p>لو محتاج دعمًا، ابدأ بصفحة <a href="/help-now/">محتاج مساعدة دلوقتي</a> أو استكشف <a href="/articles/">المقالات</a>.</p></aside>
 </div></section>'''
     ld = {"@context": "https://schema.org", "@type": "DefinedTermSet",
-          "name": "القاموس النفسي بالمصري", "inLanguage": "ar-EG", "url": SITE + "/glossary/",
+          "name": "القاموس النفسي", "inLanguage": "ar-EG", "url": SITE + "/glossary/",
           "hasDefinedTerm": [{"@type": "DefinedTerm", "name": t["title"], "url": SITE + "/glossary/" + t["slug"] + "/"} for t in terms]}
-    return shell("glossary", "القاموس النفسي بالمصري", "مصطلحات نفسية بالمصري: الحزن والاكتئاب والقلق والحدود الصحية. شرح بسيط وأمثلة توضيحية ومفاهيم شائعة ومراجع للقراءة.", body, ld)
+    return shell("glossary", "القاموس النفسي", "مصطلحات نفسية: الحزن والاكتئاب والقلق والحدود الصحية. شرح بسيط وأمثلة توضيحية ومفاهيم شائعة ومراجع للقراءة.", body, ld)
 
 
 def term_page(term, data):
@@ -134,7 +134,7 @@ def term_page(term, data):
     by_slug = {t["slug"]: t for t in data["items"]}
     related = "".join(f'<li><a href="/glossary/{s}/">{esc(by_slug[s]["title"])} <span aria-hidden="true">←</span></a></li>' for s in term["related"])
     from urllib.parse import quote
-    share_text = quote(f'{term["title"]}: {term["summary"]}\nالقاموس النفسي بالمصري\n{url}', safe="")
+    share_text = quote(f'{term["title"]}: {term["summary"]}\nالقاموس النفسي\n{url}', safe="")
     body = f'''
 <article class="g-term"><div class="wrap">
 <nav class="g-crumbs" aria-label="مسار الصفحة"><a href="/">الرئيسية</a><span aria-hidden="true">/</span><a href="/glossary/">القاموس النفسي</a><span aria-hidden="true">/</span><span>{esc(term["title"])}</span></nav>
@@ -142,8 +142,8 @@ def term_page(term, data):
 <p class="g-english" lang="en" dir="ltr">{esc(term["english"])}</p>
 <p class="g-lead">{esc(term["summary"])}</p></header>
 <div class="g-term-layout"><div class="g-prose">
-<section class="g-definition" aria-labelledby="definition"><h2 id="definition">يعني إيه بالمصري؟</h2><p>{esc(term["definition"])}</p>{ref}</section>
-<section><h2>مثال من يومك</h2><p class="g-example-label">موقف تخيّلي بالمصري للتوضيح، مش تشخيص</p><p>{esc(term["example"])}</p></section>
+<section class="g-definition" aria-labelledby="definition"><h2 id="definition">المعنى</h2><p>{esc(term["definition"])}</p>{ref}</section>
+<section><h2>مثال من يومك</h2><p class="g-example-label">موقف تخيّلي للتوضيح، مش تشخيص</p><p>{esc(term["example"])}</p></section>
 <section><h2>إيه اللي مش معناه؟</h2><p>{esc(term["not"])}</p>{ref}</section>
 <section><h2>الفرق اللي يستاهل نعرفه</h2><p>{esc(term["comparison"])}</p>{ref}</section>
 <section><h2>إمتى أطلب مساعدة؟</h2><p>{esc(term["help"])}</p>{help_ref}
@@ -163,7 +163,7 @@ def term_page(term, data):
     ld = {"@context": "https://schema.org", "@type": "DefinedTerm",
           "name": term["title"], "alternateName": term["english"], "description": term["summary"],
           "url": url, "inDefinedTermSet": SITE + "/glossary/"}
-    return shell(slug, term["title"] + " بالمصري: المعنى والفرق والمثال", term["summary"] + " افهم المعنى بمثال توضيحي، واعرف المفاهيم الشائعة وإمتى تطلب مساعدة، مع مرجع أصلي.", body, ld)
+    return shell(slug, term["title"] + ": المعنى والفرق والمثال", term["summary"] + " افهم المعنى بمثال توضيحي، واعرف المفاهيم الشائعة وإمتى تطلب مساعدة، مع مرجع أصلي.", body, ld)
 
 
 def build(root=ROOT):

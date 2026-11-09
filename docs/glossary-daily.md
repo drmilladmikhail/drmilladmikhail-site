@@ -1,5 +1,11 @@
 # Daily Egyptian Arabic glossary additions
 
+The visible feature name is `القاموس النفسي`. Definition headings read `المعنى`.
+Do not add `بالمصري` to any glossary UI label, title, metadata, sharing text, or
+homepage/start-page link. Keep the simple Egyptian Arabic writing and everyday
+examples, without labeling the dialect. Preserve the calm green, blue, sand and
+lavender category palette and its accessible dark-mode variants.
+
 The site owner authorized automatically publishing two new psychology glossary
 terms each day, preserving the existing colorful cards, click-to-open definitions,
 Egyptian Arabic everyday examples, and scientific references. The daily schedule

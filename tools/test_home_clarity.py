@@ -47,6 +47,14 @@ class HomepageTests(unittest.TestCase):
         extra = '<section class="section guide-extra">Keep</section><section class="discovery-hub-extra">Keep too</section>'
         self.assertIn(extra, hc.transform(HOME.replace('</main>', extra + '</main>')))
 
+    def test_existing_glossary_label_is_updated(self):
+        legacy = hc.GLOSSARY.replace("القاموس النفسي", "القاموس النفسي بالمصري")
+        output = hc.transform(HOME.replace("</main>", legacy + "</main>"))
+        self.assertNotIn("بالمصري", output)
+        self.assertEqual(output.count('id="glossary-home-title"'), 1)
+        self.assertIn("افتح القاموس النفسي", output)
+        self.assertEqual(hc.transform(output), output)
+
     def test_nested_removed_section_rejected(self):
         broken = HOME.replace('Duplicate</section>', '<section>Nested</section></section>')
         with self.assertRaises(ValueError):

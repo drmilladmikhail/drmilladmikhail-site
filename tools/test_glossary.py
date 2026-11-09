@@ -28,6 +28,8 @@ class GlossaryTests(unittest.TestCase):
         self.assertIn('role="status"', index)
         self.assertIn('class="g-controls" hidden', index)
         self.assertIn('<dialog id="glossary-preview"', index)
+        self.assertNotIn("بالمصري", index)
+        self.assertIn("<h3>المعنى</h3>", index)
         self.assertEqual(index.count('<template id="g-preview-'), len(self.data["items"]))
         for tone in range(4):
             self.assertIn("g-tone-" + str(tone), index)
@@ -40,6 +42,8 @@ class GlossaryTests(unittest.TestCase):
             self.assertIn('rel="canonical"', page)
             self.assertIn("إيه اللي مش معناه؟", page)
             self.assertIn("مثال من يومك", page)
+            self.assertNotIn("بالمصري", page)
+            self.assertIn('<h2 id="definition">المعنى</h2>', page)
             self.assertIn("مش تشخيص", page)
             self.assertIn('href="/help-now/"', page)
             self.assertNotIn("reviewedBy", page)
