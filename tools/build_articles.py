@@ -391,7 +391,7 @@ def sitemap(items):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-07", False))
     # standalone pages built by tools/build_pages.py
-    for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery", "exercise", "stories", "shelf"):
+    for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery", "exercise", "stories", "shelf", "newsletter"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
     parts = []

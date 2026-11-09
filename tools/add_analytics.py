@@ -11,7 +11,7 @@ CSP = ("default-src 'self'; script-src 'self' https://static.cloudflareinsights.
        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; "
        "img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; "
        "frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; "
-       "object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests")
+       "object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests")
 try:
     import json as _json
     with open(os.path.join(ROOT, "content", "comments.json"), encoding="utf-8") as _f:

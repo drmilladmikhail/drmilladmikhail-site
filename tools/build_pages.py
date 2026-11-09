@@ -716,6 +716,8 @@ def main():
     pages_trust.build_all(ba, page, write, SITE)
     import build_extras
     build_extras.build_all(ba, page, write, SITE)
+    import build_newsletter
+    build_newsletter.build_all(ba, page, write, SITE)
     ask_page()
     feelings_page()
     relationship_check_page()

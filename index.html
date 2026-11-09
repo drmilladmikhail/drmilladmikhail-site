@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>د. ميلاد ميخائيل | مقالات واختبارات لفهم النفس والعلاقات</title>
@@ -294,6 +294,19 @@
 }
 </script>
 <link rel="stylesheet" href="/assets/home-clarity.css">
+<style>
+html[lang="ar"] body.home-redesign section.section.nl-band{background:linear-gradient(135deg,#18233a,#2f6f62);color:#fff}
+html[lang="ar"] body.home-redesign section.section.nl-band h2{font-family:var(--display-ar);font-size:clamp(22px,3.5vw,30px);margin:0 0 8px;color:#fff}
+html[lang="ar"] body.home-redesign section.section.nl-band p{margin:0;color:rgba(255,255,255,.85);max-width:520px}
+.nl-band-grid{display:grid;gap:18px;grid-template-columns:minmax(0,1fr) auto;align-items:center}
+.nl-band-grid>*{min-width:0}
+.nl-band-form{display:flex;gap:10px;flex-wrap:wrap;min-width:0}
+.nl-band-form input[type=email]{font:inherit;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;min-width:230px}
+.nl-band-form input[type=email]::placeholder{color:rgba(255,255,255,.6)}
+.nl-band-form input[type=email]:focus{outline:3px solid var(--amber);outline-offset:1px}
+._honey{display:none}
+@media (max-width:720px){.nl-band-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body class="home-redesign">
 
@@ -719,6 +732,23 @@
 
     </div>
   </section>
+<section class="section nl-band" aria-labelledby="nl-h">
+  <div class="wrap nl-band-grid">
+    <div>
+      <h2 id="nl-h">✉️ رسالة واحدة كل أسبوع</h2>
+      <p>مقال مختار + أحدث الأبحاث النفسية مترجمة + تأمل قصير، من د. ميلاد ميخائيل. مجانًا ومن غير إعلانات.</p>
+    </div>
+    <form class="nl-band-form" action="https://formsubmit.co/millad.mounir@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="اشتراك جديد في نشرة راحة البال">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://drmilladmikhail.com/newsletter/thanks/">
+      <input type="text" name="_honey" class="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="sr-only" for="nl-email">الإيميل بتاعك</label>
+      <input id="nl-email" type="email" name="email" required dir="ltr" autocomplete="email" placeholder="you@example.com">
+      <button class="btn btn-gold" type="submit">اشترك</button>
+    </form>
+  </div>
+</section>
 <!-- RESEARCH-LINK --><div class="wrap"><p><a href="/research/">مرصد الأبحاث النفسية: عرض علمي وشرح مبسط</a></p></div></main>
 
 <footer class="footer">
