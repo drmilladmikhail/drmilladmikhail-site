@@ -8,7 +8,8 @@ HERO = """<section class="hero hero-dark clarity-hero">
     <p class="quiz-kicker">د. ميلاد ميخائيل</p>
     <h1 class="hero-name">افهم نفسك… وخد خطوة لحياة أهدى</h1>
     <p class="statement">مقالات مبسطة وأدوات توعوية وتمارين عملية لفهم مشاعرك وعلاقاتك، بالعربي البسيط.</p>
-    <div class="actions"><a class="btn btn-gold" href="#concern-title">اختار اللي شاغل بالك</a></div>
+    <div class="actions"><a class="btn btn-gold" href="/discover-feelings/">اكتشف مشاعرك</a> <a class="btn btn-ghost" href="#concern-title">اختار اللي شاغل بالك</a></div>
+    <p class="hero-sub">مش عارف إحساسك؟ اكتبه بكلماتك، وسمّيه، وجرّب خطوة صغيرة. اللي بتكتبه ما بيتبعتش ولا بيتحفظ.</p>
   </div></div>
 </section>"""
 REMOVED = ('discovery-hub', 'guide', 'quick-quiz', 'myth-promo', 'tests-band', 'quote-band')
@@ -54,7 +55,7 @@ def transform(text):
         main = re.sub(section_pattern('glossary-home'), lambda _: GLOSSARY, main, count=1, flags=re.S)
     text = before + '<main id="main">' + main + '</main>' + after
     stylesheet = '<link rel="stylesheet" href="/assets/home-clarity.css">'
-    if stylesheet not in text:
+    if not re.search(r'href="/assets/home-clarity\.css(\?v=[0-9a-f]+)?"', text):
         text = text.replace('</head>', stylesheet + '\n</head>', 1)
     return text
 
