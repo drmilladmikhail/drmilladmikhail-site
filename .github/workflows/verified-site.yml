@@ -30,6 +30,7 @@ jobs:
           python -m compileall -q tools
           python -m unittest discover -s tools -p test_home_clarity.py -v
           python -m unittest discover -s tools -p test_glossary.py -v
+          python -m unittest discover -s tools -p test_stories.py -v
           python tools/growth_package.py
           python tools/build_articles.py
           python tools/home_clarity.py
@@ -68,7 +69,7 @@ jobs:
                   browser = p.chromium.launch()
                   for width in [390, 1280]:
                       page = browser.new_page(viewport={'width': width, 'height': 900})
-                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
+                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/stories/', 'stories'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
                           response = page.goto('http://127.0.0.1:8765' + slug, wait_until='load')
                           assert response.status == 200, slug
                           assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), slug
@@ -101,6 +102,19 @@ jobs:
                               panel = page.locator('main details').nth(1)
                               panel.locator('summary').click()
                               assert panel.evaluate('(el) => el.open')
+                          if name == 'stories':
+                              assert page.locator('.story-card').count() == 10
+                              assert page.locator('.story-reflection').count() == 10
+                              assert page.locator('.reflection-option').count() == 30
+                              card = page.locator('.story-card').first
+                              card.locator('.story-details > summary').click()
+                              choices = card.locator('.reflection-option')
+                              for i in range(3):
+                                  choices.nth(i).locator('summary').click()
+                                  assert choices.nth(i).evaluate('(el) => el.open')
+                                  assert card.locator('.reflection-option[open]').count() == 1
+                                  assert choices.nth(i).locator('.reflection-explanation').is_visible()
+                              assert 'بحسب تأكيده' not in page.locator('main').inner_text()
                           if name == 'glossary':
                               assert page.locator('h1').inner_text() == 'القاموس النفسي'
                               assert page.locator('.g-entry:visible').count() == glossary_count

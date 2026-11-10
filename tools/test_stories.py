@@ -10,12 +10,14 @@ import build_extras
 
 
 class StoryTests(unittest.TestCase):
-    def render(self, records):
+    def render(self, records, reflections=None):
         captured = {}
         ba = SimpleNamespace(esc=html.escape, discussion_block=lambda *args: "")
         def page(*args):
             return "<html><head></head><body>" + args[3] + "</body></html>"
-        with patch.object(build_extras, "_load", return_value={"stories": records}):
+        def load(name, default):
+            return {"stories": records} if name == "stories.json" else {"items": reflections or []}
+        with patch.object(build_extras, "_load", side_effect=load):
             build_extras.stories_page(ba, page, lambda slug, value: captured.update(html=value), "https://example.com")
         return captured["html"]
 
@@ -71,6 +73,39 @@ class StoryTests(unittest.TestCase):
         self.assertIn("&lt;script&gt;", rendered)
         self.assertNotIn("<img src=x", rendered)
         self.assertNotIn("<script>bad()", rendered)
+
+    def test_every_story_has_three_hypothetical_choices_without_scripts_or_forms(self):
+        records = json.loads((Path(build_extras.ROOT) / "content/stories.json").read_text())["stories"]
+        prompts = list(build_extras.story_reflections().values())
+        self.assertEqual({s["id"] for s in records}, {p["story_id"] for p in prompts})
+        self.assertEqual(len(prompts), 10)
+        rendered = self.render(records, prompts)
+        self.assertEqual(rendered.count('class="story-reflection"'), 10)
+        self.assertEqual(rendered.count('class="reflection-option"'), 30)
+        self.assertEqual(rendered.count("موقف افتراضي للتفكير، مش تكملة لأحداث الحكاية."), 10)
+        for prompt in prompts:
+            fragment = build_extras.story_reflection_html(html.escape, prompt)
+            self.assertEqual(fragment.count(f'name="reflection-{prompt["story_id"]}"'), 3)
+            self.assertNotIn("<script", fragment)
+            self.assertNotIn("<form", fragment)
+            self.assertNotIn("onclick", fragment)
+            self.assertNotIn("data-track", fragment)
+        self.assertIn("مش بتتبعت أو بتتحفظ", rendered)
+
+    def test_prompt_validation_and_escaping(self):
+        good = {"story_id": "sample", "question": "Question", "options": [
+            {"label": "Label", "text": "Text"} for _ in range(3)]}
+        for items in ([good, good], [dict(good, story_id='bad" id')], [dict(good, options=[])],
+                      [dict(good, question="")], [dict(good, options=[{}, {}, {}])]):
+            with patch.object(build_extras, "_load", return_value={"items": items}):
+                with self.assertRaises(ValueError):
+                    build_extras.story_reflections()
+        malicious = dict(good, question="<script>question()</script>", options=[
+            {"label": "<img src=x>", "text": "<script>bad()</script>"} for _ in range(3)])
+        fragment = build_extras.story_reflection_html(html.escape, malicious)
+        self.assertIn("&lt;script&gt;", fragment)
+        self.assertNotIn("<script>", fragment)
+        self.assertNotIn("<img", fragment)
 
 
 if __name__ == "__main__":

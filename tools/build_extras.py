@@ -6,6 +6,7 @@
 """
 import json
 import os
+import re
 from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -72,8 +73,48 @@ def exercise_page(ba, page, write, SITE):
     write("exercise", html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1))
 
 
+def story_reflections():
+    """Load optional, separately labelled educational prompts, never case events."""
+    records = {}
+    for item in _load("story-reflections.json", {"items": []}).get("items", []):
+        sid = item.get("story_id", "")
+        options = item.get("options", [])
+        if (not isinstance(sid, str) or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", sid)
+                or sid in records or not isinstance(item.get("question"), str)
+                or not item["question"].strip() or not isinstance(options, list)
+                or len(options) != 3
+                or any(not isinstance(option, dict)
+                       or any(not isinstance(option.get(key), str) or not option[key].strip()
+                              for key in ("label", "text"))
+                       for option in options)):
+            raise ValueError("Invalid or duplicate story reflection: " + repr(sid))
+        records[sid] = item
+    return records
+
+
+def story_reflection_html(esc, item):
+    """Native disclosures: no scripts, submissions, storage, scores or diagnosis."""
+    sid = esc(item["story_id"])
+    choices = "".join(
+        f'''<details class="reflection-option" name="reflection-{sid}">
+          <summary><span class="reflection-number" aria-hidden="true">{number}</span>
+            <span>{esc(option["label"])}</span><span class="reflection-toggle" aria-hidden="true"></span></summary>
+          <div class="reflection-explanation"><p>{esc(option["text"])}</p></div>
+        </details>'''
+        for number, option in zip(("١", "٢", "٣"), item["options"])
+    )
+    return f'''<section class="story-reflection" aria-labelledby="reflect-{sid}">
+        <p class="reflection-kicker">وقفة مع الحكاية</p>
+        <h3 id="reflect-{sid}">لو كنت مكانه، كنت هتعمل إيه؟</h3>
+        <p class="reflection-note">موقف افتراضي للتفكير، مش تكملة لأحداث الحكاية. مفيش درجات أو تشخيص؛ افتح أي اختيار وشوف زاوية للفهم.</p>
+        <p class="reflection-question">{esc(item["question"])}</p>
+        <div class="reflection-choices">{choices}</div>
+      </section>'''
+
+
 def stories_page(ba, page, write, SITE):
     esc = ba.esc
+    reflections = story_reflections()
     stories = []
     for story in _load("stories.json", {"stories": []}).get("stories", []):
         if story.get("kind") == "illustrative_fiction":
@@ -90,6 +131,8 @@ def stories_page(ba, page, write, SITE):
             fictional = s.get("kind") == "illustrative_fiction"
             clinical = s.get("kind") == "clinician_provided_account"
             paragraphs = "".join(f"<p>{esc(p)}</p>" for p in s["text"])
+            reflection = (story_reflection_html(esc, reflections[s["id"]])
+                          if s.get("id") in reflections else "")
             attribution = (
                 '<p class="story-by">حكاية توضيحية متخيّلة، مش حالة حقيقية من العيادة.</p>'
                 if fictional else
@@ -102,8 +145,8 @@ def stories_page(ba, page, write, SITE):
         <details class="story-details"><summary>
           <span class="story-tag">{esc(s.get("tag", ""))}</span>
           <h2>{esc(s["title"])}</h2>
-          <span class="story-read"><span class="story-open-label">اقرا الحكاية</span><span class="story-close-label">اقفل الحكاية</span><span class="story-chevron" aria-hidden="true">⌄</span></span>
-        </summary><div class="story-text">{paragraphs}</div></details>
+          <span class="story-read"><span class="story-open-label">اقرا الحكاية وجرّب الموقف</span><span class="story-close-label">اقفل الحكاية</span><span class="story-chevron" aria-hidden="true">⌄</span></span>
+        </summary><div class="story-text">{paragraphs}</div>{reflection}</details>
         {attribution}</article>''')
         cards = '<div class="stories-grid">' + "".join(parts) + "</div>"
     else:
@@ -116,10 +159,11 @@ def stories_page(ba, page, write, SITE):
     <div class="wrap stories-wrap">
       <p class="crumbs"><a href="/">الصفحة الرئيسية</a></p>
       <h1>حكايات من داخل العيادة</h1>
-      <p class="section-intro">ورا كل حكاية فيه وجع ومحاولة للفهم والتغيير. افتح الكارت واقرا عن رحلة مختلفة، من غير مقارنة بين تجربة والتانية.</p>
+      <p class="section-intro">ورا كل حكاية فيه وجع ومحاولة للفهم والتغيير. افتح الكارت واقرا عن رحلة مختلفة، وبعدها جرّب تختار رد فعل في موقف افتراضي، من غير مقارنة بين تجربة والتانية.</p>
       <aside class="stories-note" aria-label="عن طبيعة الحكايات"><h2>من غير أسماء أو تفاصيل تعريفية</h2>
         <p>الحكايات دي من واقع عيادتي، وبنشرها بموافقة أصحابها، من غير أسماء أو تفاصيل تكشف هويتهم. كل حكاية مكتوبة على لسان صاحبها، مع إعادة الصياغة لحماية الخصوصية؛ مش نقل حرفي لكلامه.</p>
         <p>كل حكاية بتعرض تجربة فردية، مش تشخيص ولا خطة علاج ولا وعد بنفس النتيجة لكل الناس. وماينفعش تبدأ أو توقف دواء أو تغيّر جرعته اعتمادًا على حكاية هنا.</p></aside>
+      <p class="reflection-privacy">التفاعل اختياري. اختياراتك بتفتح شرحها هنا بس، ومش بتتبعت أو بتتحفظ.</p>
       {cards}
       <p class="safety">التجارب دي للتوعية والمساندة، مش لتشخيص نفسك أو تغيير علاجك. لو انت في خطر دلوقتي، افتح <a href="/help-now/">محتاج مساعدة دلوقتي</a>.</p>
       <section class="story-send" aria-labelledby="send-h">
@@ -143,7 +187,7 @@ def stories_page(ba, page, write, SITE):
     ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "حكايات من داخل العيادة", "url": f"{SITE}/stories/", "inLanguage": "ar",
           "author": {"@id": f"{SITE}/#person"}}
     html = page("stories", "حكايات من داخل العيادة", "١٠ حكايات من واقع عيادتي، بنشرها بموافقة أصحابها على لسانهم، من غير أسماء أو تفاصيل تعريفية، مع الحفاظ على خصوصيتهم.", body, ld)
-    html = html.replace("</head>", '<link rel="stylesheet" href="/assets/stories.css?v=20261110-3">\n</head>', 1)
+    html = html.replace("</head>", '<link rel="stylesheet" href="/assets/stories.css?v=20261110-4">\n</head>', 1)
     write("stories", html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1))
 
 
