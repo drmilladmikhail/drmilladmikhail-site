@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Interactive pages added 2026-11-07 (called by tools/build_pages.py):
   /exercise/  «تمرين الأسبوع النفسي»  — content/exercises.json, assets/extras.js (notes saved only on the visitor's device)
-  /stories/   «حكايات التعافي»        — content/stories.json (REAL stories only, sent by readers with consent, anonymised)
+  /stories/   «حكايات التعافي»        — de-identified owner accounts, labelled fiction and consented reader submissions
   /shelf/     «رفّ الترشيحات»          — content/shelf.json
 """
 import json
@@ -74,23 +74,54 @@ def exercise_page(ba, page, write, SITE):
 
 def stories_page(ba, page, write, SITE):
     esc = ba.esc
-    stories = [s for s in _load("stories.json", {"stories": []}).get("stories", []) if s.get("consent")]
+    stories = []
+    for story in _load("stories.json", {"stories": []}).get("stories", []):
+        if story.get("kind") == "illustrative_fiction":
+            stories.append(story)
+        elif (story.get("kind") == "clinician_provided_account"
+              and story.get("owner_approved") is True and story.get("deidentified") is True
+              and story.get("patient_publication_consent") is True):
+            stories.append(story)
+        elif story.get("kind", "reader_submission") == "reader_submission" and story.get("consent") is True:
+            stories.append(story)
     if stories:
-        cards = "".join(f'''<article class="story"><p class="story-tag">{esc(s.get("tag", ""))}</p><h2>{esc(s["title"])}</h2>
-        {"".join(f"<p>{esc(p)}</p>" for p in s["text"])}
-        <p class="story-by">— {esc(s.get("alias", "صاحب/ة الحكاية"))}، نُشرت بإذنه/ا وبعد إخفاء أي تفاصيل تكشف هويته/ا</p></article>''' for s in stories)
+        parts = []
+        for n, s in enumerate(stories, 1):
+            fictional = s.get("kind") == "illustrative_fiction"
+            clinical = s.get("kind") == "clinician_provided_account"
+            paragraphs = "".join(f"<p>{esc(p)}</p>" for p in s["text"])
+            attribution = (
+                '<p class="story-by">حكاية توضيحية متخيّلة، مش حالة حقيقية من العيادة.</p>'
+                if fictional else
+                '<p class="story-by">من داخل العيادة · صياغة تحريرية على لسان صاحب الحكاية، وليست اقتباسًا حرفيًا.</p>'
+                if clinical else
+                f'<p class="story-by">{esc(s.get("alias", "صاحب/ة الحكاية"))}، '
+                'نُشرت بإذنه/ا وبعد إخفاء أي تفاصيل تكشف هويته/ا</p>'
+            )
+            parts.append(f'''<article class="story story-card" id="story-{n}">
+        <details class="story-details"><summary>
+          <span class="story-tag">{esc(s.get("tag", ""))}</span>
+          <h2>{esc(s["title"])}</h2>
+          <span class="story-read"><span class="story-open-label">اقرا الحكاية</span><span class="story-close-label">اقفل الحكاية</span><span class="story-chevron" aria-hidden="true">⌄</span></span>
+        </summary><div class="story-text">{paragraphs}</div></details>
+        {attribution}</article>''')
+        cards = '<div class="stories-grid">' + "".join(parts) + "</div>"
     else:
-        cards = '''<div class="story-empty"><p class="story-tag">قريباً</p><h2>أول الحكايات في الطريق</h2>
-        <p>الحكايات هنا هتكون حقيقية بس، من ناس عدّوا بقلق أو تعلّق مؤلم أو علاقة مؤذية، وقرروا يشاركوا رحلتهم عشان غيرهم ميحسش إنه لوحده. مش هنكتب حكايات من خيالنا.</p>
-        <p>لو عندك حكاية، ممكن تكون انت أول واحد يفتح الباب ده لغيرك. 💚</p></div>'''
+        cards = '''<div class="story-empty"><p class="story-tag">قريبًا</p><h2>الحكايات بتتجهز</h2>
+        <p>أي حكاية متخيّلة هنا هتكون مكتوب عليها إنها للتوضيح. ومش هننشر تجربة حقيقية يبعتها قارئ من غير موافقته.</p>
+        <p>تقدر تبعت تجربتك من النموذج تحت، من غير تفاصيل تكشف هويتك.</p></div>'''
     cats = ["القلق والتوتر", "التعلّق والعلاقات", "التعافي من علاقة مؤذية", "تقدير الذات وجلد الذات", "الفراغ والبحث عن المعنى", "حاجة تانية"]
     opts = "".join(f"<option>{c}</option>" for c in cats)
-    body = f'''  <section class="section extras">
-    <div class="wrap narrow">
+    body = f'''  <section class="section extras stories-page">
+    <div class="wrap stories-wrap">
       <p class="crumbs"><a href="/">الصفحة الرئيسية</a></p>
-      <h1>حكايات التعافي</h1>
-      <p class="section-intro">حكايات حقيقية من غير أسماء عن رحلة التعافي والنمو: من القلق، ومن أنماط التعلّق المؤلمة، ومن علاقات وجعتنا. هنا مكان دافي وآمن تعرف فيه إنك مش لوحدك.</p>
+      <h1>حكايات من داخل العيادة</h1>
+      <p class="section-intro">ورا كل حكاية فيه وجع ومحاولة للفهم والتغيير. افتح الكارت واقرا عن رحلة مختلفة، من غير مقارنة بين تجربة والتانية.</p>
+      <aside class="stories-note" aria-label="عن طبيعة الحكايات"><h2>من غير أسماء أو تفاصيل تعريفية</h2>
+        <p>روايات قدّمها د. ميلاد من واقع العيادة، وبحسب تأكيده وافق أصحابها على النشر. أُعيدت صياغتها بضمير المتكلم مع حذف الأسماء والتفاصيل التعريفية، علشان كل حكاية تتحكي على لسان صاحبها؛ النص مش اقتباسًا حرفيًا أو تسجيلًا لكلامه.</p>
+        <p>كل حكاية بتعرض تجربة فردية، مش تشخيص ولا خطة علاج ولا وعد بنفس النتيجة لكل الناس. وماينفعش تبدأ أو توقف دواء أو تغيّر جرعته اعتمادًا على حكاية هنا.</p></aside>
       {cards}
+      <p class="safety">التجارب دي للتوعية والمساندة، مش لتشخيص نفسك أو تغيير علاجك. لو انت في خطر دلوقتي، افتح <a href="/help-now/">محتاج مساعدة دلوقتي</a>.</p>
       <section class="story-send" aria-labelledby="send-h">
         <h2 id="send-h">احكي حكايتك (من غير اسمك)</h2>
         <ul class="story-promise"><li>اكتب باسم مستعار، ومتكتبش أسماء ناس أو أماكن أو أي حاجة تكشفك.</li><li>هقرا الحكاية بنفسي، وممكن أعدّل صياغتها بسيط وأشيل أي تفاصيل حساسة قبل النشر.</li><li>مش هنشر أي حكاية من غير موافقتك الواضحة، وتقدر تطلب حذفها في أي وقت.</li></ul>
@@ -109,9 +140,10 @@ def stories_page(ba, page, write, SITE):
       {ba.discussion_block("stories", SITE + "/stories/", "حكايات التعافي", "كلمة دعم لكل حد لسه في أول الطريق: إيه اللي كنت تتمنى حد يقولهولك؟", "مساحة الدعم")}
     </div>
   </section>'''
-    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "حكايات التعافي", "url": f"{SITE}/stories/", "inLanguage": "ar",
+    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "حكايات من داخل العيادة", "url": f"{SITE}/stories/", "inLanguage": "ar",
           "author": {"@id": f"{SITE}/#person"}}
-    html = page("stories", "حكايات التعافي", "حكايات تعافي حقيقية من غير أسماء عن القلق والتعلّق والعلاقات المؤذية، ومساحة آمنة تشارك فيها حكايتك وتدعم غيرك.", body, ld)
+    html = page("stories", "حكايات من داخل العيادة", "١٠ حكايات من روايات العيادة التي قدّمها د. ميلاد، بصياغة مختصرة ومن غير أسماء أو تفاصيل تعريفية، مع توضيح أن النتائج فردية وليست وعودًا علاجية.", body, ld)
+    html = html.replace("</head>", '<link rel="stylesheet" href="/assets/stories.css?v=20261110-3">\n</head>', 1)
     write("stories", html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1))
 
 

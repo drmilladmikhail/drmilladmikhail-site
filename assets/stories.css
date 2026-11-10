@@ -1,0 +1,41 @@
+/* Recovery stories only: preserve the site's typography, palette and forms. */
+.stories-page {
+  --story-gap: 1.25rem;
+  --story-padding: 1.5rem;
+  --story-small: .875rem;
+  --story-body: 1rem;
+  --story-heading: clamp(1.25rem, 1.1rem + .45vw, 1.5rem);
+}
+.stories-wrap > .section-intro { max-width: 48rem; }
+.stories-note {
+  margin-block: 1.5rem 2rem;
+  padding: var(--story-padding);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--mist);
+}
+.stories-note h2 { margin: 0 0 .5rem; font-size: var(--story-heading); }
+.stories-note p { margin: .5rem 0 0; font-size: var(--story-body); }
+.stories-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--story-gap); align-items: start; }
+.stories-grid .story-card { margin: 0; padding: 0; overflow-wrap: anywhere; min-width: 0; }
+.story-card, .story-send { scroll-margin-top: 8rem; }
+.story-details > summary { cursor: pointer; padding: var(--story-padding); list-style: none; border-radius: 1rem; }
+.story-details > summary::-webkit-details-marker { display: none; }
+.story-details > summary::marker { content: ""; }
+.story-details > summary:hover { background: var(--paper); }
+.story-details > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.story-card h2 { font-size: var(--story-heading); line-height: 1.7; }
+.story-read { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; color: var(--eucalyptus); font-size: var(--story-small); font-weight: 600; }
+.story-chevron { font-size: var(--story-heading); line-height: 1; }
+.story-close-label { display: none; }
+.story-details[open] .story-open-label { display: none; }
+.story-details[open] .story-close-label { display: inline; }
+.story-details[open] .story-chevron { transform: rotate(180deg); }
+.story-text { padding: 0 var(--story-padding) .5rem; font-size: var(--story-body); }
+.story-text p { margin: 0 0 1rem; }
+.story-card .story-by { padding-inline: var(--story-padding); margin: 0 0 .75rem; font-size: var(--story-small); }
+.stories-wrap > .story-send, .stories-wrap > .discuss { max-width: 48rem; margin-inline: auto; }
+@media (max-width: 680px) {
+  .stories-page { --story-padding: 1.25rem; }
+  .stories-grid { grid-template-columns: minmax(0, 1fr); }
+}
