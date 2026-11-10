@@ -126,12 +126,12 @@
     var journalName = ar ? r.journal_ar : r.journal;
     var issueTxt = ar ? r.issue_ar : r.issue_en;
     var absArFirst = ar;
-    var absAr = '<div class="abs-block" dir="rtl" lang="ar"><h4>' + esc(LABELS.ar.abstractAr) + '</h4><p>' + esc(r.abstract_ar) + '</p></div>';
-    var absEn = '<div class="abs-block" dir="ltr" lang="en"><h4>' + esc(LABELS.en.abstractEn) + '</h4><p>' + esc(r.abstract) + '</p></div>';
+    var absAr = '<div class="abs-block" dir="rtl" lang="ar"><h3>' + esc(LABELS.ar.abstractAr) + '</h3><p>' + esc(r.abstract_ar) + '</p></div>';
+    var absEn = '<div class="abs-block" dir="ltr" lang="en"><h3>' + esc(LABELS.en.abstractEn) + '</h3><p>' + esc(r.abstract) + '</p></div>';
     return '<article class="lib-card" id="p' + esc(r.pmid || r.doi) + '">' +
       '<p class="tag">' + esc(journalName) + ' · ' + esc(L.vol) + ' ' + esc(r.volume) + ' · ' + esc(L.issue) + ' ' + esc(r.issue) + ' · ' + esc(issueTxt) +
       (isNewToday(r) ? '<span class="new-badge">' + esc(L.newBadge) + '</span>' : '') + '</p>' +
-      '<h3>' + esc(mainTitle) + '</h3>' +
+      '<h2>' + esc(mainTitle) + '</h2>' +
       '<p class="alt-title" dir="' + (ar ? 'ltr' : 'rtl') + '" lang="' + (ar ? 'en' : 'ar') + '">' + esc(secondTitle) + '</p>' +
       '<p class="authors"><b>' + esc(L.authors) + ':</b> <span dir="ltr" lang="en">' + esc(authorsLine(r)) + '</span></p>' +
       '<details class="abs"><summary>' + esc(L.abstracts) + '</summary>' + (absArFirst ? absAr + absEn : absEn + absAr) + '</details>' +

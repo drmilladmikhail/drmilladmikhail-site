@@ -127,7 +127,7 @@
           navigator.clipboard.writeText("اعمل الاختبار انت كمان: " + location.origin + location.pathname).then(function () {
             linkBtn.textContent = "اتنسخ ✓";
             setTimeout(function () { linkBtn.textContent = "انسخ رابط الاختبار"; }, 1800);
-          }).catch(function () {});
+          }).catch(function () { linkBtn.textContent = "انسخ الرابط من شريط العنوان"; });
         });
         cv.toBlob(function (blob) {
           if (!blob || !navigator.canShare) return;

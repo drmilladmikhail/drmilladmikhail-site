@@ -561,7 +561,8 @@ html[lang="ar"] body.home-redesign .quiz-panel,html[lang="ar"] body.home-redesig
 html[lang="ar"] body.home-redesign .guide-grid>li,html[lang="ar"] body.home-redesign #articles .card a { background:#f8f4eb; border-color:#d9d4c8; }
 html[lang="ar"] body.home-redesign .tests-band { background:#dce7e1; }
 html[lang="ar"] body.home-redesign .book-feature { background:#234c45; }
-html[lang="ar"] body.home-redesign .footer { background:#e2ded2; }
+html[lang="ar"] body.home-redesign .footer { background:#e2ded2; color:#4a5b53; }
+html[lang="ar"] body.home-redesign .footer p.fine:not(.footer-links) a { text-decoration: underline; text-underline-offset: 3px; }
 html[lang="ar"] body.home-redesign .discovery-hub { background:linear-gradient(180deg,#e7eee8,#f2eee5); }
 html[lang="ar"] body.home-redesign .discovery-heading { max-width:700px; margin:0 auto 30px; text-align:center; }
 html[lang="ar"] body.home-redesign .discovery-heading h2 { margin:0 0 8px; font-size:clamp(30px,4vw,42px); }

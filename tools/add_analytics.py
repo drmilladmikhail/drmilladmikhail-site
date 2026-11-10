@@ -33,7 +33,8 @@ def version_assets(root):
     import hashlib
     vers = {}
     names = ("site.css", "nav.js", "home-clarity.css", "home-redesign.css",
-             "extras.js", "challenges.js", "my-space.js", "helper.js", "partner-check.js", "relcheck.js")
+             "extras.js", "challenges.js", "my-space.js", "helper.js", "partner-check.js", "relcheck.js",
+             "share.js", "quiz.js")
     for name in names:
         path = os.path.join(root, "assets", name)
         if os.path.isfile(path):
