@@ -146,6 +146,22 @@ jobs:
                           if name == 'explore':
                               page.locator('.explore-controls').wait_for(state='visible')
                               assert page.locator('.explore-item:visible').count() == 12
+                              page.locator('[data-explore-kind="article"]').click()
+                              assert page.locator('.explore-item:visible').count() > 0
+                              assert page.locator('.explore-item:visible:not([data-kind="article"])').count() == 0
+                              page.locator('[data-explore-kind="research"]').click()
+                              assert page.locator('.explore-item:visible').count() > 0
+                              assert page.locator('.explore-item:visible:not([data-kind="research"])').count() == 0
+                              with page.expect_popup() as paper_event:
+                                  page.locator('.explore-item:visible a').first.click()
+                              paper_page = paper_event.value
+                              paper_page.locator('.lib-card details[open]').wait_for(state='visible')
+                              target_id = paper_page.evaluate("decodeURIComponent(location.hash.slice(1))")
+                              assert paper_page.locator('.lib-card:has(details[open])').get_attribute('id') == target_id
+                              paper_page.locator('#lib-lang').click()
+                              assert paper_page.locator('.lib-card:has(details[open])').get_attribute('id') == target_id
+                              paper_page.close()
+                              page.locator('[data-explore-kind="all"]').click()
                               page.locator('#explore-more').click()
                               assert page.locator('.explore-item:visible').count() == 24
                               page.locator('#explore-query').fill('Self-compassion')

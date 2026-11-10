@@ -22,6 +22,7 @@
 .explore-kind, .explore-open { color:var(--eucalyptus); font-size:.88rem; }
 .explore-link h2 { margin:.6rem 0; font-size:1.2rem; line-height:1.8; }
 .explore-link p { margin:0 0 1rem; font-size:.94rem; line-height:1.9; }
+.explore-link .explore-original { color:var(--muted); font-size:.88rem; }
 .explore-open { margin-top:auto; padding-top:.5rem; }
 .explore-link:hover h2 { text-decoration:underline; text-underline-offset:.25em; }
 .explore-page a:focus-visible, .explore-page button:focus-visible, #explore-query:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }

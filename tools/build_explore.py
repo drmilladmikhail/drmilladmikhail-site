@@ -1,19 +1,22 @@
 """A public, consent-gated content directory with entirely local text search."""
 import hashlib
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
-LABELS = {"story": "حكاية", "exercise": "تمرين", "concept": "معنى من القاموس"}
+LABELS = {"story": "حكاية", "exercise": "تمرين", "concept": "معنى من القاموس",
+          "article": "مقال", "research": "بحث علمي"}
 
 
 def records():
     import build_extras
     import build_glossary
     import build_saved
+    import build_articles
     aliases = build_extras._load("explore-aliases.json", {})
     if any(not isinstance(k, str) or not isinstance(v, str) for k, v in aliases.items()):
         raise ValueError("Explore aliases must be plain text")
-    groups = {"story": [], "exercise": [], "concept": []}
+    groups = {kind: [] for kind in LABELS}
     for n, item in enumerate(build_extras.eligible_stories(), 1):
         sid = item.get("id", "")
         if not isinstance(sid, str) or not build_saved.SLUG.fullmatch(sid):
@@ -37,7 +40,24 @@ def records():
             "summary": item["summary"], "search": " ".join((item["title"], item["english"],
                 item["summary"], item["category"], *item["aliases"])),
             "href": "/glossary/" + item["slug"] + "/"})
-    # Show all three kinds in the opening results, rather than an entire group first.
+    for item in build_articles.load():
+        groups["article"].append({
+            "id": "article:" + item["slug"], "kind": "article", "title": item["title"],
+            "summary": item["description"],
+            "search": " ".join((item["title"], item["description"], "مقال مقالات",
+                                item["slug"].replace("-", " "))),
+            "href": "/articles/" + item["slug"] + "/"})
+    for item in build_extras._load("research-library.json", []):
+        key = str(item.get("pmid") or item["doi"])
+        groups["research"].append({
+            "id": "research:" + item["doi"], "kind": "research",
+            "title": item["title_ar"], "secondary": item["title"],
+            "summary": item["journal_ar"],
+            "search": " ".join((item["title_ar"], item["title"], item["journal_ar"],
+                                item["journal"], " ".join(item["authors"]), item["doi"],
+                                str(item.get("pmid") or ""), "بحث أبحاث دراسة دراسات")),
+            "href": "/research/library/#" + quote("p" + key, safe="")})
+    # Include every kind early, rather than an entire group first.
     output = [group[i] for i in range(max(map(len, groups.values())))
               for group in groups.values() if i < len(group)]
     if len({x["id"] for x in output}) != len(output):
@@ -53,14 +73,17 @@ def build(ba, page, write, SITE):
         f'data-search="{esc(r["search"])}"><a class="explore-link" href="{esc(r["href"])}" '
         'target="_blank" rel="noopener">'
         f'<span class="explore-kind">{LABELS[r["kind"]]}</span>'
-        f'<h2>{esc(r["title"])}</h2><p>{esc(r["summary"])}</p>'
+        f'<h2>{esc(r["title"])}</h2>'
+        + (f'<p class="explore-original" lang="en" dir="ltr">{esc(r["secondary"])}</p>'
+           if r.get("secondary") else "")
+        + f'<p>{esc(r["summary"])}</p>'
         '<span class="explore-open">افتح المحتوى<span class="sr-only">، في لسان جديد</span></span>'
         '</a></li>' for r in items)
     body = f'''<section class="section explore-page"><div class="wrap explore-wrap">
 <p class="crumbs"><a href="/">الصفحة الرئيسية</a></p>
-<p class="explore-kicker">حكاية تقراها، تمرين تجربه، ومعنى تفهمه</p>
+<p class="explore-kicker">حكايات وتمارين ومعاني ومقالات وأبحاث</p>
 <h1>دوّر واكتشف</h1>
-<p class="section-intro">ابحث في الحكايات والتمارين ومعاني القاموس. اكتب كلمة أو اختار موضوع، وبعدها افتح اللي يهمّك بالترتيب اللي يناسبك.</p>
+<p class="section-intro">ابحث في الحكايات والتمارين ومعاني القاموس والمقالات والأبحاث. اكتب كلمة أو اختار موضوع، وبعدها افتح اللي يهمّك بالترتيب اللي يناسبك.</p>
 <p class="explore-privacy">كلمات البحث بتفضل في الصفحة دي فقط؛ مش بتتبعت للموقع، ومش بتتحفظ عندنا أو في بيانات المتصفح أو رابط الصفحة. ده بحث في المحتوى، مش أداة تشخيص.</p>
 <div class="explore-controls" hidden>
 <form id="explore-form" role="search">
@@ -69,7 +92,7 @@ def build(ba, page, write, SITE):
 autocomplete="off" spellcheck="false" placeholder="زي: القلق، الحدود، الحزن"
 aria-describedby="explore-hint" aria-controls="explore-results">
 <button type="submit">ابحث</button><button type="button" id="explore-clear" disabled>امسح البحث</button></div>
-<p id="explore-hint">تقدر تبحث بالعربي أو بالمصطلح الإنجليزي الموجود في القاموس. النتائج بتتحدث وإنت بتكتب، ومفيش إجابات شخصية مطلوبة.</p>
+<p id="explore-hint">ابحث بالعربي أو الإنجليزي في العناوين ووصف المحتوى. وفي الأبحاث تقدر كمان تبحث باسم مؤلف أو دورية أو DOI أو PMID. النتائج بتتحدث وإنت بتكتب، ومفيش إجابات شخصية مطلوبة.</p>
 </form>
 <div class="explore-topics" role="group" aria-label="موضوعات للبحث">
 <span>جرّب موضوع:</span>
@@ -80,6 +103,8 @@ aria-describedby="explore-hint" aria-controls="explore-results">
 <button type="button" data-explore-kind="story" aria-pressed="false">الحكايات</button>
 <button type="button" data-explore-kind="exercise" aria-pressed="false">التمارين</button>
 <button type="button" data-explore-kind="concept" aria-pressed="false">القاموس</button>
+<button type="button" data-explore-kind="article" aria-pressed="false">المقالات</button>
+<button type="button" data-explore-kind="research" aria-pressed="false">الأبحاث</button>
 </div></div>
 <p class="explore-reading">المحتوى كله متاح للتصفح تحت. لو البحث التفاعلي مش ظاهر، تقدر تفتح أي عنوان مباشرة.</p>
 <div class="explore-result-head"><p id="explore-count" role="status" aria-live="polite">{len(items)} مادة متاحة للتصفح</p>
@@ -90,13 +115,13 @@ aria-describedby="explore-hint" aria-controls="explore-results">
 <ul id="explore-results" class="explore-results">{cards}</ul>
 <button type="button" id="explore-more" hidden>اعرض المزيد</button>
 <p class="explore-footnote">الروابط بتفتح في لسان جديد علشان بحثك يفضل قدامك. تقدر تقفل الصفحة وقت ما تحب؛ مفيش تسجيل ولا خطوات لازم تخلصها.</p>
-<p class="related">المقالات والأبحاث مش ضمن البحث ده: افتح <a href="/articles/">المقالات</a> أو <a href="/research/library/">مكتبة الأكاديميين والباحثين</a>.</p>
+<p class="related">للتصفح المتخصص، افتح <a href="/articles/">كل المقالات</a> أو <a href="/research/library/">مكتبة الأكاديميين والباحثين</a>. نتائج الأبحاث هنا بتبحث في بيانات البحث، مش نص الملخص الكامل.</p>
 <p class="safety">لو إنت أو حد معاك في خطر حالًا، افتح <a href="/help-now/">محتاج مساعدة دلوقتي</a>.</p>
 </div></section>'''
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "دوّر واكتشف",
           "url": SITE + "/explore/", "inLanguage": "ar"}
     html = page("explore", "دوّر واكتشف",
-                "بحث موحّد في الحكايات والتمارين والقاموس النفسي، مع تصفية حسب نوع المحتوى ومن غير حفظ كلمات البحث.", body, ld)
+                "بحث موحّد في الحكايات والتمارين والقاموس والمقالات والأبحاث بالعربية والإنجليزية، مع فلاتر للنوع ومن غير حفظ كلمات البحث.", body, ld)
     def asset(name):
         return "/assets/" + name + "?v=" + hashlib.sha256((ROOT / "assets" / name).read_bytes()).hexdigest()[:12]
     html = html.replace("</head>", f'<link rel="stylesheet" href="{asset("explore.css")}">\n</head>', 1)

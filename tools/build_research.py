@@ -2,6 +2,7 @@
 """Build the dual-audience research page and the bilingual research library."""
 from pathlib import Path
 import json
+import hashlib
 import xml.etree.ElementTree as ET
 from site_header import header_for, NAV_JS
 from add_analytics import SECURITY, SNIPPET
@@ -52,7 +53,9 @@ def build_library(root=ROOT):
             '</main>')
     page = (head + header_for('research/library/index.html') + body +
             '<footer class="footer"><div class="wrap"><a href="/research/">مرصد الأبحاث النفسية</a> · <a href="/articles/">المقالات</a> · <a href="/contact/">تواصل</a></div></footer>' +
-            '<script src="/assets/research-library-data.js" defer></script><script src="/assets/research-library.js" defer></script>' +
+            ''.join('<script src="/assets/' + name + '?v=' +
+                    hashlib.sha256((root / 'assets' / name).read_bytes()).hexdigest()[:12] +
+                    '" defer></script>' for name in ('research-library-data.js', 'research-library.js')) +
             NAV_JS + SNIPPET + '</body></html>')
     out = root / 'research/library/index.html'
     out.parent.mkdir(parents=True, exist_ok=True)

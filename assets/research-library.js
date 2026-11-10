@@ -217,6 +217,32 @@
     if (top) window.scrollTo({ top: top.offsetTop - 90, behavior: 'smooth' });
   }
 
+  // Public study fragments identify a paper, never the visitor's search query.
+  function openLinkedStudy(preserveFilters) {
+    var id;
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
+    var paper = DATA.find(function (r) { return 'p' + (r.pmid || r.doi) === id; });
+    if (!paper) return;
+    if (preserveFilters !== true) {
+      state.q = ''; state.journal = 'all'; state.todayOnly = false;
+      document.getElementById('lib-search').value = '';
+      document.getElementById('lib-journal').value = 'all';
+    }
+    var ordered = sorted(DATA.filter(matches)), index = ordered.indexOf(paper);
+    if (index < 0) return false;
+    state.page = Math.floor(index / PER_PAGE) + 1;
+    render();
+    var target = document.getElementById(id);
+    if (target) {
+      target.querySelector('details.abs').open = true;
+      target.style.scrollMarginTop = '110px';
+      target.tabIndex = -1;
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: 'start' });
+    }
+    return true;
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     if (!DATA.length) return;
     var el = function (id) { return document.getElementById(id); };
@@ -239,18 +265,22 @@
     el('lib-journal').addEventListener('change', function (e) { state.journal = e.target.value; state.page = 1; render(); });
     el('lib-sort').addEventListener('change', function (e) { state.sort = e.target.value; state.page = 1; render(); });
     el('lib-search-btn').addEventListener('click', function () {
-      state.q = ''; state.journal = 'all'; state.page = 1; state.todayOnly = false;
+      state.q = ''; state.journal = 'all'; state.sort = 'journal'; state.page = 1; state.todayOnly = false;
       el('lib-search').value = ''; el('lib-journal').value = 'all'; el('lib-sort').value = 'journal';
       render();
     });
     el('lib-lang').addEventListener('click', function () {
+      var linked;
+      try { linked = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (_) {}
       state.lang = state.lang === 'ar' ? 'en' : 'ar';
-      render();
+      if (!linked || !openLinkedStudy(true)) render();
     });
     el('lib-pager').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-go]');
       if (b) go(parseInt(b.getAttribute('data-go'), 10));
     });
     render();
+    openLinkedStudy();
+    window.addEventListener('hashchange', openLinkedStudy);
   });
 })();
