@@ -8,10 +8,18 @@ import build_explore as be
 import build_extras
 import build_glossary
 import build_articles
+import build_research
 from urllib.parse import unquote
 
 
 class ExploreTests(unittest.TestCase):
+    def test_research_rebuild_preserves_shared_asset_versions(self):
+        source = '<link href="/assets/site.css"><script src="/assets/nav.js"></script>'
+        result = build_research.version_shared_assets(source, be.ROOT)
+        self.assertIn('/assets/site.css?v=', result)
+        self.assertIn('/assets/nav.js?v=', result)
+        self.assertEqual(build_research.version_shared_assets(result, be.ROOT), result)
+
     def test_indexes_all_public_sources_and_interleaves_types(self):
         data = be.records()
         expected = len(build_extras.eligible_stories()) + len(

@@ -8,6 +8,18 @@ from site_header import header_for, NAV_JS
 from add_analytics import SECURITY, SNIPPET
 from breadcrumbs import process as add_breadcrumbs
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def version_shared_assets(page, root):
+    """Match the shared asset versioner so rebuilding creates no stale diffs."""
+    for name in ('site.css', 'nav.js'):
+        path = Path(root) / 'assets' / name
+        if path.is_file():
+            digest = hashlib.md5(path.read_bytes()).hexdigest()[:8]
+            page = page.replace('/assets/' + name + '"',
+                                '/assets/' + name + '?v=' + digest + '"')
+    return page
+
 CSS = '.research-page{max-width:1000px;margin:auto;padding:40px 20px;line-height:1.95;overflow-wrap:anywhere}.research-page h1{font-size:clamp(30px,5vw,46px)}.research-page article{background:#fff;border:1px solid #dbe3dc;border-radius:18px;padding:clamp(18px,4vw,34px);margin-top:28px}.research-page details{border:1px solid #dbe3dc;border-radius:12px;padding:16px;margin-block:20px}.research-page summary{cursor:pointer;font-weight:700;min-height:44px}.research-page .notice{background:#eef3ee;padding:16px;border-radius:10px;color:#304b3e}.research-page dt{font-weight:700}.research-page dd{margin-inline-start:0;margin-bottom:10px}.research-page a{color:#245b49}.research-page .tag{color:#416353}.research-page :focus-visible{outline:3px solid #326356;outline-offset:4px}'
 LIB_CSS = '.library-page{max-width:1000px;margin:auto;padding:40px 20px 110px;line-height:1.95;overflow-wrap:anywhere}.library-page h1{font-size:clamp(28px,4.5vw,42px)}.lib-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-block:22px;padding:14px;background:#eef3ee;border-radius:14px}.lib-controls input[type=search]{flex:1 1 240px;min-width:200px;padding:10px 12px;border:1px solid #c9d6cd;border-radius:10px;font:inherit}.lib-controls select,.lib-controls button{padding:10px 12px;border:1px solid #c9d6cd;border-radius:10px;background:#fff;font:inherit;cursor:pointer;min-height:44px}.lib-controls select{max-width:min(44vw,230px);text-overflow:ellipsis}.lib-controls .lang-btn{background:#2f6f62;color:#fff;border-color:#2f6f62;font-weight:700}#lib-count{font-weight:700;color:#416353}.lib-card{background:#fff;border:1px solid #dbe3dc;border-radius:18px;padding:clamp(16px,3vw,28px);margin-top:22px}.lib-card h3{font-size:clamp(18px,2.6vw,24px);margin:6px 0 4px}.lib-card .alt-title{color:#5c6f66;font-size:95%}.lib-card .tag{color:#416353}.lib-card .authors{font-size:95%}.lib-card details{border:1px solid #dbe3dc;border-radius:12px;padding:12px 16px;margin-block:14px}.lib-card summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}.abs-block{margin-top:12px;padding-top:10px;border-top:1px dashed #c9d6cd}.abs-block h4{margin:0 0 6px;font-size:100%}.abs-block p{margin:0}.lib-card .src{font-size:95%}.lib-pager{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin-block:26px}.lib-pager button{padding:8px 14px;border:1px solid #c9d6cd;border-radius:10px;background:#fff;cursor:pointer;min-height:44px;min-width:44px}.lib-pager [aria-current]{background:#2f6f62;color:#fff;border-radius:10px;padding:8px 14px}.library-page .notice{background:#eef3ee;padding:16px;border-radius:10px;color:#304b3e}.library-page a{color:#245b49}.library-page :focus-visible{outline:3px solid #326356;outline-offset:4px}main.library-page + .footer{padding-bottom:100px}.lib-today{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-block:18px 0;padding:14px 16px;background:#2f6f62;color:#fff;border-radius:14px;font-weight:700}.lib-today[hidden]{display:none}.lib-today .today-text{display:inline-flex;align-items:center;gap:8px}.lib-today .today-dot{width:9px;height:9px;border-radius:50%;background:#ffd66b;display:inline-block}.lib-today button{font:inherit;font-weight:700;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.12);color:#fff;cursor:pointer}.lib-today button:hover{background:rgba(255,255,255,.22)}.lib-card .new-badge{display:inline-block;background:#b9862a;color:#fff;border-radius:8px;padding:1px 9px;font-size:85%;font-weight:700;margin-inline-start:8px}#lib-intro-count{font-weight:700;color:#2f6f62;margin:0}'
 
@@ -59,6 +71,7 @@ def build_library(root=ROOT):
             NAV_JS + SNIPPET + '</body></html>')
     out = root / 'research/library/index.html'
     out.parent.mkdir(parents=True, exist_ok=True)
+    page = version_shared_assets(page, root)
     out.write_text(page, encoding='utf-8')
     add_breadcrumbs(str(out), 'library', str(root))
     page = out.read_text(encoding='utf-8')
@@ -81,6 +94,7 @@ def build(root=ROOT):
     page = head + header_for('research/index.html') + body + '<footer class="footer"><div class="wrap"><a href="/articles/">المقالات</a> · <a href="/contact/">تواصل</a></div></footer>' + NAV_JS + SNIPPET + '</body></html>'
     output = root / 'research/index.html'
     output.parent.mkdir(parents=True, exist_ok=True)
+    page = version_shared_assets(page, root)
     output.write_text(page, encoding='utf-8')
     ns = 'http://www.sitemaps.org/schemas/sitemap/0.9'
     ET.register_namespace('', ns)
