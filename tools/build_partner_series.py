@@ -17,9 +17,13 @@ SERIES = [
     "emotionally-abusive-partner",
     "partner-with-depression",
     "partner-with-addiction",
+    "dealing-with-angry-partner",
+    "dealing-with-lying-partner",
+    "family-interference-marriage",
+    "partner-with-anxiety-ocd",
 ]
 TOOLS = ["emotional-communication-couples", "couples-counseling"]
-ORD = ["١", "٢", "٣", "٤", "٥", "٦"]
+ORD = ["١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩", "١٠"]
 
 
 def build_all(ba, page, write, SITE):
@@ -56,8 +60,8 @@ def build_all(ba, page, write, SITE):
     <div class="wrap narrow">
       <p class="kicker-g">سلسلة جديدة</p>
       <h1>شريكي محيّرني</h1>
-      <p class="lead">نرجسي؟ شكاك؟ بخيل؟ بيأذيك نفسياً؟ ولا تعبان نفسياً ومحتاج دعم؟ سلسلة بالمصري تساعدك تفهم اللي بيحصل في علاقتك، وتعرف تتعامل إزاي من غير ما تضيع منك نفسك.</p>
-      <p><a class="btn primary big" href="#check">ابدأ بالاختبار (دقيقتين)</a></p>
+      <p class="lead">نرجسي؟ شكاك؟ بخيل؟ عصبي؟ بيكدب؟ أهله متدخلين؟ بيأذيك نفسياً؟ ولا تعبان نفسياً ومحتاج دعم؟ سلسلة بالمصري تساعدك تفهم اللي بيحصل في علاقتك، وتعرف تتعامل إزاي من غير ما تضيع منك نفسك.</p>
+      <p><a class="btn primary big" href="#check">ابدأ بالاختبار (٣ دقايق)</a></p>
     </div>
   </section>
   <section class="section" id="check">
@@ -85,7 +89,7 @@ def build_all(ba, page, write, SITE):
       <h2>أدوات تساعدكم تقرّبوا</h2>
       <ul class="cards">{tools}</ul>
       <p>ولو حاسس إنك محتاج حد يسمعك، فيه <a href="/sessions/">جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي</a>. ولو في خطر دلوقتي، شوف <a href="/help-now/">محتاج مساعدة دلوقتي</a>.</p>
-      {ba.share_block(SITE + "/partner/", "شريكي محيّرني: اعرف إيه اللي بيتعبك في علاقتك في دقيقتين — د. ميلاد ميخائيل", "شارك السلسلة")}
+      {ba.share_block(SITE + "/partner/", "شريكي محيّرني: اعرف إيه اللي بيتعبك في علاقتك في ٣ دقايق — د. ميلاد ميخائيل", "شارك السلسلة")}
     </div>
   </section>
   <script type="application/json" id="pc-data">{json.dumps(cats, ensure_ascii=False)}</script>'''
@@ -93,10 +97,10 @@ def build_all(ba, page, write, SITE):
     parts = [{"@type": "Article", "name": arts[s]["title"], "url": f"{SITE}/articles/{s}/"} for s in SERIES if s in arts]
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "شريكي محيّرني",
           "url": f"{SITE}/partner/", "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
-          "description": "سلسلة عن التعامل مع الشريك النرجسي والشكاك والبخيل والمؤذي نفسياً والشريك اللي عنده اكتئاب أو إدمان، مع اختبار سلوكيات.",
+          "description": "سلسلة عن التعامل مع الشريك النرجسي والشكاك والبخيل والعصبي والكداب والمؤذي نفسياً، وتدخل الأهل، والشريك اللي عنده اكتئاب أو إدمان أو قلق، مع اختبار سلوكيات.",
           "hasPart": parts}
     title = "شريكي محيّرني: التعامل مع الشريك النرجسي والشكاك والبخيل"
-    desc = "شريكك نرجسي ولا شكاك ولا بخيل ولا بيأذيك نفسياً؟ اختبار في دقيقتين يوضحلك إيه اللي بيتعبك، وسلسلة مقالات بالمصري تقولك تتعامل إزاي."
+    desc = "شريكك نرجسي ولا شكاك ولا بخيل ولا بيأذيك نفسياً؟ اختبار قصير يوضحلك إيه اللي بيتعبك، وسلسلة مقالات بالمصري تقولك تتعامل إزاي."
     html = page("partner", title, desc, body, ld, og=f"{SITE}/assets/og/dealing-with-narcissistic-partner.jpg")
     html = html.replace('<script src="/assets/share.js" defer></script>',
                         '<script src="/assets/partner-check.js" defer></script>\n<script src="/assets/share.js" defer></script>')
