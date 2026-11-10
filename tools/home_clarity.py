@@ -4,13 +4,23 @@ from pathlib import Path
 import re
 
 HERO = """<section class="hero hero-dark clarity-hero">
-  <div class="wrap"><div class="hero-text">
+  <div class="wrap h3d-wrap"><div class="hero-text">
     <p class="quiz-kicker">د. ميلاد ميخائيل</p>
     <h1 class="hero-name">افهم نفسك… وخد خطوة لحياة أهدى</h1>
     <p class="statement">مقالات مبسطة وأدوات توعوية وتمارين عملية لفهم مشاعرك وعلاقاتك، بالعربي البسيط.</p>
     <div class="actions"><a class="btn btn-gold" href="/discover-feelings/">اكتشف مشاعرك</a> <a class="btn btn-ghost" href="#concern-title">اختار اللي شاغل بالك</a></div>
     <p class="hero-sub">مش عارف إحساسك؟ اكتبه بكلماتك، وسمّيه، وجرّب خطوة صغيرة. اللي بتكتبه ما بيتبعتش ولا بيتحفظ.</p>
+  </div>
+  <div class="hero3d"><div class="h3d-stage">
+    <span class="h3d-core" aria-hidden="true"><span class="h3d-ring"></span><span class="h3d-orb"></span><span class="h3d-ring h3d-ring-front"></span></span>
+    <span class="h3d-dot d1" aria-hidden="true"></span><span class="h3d-dot d2" aria-hidden="true"></span><span class="h3d-dot d3" aria-hidden="true"></span>
+    <ul class="h3d-cards" aria-label="أدوات مجانية في الموقع">
+      <li><a class="h3d-card" href="/tests/"><span class="h3d-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 11l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="3"/></svg></span><span><b>اختبارات نفسية</b><small>مقاييس علمية، والنتيجة فورًا</small></span></a></li>
+      <li><a class="h3d-card" href="/exercise/"><span class="h3d-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 16 11-11 4 4L8 20H4zM13 7l4 4"/></svg></span><span><b>تمرين الأسبوع</b><small>خطوة عملية صغيرة كل أسبوع</small></span></a></li>
+      <li><a class="h3d-card" href="/glossary/"><span class="h3d-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M9 8h6"/></svg></span><span><b>القاموس النفسي</b><small>افهم المصطلح بمثال بسيط</small></span></a></li>
+    </ul>
   </div></div>
+  </div>
 </section>"""
 REMOVED = ('discovery-hub', 'guide', 'quick-quiz', 'myth-promo', 'tests-band', 'quote-band')
 GLOSSARY = """<section class="section glossary-home" aria-labelledby="glossary-home-title">

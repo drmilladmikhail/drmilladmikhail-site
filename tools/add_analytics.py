@@ -28,13 +28,27 @@ SECURITY = (f'<meta http-equiv="Content-Security-Policy" content="{CSP}">\n'
 SKIP_DIRS = {".git", ".github", "tools", "node_modules", "content", "docs"}
 
 
+
+def inject_depth3d(t):
+    """Add the light 3D layer (assets/depth3d.css + depth3d.js) to pages that use site.css."""
+    if "/assets/site.css" not in t or "</body>" not in t:
+        return t
+    if "/assets/depth3d.css" not in t:
+        t = re.sub(r'(<link rel="stylesheet" href="/assets/site\.css[^"]*">)',
+                   lambda m: m.group(1) + '<link rel="stylesheet" href="/assets/depth3d.css">', t, count=1)
+    if "/assets/depth3d.js" not in t:
+        i = t.rfind("</body>")
+        t = t[:i] + '<script src="/assets/depth3d.js" defer></script>\n' + t[i:]
+    return t
+
+
 def version_assets(root):
     """Version shared styles and interactive scripts so fixes bypass stale caches."""
     import hashlib
     vers = {}
     names = ("site.css", "nav.js", "home-clarity.css", "home-redesign.css",
              "extras.js", "challenges.js", "my-space.js", "helper.js", "partner-check.js", "relcheck.js",
-             "share.js", "quiz.js")
+             "share.js", "quiz.js", "depth3d.css", "depth3d.js")
     for name in names:
         path = os.path.join(root, "assets", name)
         if os.path.isfile(path):
@@ -77,6 +91,7 @@ def main():
             old = t
             t = re.sub(r'<meta http-equiv="Content-Security-Policy"[^>]*>\n?<meta name="referrer"[^>]*>\n?', "", t)
             t = re.sub(r'(<meta charset="utf-8">\n?)', lambda m: m.group(1) + SECURITY, t, count=1, flags=re.I)
+            t = inject_depth3d(t)
             if TOKEN not in t:
                 i = t.rfind("</body>")
                 t = t[:i] + SNIPPET + "\n" + t[i:]
