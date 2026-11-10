@@ -30,11 +30,11 @@
 .h3d-cards li:nth-child(3) { bottom: 2%; inset-inline-end: 6%; transform: translateZ(40px) rotateY(-3deg); }
 .h3d-card { display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 18px; text-decoration: none; text-align: start;
   background: rgba(255,255,255,.94); border: 1px solid #fff; color: #18233a;
-  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 24px 44px -20px rgba(24,35,58,.5), 0 6px 14px -8px rgba(24,35,58,.25);
+  box-shadow: 0 1px 0 #fff inset, 0 16px 26px -14px rgba(24,35,58,.5), 0 4px 10px -6px rgba(24,35,58,.25);
   animation: h3d-float 7s ease-in-out infinite; transition: box-shadow .3s, translate .3s; }
 .h3d-cards li:nth-child(2) .h3d-card { animation-delay: -2.3s; animation-duration: 8s; }
 .h3d-cards li:nth-child(3) .h3d-card { animation-delay: -4.6s; animation-duration: 9s; }
-.h3d-card:hover, .h3d-card:focus-visible { box-shadow: 0 1px 0 #fff inset, 0 34px 54px -20px rgba(24,35,58,.6); }
+.h3d-card:hover, .h3d-card:focus-visible { box-shadow: 0 1px 0 #fff inset, 0 20px 30px -14px rgba(24,35,58,.6), 0 4px 10px -6px rgba(24,35,58,.3); }
 .h3d-card:focus-visible { outline: 3px solid #326356; outline-offset: 3px; }
 .h3d-ico { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(145deg, #2f6f62, #234c42); color: #fff;
   box-shadow: 0 8px 16px -8px rgba(35,76,66,.8); }
