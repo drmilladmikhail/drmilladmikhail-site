@@ -31,6 +31,7 @@ jobs:
           python -m unittest discover -s tools -p test_home_clarity.py -v
           python -m unittest discover -s tools -p test_glossary.py -v
           python -m unittest discover -s tools -p test_stories.py -v
+          python -m unittest discover -s tools -p test_your_path.py -v
           python tools/growth_package.py
           python tools/build_articles.py
           python tools/home_clarity.py
@@ -69,7 +70,7 @@ jobs:
                   browser = p.chromium.launch()
                   for width in [390, 1280]:
                       page = browser.new_page(viewport={'width': width, 'height': 900})
-                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/stories/', 'stories'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
+                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/stories/', 'stories'), ('/your-path/', 'your-path'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
                           response = page.goto('http://127.0.0.1:8765' + slug, wait_until='load')
                           assert response.status == 200, slug
                           assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), slug
@@ -115,6 +116,20 @@ jobs:
                                   assert card.locator('.reflection-option[open]').count() == 1
                                   assert choices.nth(i).locator('.reflection-explanation').is_visible()
                               assert 'بحسب تأكيده' not in page.locator('main').inner_text()
+                          if name == 'your-path':
+                              assert page.locator('.yp-topic').count() == 6
+                              page.locator('[data-topic="anxiety"]').click()
+                              page.locator('#yp-preferences').wait_for(state='visible')
+                              page.locator('[data-start="exercise"]').click()
+                              route = page.locator('.yp-route:visible')
+                              assert route.locator('.yp-step').first.get_attribute('data-kind') == 'exercise'
+                              for button in route.locator('[data-complete]').all():
+                                  button.click()
+                              assert page.locator('#yp-finish').is_visible()
+                              route.locator('[data-complete]').first.click()
+                              assert not page.locator('#yp-finish').is_visible()
+                              page.locator('#yp-restart').click()
+                              assert page.locator('.yp-route:visible').count() == 0
                           if name == 'glossary':
                               assert page.locator('h1').inner_text() == 'القاموس النفسي'
                               assert page.locator('.g-entry:visible').count() == glossary_count

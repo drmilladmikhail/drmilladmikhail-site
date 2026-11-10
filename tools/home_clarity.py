@@ -45,6 +45,12 @@ def transform(text):
     if len(heroes) != 1 or len(re.findall(r'<section\b', heroes[0].group(0))) != 1:
         raise ValueError('Expected one non-nested homepage hero')
     main = re.sub(section_pattern('hero'), lambda _: HERO, main, count=1, flags=re.S)
+    import build_your_path
+    concerns = list(re.finditer(section_pattern('concern-finder'), main, flags=re.S))
+    if len(concerns) != 1 or len(re.findall(r'<section\b', concerns[0].group(0))) != 1:
+        raise ValueError('Expected one non-nested concern finder')
+    main = re.sub(section_pattern('concern-finder'), lambda _: build_your_path.home_section(),
+                  main, count=1, flags=re.S)
     if 'class="section glossary-home"' not in main:
         # Keep existing homepage sections and their relative ordering intact.
         main = main.rstrip() + '\n' + GLOSSARY + '\n'

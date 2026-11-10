@@ -241,6 +241,8 @@ def shelf_page(ba, page, write, SITE):
 def build_all(ba, page, write, SITE):
     exercise_page(ba, page, write, SITE)
     stories_page(ba, page, write, SITE)
+    import build_your_path
+    build_your_path.build(ba, page, write, SITE)
     shelf_page(ba, page, write, SITE)
     import build_life_tools
     build_life_tools.build(ba, page, write, SITE)

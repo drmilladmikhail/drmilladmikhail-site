@@ -1,0 +1,52 @@
+/* This page only: inherit the site's Arabic typography and light/dark palette. */
+.your-path [hidden] { display: none !important; }
+.yp-wrap { max-width: 1120px; }
+.your-path h1 { margin-block: .5rem 1rem; }
+.yp-kicker { color: var(--eucalyptus); font-size: .875rem; font-weight: 600; }
+.yp-intro { max-width: 48rem; font-size: 1.125rem; }
+.yp-privacy { padding: 1.25rem 1.5rem; margin-block: 1.5rem 2rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--mist); }
+.yp-privacy p { margin: .25rem 0; font-size: .9375rem; }
+.your-path h2, .yp-route, .your-path #yp-topics { scroll-margin-top: 9rem; }
+.your-path h2[tabindex="-1"]:focus { outline: none; }
+.yp-topics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .875rem; }
+.yp-topic { display: grid; gap: .5rem; min-width: 0; padding: 1.25rem; text-decoration: none; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); color: var(--ink); }
+.yp-topic b { font-size: 1.0625rem; }
+.yp-topic span { color: var(--muted); font-size: .875rem; line-height: 1.9; }
+.yp-topic:hover, .yp-topic[aria-current="true"] { border-color: var(--eucalyptus); background: var(--mist); }
+.yp-topic[aria-current="true"] b::after { content: " · اختيارك"; color: var(--eucalyptus); font-size: .875rem; }
+.your-path a:focus-visible, .your-path button:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+.yp-preferences { margin-top: 2rem; padding-top: .5rem; }
+.yp-preferences p { color: var(--muted); }
+.yp-starts { display: flex; flex-wrap: wrap; gap: .625rem; }
+.your-path button { font-family: inherit; font-size: .9375rem; line-height: 1.7; cursor: pointer; border: 1px solid var(--line); border-radius: .625rem; background: var(--surface); color: var(--ink); padding: .625rem 1rem; min-height: 44px; }
+.yp-starts button[aria-pressed="true"] { background: var(--eucalyptus); border-color: var(--eucalyptus); color: var(--eucalyptus-ink); }
+.yp-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; margin-top: 1.25rem; }
+.yp-toolbar p { color: var(--eucalyptus); font-size: .9375rem; }
+.yp-reading-note, .yp-session-note { color: var(--muted); font-size: .875rem; max-width: 48rem; }
+.yp-progress { font-weight: 600; color: var(--eucalyptus); margin-bottom: .25rem; }
+.yp-route { margin-block: 1.5rem 2rem; padding-block: 1.25rem; border-block-start: 1px solid var(--line); }
+.yp-route > h2 { margin-block: .25rem .75rem; }
+.yp-route > p:not(.yp-kicker) { max-width: 48rem; }
+.yp-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; counter-reset: yp-step; list-style: none; margin: 1.5rem 0; padding: 0; }
+.yp-step { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; min-width: 0; padding: 1.25rem; background: var(--surface); border: 1px solid var(--line); border-radius: 1rem; counter-increment: yp-step; overflow-wrap: anywhere; }
+.yp-step::before { content: "المحطة " counter(yp-step, arabic-indic); color: var(--muted); font-size: .875rem; }
+.yp-kind { margin: 0; color: var(--eucalyptus); font-size: .875rem; font-weight: 600; }
+.yp-step h3 { font-size: 1.25rem; line-height: 1.7; margin: 0 0 .5rem; }
+.yp-open { margin-top: auto; font-weight: 600; font-size: .9375rem; }
+.yp-complete { width: 100%; margin-top: .5rem; }
+.yp-step.yp-done { border-color: var(--eucalyptus); }
+.yp-complete[aria-pressed="true"] { background: var(--mist); color: var(--ink); border-color: var(--eucalyptus); }
+.yp-back { font-size: .9375rem; }
+.yp-finish { padding: 1.5rem; margin-block: 1.5rem; background: var(--mist); border: 1px solid var(--line); border-radius: 1rem; }
+.yp-finish h2 { font-size: 1.375rem; margin-top: 0; }
+.yp-finish p { margin-bottom: 0; }
+.yp-other { margin-block: 2rem 1rem; font-size: .9375rem; }
+@media (max-width: 760px) {
+  .yp-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .yp-steps { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .yp-topics { grid-template-columns: minmax(0, 1fr); }
+  .yp-privacy { padding: 1rem; }
+  .yp-topic, .yp-step { padding: 1.125rem; }
+}
