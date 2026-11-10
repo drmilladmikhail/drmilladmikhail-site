@@ -124,6 +124,10 @@
     if (event.key !== KEY && event.key !== null) return;
     state = read(); say(problem()); paint();
   });
+  // A restored back/forward-cache page must reflect saves made on another page.
+  window.addEventListener('pageshow', function () {
+    state = read(); say(problem()); paint();
+  });
   function openStory() {
     if (location.pathname !== '/stories/' || !/^#story-\d+$/.test(location.hash)) return;
     var card = document.getElementById(location.hash.slice(1));
