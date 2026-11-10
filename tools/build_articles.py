@@ -387,15 +387,17 @@ def sitemap(items):
             vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
         urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
     # Core platform routes (keep them discoverable in the sitemap).
-    for slug in ("platform", "paths", "experts", "join-us"):
+    for slug in ("platform", "paths", "experts", "join-us", "research", "research/library", "my-space"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-07", False))
     # standalone pages built by tools/build_pages.py
-    for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery", "exercise", "stories", "shelf", "newsletter"):
+    for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "partner", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery", "exercise", "life-tools", "discover-feelings", "stories", "shelf", "newsletter"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
-    # Static glossary pages are generated before the final sitemap pass.
     from pathlib import Path
+    for path in sorted((Path(ROOT) / "life-tools").glob("*/index.html")) if os.path.isdir(os.path.join(ROOT, "life-tools")) else []:
+        urls.append((f"{SITE}/life-tools/{path.parent.name}/", "2026-11-09", False))
+    # Static glossary pages are generated before the final sitemap pass.
     for path in sorted((Path(ROOT) / "glossary").glob("**/index.html")):
         slug = path.parent.relative_to(ROOT).as_posix()
         urls.append((f"{SITE}/{slug}/", "2026-11-08", False))

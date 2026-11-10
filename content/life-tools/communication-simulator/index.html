@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>أقول إيه في الموقف ده؟ (مسودة) | د. ميلاد ميخائيل</title>
+<meta name="description" content="تمرين تواصل بمواقف خيالية: جرّب ردود مختلفة، شوف مميزات وتكلفة كل رد، واكتب جملتك. مسودة للمراجعة.">
+<link rel="stylesheet" href="tool.css">
+</head>
+<body>
+<a class="skip-link" href="#main">تخطّى للمحتوى</a>
+<aside class="draft-banner" aria-label="تنبيه المسودة"><strong>مسودة غير منشورة.</strong> محتوى لسه ما اتراجعش مهنيًا، ومش ظاهر في الموقع ولا في الـ sitemap.</aside>
+<main id="main" class="tool">
+  <nav class="crumbs" aria-label="مسار الصفحة"><a href="/">الرئيسية</a> ‹ <a href="/exercise/">تمارين وأدوات</a> ‹ <span aria-current="page">أقول إيه في الموقف ده؟</span></nav>
+  <h1>أقول إيه في الموقف ده؟</h1>
+  <p class="lede">تمرين تواصل بمواقف خيالية. هتجرّب ردود مختلفة، وتشوف كل رد بيحقق إيه وبيكلّف إيه، وتطلع بجملة بتاعتك.</p>
+
+  <section class="card" aria-labelledby="about-h">
+    <h2 id="about-h">قبل ما تبدأ</h2>
+    <ul>
+      <li><b>الغرض:</b> تتدرب على صياغة ردود هادية وواضحة في مواقف يومية.</li>
+      <li><b>مفيش رد «صح» في كل مكان.</b> اللي بينفع مع حد أو في موقف ممكن ما ينفعش مع حد تاني. كل رد ليه مميزات وتكلفة.</li>
+      <li><b>الأشخاص في المواقف شخصيات خيالية.</b> التمرين مش بيحكم على حد ومش بيشخّص حد.</li>
+      <li><b>خصوصيتك:</b> اختياراتك وجملتك بتفضل في الصفحة دي بس. مش بتتبعت ومش بتتحفظ، وبتتمسح لما تقفل الصفحة.</li>
+    </ul>
+    <p class="safety" role="note"><b>تنبيه أمان:</b> تمارين التواصل العادية مش مناسبة لو في تهديد أو عنف أو إجبار أو تحكم مخيف. في الحالة دي سلامتك الأول: اتكلم مع حد بتثق فيه أو جهة مساعدة، وما تواجههوش لوحدك. <b>الأداة دي مش خدمة طوارئ.</b> لو في خطر دلوقتي: في مصر كلّم <a href="tel:105">105</a> (الخط الساخن للدعم النفسي) أو <a href="tel:122">122</a> (النجدة)، وفي أمريكا <a href="tel:988">988</a> أو <a href="tel:911">911</a>.</p>
+  </section>
+
+  <section class="card" id="app" aria-labelledby="app-h">
+    <h2 id="app-h">التمرين</h2>
+    <noscript><p>التمرين محتاج JavaScript. من غيره، اقرأ قسم «عن التمرين» تحت.</p></noscript>
+    <div id="pick" class="step">
+      <p>اختار موقف تتدرب عليه:</p>
+      <ul class="choices" id="scn-list"></ul>
+    </div>
+    <div id="play" class="step" hidden>
+      <p class="prog" id="prog"></p>
+      <h3 id="scn-title" tabindex="-1"></h3>
+      <div class="scn" id="scn-situation"></div>
+      <div id="s1" class="step">
+        <p><b>1.</b> لو انت في الموقف ده، إيه أقرب رد ليك؟</p>
+        <ul class="choices" id="opts"></ul>
+      </div>
+      <div id="s2" class="step" hidden>
+        <div class="fb" id="fb" tabindex="-1"></div>
+        <div class="alt" id="alt"></div>
+        <p><b>2.</b> جرّب تاني: اختار صياغة تحس إنها أقرب ليك.</p>
+        <ul class="choices" id="retry"></ul>
+      </div>
+      <div id="s3" class="step" hidden>
+        <p><b>3.</b> جملتك. عدّلها بكلامك وبالطريقة اللي تناسب الشخص والموقف:</p>
+        <label class="sr" for="final">جملتك</label>
+        <textarea id="final" rows="3" maxlength="500"></textarea>
+        <div class="actions">
+          <button type="button" class="btn" id="copy">انسخ الجملة</button>
+          <button type="button" class="btn btn-quiet" id="another">موقف تاني</button>
+          <button type="button" class="btn btn-quiet" id="reset">ابدأ من جديد</button>
+        </div>
+        <p class="hint">لو اتنسخت الجملة، هي بتتحفظ في الحافظة بتاعة جهازك بس. امسحها لو الجهاز مشترك.</p>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </div>
+    <div id="done" class="step" hidden>
+      <p><b>خلصت المواقف التلاتة.</b> التدريب مش امتحان، وممكن ترجع له أي وقت.</p>
+      <div class="actions">
+        <button type="button" class="btn" id="share">انسخ رسالة مشاركة عامة</button>
+        <button type="button" class="btn btn-quiet" id="again">ابدأ من الأول</button>
+      </div>
+      <p class="hint">رسالة المشاركة عامة جدًا ومفيهاش اختياراتك ولا جملتك.</p>
+    </div>
+  </section>
+
+  <section class="card meta" aria-labelledby="meta-h">
+    <h2 id="meta-h">عن التمرين</h2>
+    <ul>
+      <li><b>الكاتب:</b> د. ميلاد ميخائيل.</li>
+      <li><b>حالة المراجعة:</b> مسودة، لم تُراجَع مهنيًا بعد.</li>
+      <li><b>تاريخ آخر تعديل:</b> 2026-11-09.</li>
+      <li><b>المراجع:</b> Alberti, R., &amp; Emmons, M. (2008). <i lang="en" dir="ltr">Your Perfect Right</i> (9th ed.). Impact Publishers (خلفية عامة عن التواصل الحازم). المواقف والردود أصلية، والتمرين مش مقياس مُتحقَّق منه علميًا.</li>
+      <li><b>المواقف:</b> 1) رفض طلب مُرهق. 2) الرد على نقد. 3) طلب مساحة شخصية.</li>
+    </ul>
+  </section>
+</main>
+<script src="data.js" defer></script>
+<script src="tool.js" defer></script>
+</body>
+</html>

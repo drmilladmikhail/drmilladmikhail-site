@@ -32,6 +32,7 @@ MARK = ('<svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true" focusabl
 GROUPS = [
     ("اقرأ واتفرّج", [
         ("/articles/", "المقالات"),
+        ("/partner/", "سلسلة: شريكي محيّرني"),
         ("/videos/", "فيديوهات"),
         ("/questions/", "أسئلة محرجة"),
         ("/stories/", "حكايات التعافي"),
@@ -40,9 +41,11 @@ GROUPS = [
         ("https://blog.drmilladmikhail.com/", "المدونة"),
     ]),
     ("اختبر نفسك واتمرّن", [
+        ("/discover-feelings/", "اكتشاف مشاعرك"),
         ("/paths/", "مسارات التعلّم"),
         ("/experts/", "دليل المتخصصين"),
         ("/tests/", "اختبارات نفسية"),
+        ("/life-tools/", "أدوات لحياتك"),
         ("/exercise/", "تمرين الأسبوع"),
         ("/challenges/", "تحديات قصيرة"),
         ("/feelings/", "عجلة المشاعر"),
@@ -63,10 +66,13 @@ GROUPS = [
 def _links(items):
     return "\n".join(f'          <a href="{h}">{t}</a>' for h, t in items)
 
+RESEARCH_LIBRARY = ("/research/library/", "مكتبة الأكاديميين والباحثين")
+
 
 def _menu():
     parts = ['        <a class="m-home" href="/">الصفحة الرئيسية</a>',
-             '        <a class="m-start" href="/start/">ابدأ من هنا</a>']
+             '        <a class="m-start" href="/start/">ابدأ من هنا</a>',
+             f'        <a href="{RESEARCH_LIBRARY[0]}">{RESEARCH_LIBRARY[1]}</a>']
     for title, items in GROUPS:
         parts.append(f'        <p class="m-group">{title}</p>')
         parts.append(_links(items).replace("          ", "        "))
@@ -98,7 +104,7 @@ TOPBAR = f'''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
       <a href="/platform/">المنصة</a>
       <a href="/paths/">مسارات التعلّم</a>
 {_dropdown("تمارين وأدوات", GROUPS[1][1][1:])}
-{_dropdown("مكتبتي", [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6)])}
+{_dropdown("مكتبتي", [RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6)])}
 {_dropdown("عن د. ميلاد", GROUPS[2][1])}
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
     </nav>
@@ -152,7 +158,7 @@ def sync():
                 continue
             new = header_for(os.path.relpath(path, ROOT), dark=bool(m.group(1)))
             t2 = t[:m.start()] + new + t[m.end():]
-            if NAV_JS not in t2:
+            if "/assets/nav.js" not in t2:
                 i = t2.rfind("</body>")
                 t2 = t2[:i] + NAV_JS + "\n" + t2[i:]
             if t2 != t:

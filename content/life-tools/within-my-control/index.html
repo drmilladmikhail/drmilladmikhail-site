@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>إيه اللي في إيدي؟ (مسودة) | د. ميلاد ميخائيل</title>
+<meta name="description" content="أداة قصيرة تساعدك تفرز همّك: إيه اللي في إيدك، وإيه اللي مش في إيدك، وتختار خطوة صغيرة. مسودة للمراجعة.">
+<link rel="stylesheet" href="tool.css">
+</head>
+<body>
+<a class="skip-link" href="#main">تخطّى للمحتوى</a>
+<aside class="draft-banner" aria-label="تنبيه المسودة"><strong>مسودة غير منشورة.</strong> محتوى لسه ما اتراجعش مهنيًا، ومش ظاهر في الموقع ولا في الـ sitemap.</aside>
+
+<main id="main" class="tool">
+  <nav class="crumbs" aria-label="مسار الصفحة"><a href="/">الرئيسية</a> ‹ <a href="/exercise/">تمارين وأدوات</a> ‹ <span aria-current="page">إيه اللي في إيدي؟</span></nav>
+  <h1>إيه اللي في إيدي؟</h1>
+  <p class="lede">لما الهم يكبر، ساعات بنحاول نتحكم في حاجات مش بتاعتنا ونسيب حاجات في إيدنا. الأداة دي بتفرزهم.</p>
+  <section class="card" aria-labelledby="about-h"><h2 id="about-h">قبل ما تبدأ</h2><ul>
+    <li><b>الغرض:</b> لما قلق أو ضغط ياخد دماغك، تفرز اللي ممكن تتحرك فيه من اللي مش في إيدك، وتختار خطوة صغيرة واحدة.</li>
+    <li><b>مناسبة لـ:</b> هموم يومية زي الشغل والمذاكرة والفلوس وعلاقات الأهل والأصحاب.</li>
+    <li><b>حدودها:</b> مش تشخيص ولا علاج. وكلمة «مش في إيدي» مش معناها إنها غلطتك أو إنك لازم تستحمل. لو حد بيهددك أو بيتحكم فيك أو إنت مش في أمان، ما تستخدمش الأداة دي لوحدك، واطلب مساعدة.</li>
+    <li><b>خصوصيتك:</b> اللي بتكتبه بيفضل في الصفحة دي بس. مش بيتبعت لأي سيرفر، ومش بيتحفظ في المتصفح. لو قفلت الصفحة أو دوست «ابدأ من جديد» بيتمسح.</li></ul><p class="safety" role="note"><b>الأداة دي مش خدمة طوارئ.</b> لو بتفكر تأذي نفسك أو في خطر دلوقتي: في مصر كلّم <a href="tel:105">105</a> (الخط الساخن للدعم النفسي)، وفي أمريكا <a href="tel:988">988</a>، أو روح أقرب طوارئ.</p></section>
+  <section class="card" aria-labelledby="ex-h"><h2 id="ex-h">مثال محلول (شخصية خيالية)</h2><p class="muted">كريم شخصية خيالية، مش حد حقيقي.</p>
+    <dl class="example"><dt>اللي شاغلني</dt><dd>مقابلة شغل الأسبوع الجاي.</dd>
+    <dt>في إيدي</dt><dd>أراجع الأسئلة الشائعة، أجهز لبسي، أنام بدري الليلة اللي قبلها.</dd>
+    <dt>مش في إيدي بس بأثر عليه</dt><dd>الانطباع اللي هسيبه: ممكن أجهز أمثلة من شغلي.</dd>
+    <dt>مش في إيدي</dt><dd>قرار الشركة، وعدد المتقدمين التانيين.</dd>
+    <dt>خطوتي الصغيرة النهارده</dt><dd>أكتب 3 أمثلة من شغلي في ورقة، 15 دقيقة.</dd></dl></section>
+  <form id="tool-form" class="card" aria-labelledby="form-h" novalidate><h2 id="form-h">جرّبها بنفسك</h2>
+    <div class="field"><label for="worry">1. إيه اللي شاغلك؟</label><textarea id="worry" rows="2" maxlength="500"></textarea></div>
+    <div class="field"><p><b>2. وزّع اللي في بالك على التلات قوايم:</b> اكتب بند واضغط «أضف» (أو Enter).</p>
+      <div class="cols">
+        <div class="col" data-list="in"><h3 id="h-in">في إيدي<span class="tag">✓</span></h3><p class="hint">حاجات أقدر أعملها أنا.</p>
+        <div class="add"><label class="sr" for="in-in">أضف بند في «في إيدي»</label><input id="in-in" type="text" maxlength="150" autocomplete="off" placeholder="اكتب بند"><button type="button" class="btn btn-quiet" data-add="in">أضف</button></div>
+        <ul id="ul-in" aria-labelledby="h-in"></ul><p class="empty" id="empty-in">لسه مفيش بنود.</p></div>
+        <div class="col" data-list="influence"><h3 id="h-influence">أقدر أأثر فيه<span class="tag">~</span></h3><p class="hint">مش بتحكم فيه، بس تقدر تأثر على فرصه.</p>
+        <div class="add"><label class="sr" for="in-influence">أضف بند في «أقدر أأثر فيه»</label><input id="in-influence" type="text" maxlength="150" autocomplete="off" placeholder="اكتب بند"><button type="button" class="btn btn-quiet" data-add="influence">أضف</button></div>
+        <ul id="ul-influence" aria-labelledby="h-influence"></ul><p class="empty" id="empty-influence">لسه مفيش بنود.</p></div>
+        <div class="col" data-list="out"><h3 id="h-out">مش في إيدي<span class="tag">✗</span></h3><p class="hint">حاجات ما أقدرش أتحكم فيها.</p>
+        <div class="add"><label class="sr" for="in-out">أضف بند في «مش في إيدي»</label><input id="in-out" type="text" maxlength="150" autocomplete="off" placeholder="اكتب بند"><button type="button" class="btn btn-quiet" data-add="out">أضف</button></div>
+        <ul id="ul-out" aria-labelledby="h-out"></ul><p class="empty" id="empty-out">لسه مفيش بنود.</p></div>
+      </div></div>
+    <div class="field"><label for="step">3. خطوة صغيرة واحدة من «في إيدي» أعملها النهارده</label><p id="step-hint" class="hint">خطوة بتاخد دقايق مش ساعات.</p><textarea id="step" rows="2" maxlength="300" aria-describedby="step-hint"></textarea></div>
+    <div class="field"><label for="letgo">4. (اختياري) جملة لنفسي عن «مش في إيدي»</label><textarea id="letgo" rows="2" maxlength="300"></textarea></div>
+    <div class="actions"><button type="button" id="print-btn" class="btn">اطبع أو احفظ PDF</button><button type="button" id="reset-btn" class="btn btn-quiet">ابدأ من جديد</button></div>
+    <p class="hint">لما بتطبع أو بتحفظ PDF، بيتعمل ملف على جهازك برا الموقع. مسح بيانات المتصفح مش بيمسح الملف ده. احذفه بنفسك لو الجهاز مشترك.</p><p id="status" class="status" role="status" aria-live="polite"></p></form>
+  <section class="print-copy" id="print-copy" aria-hidden="true"><h2>إيه اللي في إيدي؟</h2><div id="print-body"></div></section>
+  <section class="card" aria-labelledby="more-h"><h2 id="more-h">كمّل من هنا</h2><ul><li><a href="/exercise/">تمرين الأسبوع</a></li><li><a href="/articles/">المقالات</a></li><li><a href="/feelings/">عجلة المشاعر</a></li></ul></section>
+  <section class="card meta" aria-labelledby="meta-h"><h2 id="meta-h">عن الأداة</h2><ul>
+    <li><b>الكاتب:</b> د. ميلاد ميخائيل.</li><li><b>حالة المراجعة:</b> مسودة، لم تُراجَع مهنيًا بعد.</li><li><b>تاريخ آخر تعديل:</b> 2026-11-09.</li>
+    <li><b>المرجع:</b> Covey, S. R. (1989). <i lang="en" dir="ltr">The 7 Habits of Highly Effective People</i>. Free Press (فكرة «دائرة الاهتمام» و«دائرة التأثير»). الصياغة والمثال أصلية. الأداة مش مقياس مُتحقَّق منه علميًا.</li></ul></section>
+</main>
+<script src="tool.js" defer></script>
+</body>
+</html>

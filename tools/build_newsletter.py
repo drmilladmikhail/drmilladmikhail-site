@@ -139,7 +139,11 @@ def thanks_page(page, write):
 </section>'''
     ld = {"@context": "https://schema.org", "@type": "WebPage", "url": f"{SITE}/newsletter/thanks/",
           "inLanguage": "ar", "name": "تم الاشتراك في النشرة"}
-    write("newsletter/thanks", page("newsletter/thanks", "تم الاشتراك", "تم استلام اشتراكك في نشرة راحة البال.", body, ld))
+    html = page("newsletter/thanks", "تم الاشتراك", "تم استلام اشتراكك في نشرة راحة البال.", body, ld)
+    # A thank-you page should not appear in search results.
+    if 'name="robots"' not in html:
+        html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<meta name="robots" content="noindex,follow">', 1)
+    write("newsletter/thanks", html)
 
 
 def issue_pages(page, write):

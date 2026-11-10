@@ -112,6 +112,7 @@
 
   function authorsLine(r) {
     var a = r.authors;
+    if (r.license) return a.join(', ');
     var shown = a.slice(0, 3).join(', ');
     if (a.length > 3) shown += ' et al.';
     return shown;
@@ -136,7 +137,8 @@
       '<details class="abs"><summary>' + esc(L.abstracts) + '</summary>' + (absArFirst ? absAr + absEn : absEn + absAr) + '</details>' +
       '<p class="src"><b>' + esc(L.source) + ':</b> ' +
       (r.pmid ? '<a href="https://pubmed.ncbi.nlm.nih.gov/' + esc(r.pmid) + '/">' + esc(L.pmid) + ' ' + esc(r.pmid) + '</a> · ' : '') +
-      '<a href="https://doi.org/' + esc(r.doi) + '" dir="ltr">DOI: ' + esc(r.doi) + '</a></p>' +
+      '<a href="https://doi.org/' + esc(r.doi) + '" dir="ltr">DOI: ' + esc(r.doi) + '</a>' +
+      (r.license && r.license_url ? ' · <a rel="license" href="' + esc(r.license_url) + '" dir="ltr">' + esc(r.license) + '</a>' : '') + '</p>' +
       '</article>';
   }
 

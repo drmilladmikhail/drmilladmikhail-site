@@ -25,7 +25,34 @@ except (OSError, ValueError):
     pass
 SECURITY = (f'<meta http-equiv="Content-Security-Policy" content="{CSP}">\n'
             '<meta name="referrer" content="strict-origin-when-cross-origin">\n')
-SKIP_DIRS = {".git", ".github", "tools", "node_modules", "content"}
+SKIP_DIRS = {".git", ".github", "tools", "node_modules", "content", "docs"}
+
+
+def version_assets(root):
+    """Append ?v=<content hash> to site.css and nav.js so a changed file is never served stale from a browser/CDN cache."""
+    import hashlib
+    vers = {}
+    for name in ("site.css", "nav.js", "home-clarity.css", "home-redesign.css"):
+        path = os.path.join(root, "assets", name)
+        if os.path.isfile(path):
+            with open(path, "rb") as f:
+                vers[name] = hashlib.md5(f.read()).hexdigest()[:8]
+    pat = re.compile(r'(/assets/)(site\.css|nav\.js|home-clarity\.css|home-redesign\.css)(\?v=[0-9a-f]+)?(")')
+    n = 0
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS and not d.startswith(".")]
+        for fn in filenames:
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dirpath, fn)
+            with open(path, encoding="utf-8") as f:
+                t = f.read()
+            new = pat.sub(lambda m: f"{m.group(1)}{m.group(2)}?v={vers[m.group(2)]}{m.group(4)}" if m.group(2) in vers else m.group(0), t)
+            if new != t:
+                with open(path, "w", encoding="utf-8") as f:
+                    f.write(new)
+                n += 1
+    print(f"asset versions: updated {n} page(s)")
 
 
 def main():
@@ -62,6 +89,9 @@ def main():
     growth_package.apply_pages(ROOT)
     import home_clarity
     home_clarity.apply(ROOT)
+    import breadcrumbs
+    breadcrumbs.apply(ROOT)
+    version_assets(ROOT)
 
 
 if __name__ == "__main__":

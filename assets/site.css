@@ -262,6 +262,8 @@ html[lang="en"] .thesis .translated { font-family: var(--display-ar); font-style
 .exercise { background: var(--mist); border-radius: 14px; padding: 20px 22px; margin: 30px 0; }
 .exercise p:last-child { margin-bottom: 0; }
 .exercise-title { font-weight: 700; color: var(--eucalyptus); }
+.series-note { background: var(--mist); border-inline-start: 4px solid var(--eucalyptus); border-radius: 10px; padding: 12px 16px; font-size: 16px; line-height: 1.8; }
+.series-note a { color: var(--eucalyptus); font-weight: 600; }
 .safety { font-size: 15.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin-top: 26px; }
 .book-box { display: grid; grid-template-columns: 120px 1fr; gap: 22px; align-items: center; margin: 36px 0 20px; padding: 22px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
 .book-box p { margin: 0 0 10px; }
@@ -1080,3 +1082,18 @@ details.fold[open] .fold-hint { display: none; }
 .journey-private { margin:16px 0 8px; color:var(--muted); font-size:14px; }
 .journey-reset { font:inherit; cursor:pointer; }
 @media(prefers-reduced-motion:reduce) { .journey-track span { transition:none; } }
+
+/* Mobile menu on the dark header: links inherited white text on the light panel (invisible). */
+.topbar-dark .menu nav a { color: var(--ink); }
+.topbar-dark .menu nav a.m-start { color: var(--amber-text); }
+.topbar-dark .menu nav a[aria-current="page"] { color: var(--eucalyptus); }
+/* Header (and its open menu) must stay above the announcement bar, which is injected after it with the same z-index. */
+.topbar { z-index: 30; }
+/* The home page keeps a white menu panel in every colour scheme, so use fixed dark link colours there. */
+.home-redesign .topbar-dark .menu nav a { color: #18233a; }
+.home-redesign .topbar-dark .menu nav a.m-start { color: #8a6214; }
+.home-redesign .topbar-dark .menu nav a[aria-current="page"] { color: #2f6f62; }
+/* Home header uses light text, but desktop dropdown panels have a white surface. */
+html[lang="ar"] body.home-redesign .topbar-dark .nav .dd-panel a { color: #18233a; }
+html[lang="ar"] body.home-redesign .topbar-dark .nav .dd-panel a:hover,
+html[lang="ar"] body.home-redesign .topbar-dark .nav .dd-panel a[aria-current="page"] { color: #2f6f62; }

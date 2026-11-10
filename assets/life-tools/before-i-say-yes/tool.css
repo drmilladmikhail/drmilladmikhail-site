@@ -1,0 +1,27 @@
+.xtool{--euc:var(--eucalyptus)}
+.xtool h2{font-size:21px;margin:0 0 10px;color:var(--euc)}
+.xtool .lede{font-size:18px}
+.xtool .xt-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px;margin:18px 0}
+.xtool .xt-muted,.xtool .hint{color:var(--muted);font-size:15px;margin:4px 0 8px}
+.xtool .xt-safety{background:var(--mist);border-radius:10px;padding:12px 14px;margin:12px 0 0}
+.xtool a{color:var(--euc)}
+.xtool .example dt{font-weight:700;margin-top:10px}
+.xtool .example dd{margin:2px 0 0}
+.xtool .field{margin:0 0 20px}
+.xtool label{display:block;font-weight:600;margin-bottom:4px}
+.xtool textarea,.xtool input[type=text]{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--muted);border-radius:10px;padding:10px 12px}
+.xtool textarea{resize:vertical}
+.xtool input[type=range]{width:100%;accent-color:var(--euc);min-height:32px}
+.xtool :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.xtool .xt-actions{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.xtool .btn{font:inherit;font-weight:600;min-height:44px;padding:8px 18px;border-radius:10px;border:1.5px solid var(--euc);background:var(--euc);color:var(--eucalyptus-ink);cursor:pointer}
+.xtool .btn-quiet{background:var(--surface);color:var(--euc)}
+.xtool .status{min-height:1.5em;color:var(--ink);font-size:15px}
+.xtool .print-copy{display:none}
+.xtool fieldset{border:1.5px solid var(--line);border-radius:12px;margin:0 0 20px;padding:10px 14px}
+.xtool legend{font-weight:600;padding:0 6px}
+.xtool .xt-opt{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:6px 0;min-height:44px}
+.xtool .xt-opt input{margin-top:9px;width:20px;height:20px;accent-color:var(--euc);flex:none}
+.xtool .xt-opt small{display:block;color:var(--muted)}
+.xtool .draft-out{border:1.5px dashed var(--euc);border-radius:10px;padding:10px 12px;background:var(--mist)}
+@media print{body>*:not(main){display:none!important}.xtool>*{display:none!important}.xtool>.print-copy{display:block!important}.print-copy h2{font-size:16pt}.print-copy h3{margin:12px 0 2px;font-size:13pt}.print-copy p{margin:0;white-space:pre-wrap}}
