@@ -1,5 +1,6 @@
 /* Personal progress dashboard. Reads the challenges page's local-only state. */
 (function () {
+  function render() {
   var status = document.getElementById("journey-status");
   var count = document.getElementById("journey-count");
   var all = document.getElementById("all-count");
@@ -7,14 +8,22 @@
   var track = document.querySelector('[role="progressbar"]');
   var hint = document.getElementById("space-hint");
   var state = {};
-  try { state = JSON.parse(localStorage.getItem("dm-challenges") || "{}") || {}; } catch (e) {
+  try {
+    state = JSON.parse(localStorage.getItem("dm-challenges") || "{}");
+    if (!state || typeof state !== "object" || Array.isArray(state)) state = {};
+  } catch (e) {
     status.textContent = "المتصفح لا يسمح بقراءة التقدم المحفوظ. تقدر تستخدم التحديات بشكل عادي.";
     hint.textContent = "لو التخزين المحلي مقفول، مش هنقدر نعرض تقدمك هنا.";
     return;
   }
   var done = 0;
   for (var n = 1; n <= 7; n++) if (state["seven-day-journey-" + n]) done++;
-  var total = Object.keys(state).filter(function (key) { return !!state[key]; }).length;
+  var limits = { "seven-day-journey": 7, "kind-voice": 7, gratitude: 5, sleep: 7,
+    "small-no": 3, "less-scrolling": 7, "reach-out": 5, "urge-awareness": 7 };
+  var total = Object.keys(limits).reduce(function (sum, id) {
+    for (var day = 1; day <= limits[id]; day++) if (state[id + "-" + day]) sum++;
+    return sum;
+  }, 0);
   count.textContent = done + "/7";
   all.textContent = String(total);
   bar.style.width = Math.round(done / 7 * 100) + "%";
@@ -70,4 +79,8 @@
       list.appendChild(empty);
     }
   }
+  }
+  render();
+  window.addEventListener("pageshow", render);
+  window.addEventListener("storage", function (event) { if (event.key === "dm-challenges" || event.key === null) render(); });
 })();

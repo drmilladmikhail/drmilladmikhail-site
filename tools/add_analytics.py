@@ -29,15 +29,17 @@ SKIP_DIRS = {".git", ".github", "tools", "node_modules", "content", "docs"}
 
 
 def version_assets(root):
-    """Append ?v=<content hash> to site.css and nav.js so a changed file is never served stale from a browser/CDN cache."""
+    """Version shared styles and interactive scripts so fixes bypass stale caches."""
     import hashlib
     vers = {}
-    for name in ("site.css", "nav.js", "home-clarity.css", "home-redesign.css"):
+    names = ("site.css", "nav.js", "home-clarity.css", "home-redesign.css",
+             "extras.js", "challenges.js", "my-space.js", "helper.js", "partner-check.js", "relcheck.js")
+    for name in names:
         path = os.path.join(root, "assets", name)
         if os.path.isfile(path):
             with open(path, "rb") as f:
                 vers[name] = hashlib.md5(f.read()).hexdigest()[:8]
-    pat = re.compile(r'(/assets/)(site\.css|nav\.js|home-clarity\.css|home-redesign\.css)(\?v=[0-9a-f]+)?(")')
+    pat = re.compile(r'(/assets/)(' + "|".join(re.escape(name) for name in names) + r')(\?v=[0-9a-f]+)?(")')
     n = 0
     for dirpath, dirnames, filenames in os.walk(root):
         dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS and not d.startswith(".")]

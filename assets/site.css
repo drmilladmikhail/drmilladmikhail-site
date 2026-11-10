@@ -951,7 +951,7 @@ summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; bo
 .qp-bar { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--eucalyptus), #e2b35a); transition: width .3s; }
 .scale-res { padding: 4px 0 2px; border-top: 1px dashed var(--line); margin-top: 10px; }
 .scale-res p { font-size: 15.5px; }
-.test-refs { margin: 24px 0; padding: 18px 20px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); border-inline-start: 4px solid #e2b35a; font-size: 15px; line-height: 1.85; }
+.test-refs { margin: 24px 0; padding: 18px 20px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); border-inline-start: 4px solid #e2b35a; font-size: 15px; line-height: 1.85; overflow-wrap: anywhere; }
 .test-refs h2 { margin: 0 0 8px; font-size: 17px; color: var(--ink); }
 .test-refs p { margin: 0 0 10px; } .test-refs .ref { direction: ltr; text-align: left; unicode-bidi: plaintext; color: var(--ink); }
 .test-refs .ref-fine { color: var(--muted); font-size: 14px; }
@@ -1072,7 +1072,7 @@ details.fold[open] .fold-hint { display: none; }
 [hidden] { display: none !important; }
 
 /* Seven-day self-connection journey */
-.featured-journey { border:2px solid var(--eucalyptus); background:linear-gradient(145deg,var(--surface),#eef4f1); }
+.featured-journey { border:2px solid var(--eucalyptus); background:linear-gradient(145deg,var(--surface),var(--mist)); }
 .journey-label { display:inline-block; margin:0 0 8px; color:var(--eucalyptus); font-weight:700; }
 .journey-progress { margin:16px 0; }
 .journey-track { height:10px; overflow:hidden; border-radius:99px; background:var(--line); }

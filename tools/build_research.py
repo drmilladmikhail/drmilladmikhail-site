@@ -24,7 +24,22 @@ CSS = '.research-page{max-width:1000px;margin:auto;padding:40px 20px;line-height
 LIB_CSS = '.library-page{max-width:1000px;margin:auto;padding:40px 20px 110px;line-height:1.95;overflow-wrap:anywhere}.library-page h1{font-size:clamp(28px,4.5vw,42px)}.lib-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-block:22px;padding:14px;background:#eef3ee;border-radius:14px}.lib-controls input[type=search]{flex:1 1 240px;min-width:200px;padding:10px 12px;border:1px solid #c9d6cd;border-radius:10px;font:inherit}.lib-controls select,.lib-controls button{padding:10px 12px;border:1px solid #c9d6cd;border-radius:10px;background:#fff;font:inherit;cursor:pointer;min-height:44px}.lib-controls select{max-width:min(44vw,230px);text-overflow:ellipsis}.lib-controls .lang-btn{background:#2f6f62;color:#fff;border-color:#2f6f62;font-weight:700}#lib-count{font-weight:700;color:#416353}.lib-card{background:#fff;border:1px solid #dbe3dc;border-radius:18px;padding:clamp(16px,3vw,28px);margin-top:22px}.lib-card h3{font-size:clamp(18px,2.6vw,24px);margin:6px 0 4px}.lib-card .alt-title{color:#5c6f66;font-size:95%}.lib-card .tag{color:#416353}.lib-card .authors{font-size:95%}.lib-card details{border:1px solid #dbe3dc;border-radius:12px;padding:12px 16px;margin-block:14px}.lib-card summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}.abs-block{margin-top:12px;padding-top:10px;border-top:1px dashed #c9d6cd}.abs-block h4{margin:0 0 6px;font-size:100%}.abs-block p{margin:0}.lib-card .src{font-size:95%}.lib-pager{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin-block:26px}.lib-pager button{padding:8px 14px;border:1px solid #c9d6cd;border-radius:10px;background:#fff;cursor:pointer;min-height:44px;min-width:44px}.lib-pager [aria-current]{background:#2f6f62;color:#fff;border-radius:10px;padding:8px 14px}.library-page .notice{background:#eef3ee;padding:16px;border-radius:10px;color:#304b3e}.library-page a{color:#245b49}.library-page :focus-visible{outline:3px solid #326356;outline-offset:4px}main.library-page + .footer{padding-bottom:100px}.lib-today{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-block:18px 0;padding:14px 16px;background:#2f6f62;color:#fff;border-radius:14px;font-weight:700}.lib-today[hidden]{display:none}.lib-today .today-text{display:inline-flex;align-items:center;gap:8px}.lib-today .today-dot{width:9px;height:9px;border-radius:50%;background:#ffd66b;display:inline-block}.lib-today button{font:inherit;font-weight:700;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.12);color:#fff;cursor:pointer}.lib-today button:hover{background:rgba(255,255,255,.22)}.lib-card .new-badge{display:inline-block;background:#b9862a;color:#fff;border-radius:8px;padding:1px 9px;font-size:85%;font-weight:700;margin-inline-start:8px}#lib-intro-count{font-weight:700;color:#2f6f62;margin:0}'
 
 
-LIB_CSS += '.library-page .lib-card{color:#18233a}'
+CSS += '''
+.research-page article,.research-page details{background:var(--surface);border-color:var(--line);color:var(--ink)}
+.research-page .notice{background:var(--mist);color:var(--ink)}
+.research-page a,.research-page .tag{color:var(--eucalyptus)}
+'''
+LIB_CSS += '''
+.library-page .lib-card{background:var(--surface);border-color:var(--line);color:var(--ink)}
+.library-page a,#lib-count,#lib-intro-count{color:var(--eucalyptus)}
+.lib-card .alt-title,.lib-card .tag{color:var(--muted)}
+.lib-card details,.abs-block{border-color:var(--line)}
+.lib-controls,.library-page .notice{background:var(--mist);color:var(--ink)}
+.lib-controls input[type=search],.lib-controls select,.lib-controls button,.lib-pager button{
+  background:var(--surface);color:var(--ink);border-color:var(--line)}
+.lib-controls .lang-btn{background:#2f6f62;color:#fff;border-color:#2f6f62}
+.lib-card .new-badge{background:var(--amber);color:#18233a}
+'''
 
 def build_library(root=ROOT):
     """Build /research/library/ : APA-journal papers, bilingual abstracts, search UI."""

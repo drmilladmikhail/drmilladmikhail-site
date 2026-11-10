@@ -58,8 +58,8 @@
   viewport.className = 'site-announcement-viewport';
 
   var message = isEnglish
-    ? 'New today: the CES-D depression symptoms scale is now available (20 questions). Start the self-assessment.'
-    : 'تمت إضافة مقياس أعراض الاكتئاب CES-D اليوم — 20 سؤالًا — ابدأ التقييم الآن.';
+    ? 'Explore the CES-D depression symptoms scale (20 questions). Start the self-assessment.'
+    : 'جرّب مقياس أعراض الاكتئاب CES-D: 20 سؤالًا، والنتيجة فورًا.';
 
   var track = document.createElement('div');
   track.className = 'site-announcement-track';
