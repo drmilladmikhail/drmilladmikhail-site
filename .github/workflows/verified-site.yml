@@ -34,6 +34,7 @@ jobs:
           python -m unittest discover -s tools -p test_your_path.py -v
           python -m unittest discover -s tools -p test_saved.py -v
           python -m unittest discover -s tools -p test_next_steps.py -v
+          python -m unittest discover -s tools -p test_explore.py -v
           python tools/growth_package.py
           python tools/build_articles.py
           python tools/home_clarity.py
@@ -72,7 +73,7 @@ jobs:
                   browser = p.chromium.launch()
                   for width in [390, 1280]:
                       page = browser.new_page(viewport={'width': width, 'height': 900})
-                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/stories/', 'stories'), ('/exercise/', 'exercise'), ('/saved/', 'saved'), ('/your-path/', 'your-path'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
+                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/stories/', 'stories'), ('/exercise/', 'exercise'), ('/saved/', 'saved'), ('/explore/', 'explore'), ('/your-path/', 'your-path'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
                           response = page.goto('http://127.0.0.1:8765' + slug, wait_until='load')
                           assert response.status == 200, slug
                           assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), slug
@@ -142,6 +143,23 @@ jobs:
                               page.locator('#bookmark-confirm-clear').click()
                               assert page.locator('#bookmark-list li').count() == 0
                               assert page.evaluate("localStorage.getItem('journal:bookmark-test')") == 'preserve'
+                          if name == 'explore':
+                              page.locator('.explore-controls').wait_for(state='visible')
+                              assert page.locator('.explore-item:visible').count() == 12
+                              page.locator('#explore-more').click()
+                              assert page.locator('.explore-item:visible').count() == 24
+                              page.locator('#explore-query').fill('Self-compassion')
+                              page.locator('#explore-form button[type="submit"]').click()
+                              assert 'التعاطف مع الذات' in page.locator('.explore-item:visible h2').first.inner_text()
+                              assert page.url.endswith('/explore/')
+                              page.locator('#explore-clear').click()
+                              page.locator('[data-explore-kind="story"]').click()
+                              assert page.locator('.explore-item:visible').count() == 10
+                              page.locator('#explore-query').fill('zzznomatch123')
+                              page.locator('#explore-form button[type="submit"]').click()
+                              assert page.locator('#explore-empty').is_visible()
+                              page.locator('#explore-reset').click()
+                              assert page.locator('.explore-item:visible').count() == 12
                           if name == 'your-path':
                               assert page.locator('.yp-topic').count() == 6
                               page.locator('[data-topic="anxiety"]').click()

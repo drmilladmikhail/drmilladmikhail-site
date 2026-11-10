@@ -271,6 +271,8 @@ def shelf_page(ba, page, write, SITE):
 
 
 def build_all(ba, page, write, SITE):
+    import build_explore
+    build_explore.build(ba, page, write, SITE)
     import build_saved
     import build_next_steps
     next_steps = build_next_steps.load()
