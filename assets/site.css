@@ -685,7 +685,7 @@ summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; bo
 .faq[open] summary::after { content: "–"; }
 .faq summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 12px; }
 .faq p { margin: 0; padding: 0 18px 16px; color: var(--muted); }
-.book-row.soon { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
+.book-row.book-soon { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
 .badge-soon { display: inline-block; margin: 0 0 8px; padding: 3px 12px; border-radius: 999px; background: #f6ead2; color: #7a5410; font-weight: 700; font-size: 14px; }
 @media (max-width: 700px) {
   .book-row { grid-template-columns: 1fr; gap: 18px; }

@@ -199,7 +199,7 @@ def book_page():
       <p class="note-free">عايز تجرّب قبل ما تقرر؟ مقالات كتير على الموقع مأخوذة من الكتاب، <a href="/articles/">اقراها مجانًا</a>.</p>
       <h3 class="sec-h">أسئلة شائعة</h3>
       {faq}
-      <article class="book-row soon" id="battery">
+      <article class="book-row book-soon" id="battery">
         <picture class="book-cover">
           <source srcset="/assets/battery-cover.webp" type="image/webp">
           <img src="/assets/battery-cover.jpg" width="480" height="720" alt="غلاف كتاب بطاريتي 1%" loading="lazy">
@@ -229,7 +229,7 @@ def book_page():
 def battery_page():
     body = f'''  <section class="section">
     <div class="wrap">
-      <article class="book-row soon">
+      <article class="book-row book-soon">
         <picture class="book-cover">
           <source srcset="/assets/battery-cover.webp" type="image/webp">
           <img src="/assets/battery-cover.jpg" width="480" height="720" alt="غلاف كتاب بطاريتي 1% لـ د. ميلاد ميخائيل">
