@@ -5,12 +5,23 @@
   /shelf/     «رفّ الترشيحات»          — content/shelf.json
 """
 import json
+import hashlib
 import os
 import re
 from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WA = "https://wa.me/12012758490"
+
+
+def _asset(name):
+    with open(os.path.join(ROOT, "assets", name), "rb") as source:
+        digest = hashlib.sha256(source.read()).hexdigest()[:12]
+    return f"/assets/{name}?v={digest}"
+
+
+def _extras_script():
+    return f'<script src="{_asset("extras.js")}" defer></script>\n</body>'
 
 
 def _load(name, default):
@@ -21,8 +32,9 @@ def _load(name, default):
     return default
 
 
-def exercise_page(ba, page, write, SITE):
+def exercise_page(ba, page, write, SITE, next_steps=None):
     import build_saved
+    import build_next_steps
     esc = ba.esc
     data = _load("exercises.json", {"items": []})
     items = data["items"]
@@ -56,6 +68,7 @@ def exercise_page(ba, page, write, SITE):
           <a class="sh sh-fb" href="https://www.facebook.com/sharer/sharer.php?u={quote(SITE + '/exercise/', safe='')}" target="_blank" rel="noopener">فيسبوك</a>
           <a class="sh sh-x" href="https://x.com/intent/post?text={share_txt}" target="_blank" rel="noopener">X</a></div>
         {rel}
+        {build_next_steps.render(esc, "exercise", e["slug"], (next_steps or {}).get("exercise", {}).get(e["slug"]))}
       </article>''')
     archive = "".join(f'<li><a href="#{e["slug"]}" data-n="{n}">{esc(e["title"])}</a></li>' for n, e in enumerate(items))
     body = f'''  <section class="section extras" data-start="{data.get("start", "2026-11-02")}" data-count="{len(items)}">
@@ -64,6 +77,7 @@ def exercise_page(ba, page, write, SITE):
       <h1>تمرين الأسبوع النفسي</h1>
       {build_saved.notice()}
       <p class="section-intro">كل أسبوع تمرين عملي قصير من العلاج النفسي: تدوين المشاعر، الحدود الصحية، التنفس الواعي، والبحث عن المعنى. اقرا الخطوات، جرّبها، واكتب تأملاتك لنفسك.</p>
+      <p class="safety exercise-readonly">كل التمارين متاحة هنا للقراءة. لو تفاعل الصفحة مش شغّال، مساحة كتابة الملاحظات وتشغيل التنفس التفاعلي مش متاحين؛ تقدر تتبع الخطوات المكتوبة عادي.</p>
       {"".join(arts)}
       <p class="related">عايز أدوات قصيرة تانية؟ شوف <a href="/life-tools/">أدوات لحياتك</a>.</p>
       <details class="ex-archive"><summary>كل التمارين (تقدر ترجع لأي تمرين)</summary><ol>{archive}</ol></details>
@@ -73,7 +87,10 @@ def exercise_page(ba, page, write, SITE):
     ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "تمرين الأسبوع النفسي", "url": f"{SITE}/exercise/",
           "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
     html = page("exercise", "تمرين الأسبوع النفسي", "تمرين نفسي عملي جديد كل أسبوع: تدوين المشاعر، الحدود الصحية، التنفس الواعي ورسالة حنية لنفسك، مع مساحة تكتب فيها لنفسك.", body, ld)
-    write("exercise", build_saved.attach(html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1)))
+    html = html.replace("</head>", f'<link rel="stylesheet" href="{_asset("exercise-fallback.css")}">\n</head>', 1)
+    if next_steps is not None:
+        html = build_next_steps.attach(html)
+    write("exercise", build_saved.attach(html.replace("</body>", _extras_script(), 1)))
 
 
 def story_reflections():
@@ -129,8 +146,9 @@ def eligible_stories():
     return stories
 
 
-def stories_page(ba, page, write, SITE):
+def stories_page(ba, page, write, SITE, next_steps=None):
     import build_saved
+    import build_next_steps
     esc = ba.esc
     reflections = story_reflections()
     stories = eligible_stories()
@@ -142,6 +160,8 @@ def stories_page(ba, page, write, SITE):
             paragraphs = "".join(f"<p>{esc(p)}</p>" for p in s["text"])
             reflection = (story_reflection_html(esc, reflections[s["id"]])
                           if s.get("id") in reflections else "")
+            onward = build_next_steps.render(esc, "story", s.get("id"),
+                        (next_steps or {}).get("story", {}).get(s.get("id")))
             attribution = (
                 '<p class="story-by">حكاية توضيحية متخيّلة، مش حالة حقيقية من العيادة.</p>'
                 if fictional else
@@ -155,7 +175,7 @@ def stories_page(ba, page, write, SITE):
           <span class="story-tag">{esc(s.get("tag", ""))}</span>
           <h2>{esc(s["title"])}</h2>
           <span class="story-read"><span class="story-open-label">اقرا الحكاية وجرّب الموقف</span><span class="story-close-label">اقفل الحكاية</span><span class="story-chevron" aria-hidden="true">⌄</span></span>
-        </summary><div class="story-text">{paragraphs}</div>{reflection}</details>
+        </summary><div class="story-text">{paragraphs}</div>{reflection}{onward}</details>
         {attribution}{build_saved.button(esc, "story", s.get("id"), s["title"])}</article>''')
         cards = '<div class="stories-grid">' + "".join(parts) + "</div>"
     else:
@@ -198,7 +218,9 @@ def stories_page(ba, page, write, SITE):
     html = page("stories", "حكايات من داخل العيادة", "١٠ حكايات من واقع عيادتي، بنشرها بموافقة أصحابها على لسانهم، من غير أسماء أو تفاصيل تعريفية، مع الحفاظ على خصوصيتهم.", body, ld)
     html = html.replace("</head>", '<link rel="stylesheet" href="/assets/stories.css?v=20261110-4">\n</head>', 1)
     html = html.replace('<div class="stories-grid">', build_saved.notice() + '<div class="stories-grid">', 1)
-    write("stories", build_saved.attach(html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1)))
+    if next_steps is not None:
+        html = build_next_steps.attach(html)
+    write("stories", build_saved.attach(html.replace("</body>", _extras_script(), 1)))
 
 
 def shelf_page(ba, page, write, SITE):
@@ -245,15 +267,17 @@ def shelf_page(ba, page, write, SITE):
           "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
           "hasPart": [{"@type": "Book", "name": b["orig"], "author": b["author"], "datePublished": str(b["year"])} for b in d["books"]]}
     html = page("shelf", "رفّ الترشيحات: كتب نفسية وأدوات", "أفضل كتب علم النفس اللي برشّحها مع رأيي فيها ولمين تنفع: المعنى، التعلّق، التعاطف مع الذات، العادات. وأدوات مجانية ومحتوى مسموع.", body, ld)
-    write("shelf", html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1))
+    write("shelf", html.replace("</body>", _extras_script(), 1))
 
 
 def build_all(ba, page, write, SITE):
     import build_saved
+    import build_next_steps
+    next_steps = build_next_steps.load()
     build_saved.write_catalog()
     build_saved.build(ba, page, write, SITE)
-    exercise_page(ba, page, write, SITE)
-    stories_page(ba, page, write, SITE)
+    exercise_page(ba, page, write, SITE, next_steps)
+    stories_page(ba, page, write, SITE, next_steps)
     import build_your_path
     build_your_path.build(ba, page, write, SITE)
     shelf_page(ba, page, write, SITE)

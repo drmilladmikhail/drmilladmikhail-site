@@ -1,0 +1,24 @@
+{
+  "stories": [
+    {"id":"compulsive-sexual-behaviour","concept":"avoidance","exercise":"feelings-journal","note":"التمرين للتأمل في المشاعر فقط، مش علاج للسلوك القهري أو بديل عن تقييم متخصص."},
+    {"id":"loss-of-parents","concept":"grief","exercise":"kind-letter","note":"خد وقتك. مش لازم تعمل تمرين أو تحاول تغيّر إحساسك وإنت لسه مش جاهز."},
+    {"id":"adolescence","concept":"emotional-validation","exercise":"feelings-journal","note":"مساحة لفهم المشاعر، مش حكم على المراهق أو أسرته."},
+    {"id":"loss-of-interest","concept":"motivation","exercise":"meaning-moment","note":"اختار اللي يناسب طاقتك النهارده، ومش مطلوب منك تخلّص كل حاجة."},
+    {"id":"chronic-depression","concept":"depression","exercise":"energy-map","note":"دي موارد للتثقيف والتأمل، مش بديل للمتابعة المتخصصة. ما تغيّرش علاجك بناءً على حكاية أو تمرين."},
+    {"id":"marital-betrayal","concept":"trust","exercise":"kind-letter","note":"مفيش قرار واحد يناسب كل العلاقات، والأمان مهم قبل أي محاولة للإصلاح."},
+    {"id":"harmful-relationships","concept":"boundaries","exercise":"small-no","note":"لو فيه تهديد أو عنف، الأولوية للأمان وطلب دعم مناسب، مش تجربة مواجهة لوحدك."},
+    {"id":"living-abroad","concept":"loneliness","exercise":"feelings-journal","note":"تقدر تكتفي بالقراءة. مش مطلوب منك تشارك أي تفاصيل شخصية."},
+    {"id":"anxiety-and-stress","concept":"rumination","exercise":"fact-or-thought","note":"التجربة اختيارية. تقدر توقف أو تختار قراءة المعنى بس لو التمرين مش مريح ليك."},
+    {"id":"substance-use-recovery","concept":"coping","exercise":"feelings-journal","note":"دي قراءة وتمرين للتأمل، مش خطة لسحب المواد أو بديل لعلاج الإدمان والمتابعة المتخصصة."}
+  ],
+  "exercises": [
+    {"id":"feelings-journal","concept":"self-awareness","story":"loss-of-parents"},
+    {"id":"small-no","concept":"boundaries","story":"harmful-relationships"},
+    {"id":"mindful-breathing","concept":"mindfulness","story":"anxiety-and-stress"},
+    {"id":"kind-letter","concept":"self-compassion","story":"chronic-depression"},
+    {"id":"three-good-things","concept":"resilience","story":"living-abroad"},
+    {"id":"fact-or-thought","concept":"cognitive-reframing","story":"anxiety-and-stress"},
+    {"id":"energy-map","concept":"burnout","story":"loss-of-interest"},
+    {"id":"meaning-moment","concept":"motivation","story":"loss-of-interest"}
+  ]
+}

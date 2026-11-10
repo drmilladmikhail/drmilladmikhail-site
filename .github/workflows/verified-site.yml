@@ -33,6 +33,7 @@ jobs:
           python -m unittest discover -s tools -p test_stories.py -v
           python -m unittest discover -s tools -p test_your_path.py -v
           python -m unittest discover -s tools -p test_saved.py -v
+          python -m unittest discover -s tools -p test_next_steps.py -v
           python tools/growth_package.py
           python tools/build_articles.py
           python tools/home_clarity.py
@@ -106,6 +107,8 @@ jobs:
                               assert panel.evaluate('(el) => el.open')
                           if name == 'stories':
                               assert page.locator('.story-card').count() == 10
+                              assert page.locator('.story-card .next-steps').count() == 10
+                              assert page.locator('.story-card .next-steps a').count() == 20
                               assert page.locator('.story-reflection').count() == 10
                               assert page.locator('.reflection-option').count() == 30
                               card = page.locator('.story-card').first
@@ -120,6 +123,8 @@ jobs:
                               card.locator('[data-save-id]').click()
                               assert card.locator('[data-save-id]').get_attribute('aria-pressed') == 'true'
                           if name == 'exercise':
+                              assert page.locator('.ex .next-steps').count() == 8
+                              assert page.locator('.ex .next-steps a').count() == 16
                               page.locator('.ex:visible [data-save-id]').click()
                               assert page.locator('.ex:visible [data-save-id]').get_attribute('aria-pressed') == 'true'
                           if name == 'saved':

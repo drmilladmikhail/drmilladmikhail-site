@@ -1,0 +1,5 @@
+/* Reading-first fallback until the exercise controls finish initializing. */
+.extras:not(.exercise-enhanced) .ex[hidden] { display:block !important; }
+.extras .ex { scroll-margin-top:8rem; }
+.extras:not(.exercise-enhanced) .journal, .extras:not(.exercise-enhanced) .breath { display:none; }
+.extras.exercise-enhanced .exercise-readonly { display:none; }

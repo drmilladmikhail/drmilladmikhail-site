@@ -74,6 +74,7 @@
       });
       circle.setAttribute('aria-hidden', 'true');
     });
+    ex.classList.add('exercise-enhanced');
   }
 
   // ---------- stories / suggestions → WhatsApp ----------
