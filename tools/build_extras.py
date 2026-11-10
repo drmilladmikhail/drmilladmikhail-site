@@ -22,6 +22,7 @@ def _load(name, default):
 
 
 def exercise_page(ba, page, write, SITE):
+    import build_saved
     esc = ba.esc
     data = _load("exercises.json", {"items": []})
     items = data["items"]
@@ -38,6 +39,7 @@ def exercise_page(ba, page, write, SITE):
         arts.append(f'''<article class="ex" id="{e["slug"]}" data-n="{n}"{"" if n == 0 else " hidden"}>
         <p class="ex-kicker"><span class="ex-when">تمرين الأسبوع</span> · {e["minutes"]} دقايق</p>
         <h2>{esc(e["title"])}</h2>
+        {build_saved.button(esc, "exercise", e["slug"], e["title"])}
         <p class="ex-goal"><b>الهدف:</b> {esc(e["goal"])}</p>
         <ol class="ex-steps">{steps}</ol>
         {breathing}
@@ -60,6 +62,7 @@ def exercise_page(ba, page, write, SITE):
     <div class="wrap narrow">
       <p class="crumbs"><a href="/">الصفحة الرئيسية</a></p>
       <h1>تمرين الأسبوع النفسي</h1>
+      {build_saved.notice()}
       <p class="section-intro">كل أسبوع تمرين عملي قصير من العلاج النفسي: تدوين المشاعر، الحدود الصحية، التنفس الواعي، والبحث عن المعنى. اقرا الخطوات، جرّبها، واكتب تأملاتك لنفسك.</p>
       {"".join(arts)}
       <p class="related">عايز أدوات قصيرة تانية؟ شوف <a href="/life-tools/">أدوات لحياتك</a>.</p>
@@ -70,7 +73,7 @@ def exercise_page(ba, page, write, SITE):
     ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "تمرين الأسبوع النفسي", "url": f"{SITE}/exercise/",
           "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
     html = page("exercise", "تمرين الأسبوع النفسي", "تمرين نفسي عملي جديد كل أسبوع: تدوين المشاعر، الحدود الصحية، التنفس الواعي ورسالة حنية لنفسك، مع مساحة تكتب فيها لنفسك.", body, ld)
-    write("exercise", html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1))
+    write("exercise", build_saved.attach(html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1)))
 
 
 def story_reflections():
@@ -112,9 +115,7 @@ def story_reflection_html(esc, item):
       </section>'''
 
 
-def stories_page(ba, page, write, SITE):
-    esc = ba.esc
-    reflections = story_reflections()
+def eligible_stories():
     stories = []
     for story in _load("stories.json", {"stories": []}).get("stories", []):
         if story.get("kind") == "illustrative_fiction":
@@ -125,6 +126,14 @@ def stories_page(ba, page, write, SITE):
             stories.append(story)
         elif story.get("kind", "reader_submission") == "reader_submission" and story.get("consent") is True:
             stories.append(story)
+    return stories
+
+
+def stories_page(ba, page, write, SITE):
+    import build_saved
+    esc = ba.esc
+    reflections = story_reflections()
+    stories = eligible_stories()
     if stories:
         parts = []
         for n, s in enumerate(stories, 1):
@@ -147,7 +156,7 @@ def stories_page(ba, page, write, SITE):
           <h2>{esc(s["title"])}</h2>
           <span class="story-read"><span class="story-open-label">اقرا الحكاية وجرّب الموقف</span><span class="story-close-label">اقفل الحكاية</span><span class="story-chevron" aria-hidden="true">⌄</span></span>
         </summary><div class="story-text">{paragraphs}</div>{reflection}</details>
-        {attribution}</article>''')
+        {attribution}{build_saved.button(esc, "story", s.get("id"), s["title"])}</article>''')
         cards = '<div class="stories-grid">' + "".join(parts) + "</div>"
     else:
         cards = '''<div class="story-empty"><p class="story-tag">قريبًا</p><h2>الحكايات بتتجهز</h2>
@@ -188,7 +197,8 @@ def stories_page(ba, page, write, SITE):
           "author": {"@id": f"{SITE}/#person"}}
     html = page("stories", "حكايات من داخل العيادة", "١٠ حكايات من واقع عيادتي، بنشرها بموافقة أصحابها على لسانهم، من غير أسماء أو تفاصيل تعريفية، مع الحفاظ على خصوصيتهم.", body, ld)
     html = html.replace("</head>", '<link rel="stylesheet" href="/assets/stories.css?v=20261110-4">\n</head>', 1)
-    write("stories", html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1))
+    html = html.replace('<div class="stories-grid">', build_saved.notice() + '<div class="stories-grid">', 1)
+    write("stories", build_saved.attach(html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1)))
 
 
 def shelf_page(ba, page, write, SITE):
@@ -239,6 +249,9 @@ def shelf_page(ba, page, write, SITE):
 
 
 def build_all(ba, page, write, SITE):
+    import build_saved
+    build_saved.write_catalog()
+    build_saved.build(ba, page, write, SITE)
     exercise_page(ba, page, write, SITE)
     stories_page(ba, page, write, SITE)
     import build_your_path

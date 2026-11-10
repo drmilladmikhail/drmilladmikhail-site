@@ -32,6 +32,7 @@ jobs:
           python -m unittest discover -s tools -p test_glossary.py -v
           python -m unittest discover -s tools -p test_stories.py -v
           python -m unittest discover -s tools -p test_your_path.py -v
+          python -m unittest discover -s tools -p test_saved.py -v
           python tools/growth_package.py
           python tools/build_articles.py
           python tools/home_clarity.py
@@ -70,7 +71,7 @@ jobs:
                   browser = p.chromium.launch()
                   for width in [390, 1280]:
                       page = browser.new_page(viewport={'width': width, 'height': 900})
-                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/stories/', 'stories'), ('/your-path/', 'your-path'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
+                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/stories/', 'stories'), ('/exercise/', 'exercise'), ('/saved/', 'saved'), ('/your-path/', 'your-path'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
                           response = page.goto('http://127.0.0.1:8765' + slug, wait_until='load')
                           assert response.status == 200, slug
                           assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), slug
@@ -116,6 +117,26 @@ jobs:
                                   assert card.locator('.reflection-option[open]').count() == 1
                                   assert choices.nth(i).locator('.reflection-explanation').is_visible()
                               assert 'بحسب تأكيده' not in page.locator('main').inner_text()
+                              card.locator('[data-save-id]').click()
+                              assert card.locator('[data-save-id]').get_attribute('aria-pressed') == 'true'
+                          if name == 'exercise':
+                              page.locator('.ex:visible [data-save-id]').click()
+                              assert page.locator('.ex:visible [data-save-id]').get_attribute('aria-pressed') == 'true'
+                          if name == 'saved':
+                              assert page.locator('#bookmark-list li').count() == 2
+                              page.reload()
+                              assert page.locator('#bookmark-list li').count() == 2
+                              page.locator('[data-saved-filter="story"]').click()
+                              assert page.locator('#bookmark-list li').count() == 1
+                              page.locator('[data-saved-filter="all"]').click()
+                              page.locator('#bookmark-clear').click()
+                              page.locator('#bookmark-cancel').click()
+                              assert page.locator('#bookmark-list li').count() == 2
+                              page.evaluate("localStorage.setItem('journal:bookmark-test', 'preserve')")
+                              page.locator('#bookmark-clear').click()
+                              page.locator('#bookmark-confirm-clear').click()
+                              assert page.locator('#bookmark-list li').count() == 0
+                              assert page.evaluate("localStorage.getItem('journal:bookmark-test')") == 'preserve'
                           if name == 'your-path':
                               assert page.locator('.yp-topic').count() == 6
                               page.locator('[data-topic="anxiety"]').click()
