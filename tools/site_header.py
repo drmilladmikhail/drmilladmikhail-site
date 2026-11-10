@@ -32,6 +32,7 @@ MARK = ('<svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true" focusabl
 GROUPS = [
     ("اقرأ واتفرّج", [
         ("/articles/", "المقالات"),
+        ("/partner/", "سلسلة: شريكي محيّرني"),
         ("/videos/", "فيديوهات"),
         ("/questions/", "أسئلة محرجة"),
         ("/stories/", "حكايات التعافي"),
