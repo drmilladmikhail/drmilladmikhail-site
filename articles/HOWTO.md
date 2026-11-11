@@ -66,3 +66,8 @@ p23, p27 (ch.3), p30, p35 (ch.4), p37, p42 (ch.5), p46, p50, p53 (ch.6), p59 (ch
 ## Visitor data → what to make next
 Read `content/PRIORITIES.md` (rewritten every 15 days from Cloudflare Web Analytics) and the 90-day editorial calendar
 (Project doc `claude/editorial-calendar.md`) before choosing a topic.
+
+## صور المقال (من 2026-11-11)
+كل مقال جديد ليه رسمتين أصليتين بألوان الموقع: `assets/book/art-<slug>.jpg` (الكارت وأول المقال، وتتحط في "image" مع "image_alt")
+و`assets/book/art-<slug>-2.jpg` (جوه المقال كـ `<figure><img src="/assets/book/art-<slug>-2.jpg" width="1200" height="800" alt="…" loading="lazy"></figure>`).
+الرسم بيتعمل بـ `tools/draw_article_art.py` (أضف مشهدين للمقال الجديد في القاموس A). الرسمة لازم تعبّر عن موضوع المقال، ومعاها وصف عربي في alt.
