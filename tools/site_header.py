@@ -17,7 +17,7 @@ import re
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 NAME = "د. ميلاد ميخائيل"
-TITLE = "استشاري العلاج النفسي وتطوير الذات"
+TITLE = "استشاري العلاج النفسي والأسري"
 SLOGAN = "راحة بال، وتعديل حال… معاك في الرحلة لحياة أحلى"
 
 # Logo mark: a sunrise arc (حياة أحلى) over the letter م, in the site colours.
@@ -38,6 +38,8 @@ GROUPS = [
         ("/stories/", "حكايات التعافي"),
         ("/shelf/", "رفّ الترشيحات"),
         ("/book/", "كتبي"),
+        ("/glossary/", "القاموس النفسي"),
+        ("/research/", "مرصد الأبحاث النفسية"),
         ("https://blog.drmilladmikhail.com/", "المدونة"),
     ]),
     ("اختبر نفسك واتمرّن", [
@@ -108,7 +110,7 @@ TOPBAR = f'''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
       <a href="/platform/">المنصة</a>
       <a href="/paths/">مسارات التعلّم</a>
 {_dropdown("تمارين وأدوات", GROUPS[1][1][1:])}
-{_dropdown("مكتبتي", [EXPLORE, SAVED, RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6)])}
+{_dropdown("مكتبتي", [EXPLORE, SAVED, RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6, 7, 8)])}
 {_dropdown("عن د. ميلاد", GROUPS[2][1])}
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
     </nav>

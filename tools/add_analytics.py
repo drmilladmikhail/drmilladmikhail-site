@@ -29,6 +29,13 @@ SKIP_DIRS = {".git", ".github", "tools", "node_modules", "content", "docs"}
 
 
 
+# His request (2026-11-10): drop the footer's name + Ph.D. lines; they are already
+# stated higher on the page. One regex here covers every builder and static page.
+FOOTER_DUP_RE = re.compile(
+    r'\s*<p class="names">د\. ميلاد ميخائيل <span lang="en" dir="ltr">· Dr\. Millad Mikhail</span></p>'
+    r'\s*<p>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس \(APA\)\.</p>')
+
+
 def inject_depth3d(t):
     """Add the light 3D layer (assets/depth3d.css + depth3d.js) to pages that use site.css."""
     if "/assets/site.css" not in t or "</body>" not in t:
@@ -92,6 +99,7 @@ def main():
             t = re.sub(r'<meta http-equiv="Content-Security-Policy"[^>]*>\n?<meta name="referrer"[^>]*>\n?', "", t)
             t = re.sub(r'(<meta charset="utf-8">\n?)', lambda m: m.group(1) + SECURITY, t, count=1, flags=re.I)
             t = inject_depth3d(t)
+            t = FOOTER_DUP_RE.sub("", t)
             if TOKEN not in t:
                 i = t.rfind("</body>")
                 t = t[:i] + SNIPPET + "\n" + t[i:]
@@ -109,6 +117,8 @@ def main():
     home_clarity.apply(ROOT)
     import breadcrumbs
     breadcrumbs.apply(ROOT)
+    import build_news
+    build_news.apply(ROOT)
     version_assets(ROOT)
 
 

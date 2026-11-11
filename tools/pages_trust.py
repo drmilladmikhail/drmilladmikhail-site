@@ -1,7 +1,7 @@
 """Phase A pages (2026-11-05): /sessions/, /contact/, /help-now/, /privacy/, /terms/.
 
 Called from tools/build_pages.py main(). Arabic only. Facts here must stay true:
-- sessions: «جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي», 60 minutes, 500 EGP (his words 2026-11-05).
+- sessions: «جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي», 60 minutes, 1000 EGP (his words 2026-11-10; was 500).
   NEVER put sessions on English pages. No invented testimonials — only real ones with written consent.
 - help-now numbers were checked on 2026-11-05 (sources in the page). Re-check them every few months.
 - privacy describes the real data flows of the site. If you add any outside service, update /privacy/.
@@ -30,6 +30,19 @@ def _faq_ld(items, url):
 
 
 # ------------------------------------------------------------------ sessions
+# 3D session visual, shared with the homepage «جلسات نفسية أونلاين» section (styles: assets/depth3d.css)
+SESSION_3D = '''<figure class="sessions-visual s3d" data-d3="card">
+        <div class="s3d-stage">
+          <span class="s3d-plate s3d-p1" aria-hidden="true"></span><span class="s3d-plate s3d-p2" aria-hidden="true"></span>
+          <img class="s3d-img" src="/assets/illustrations/session.svg" width="480" height="300" alt="رسم توضيحي لحوار داعم في جلسة نفسية عبر الإنترنت" loading="lazy" decoding="async">
+          <span class="s3d-chip s3d-c1" aria-hidden="true">🔒 سرية تامة</span>
+          <span class="s3d-chip s3d-c2" aria-hidden="true">🎧 فيديو أو صوت</span>
+          <span class="s3d-chip s3d-c3" aria-hidden="true">⏱ ساعة كاملة</span>
+        </div>
+        <figcaption>مساحة آمنة للحوار والفهم وخطوات التغيير</figcaption>
+      </figure>'''
+
+
 def sessions_page(ba, page, write, SITE):
     book = wa("أهلًا د. ميلاد، أنا جاي من الموقع وعايز أحجز جلسة نفسية أونلاين. أنا مقيم في: ")
     faq = [
@@ -49,17 +62,39 @@ def sessions_page(ba, page, write, SITE):
         ("الحزن والانفصال", "لما تخسر حد أو علاقة، ومحتاج حد يسمعك وانت بتعدّي الفترة دي."),
     ]
     tcards = "\n".join(f'<li><b>{t}</b><span>{d}</span></li>' for t, d in topics)
+    # 2026-11-10 (his request): types of psychological disorders and other therapy approaches.
+    disorders = [
+        ("الاكتئاب", "الحزن اللي مش بيمشي، وفقدان الشغف والطاقة."),
+        ("اضطرابات القلق", "القلق العام، ونوبات الهلع، والرهاب الاجتماعي، والمخاوف."),
+        ("الوسواس القهري", "الأفكار اللي بتلحّ عليك، والتصرفات اللي مش قادر توقفها."),
+        ("الصدمات النفسية", "آثار المواقف الصعبة، واضطراب ما بعد الصدمة."),
+        ("الحزن بعد الفقد", "لما الحزن على حد غالي يطوّل ويوقف حياتك."),
+        ("الإدمان السلوكي", "الإباحية، والموبايل، والألعاب، وأي عادة سايقاك."),
+        ("الضغوط وصعوبات التكيّف", "الغربة، وتغيير الشغل، والانفصال، وضغوط الحياة."),
+        ("مشاكل الأسرة والزواج", "الخلافات الزوجية، والتواصل في البيت، وتربية الأولاد."),
+    ]
+    therapies = [
+        ("العلاج المعرفي السلوكي (CBT)", "بنفهم الأفكار اللي بتوجعك ونغيّرها بخطوات عملية."),
+        ("العلاج بالمعنى (Logotherapy)", "تخصص رسالة الدكتوراه: إزاي تلاقي معنى يسندك وقت الصعب."),
+        ("العلاج بالقبول والالتزام (ACT)", "تعيش بقيمك حتى والمشاعر الصعبة موجودة."),
+        ("العلاج الأسري والزوجي", "جلسات للزوجين أو الأسرة، عشان تفهموا بعض وتحلّوا الخلاف."),
+        ("العلاج باليقظة الذهنية", "تمارين تهدّي الجسم والدماغ وتقلل التوتر."),
+        ("العلاج المرتكز على الحلول", "جلسات مركّزة على أهداف صغيرة وواضحة."),
+    ]
+    dcards = "\n".join(f'<li><b>{t}</b><span>{d}</span></li>' for t, d in disorders)
+    thcards = "\n".join(f'<li><b>{t}</b><span>{d}</span></li>' for t, d in therapies)
     body = f'''  <section class="page-hero">
     <div class="wrap narrow">
       <p class="kicker-g">لأهلنا في مصر والوطن العربي</p>
       <h1>جلسات نفسية أونلاين</h1>
       <p class="lead">لو حاسس إنك محتاج حد يسمعك بجد، ويساعدك تفهم نفسك وتبدأ تتحسن، الجلسات دي ليك. بالعربي، فيديو أو صوت، ومن بيتك.</p>
+      {SESSION_3D}
     </div>
   </section>
   <section class="section">
     <div class="wrap narrow">
       <div class="price-card">
-        <div class="price-main"><span class="price-num">500</span><span class="price-unit">جنيه مصري</span></div>
+        <div class="price-main"><span class="price-num">1000</span><span class="price-unit">جنيه مصري</span></div>
         <ul class="price-facts"><li>الجلسة ساعة كاملة</li><li>أونلاين: فيديو أو صوت</li><li>سرية تمامًا</li></ul>
         <a class="btn primary big" href="{book}" target="_blank" rel="noopener">احجز على واتساب</a>
         <p class="price-note">واتساب: <bdi dir="ltr">{WA_SHOW}</bdi> · الميعاد وطريقة الدفع بنتفق عليهم في الرسايل.</p>
@@ -77,11 +112,23 @@ def sessions_page(ba, page, write, SITE):
 {tcards}
       </ul>
 
+      <h2 class="sec-h">اضطرابات نفسية بنشتغل عليها</h2>
+      <ul class="topic-cards topic-cards-dx">
+{dcards}
+      </ul>
+      <p class="ses-medical">لو الحالة محتاجة دوا أو متابعة طبية (زي الاضطراب ثنائي القطب، أو الذهان، أو أفكار الانتحار)، الطبيب النفسي هو الأساس، والجلسات بتبقى جنبه مش بداله.</p>
+
+      <h2 class="sec-h">أنواع العلاج اللي بستخدمها</h2>
+      <ul class="topic-cards topic-cards-tx">
+{thcards}
+      </ul>
+      <p class="ses-medical">في أول جلسة بنختار سوا الطريقة الأنسب ليك، وممكن نجمع بين أكتر من طريقة.</p>
+
       <h2 class="sec-h">مين هيكون معاك في الجلسة؟</h2>
       <div class="who-card">
         <picture><source srcset="/assets/millad-cut.webp" type="image/webp"><img src="/assets/millad.jpg" width="160" height="160" alt="د. ميلاد ميخائيل" loading="lazy"></picture>
         <div>
-          <p><b>د. ميلاد ميخائيل</b>، استشاري الصحة النفسية.</p>
+          <p><b>د. ميلاد ميخائيل</b>، استشاري العلاج النفسي والأسري.</p>
           <ul class="creds">
             <li>دكتوراه في الصحة النفسية، جامعة قناة السويس (2022)</li>
             <li>الدبلوم المتخصص في الإرشاد وعلم النفس الإكلينيكي، جامعة طنطا</li>
@@ -109,10 +156,10 @@ def sessions_page(ba, page, write, SITE):
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "Service", "@id": url + "#service", "name": "جلسات نفسية أونلاين", "url": url, "inLanguage": "ar",
          "provider": {"@id": f"{SITE}/#person"}, "areaServed": ["Egypt", "Arab world"], "availableChannel": {"@type": "ServiceChannel", "serviceUrl": f"https://wa.me/{WA}"},
-         "offers": {"@type": "Offer", "price": "500", "priceCurrency": "EGP", "description": "جلسة مدتها ساعة، أونلاين"}},
+         "offers": {"@type": "Offer", "price": "1000", "priceCurrency": "EGP", "description": "جلسة مدتها ساعة، أونلاين"}},
         _faq_ld(faq, url)]}
     write("sessions", page("sessions", "جلسات نفسية أونلاين",
-                           "جلسات نفسية أونلاين مع د. ميلاد ميخائيل لأهلنا في مصر والوطن العربي: ساعة كاملة بـ 500 جنيه، فيديو أو صوت، سرية، والحجز على واتساب.", body, ld))
+                           "جلسات نفسية أونلاين مع د. ميلاد ميخائيل لأهلنا في مصر والوطن العربي: ساعة كاملة بـ 1000 جنيه، فيديو أو صوت، سرية، والحجز على واتساب.", body, ld))
 
 
 # ------------------------------------------------------------------ contact
@@ -289,7 +336,7 @@ def terms_page(ba, page, write, SITE):
 <p>لو انت في خطر، متعتمدش على الموقع ولا على رسالة واتساب. روح <a href="/help-now/">صفحة المساعدة الفورية</a> أو أقرب طوارئ.</p>
 
 <h2>الجلسات</h2>
-<p>الجلسات النفسية الأونلاين مدتها ساعة، وسعرها 500 جنيه مصري. الميعاد وطريقة الدفع بيتحددوا بالاتفاق على واتساب قبل الجلسة. وتفاصيلها في <a href="/sessions/">صفحة الجلسات</a>.</p>
+<p>الجلسات النفسية الأونلاين مدتها ساعة، وسعرها 1000 جنيه مصري. الميعاد وطريقة الدفع بيتحددوا بالاتفاق على واتساب قبل الجلسة. وتفاصيلها في <a href="/sessions/">صفحة الجلسات</a>.</p>
 
 <h2>حقوق المحتوى</h2>
 <p>المحتوى المكتوب والرسومات حقوقها لـ د. ميلاد ميخائيل. تقدر تشارك لينكات الصفحات براحتك، وتطبع أوراق التمرين لاستخدامك الشخصي أو مع مجموعة بتساعدها، من غير ما تبيعها أو تشيل اسم المصدر منها. ولو عايز تنقل مقال كامل في مكان تاني، كلّمنا الأول.</p>

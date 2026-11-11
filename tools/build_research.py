@@ -126,8 +126,8 @@ def build(root=ROOT):
     marker = '<!-- RESEARCH-LINK -->'
     if marker not in text:
         assert '</main>' in text
-        link = marker + '<div class="wrap"><p><a href="/research/">مرصد الأبحاث النفسية: عرض علمي وشرح مبسط</a></p></div>'
-        home.write_text(text.replace('</main>', link + '</main>', 1), encoding='utf-8')
+        # The observatory is linked from the menu (site_header.py), not the homepage.
+        home.write_text(text.replace('</main>', marker + '</main>', 1), encoding='utf-8')
     return page
 
 if __name__ == '__main__':

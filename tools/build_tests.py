@@ -529,8 +529,6 @@ from site_header import TOPBAR  # noqa: E402  (one shared header for all Arabic 
 FOOTER = '''<footer class="footer">
   <div class="wrap footer-grid">
     <div>
-      <p class="names">د. ميلاد ميخائيل <span lang="en" dir="ltr">· Dr. Millad Mikhail</span></p>
-      <p>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA).</p>
       <p class="fine">© 2026. الاختبارات للتوعية وفهم النفس، ومش تشخيص ولا بديل عن تقييم متخصص.</p>
       <p class="fine footer-links"><a href="/sessions/">الجلسات</a> · <a href="/contact/">تواصل</a> · <a href="/help-now/">محتاج مساعدة دلوقتي</a> · <a href="/privacy/">الخصوصية</a> · <a href="/terms/">الشروط</a></p>
     </div>

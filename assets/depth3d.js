@@ -171,11 +171,11 @@
   })();
 
   /* ---------- 2. tilting / pressing cards ---------- */
-  var SEL = '.card > a, .concern-card, .weekly, .test-card, .vcard, .g-card, .platform-card, .story-card, ' +
+  var SEL = '[data-d3="card"], .card > a, .concern-card, .weekly, .test-card, .vcard, .g-card, .platform-card, .story-card, ' +
             '.ws-card, .path-card, .xt-card, .fw-card, .c-card, .myth-card';
   var cards = Array.prototype.filter.call(document.querySelectorAll(SEL), function (el) {
     if (el.matches('.df-station, .meta, .df-urgent') || el.closest('.h3d-stage')) return false;
-    if (el.matches('a, button')) return true;
+    if (el.matches('a, button, [data-d3="card"]')) return true;
     /* only small link cards: big panels, forms and step lists stay flat */
     if (el.querySelector('input, textarea, select, details, ol, form')) return false;
     if (el.getBoundingClientRect().height > 460) return false;
