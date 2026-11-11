@@ -23,7 +23,14 @@ jobs:
       - name: Install browser and axe-core
         run: |
           pip install playwright
-          python -m playwright install --with-deps chromium
+          # Ubuntu apt mirrors are sometimes unreachable from runners (2026-11-11 outage).
+          # The runner image already has Chrome's system libraries, so try without apt first.
+          python -m playwright install chromium
+          if python -c "from playwright.sync_api import sync_playwright as s; p=s().start(); p.chromium.launch().close(); p.stop()"; then
+            echo "Chromium runs without extra system packages"
+          else
+            for i in 1 2 3; do python -m playwright install --with-deps chromium && break; [ "$i" = 3 ] && exit 1; echo "apt failed, retrying in 45s"; sleep 45; done
+          fi
           npm install --no-save --prefix /tmp/axe axe-core@4
       - name: Check the live site
         run: python tools/live_check.py /tmp/axe/node_modules/axe-core/axe.min.js
