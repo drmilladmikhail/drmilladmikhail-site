@@ -685,11 +685,11 @@ def index_page():
         cards.append(f'''<li class="test-card">
         <a href="/tests/{t["slug"]}/">
           {icon(t["icon"])}
-          <span class="tc-body">
+          <div class="tc-body">
             <h2>{esc(t["short"])}</h2>
             <span class="card-desc">{esc(t["description"])}</span>
             <span class="card-date">{count_label(len(t["items"]))} · {t["minutes"]} دقايق</span>
-          </span>
+          </div>
         </a>
       </li>''')
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "اختبارات نفسية مجانية",

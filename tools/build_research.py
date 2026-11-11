@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from site_header import header_for, NAV_JS
 from add_analytics import SECURITY, SNIPPET, inject_depth3d, ensure_social
 import build_news
-from breadcrumbs import process as add_breadcrumbs
+from breadcrumbs import process as add_breadcrumbs, auto_ld
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -113,6 +113,7 @@ def build(root=ROOT):
     output.parent.mkdir(parents=True, exist_ok=True)
     page = version_shared_assets(page, root)
     output.write_text(page, encoding='utf-8')
+    auto_ld(root)  # same BreadcrumbList data add_analytics gives other pages
     ns = 'http://www.sitemaps.org/schemas/sitemap/0.9'
     ET.register_namespace('', ns)
     path = root / 'sitemap.xml'

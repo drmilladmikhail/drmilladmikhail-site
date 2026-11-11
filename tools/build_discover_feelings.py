@@ -22,10 +22,10 @@ def available():
 def card_html(esc):
     return f'''      <li class="test-card">
         <a href="/{SLUG}/">
-          <span class="tc-body">
+          <div class="tc-body">
             <h2>اكتشاف مشاعرك</h2>
             <span class="card-desc">{esc(CARD_BLURB)}</span>
-          </span>
+          </div>
         </a>
       </li>'''
 

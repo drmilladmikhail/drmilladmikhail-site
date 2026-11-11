@@ -54,7 +54,7 @@ def ensure_social(t):
     import html as _h
     title = re.search(r"<title>([^<]*)</title>", head)
     desc = re.search(r'<meta name="description" content="([^"]*)"', head)
-    canon = re.search(r'<link rel="canonical" href="([^"]+)"', head)
+    canon = re.search(r'<link rel="canonical" href="([^"]+)"[^>]*>', head)
     if not (title and canon):
         return t
     tt, dd, uu = title.group(1), (desc.group(1) if desc else ""), canon.group(1)

@@ -303,11 +303,11 @@ def card(a, heading="h2"):
     return f'''<li class="card">
         <a href="/articles/{a["slug"]}/">
           {pic(a["image"], a["image_alt"], sizes="(max-width: 640px) 100vw, 380px")}
-          <span class="card-body">
+          <div class="card-body">
             <{heading}>{esc(a["title"])}</{heading}>
             <span class="card-desc">{esc(a["description"])}</span>
             <span class="card-date">{ar_date(a["date"])}</span>
-          </span>
+          </div>
         </a>
       </li>'''
 

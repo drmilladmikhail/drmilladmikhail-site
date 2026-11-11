@@ -204,11 +204,11 @@ def vcard(v, heading="h3", lang="ar", tag=""):
             <img src="https://i.ytimg.com/vi_webp/{vid}/hqdefault.webp" width="480" height="360" alt="" loading="lazy" decoding="async">
             {PLAY}
           </a>
-          <span class="card-body">
+          <div class="card-body">
             {f'<span class="vtag">{esc(tag)}</span>' if tag else ""}
             <{heading}{title_attr}>{esc(t)}</{heading}>
             {date}
-          </span>
+          </div>
         </li>'''
 
 

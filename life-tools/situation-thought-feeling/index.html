@@ -221,7 +221,7 @@
       <label for="feeling">2. الإحساس: حسّيت بإيه؟</label>
       <p id="feeling-hint" class="hint">كلمة أو اتنين (قلق، زعل، إحراج، غضب، خوف، وحدة…).</p>
       <input id="feeling" type="text" maxlength="80" aria-describedby="feeling-hint" autocomplete="off">
-      <label for="intensity-before">شدة الإحساس: <output id="intensity-before-out" for="intensity-before">5</output> من 10</label>
+      <label for="intensity-before">شدة الإحساس: <span id="intensity-before-out" class="range-out">5</span> من 10</label>
       <input id="intensity-before" type="range" min="0" max="10" step="1" value="5">
     </div>
 
@@ -238,7 +238,7 @@
     </div>
 
     <div class="field">
-      <label for="intensity-after">5. دلوقتي: شدة الإحساس بقت كام؟ <output id="intensity-after-out" for="intensity-after">5</output> من 10</label>
+      <label for="intensity-after">5. دلوقتي: شدة الإحساس بقت كام؟ <span id="intensity-after-out" class="range-out">5</span> من 10</label>
       <p id="after-hint" class="hint">ممكن تقل، وممكن تفضل زي ما هي، وده عادي. مفيش نتيجة «صح» هنا.</p>
       <input id="intensity-after" type="range" min="0" max="10" step="1" value="5" aria-describedby="after-hint">
     </div>
