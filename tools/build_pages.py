@@ -122,7 +122,7 @@ def start_page():
         </li>
       </ol>
       <div class="safety-note" role="note">
-        <p><b>لو حاسس إنك مش بخير دلوقتي:</b> الموقع ده للتوعية ومش بديل عن متخصص. لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:105">105</a> (الخط الساخن للدعم النفسي) · أمريكا <a href="tel:988">988</a>.</p>
+        <p><b>لو حاسس إنك مش بخير دلوقتي:</b> الموقع ده للتوعية ومش بديل عن متخصص. لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:16328">16328</a> (الخط الساخن للدعم النفسي) · أمريكا <a href="tel:988">988</a>.</p>
       </div>
       {ba.share_block(SITE + "/start/", "مكتبة مجانية بالعربي عن الحب والتعلق والصحة النفسية — د. ميلاد ميخائيل", "شارك الموقع")}
     </div>
@@ -199,7 +199,7 @@ def book_page():
       <p class="note-free">عايز تجرّب قبل ما تقرر؟ مقالات كتير على الموقع مأخوذة من الكتاب، <a href="/articles/">اقراها مجانًا</a>.</p>
       <h3 class="sec-h">أسئلة شائعة</h3>
       {faq}
-      <article class="book-row soon" id="battery">
+      <article class="book-row book-soon" id="battery">
         <picture class="book-cover">
           <source srcset="/assets/battery-cover.webp" type="image/webp">
           <img src="/assets/battery-cover.jpg" width="480" height="720" alt="غلاف كتاب بطاريتي 1%" loading="lazy">
@@ -229,7 +229,7 @@ def book_page():
 def battery_page():
     body = f'''  <section class="section">
     <div class="wrap">
-      <article class="book-row soon">
+      <article class="book-row book-soon">
         <picture class="book-cover">
           <source srcset="/assets/battery-cover.webp" type="image/webp">
           <img src="/assets/battery-cover.jpg" width="480" height="720" alt="غلاف كتاب بطاريتي 1% لـ د. ميلاد ميخائيل">
@@ -304,7 +304,7 @@ def questions_page():
       {blocks}
       <div class="note-box ask-cta"><h2>سؤالك مش موجود؟</h2><p>ابعته من غير اسمك، وممكن نجاوبه هنا في الأسابيع الجاية.</p><div class="actions"><a class="btn primary" href="/ask/">اسأل من غير اسمك</a></div></div>
       <div class="safety-note" role="note">
-        <p><b>تنبيه:</b> الإجابات دي للتوعية، ومش تشخيص ولا بديل عن دكتور أو معالج. لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p>
+        <p><b>تنبيه:</b> الإجابات دي للتوعية، ومش تشخيص ولا بديل عن دكتور أو معالج. لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:16328">16328</a> · أمريكا <a href="tel:988">988</a>.</p>
       </div>
       {ba.share_block(SITE + "/questions/", "أسئلة محرجة وإجابات علمية بالمصري — د. ميلاد ميخائيل", "شارك الصفحة")}
     </div>
@@ -325,12 +325,23 @@ def challenges_page():
     for c in chs:
         tasks = "\n".join(f'<li><label><input type="checkbox" data-key="{c["id"]}-{n}"> <span><b>يوم {n}:</b> {esc(t)}</span></label></li>'
                           for n, t in enumerate(c["tasks"], 1))
+        journey = c["id"] == "seven-day-journey"
+        extra = '''<div class="journey-progress" role="group" aria-label="تقدمك في الرحلة">
+          <div class="journey-track"><span data-journey-bar></span></div>
+          <p class="journey-badge" data-journey-badge hidden>شارة «خطوة لنفسي»: أنهيت الرحلة!</p>
+        </div>
+        <p class="journey-private">تقدمك بيتحفظ على جهازك فقط. مفيش حساب، ومفيش إجابات شخصية بتتبعت للموقع.</p>
+        <div data-journey-share-wrap hidden>
+          <button type="button" class="sh" data-journey-share>صمّم بطاقة إنجازك وشاركها</button>
+          <p data-journey-share-hint role="status" aria-live="polite">الصورة بتتجهز على جهازك فقط؛ مفيش بيانات بتتبعت للموقع.</p>
+        </div>
+        <button type="button" class="sh journey-reset" data-journey-reset>ابدأ الرحلة من جديد</button>''' if journey else ""
         cards += f'''
-      <article class="challenge" id="{c["id"]}">
+      <article class="challenge{" featured-journey" if journey else ""}" id="{c["id"]}">
         <h2>{esc(c["title"])}</h2>
         <p class="ch-why">{esc(c["why"])}</p>
         <ol class="ch-tasks">{tasks}</ol>
-        <p class="ch-progress" aria-live="polite" data-for="{c["id"]}" data-total="{len(c["tasks"])}"></p>
+        <p class="ch-progress" aria-live="polite" data-for="{c["id"]}" data-total="{len(c["tasks"])}"></p>{extra}
       </article>'''
     body = f'''  <section class="page-hero">
     <div class="wrap narrow">
@@ -342,7 +353,8 @@ def challenges_page():
   <section class="section">
     <div class="wrap narrow">
       {cards}
-      <div class="safety-note" role="note"><p>التحديات دي للتجربة وتحسين المزاج، ومش علاج. لو حاسس إنك مش بخير لفترة طويلة، كلّم متخصص. مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p></div>
+      <p class="fine" data-ch-storage-hint role="status" aria-live="polite"></p>
+      <div class="safety-note" role="note"><p>التحديات دي للتجربة وتحسين المزاج، ومش علاج. لو حاسس إنك مش بخير لفترة طويلة، كلّم متخصص. مصر <a href="tel:16328">16328</a> · أمريكا <a href="tel:988">988</a>.</p></div>
       {ba.share_block(SITE + "/challenges/", "تحديات نفسية قصيرة: 7 أيام من غير جلد للذات، نوم منتظم، امتنان… — د. ميلاد ميخائيل", "اتحدّى صاحبك")}
     </div>
   </section>'''
@@ -364,7 +376,7 @@ def feelings_page():
     for f in fams:
         cards = ""
         for it in f["items"]:
-            sos = ('<p class="fw-sos">لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:105">105</a>'
+            sos = ('<p class="fw-sos">لو عندك أفكار تأذي بيها نفسك أو حاسس إنك في خطر، كلّم حد فورًا: مصر <a href="tel:16328">16328</a>'
                    ' أو الطوارئ <a href="tel:122">122</a> · أمريكا <a href="tel:988">988</a> أو <a href="tel:911">911</a>.</p>') if it.get("safety") else ""
             cards += f'''
           <article class="fw-card hue-{f["hue"]}" id="f-{it["id"]}" data-fam="{f["id"]}" data-name="{esc(it["name"])}" tabindex="-1">
@@ -417,7 +429,7 @@ def feelings_page():
         <p>دراسة مشهورة من جامعة UCLA (ليبرمان وزملاؤه، 2007) لقت إن لما الناس بيسمّوا إحساسهم بكلمة، نشاط اللوزة الدماغية (جرس الإنذار في المخ) بيقل. وأبحاث «دقة المشاعر» بتقول إن اللي بيعرف يفرّق بين «زعلان» و«مخذول» و«وحيد» بيعرف يتعامل مع مشاعره أحسن.</p>
         <p>المشاعر مش حلوة ووحشة، كلها رسايل. الفكرة إنك تسمع الرسالة، مش إنك تكتمها أو تمشي وراها من غير تفكير.</p>
       </div>
-      <div class="safety-note" role="note"><p>العجلة دي للتوعية وفهم النفس، ومش تشخيص. لو إحساس صعب مكمّل معاك أكتر من أسبوعين أو مأثر على حياتك، كلّم متخصص. ولو حاسس إنك في خطر: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p></div>
+      <div class="safety-note" role="note"><p>العجلة دي للتوعية وفهم النفس، ومش تشخيص. لو إحساس صعب مكمّل معاك أكتر من أسبوعين أو مأثر على حياتك، كلّم متخصص. ولو حاسس إنك في خطر: مصر <a href="tel:16328">16328</a> · أمريكا <a href="tel:988">988</a>.</p></div>
       {ba.share_block(SITE + "/feelings/", "عجلة المشاعر: مش عارف تسمّي إحساسك؟ اختار لونه — د. ميلاد ميخائيل", "شارك العجلة")}
     </div>
   </section>'''
@@ -522,7 +534,7 @@ def worksheets_page():
       <nav class="vchips" aria-label="أقسام الأوراق">{chips}</nav>
       {blocks}
       <div class="safety-note" role="note">
-        <p><b>تنبيه:</b> الأوراق دي للتأمل وفهم النفس، ومش تشخيص ولا بديل عن العلاج. لو حاسس بضيق جامد أو خايف على نفسك، كلّم حد فورًا: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>.</p>
+        <p><b>تنبيه:</b> الأوراق دي للتأمل وفهم النفس، ومش تشخيص ولا بديل عن العلاج. لو حاسس بضيق جامد أو خايف على نفسك، كلّم حد فورًا: مصر <a href="tel:16328">16328</a> · أمريكا <a href="tel:988">988</a>.</p>
       </div>
       {ba.share_block(SITE + "/worksheets/", "أوراق تمرين نفسية مجانية تطبعها وتكتب فيها — د. ميلاد ميخائيل", "شارك المكتبة")}
     </div>
@@ -577,7 +589,7 @@ def ask_page():
         <p>لو كتبت إيميلك، بنحاول نبعتلك رد قصير بإيميل. الرد ده توعوي وعام، ومش استشارة ولا تشخيص، وممكن ياخد وقت.</p>
       </div>
       {sessions}
-      <div class="safety-note" role="note"><p><b>الصندوق ده مش للطوارئ</b>، والرد ممكن ياخد أسابيع، ومش كل سؤال هيتنشر. ولا هو بديل عن استشارة شخصية. لو حاسس إنك في خطر أو بتفكر تأذي نفسك، كلّم حد دلوقتي: مصر <a href="tel:105">105</a> أو <a href="tel:122">122</a> · أمريكا <a href="tel:988">988</a> أو <a href="tel:911">911</a>.</p></div>
+      <div class="safety-note" role="note"><p><b>الصندوق ده مش للطوارئ</b>، والرد ممكن ياخد أسابيع، ومش كل سؤال هيتنشر. ولا هو بديل عن استشارة شخصية. لو حاسس إنك في خطر أو بتفكر تأذي نفسك، كلّم حد دلوقتي: مصر <a href="tel:16328">16328</a> أو <a href="tel:122">122</a> · أمريكا <a href="tel:988">988</a> أو <a href="tel:911">911</a>.</p></div>
       {ba.share_block(SITE + "/ask/", "اسأل د. ميلاد من غير اسمك: سؤالك المحرج ليه إجابة علمية", "شارك الصفحة")}
     </div>
   </section>'''
@@ -680,7 +692,7 @@ def csbd_page():
 </ul>
 <p><strong>العلاج المعرفي السلوكي</strong> و<strong>علاج القبول والالتزام</strong> من أكتر الطرق اللي بتساعد. وفيه حالات دكتور نفسي بيقرر فيها علاج دوائي، وده <strong>بيتاخد بس تحت إشراف دكتور</strong>، ومتاخدش أي دوا من نفسك.</p>
 <p>ولو حابب تتكلم مع متخصص، أنا بقدّم <a href="/sessions/">جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي</a>، وكل اللي بيتقال فيها سري.</p>
-<p class="safety"><strong>وقفة أمان:</strong> لو عندك أفكار تأذي بيها نفسك، كلّم حد فوراً: مصر <a href="tel:105">105</a> · أمريكا <a href="tel:988">988</a>. ولو عندك أي أفكار أو رغبات ناحية أطفال، حتى لو عمرك ما عملت حاجة، اطلب مساعدة متخصصة سرية فوراً. فيه جهات متخصصة في ده زي <a href="https://www.stopitnow.org/" target="_blank" rel="noopener">Stop It Now</a>.</p>
+<p class="safety"><strong>وقفة أمان:</strong> لو عندك أفكار تأذي بيها نفسك، كلّم حد فوراً: مصر <a href="tel:16328">16328</a> · أمريكا <a href="tel:988">988</a>. ولو عندك أي أفكار أو رغبات ناحية أطفال، حتى لو عمرك ما عملت حاجة، اطلب مساعدة متخصصة سرية فوراً. فيه جهات متخصصة في ده زي <a href="https://www.stopitnow.org/" target="_blank" rel="noopener">Stop It Now</a>.</p>
       </div>
 
       <h2 class="sec-h">ممكن يفيدك كمان</h2>

@@ -1,0 +1,73 @@
+/* «اكتشاف مشاعرك» — premium layer (2026-11-10). Loaded only on /discover-feelings/,
+   after tool.css. Light and dark both covered; motion off for reduced-motion. */
+main#main > .section { position: relative; isolation: isolate; overflow: hidden;
+  background: radial-gradient(70% 50% at 100% 0%, rgba(226,179,90,.20), transparent 70%),
+              radial-gradient(60% 45% at 0% 30%, rgba(47,111,98,.16), transparent 70%), var(--paper, #f5f7f4); }
+.xtool > h1 { margin: 8px 0 6px; font-size: clamp(36px, 7vw, 58px); line-height: 1.25; color: #143d35; letter-spacing: -.01em; }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .xtool > h1 { background: linear-gradient(120deg, #123a33 0%, #2a6658 55%, #7a5a12 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+}
+.xtool > .lede { position: relative; display: inline-block; margin: 0 0 22px; padding-bottom: 12px; font-size: clamp(18px, 2.6vw, 22px); color: #2c4a42; }
+.xtool > .lede::after { content: ""; position: absolute; bottom: 0; inset-inline-start: 0; width: 64px; height: 4px; border-radius: 4px; background: linear-gradient(90deg, #e2b35a, #b9862a); }
+
+/* cards: stacked "3D" depth + a gold top line */
+.xtool .xt-card { position: relative; overflow: hidden; border-radius: 26px; padding: clamp(20px, 3.6vw, 32px); border: 1px solid #fff;
+  background: linear-gradient(160deg, #ffffff 0%, #f4f9f6 60%, #fbf6ea 100%);
+  box-shadow: 0 1px 0 #fff inset, 0 0 0 1px rgba(47,111,98,.10),
+              0 10px 0 -5px rgba(255,255,255,.85), 0 10px 0 -4px rgba(47,111,98,.14),
+              0 36px 60px -34px rgba(24,35,58,.45); background-color: #f6faf8; }
+.xtool .xt-card::before { content: ""; position: absolute; top: 0; left: 14%; right: 14%; height: 4px; border-radius: 0 0 6px 6px;
+  background: linear-gradient(90deg, transparent, #e2b35a 20%, #b9862a 50%, #e2b35a 80%, transparent); }
+.xtool .xt-card h2 { font-size: clamp(22px, 3vw, 28px); color: #1f5247; }
+
+/* search field + main button */
+.xtool input[type=text], .xtool textarea { border-radius: 16px; padding: 14px 16px; border: 1.5px solid #b9cfc6; background: #fff;
+  box-shadow: inset 0 2px 6px rgba(24,35,58,.06); transition: border-color .2s, box-shadow .2s; }
+.xtool input[type=text]:focus, .xtool textarea:focus { border-color: #2f6f62; box-shadow: inset 0 2px 6px rgba(24,35,58,.06), 0 0 0 4px rgba(47,111,98,.18); }
+.xtool .btn { border-radius: 14px; min-height: 48px; padding: 10px 22px; }
+.xtool .btn:not(.btn-quiet) { border: 0; color: #fff; background: linear-gradient(135deg, #2f6f62, #1b4e44);
+  box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 14px 24px -14px rgba(15,58,51,.8); transition: transform .2s, box-shadow .2s; }
+.xtool .btn:not(.btn-quiet):hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 18px 28px -14px rgba(15,58,51,.85); }
+.xtool .btn-quiet { background: #fff; border: 1.5px solid #9fc1b4; color: #1f5247; transition: transform .2s, box-shadow .2s, border-color .2s; }
+.xtool .btn-quiet:hover { transform: translateY(-2px); border-color: #2f6f62; box-shadow: 0 12px 20px -14px rgba(24,35,58,.45); }
+#unknown { border-style: dashed; }
+
+/* the four feeling doors: each its own colour */
+.xtool #doors .btn { min-width: 92px; justify-content: center; border-radius: 999px; font-weight: 700; border-width: 1.5px; box-shadow: 0 10px 18px -14px rgba(24,35,58,.55); }
+.xtool #doors .btn:nth-child(1) { background: #fdf3df; border-color: #e6c27a; color: #6b4a0c; }
+.xtool #doors .btn:nth-child(2) { background: #e6eef9; border-color: #a9c0e3; color: #23466f; }
+.xtool #doors .btn:nth-child(3) { background: #fbe7e3; border-color: #e7aea3; color: #7a2a1d; }
+.xtool #doors .btn:nth-child(4) { background: #efe8f8; border-color: #c4b2e2; color: #4b2f73; }
+.xtool .df-pick { border-radius: 16px; border-color: #c7d9d1; background: #fff; transition: transform .2s, box-shadow .2s, border-color .2s; }
+.xtool .df-pick:hover { transform: translateY(-2px); border-color: #2f6f62; box-shadow: 0 14px 24px -16px rgba(24,35,58,.5); }
+.xtool .df-all summary { color: #1f5247; }
+.xtool .df-step { border-radius: 999px; }
+.xtool .df-step[aria-current=step] { background: linear-gradient(135deg, #2f6f62, #1b4e44); color: #fff; box-shadow: 0 10px 18px -12px rgba(15,58,51,.8); }
+.xtool .xt-safety { border-radius: 14px; border-inline-start: 4px solid #e2b35a; }
+
+/* dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) main#main > .section { background: radial-gradient(70% 50% at 100% 0%, rgba(226,179,90,.16), transparent 70%),
+              radial-gradient(60% 45% at 0% 30%, rgba(95,170,148,.14), transparent 70%), #0e1626; }
+  :root:not([data-theme="light"]) .xtool > h1 { color: #e8f3ee; }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    :root:not([data-theme="light"]) .xtool > h1 { background: linear-gradient(120deg, #eef7f3 0%, #a8dccb 55%, #f0cf8a 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  }
+  :root:not([data-theme="light"]) .xtool > .lede { color: #d4e2dc; }
+  :root:not([data-theme="light"]) .xtool .xt-card { border-color: rgba(255,255,255,.08); color: #e6eef0;
+    background: linear-gradient(160deg, #182740 0%, #13213a 60%, #1c2a2f 100%);
+    box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 10px 0 -5px #13203a, 0 10px 0 -4px rgba(226,179,90,.22), 0 36px 60px -34px rgba(0,0,0,.8); background-color: #16243c; }
+  :root:not([data-theme="light"]) .xtool .xt-card h2 { color: #9fd8c6; }
+  :root:not([data-theme="light"]) .xtool input[type=text], :root:not([data-theme="light"]) .xtool textarea { background: #0f1a2d; border-color: #3a5a62; color: #eef4f2; box-shadow: inset 0 2px 6px rgba(0,0,0,.35); }
+  :root:not([data-theme="light"]) .xtool input[type=text]:focus, :root:not([data-theme="light"]) .xtool textarea:focus { border-color: #7cc4ad; box-shadow: 0 0 0 4px rgba(124,196,173,.22); }
+  :root:not([data-theme="light"]) .xtool .btn:not(.btn-quiet) { background: linear-gradient(135deg, #7cc4ad, #5aa98f); color: #0e1626; }
+  :root:not([data-theme="light"]) .xtool .btn-quiet { background: #13213a; border-color: #4f7f73; color: #bfe6d8; }
+  :root:not([data-theme="light"]) .xtool #doors .btn:nth-child(1) { background: #3a2e14; border-color: #8a6a28; color: #f6dca2; }
+  :root:not([data-theme="light"]) .xtool #doors .btn:nth-child(2) { background: #1b2c47; border-color: #4a6b99; color: #c9dcf6; }
+  :root:not([data-theme="light"]) .xtool #doors .btn:nth-child(3) { background: #40201b; border-color: #9a5348; color: #f6cfc6; }
+  :root:not([data-theme="light"]) .xtool #doors .btn:nth-child(4) { background: #2c2140; border-color: #6e5a99; color: #ddd0f3; }
+  :root:not([data-theme="light"]) .xtool .df-pick { background: #13213a; border-color: #34506a; color: #e6eef0; }
+  :root:not([data-theme="light"]) .xtool .df-all summary { color: #bfe6d8; }
+}
+@media (prefers-reduced-motion: reduce) { .xtool .btn, .xtool .df-pick { transition: none; } .xtool .btn:hover, .xtool .df-pick:hover { transform: none; } }
+.xtool > #status { margin: 0; }

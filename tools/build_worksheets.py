@@ -22,7 +22,7 @@ import tempfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FONTS = os.path.join(ROOT, "tools", "fonts")
 OUT = os.path.join(ROOT, "worksheets")
-TEMPLATE_VERSION = "3"  # bump to rebuild every PDF after a design change
+TEMPLATE_VERSION = "4"  # safety contact correction and its official citation
 
 AR_URL, EN_URL = "amazon.com/dp/B0HPNCYWWS", "amazon.com/dp/B0HPRPSPWF"
 
@@ -146,7 +146,8 @@ def worksheet_html(w):
 <h1>{h1}</h1>
 <p class="intro">{esc(w["intro"])}</p>
 {secs}
-<p class="note"><b>تنبيه:</b> ده تمرين للتأمل وفهم النفس، مش تشخيص ولا بديل عن العلاج النفسي.{extra} لو حاسس بضيق جامد أو خايف على نفسك، كلّم متخصص أو حد بتثق فيه فورًا — مصر: 105 · أمريكا: 988.</p>
+<p class="note"><b>تنبيه:</b> ده تمرين للتأمل وفهم النفس، مش تشخيص ولا بديل عن العلاج النفسي.{extra} لو حاسس بضيق جامد أو خايف على نفسك، كلّم متخصص أو حد بتثق فيه فورًا — مصر: 16328<sup>1</sup> · أمريكا: 988.</p>
+<p style="font-size:8pt">1. رقم الأمانة العامة للصحة النفسية: <a href="https://www.100millionseha.eg/happiness">https://www.100millionseha.eg/happiness</a></p>
 <div class="foot">
 <div>من عالم كتاب <b>«ليه بنحب اللي بيوجعنا؟»</b><br>د. ميلاد ميخائيل — دكتوراه في الصحة النفسية، جامعة قناة السويس</div>
 <div class="ltr">Arabic: {AR_URL}<br>English: {EN_URL}<br>drmilladmikhail.com</div>
@@ -198,6 +199,13 @@ def main():
                 page.evaluate("document.fonts.ready")
                 pdf = os.path.join(OUT, w["slug"] + ".pdf")
                 page.pdf(path=pdf, format="A4", print_background=True, prefer_css_page_size=True)
+                # Keep metadata explicit while preserving every page and link.
+                from pypdf import PdfReader, PdfWriter
+                writer = PdfWriter(clone_from=PdfReader(pdf))
+                writer.add_metadata({"/Title": w.get("title", w["slug"]),
+                                     "/Author": "Perplexity Computer"})
+                writer.write(pdf + ".metadata.pdf")
+                os.replace(pdf + ".metadata.pdf", pdf)
                 png = os.path.join(tmp, "prev")
                 subprocess.run(["pdftoppm", "-f", "1", "-l", "1", "-r", "70", "-png", "-singlefile", pdf, png], check=True)
                 img = Image.open(png + ".png").convert("RGB")

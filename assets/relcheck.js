@@ -51,7 +51,7 @@
     var html = '<p class="result-kicker">نتيجتك</p><h2>' + head + "</h2><p>" + msg + "</p>";
     if (serious.length || red.length) html += '<h3 class="rc-h rc-red">🚩 علامات محتاجة انتباه</h3>' + list(serious.concat(red));
     if (green.length) html += '<h3 class="rc-h rc-green">✅ علامات خضرا عندك</h3>' + list(green);
-    if (serious.length) html += '<p class="result-alert"><b>لو حاسس إنك في خطر دلوقتي:</b> مصر: النجدة <a href="tel:122">122</a>، والمجلس القومي للمرأة <a href="tel:15115">15115</a>، والدعم النفسي <a href="tel:105">105</a>. أمريكا: <a href="tel:911">911</a>، والخط الوطني للعنف الأسري <a href="tel:18007997233" dir="ltr" class="nowrap">1-800-799-7233</a>. واتكلم مع حد بتثق فيه.</p>';
+    if (serious.length) html += '<p class="result-alert"><b>لو حاسس إنك في خطر دلوقتي:</b> مصر: النجدة <a href="tel:122">122</a>، والمجلس القومي للمرأة <a href="tel:15115">15115</a>، والدعم النفسي <a href="tel:16328">16328</a>. أمريكا: <a href="tel:911">911</a>، والخط الوطني للعنف الأسري <a href="tel:18007997233" dir="ltr" class="nowrap">1-800-799-7233</a>. واتكلم مع حد بتثق فيه.</p>';
     html += '<p class="result-note">دي قايمة توعية، مش تشخيص ولا حكم على شريكك. لو محتار، اتكلم مع متخصص نفسي أو مستشار علاقات.</p>' +
       '<button type="button" class="btn again">جاوب تاني</button>';
     out.innerHTML = html;

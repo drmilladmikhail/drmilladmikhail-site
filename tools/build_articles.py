@@ -40,8 +40,6 @@ from site_header import TOPBAR  # noqa: E402  (one shared header for all Arabic 
 FOOTER = '''<footer class="footer">
   <div class="wrap footer-grid">
     <div>
-      <p class="names">د. ميلاد ميخائيل <span lang="en" dir="ltr">· Dr. Millad Mikhail</span></p>
-      <p>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA).</p>
       <p class="fine">© 2026. المحتوى لأغراض التوعية والتثقيف، ومش تشخيص ولا بديل عن العلاج النفسي.</p>
       <p class="fine footer-links"><a href="/sessions/">الجلسات</a> · <a href="/contact/">تواصل</a> · <a href="/help-now/">محتاج مساعدة دلوقتي</a> · <a href="/privacy/">الخصوصية</a> · <a href="/terms/">الشروط</a></p>
     </div>
@@ -387,11 +385,11 @@ def sitemap(items):
             vids = [v for v in json.load(f).get("videos", []) if v.get("published")]
         urls.append((f"{SITE}/videos/", max([v["published"] for v in vids] or ["2026-11-05"]), False))
     # Core platform routes (keep them discoverable in the sitemap).
-    for slug in ("platform", "paths", "experts", "join-us", "research", "research/library", "my-space"):
+    for slug in ("platform", "paths", "experts", "join-us", "research", "research/library", "my-space", "saved", "explore"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-07", False))
     # standalone pages built by tools/build_pages.py
-    for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "partner", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery", "exercise", "life-tools", "discover-feelings", "stories", "shelf", "newsletter"):
+    for slug in ("sessions", "contact", "help-now", "privacy", "terms", "start", "ask", "feelings", "relationship-check", "partner", "questions", "porn-addiction", "challenges", "worksheets", "book", "battery", "exercise", "life-tools", "discover-feelings", "stories", "shelf", "newsletter", "your-path"):
         if os.path.exists(os.path.join(ROOT, slug, "index.html")):
             urls.append((f"{SITE}/{slug}/", "2026-11-05", False))
     from pathlib import Path

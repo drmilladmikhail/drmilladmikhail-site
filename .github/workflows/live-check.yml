@@ -1,0 +1,29 @@
+# Checks the LIVE site (https://drmilladmikhail.com) in a real browser:
+# every sitemap page on phone + desktop, light + dark, JS errors, missing files,
+# overflow, accessibility (axe), internal + external links, redirects, and
+# whether the live copy matches the latest commit.
+# Manual only. The report is printed to the log between LIVE-CHECK-BEGIN/END.
+name: Live site check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser and axe-core
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+          npm install --no-save --prefix /tmp/axe axe-core@4
+      - name: Check the live site
+        run: python tools/live_check.py /tmp/axe/node_modules/axe-core/axe.min.js

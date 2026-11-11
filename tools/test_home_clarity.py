@@ -32,10 +32,18 @@ class HomepageTests(unittest.TestCase):
         self.assertIn(HEADER, output)
         self.assertIn(FOOTER, output)
 
-    def test_retains_content_and_research_link(self):
+    def test_retains_content(self):
         output = hc.transform(HOME)
-        for marker in ('id="articles"', 'id="about"', 'id="credentials"', 'id="concern-title"', 'href="/research/"'):
+        for marker in ('id="articles"', 'id="about"', 'id="credentials"', 'id="concern-title"'):
             self.assertIn(marker, output)
+
+    def test_research_link_moves_to_menu(self):
+        # 2026-11-10: the observatory is in the menu, not a homepage link.
+        link = '<!-- RESEARCH-LINK --><div class="wrap"><p><a href="/research/">مرصد الأبحاث النفسية: عرض علمي وشرح مبسط</a></p></div>'
+        output = hc.transform(HOME.replace('<!-- RESEARCH-LINK --><a href="/research/">Research</a>', link))
+        self.assertIn('<!-- RESEARCH-LINK -->', output)
+        self.assertNotIn('مرصد الأبحاث النفسية: عرض علمي', output)
+        self.assertEqual(hc.transform(output), output)
 
     def test_repeatable_and_single_heading_stylesheet(self):
         output = hc.transform(HOME)
@@ -47,12 +55,11 @@ class HomepageTests(unittest.TestCase):
         extra = '<section class="section guide-extra">Keep</section><section class="discovery-hub-extra">Keep too</section>'
         self.assertIn(extra, hc.transform(HOME.replace('</main>', extra + '</main>')))
 
-    def test_existing_glossary_label_is_updated(self):
-        legacy = hc.GLOSSARY.replace("القاموس النفسي", "القاموس النفسي بالمصري")
-        output = hc.transform(HOME.replace("</main>", legacy + "</main>"))
-        self.assertNotIn("بالمصري", output)
-        self.assertEqual(output.count('id="glossary-home-title"'), 1)
-        self.assertIn("افتح القاموس النفسي", output)
+    def test_glossary_section_moves_to_menu(self):
+        # 2026-11-10: the glossary is in the menu, not a homepage section.
+        output = hc.transform(HOME.replace("</main>", hc.GLOSSARY + "</main>"))
+        self.assertEqual(output.count('id="glossary-home-title"'), 0)
+        self.assertNotIn("افتح القاموس النفسي", output)
         self.assertEqual(hc.transform(output), output)
 
     def test_nested_removed_section_rejected(self):

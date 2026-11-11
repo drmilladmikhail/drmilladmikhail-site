@@ -36,41 +36,48 @@
   openHash();
 })();
 
-/* Site-wide announcement ticker for the latest published self-assessment. */
+/* Site-wide «جديد» ticker: the newest content on the site, written into each
+   page by tools/build_news.py as <script type="application/json" id="site-news">.
+   Nothing new → the previous items keep showing. Dismissing hides it for this
+   visit until something newer goes up. */
 (function () {
   var header = document.querySelector('.topbar');
   if (!header || document.querySelector('.site-announcement')) return;
-
+  var src = document.getElementById('site-news');
+  var news = [];
+  try { news = JSON.parse(src ? src.textContent : '[]') || []; } catch (e) { news = []; }
+  if (!news.length) return;
+  var key = news[0].k;
   try {
-    if (sessionStorage.getItem('siteAnnouncementDismissed') === 'cesd-2026-11') return;
+    if (sessionStorage.getItem('siteAnnouncementDismissed') === key) return;
   } catch (e) {}
 
   var isEnglish = document.documentElement.lang === 'en';
   var bar = document.createElement('aside');
   bar.className = 'site-announcement';
-  bar.setAttribute('aria-label', isEnglish ? 'New on the site' : 'إعلان جديد على الموقع');
+  bar.setAttribute('aria-label', 'الجديد على الموقع');
 
   var label = document.createElement('span');
   label.className = 'site-announcement-label';
-  label.textContent = isEnglish ? 'NEW' : 'جديد';
+  label.textContent = 'جديد';
 
   var viewport = document.createElement('div');
   viewport.className = 'site-announcement-viewport';
 
-  var message = isEnglish
-    ? 'New today: the CES-D depression symptoms scale is now available (20 questions). Start the self-assessment.'
-    : 'تمت إضافة مقياس أعراض الاكتئاب CES-D اليوم — 20 سؤالًا — ابدأ التقييم الآن.';
-
   var track = document.createElement('div');
   track.className = 'site-announcement-track';
+  var chars = 0;
   for (var i = 0; i < 2; i++) {
-    var link = document.createElement('a');
-    link.className = 'site-announcement-link';
-    link.href = '/tests/depression-cesd/';
-    link.textContent = message;
-    if (i === 1) { link.setAttribute('aria-hidden', 'true'); link.tabIndex = -1; }
-    track.appendChild(link);
+    news.forEach(function (n) {
+      var link = document.createElement('a');
+      link.className = 'site-announcement-link';
+      link.href = n.u;
+      link.textContent = n.t;
+      if (i === 1) { link.setAttribute('aria-hidden', 'true'); link.tabIndex = -1; } else { chars += n.t.length; }
+      track.appendChild(link);
+    });
   }
+  track.style.animationDuration = Math.max(24, Math.round(chars * 0.22)) + 's';
   viewport.appendChild(track);
 
   var close = document.createElement('button');
@@ -80,7 +87,7 @@
   close.textContent = '×';
   close.addEventListener('click', function () {
     bar.remove();
-    try { sessionStorage.setItem('siteAnnouncementDismissed', 'cesd-2026-11'); } catch (e) {}
+    try { sessionStorage.setItem('siteAnnouncementDismissed', key); } catch (e) {}
   });
 
   bar.appendChild(label);
@@ -95,6 +102,7 @@
     '.site-announcement-viewport{flex:1;min-width:0;overflow:hidden}',
     '.site-announcement-track{display:flex;width:max-content;direction:rtl;animation:site-announcement-scroll 24s linear infinite}',
     '.site-announcement-link{display:block;flex:none;padding-inline:32px;color:#fff;text-decoration:none;white-space:nowrap}',
+    '.site-announcement-link+.site-announcement-link{border-inline-start:1px solid rgba(226,179,90,.55)}',
     '.site-announcement-link:hover{text-decoration:underline}',
     '.site-announcement-close{position:relative;z-index:2;flex:none;width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font:400 22px/1 Arial,sans-serif;cursor:pointer}',
     '.site-announcement-close:hover{background:rgba(255,255,255,.22)}',

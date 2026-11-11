@@ -1,0 +1,62 @@
+/* Recovery stories only: preserve the site's typography, palette and forms. */
+.stories-page {
+  --story-gap: 1.25rem;
+  --story-padding: 1.5rem;
+  --story-small: .875rem;
+  --story-body: 1rem;
+  --story-heading: clamp(1.25rem, 1.1rem + .45vw, 1.5rem);
+}
+.stories-wrap > .section-intro { max-width: 48rem; }
+.stories-note {
+  margin-block: 1.5rem 2rem;
+  padding: var(--story-padding);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--mist);
+}
+.stories-note h2 { margin: 0 0 .5rem; font-size: var(--story-heading); }
+.stories-note p { margin: .5rem 0 0; font-size: var(--story-body); }
+.stories-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--story-gap); align-items: start; }
+.stories-grid .story-card { margin: 0; padding: 0; overflow-wrap: anywhere; min-width: 0; }
+.story-card, .story-send { scroll-margin-top: 8rem; }
+.story-details > summary { cursor: pointer; padding: var(--story-padding); list-style: none; border-radius: 1rem; }
+.story-details > summary::-webkit-details-marker { display: none; }
+.story-details > summary::marker { content: ""; }
+.story-details > summary:hover { background: var(--paper); }
+.story-details > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.story-card h2 { font-size: var(--story-heading); line-height: 1.7; }
+.story-read { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; color: var(--eucalyptus); font-size: var(--story-small); font-weight: 600; }
+.story-chevron { font-size: var(--story-heading); line-height: 1; }
+.story-close-label { display: none; }
+.story-details[open] .story-open-label { display: none; }
+.story-details[open] .story-close-label { display: inline; }
+.story-details[open] .story-chevron { transform: rotate(180deg); }
+.story-text { padding: 0 var(--story-padding) .5rem; font-size: var(--story-body); }
+.story-text p { margin: 0 0 1rem; }
+.story-card .story-by { padding-inline: var(--story-padding); margin: 0 0 .75rem; font-size: var(--story-small); }
+.reflection-privacy { font-size: var(--story-small); color: var(--muted); margin-block: -1rem 1.5rem; }
+.story-reflection { margin: .25rem var(--story-padding) 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+.story-reflection .reflection-kicker { margin: 0 0 .375rem; color: var(--eucalyptus); font-size: var(--story-small); font-weight: 600; }
+.story-reflection h3 { margin: 0 0 .75rem; font-size: 1.125rem; line-height: 1.7; }
+.story-reflection .reflection-note { font-size: var(--story-small); color: var(--muted); margin: 0 0 1rem; }
+.story-reflection .reflection-question { font-size: var(--story-body); font-weight: 600; margin: 0 0 1rem; }
+.reflection-choices { display: grid; gap: .625rem; }
+.reflection-option { min-width: 0; border: 1px solid var(--line); border-radius: .75rem; background: var(--paper); }
+.reflection-option > summary { display: flex; align-items: start; gap: .625rem; padding: .875rem; cursor: pointer; list-style: none; font-size: var(--story-small); line-height: 1.8; }
+.reflection-option > summary::-webkit-details-marker { display: none; }
+.reflection-option > summary::marker { content: ""; }
+.reflection-option > summary:hover { color: var(--eucalyptus); }
+.reflection-option > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: .75rem; }
+.reflection-number { display: inline-grid; place-items: center; flex: 0 0 1.625rem; min-height: 1.625rem; border: 1px solid var(--line); border-radius: 50%; color: var(--eucalyptus); font-weight: 600; }
+.reflection-toggle { flex: 0 0 1rem; margin-inline-start: auto; color: var(--eucalyptus); font-weight: 600; text-align: center; }
+.reflection-toggle::before { content: "+"; }
+.reflection-option[open] { border-color: var(--eucalyptus); }
+.reflection-option[open] .reflection-toggle::before { content: "−"; }
+.reflection-option[open] > summary { font-weight: 600; }
+.reflection-explanation { padding: 0 .875rem .875rem; font-size: var(--story-small); line-height: 1.9; }
+.reflection-explanation p { margin: 0; }
+.stories-wrap > .story-send, .stories-wrap > .discuss { max-width: 48rem; margin-inline: auto; }
+@media (max-width: 680px) {
+  .stories-page { --story-padding: 1.25rem; }
+  .stories-grid { grid-template-columns: minmax(0, 1fr); }
+}

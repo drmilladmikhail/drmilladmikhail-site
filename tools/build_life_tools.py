@@ -159,7 +159,7 @@ def build(ba, page, write, SITE):
       <ul class="cards">
 {chr(10).join(cards)}
       </ul>
-      <p class="safety">لو حاسس إنك في خطر دلوقتي، روح لصفحة <a href="/help-now/">محتاج مساعدة دلوقتي؟</a>. في مصر <a href="tel:105">105</a>، وفي أمريكا <a href="tel:988">988</a>.</p>
+      <p class="safety">لو حاسس إنك في خطر دلوقتي، روح لصفحة <a href="/help-now/">محتاج مساعدة دلوقتي؟</a>. في مصر <a href="tel:16328">16328</a>، وفي أمريكا <a href="tel:988">988</a>.</p>
     </div>
   </section>'''
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "أدوات لحياتك", "url": f"{SITE}/life-tools/",

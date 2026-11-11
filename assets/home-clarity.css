@@ -36,3 +36,41 @@ html[lang="ar"] body.home-redesign .about-facts{list-style:none;margin:16px 0;pa
 html[lang="ar"] body.home-redesign .about-facts li{font-size:14.5px;line-height:1.6;color:#244d43;background:#e5ebe3;border-radius:999px;padding:4px 12px}
 html[lang="ar"] body.home-redesign .about-more{display:grid;gap:12px;margin-top:28px}
 html[lang="ar"] body.home-redesign .about-fold[open]>.about-grid{margin-top:20px}
+
+/* ===== 2026-11-10 premium front: hero text as a 3D card, distinctive «تأمل اليوم» ===== */
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card{position:relative;isolation:isolate;overflow:hidden;padding:clamp(26px,4.4vw,48px) clamp(20px,4vw,46px);border-radius:30px;
+  background:linear-gradient(155deg,rgba(255,255,255,.97) 0%,rgba(243,249,246,.95) 52%,rgba(252,247,236,.96) 100%);
+  border:1px solid #fff;
+  box-shadow:0 1px 0 #fff inset,0 0 0 1px rgba(47,111,98,.10),
+    0 12px 0 -6px rgba(255,255,255,.85),0 12px 0 -5px rgba(47,111,98,.16),
+    0 24px 0 -12px rgba(255,255,255,.7),0 24px 0 -11px rgba(185,134,42,.18),
+    0 44px 70px -34px rgba(24,35,58,.5);background-color:#f4f9f6}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card::before{content:"";position:absolute;top:0;left:12%;right:12%;height:4px;border-radius:0 0 6px 6px;background:linear-gradient(90deg,transparent,#e2b35a 20%,#b9862a 50%,#e2b35a 80%,transparent)}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card-glow{position:absolute;z-index:-1;width:340px;height:340px;top:-170px;inset-inline-end:-120px;border-radius:50%;background:radial-gradient(circle,rgba(226,179,90,.30),rgba(226,179,90,0) 66%)}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card::after{content:"";position:absolute;z-index:-1;width:300px;height:300px;bottom:-170px;inset-inline-start:-110px;border-radius:50%;background:radial-gradient(circle,rgba(47,111,98,.18),rgba(47,111,98,0) 66%)}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-name{margin-top:0;color:#163c35;letter-spacing:-.01em}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-name{background:linear-gradient(120deg,#123a33 0%,#235a4e 55%,#6f5210 100%);-webkit-background-clip:text;background-clip:text;color:transparent}}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .statement{color:#2c4a42}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-sub{position:relative;margin-top:22px;padding-top:18px;color:#3d4f48}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-sub::before{content:"";position:absolute;top:0;left:30%;right:30%;height:1px;background:linear-gradient(90deg,transparent,rgba(47,111,98,.35),transparent)}
+@media(min-width:900px){html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-sub::before{left:auto;right:0;width:40%}}
+@media(max-width:560px){html[lang="ar"] body.home-redesign #main .clarity-hero{padding-block:22px 34px}
+  html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card{border-radius:24px}}
+
+/* «تأمل اليوم»: a deep green card with gold light — stands out from the white cards */
+html[lang="ar"] body.home-redesign #main .today .daily{position:relative;isolation:isolate;overflow:hidden;color:#f4f8f6;border:1px solid rgba(226,179,90,.45);border-radius:26px;
+  background:radial-gradient(120% 90% at 100% 0%,rgba(226,179,90,.32) 0%,rgba(226,179,90,0) 55%),linear-gradient(150deg,#0f3a33 0%,#1b4e44 48%,#2f6f62 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 30px 60px -30px rgba(15,58,51,.75),0 10px 22px -14px rgba(15,58,51,.5);background-color:#1b4e44}
+html[lang="ar"] body.home-redesign #main .today .daily::before{content:"”";position:absolute;z-index:-1;top:-34px;inset-inline-end:14px;font:700 180px/1 Georgia,"Times New Roman",serif;color:rgba(226,179,90,.22)}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-kicker,
+html[lang="ar"] body.home-redesign #main .today .daily .daily-kicker .mini-heading-icon{color:#f0cf8a}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-date{color:#d6e6df}
+html[lang="ar"] body.home-redesign #main .today .daily blockquote,
+html[lang="ar"] body.home-redesign #main .today .daily .daily-text{color:#fff}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-text{font-size:clamp(20px,2.4vw,25px);line-height:1.85}
+html[lang="ar"] body.home-redesign #main .today .daily figcaption{color:#d6e6df}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-wa{background:#e2b35a;border-color:#e2b35a;color:#1d2a26}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-copy{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
+html[lang="ar"] body.home-redesign #main .today .daily a:focus-visible,html[lang="ar"] body.home-redesign #main .today .daily button:focus-visible{outline-color:#f0cf8a}
+html[lang="ar"] body.home-redesign #main .ses-topics{list-style:none;padding:0;margin:0 0 14px}

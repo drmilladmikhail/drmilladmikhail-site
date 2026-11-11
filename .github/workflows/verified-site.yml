@@ -30,6 +30,12 @@ jobs:
           python -m compileall -q tools
           python -m unittest discover -s tools -p test_home_clarity.py -v
           python -m unittest discover -s tools -p test_glossary.py -v
+          python -m unittest discover -s tools -p test_stories.py -v
+          python -m unittest discover -s tools -p test_your_path.py -v
+          python -m unittest discover -s tools -p test_saved.py -v
+          python -m unittest discover -s tools -p test_next_steps.py -v
+          python -m unittest discover -s tools -p test_explore.py -v
+          python -m unittest discover -s tools -p test_site_repairs.py -v
           python tools/growth_package.py
           python tools/build_articles.py
           python tools/home_clarity.py
@@ -68,7 +74,7 @@ jobs:
                   browser = p.chromium.launch()
                   for width in [390, 1280]:
                       page = browser.new_page(viewport={'width': width, 'height': 900})
-                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
+                      for slug, name in [('/', 'home'), ('/research/', 'research'), ('/start/', 'start'), ('/stories/', 'stories'), ('/exercise/', 'exercise'), ('/saved/', 'saved'), ('/explore/', 'explore'), ('/your-path/', 'your-path'), ('/glossary/', 'glossary'), ('/glossary/self-compassion/', 'glossary-term')]:
                           response = page.goto('http://127.0.0.1:8765' + slug, wait_until='load')
                           assert response.status == 200, slug
                           assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), slug
@@ -87,13 +93,24 @@ jobs:
                                           });
                                           return rgb[0] * .2126 + rgb[1] * .7152 + rgb[2] * .0722;
                                       };
+                                      // contrast against the nearest painted background (the «تأمل اليوم»
+                                      // card is deep green with light text since 2026-11-10)
+                                      const bgOf = el => {
+                                          for (let n = el; n; n = n.parentElement) {
+                                              const c = getComputedStyle(n).backgroundColor;
+                                              const a = (c.match(/[\\d.]+/g) || [])[3];
+                                              if (c !== 'transparent' && (a === undefined || Number(a) > .9)) return c;
+                                          }
+                                          return 'rgb(255, 255, 255)';
+                                      };
+                                      const ratio = (a, b) => { const x = luminance(a), y = luminance(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
                                       return ['.daily-text', '.daily-kicker', '.daily-date',
                                           '.daily figcaption', '.daily-copy', '.weekly > span'].flatMap(selector =>
                                           [...document.querySelectorAll(selector)].map(el =>
-                                              [selector, 1.05 / (luminance(getComputedStyle(el).color) + .05)]));
+                                              [selector, ratio(getComputedStyle(el).color, bgOf(el))]));
                                   }""")
                                   assert all(ratio >= 4.5 for _, ratio in contrast), contrast
-                                  assert page.locator('.daily').evaluate("(el) => getComputedStyle(el).backgroundColor") == 'rgb(255, 255, 255)'
+                                  assert page.locator('.daily').evaluate("(el) => getComputedStyle(el).backgroundColor") not in ('transparent', 'rgba(0, 0, 0, 0)')
                                   assert page.locator('.weekly').evaluate("(el) => getComputedStyle(el).backgroundColor") == 'rgb(255, 255, 255)'
                               page.emulate_media(color_scheme='light')
                           if name == 'research':
@@ -101,6 +118,90 @@ jobs:
                               panel = page.locator('main details').nth(1)
                               panel.locator('summary').click()
                               assert panel.evaluate('(el) => el.open')
+                          if name == 'stories':
+                              assert page.locator('.story-card').count() == 10
+                              assert page.locator('.story-card .next-steps').count() == 10
+                              assert page.locator('.story-card .next-steps a').count() == 20
+                              assert page.locator('.story-reflection').count() == 10
+                              assert page.locator('.reflection-option').count() == 30
+                              card = page.locator('.story-card').first
+                              card.locator('.story-details > summary').click()
+                              choices = card.locator('.reflection-option')
+                              for i in range(3):
+                                  choices.nth(i).locator('summary').click()
+                                  assert choices.nth(i).evaluate('(el) => el.open')
+                                  assert card.locator('.reflection-option[open]').count() == 1
+                                  assert choices.nth(i).locator('.reflection-explanation').is_visible()
+                              assert 'بحسب تأكيده' not in page.locator('main').inner_text()
+                              card.locator('[data-save-id]').click()
+                              assert card.locator('[data-save-id]').get_attribute('aria-pressed') == 'true'
+                          if name == 'exercise':
+                              assert page.locator('.ex .next-steps').count() == 8
+                              assert page.locator('.ex .next-steps a').count() == 16
+                              page.locator('.ex:visible [data-save-id]').click()
+                              assert page.locator('.ex:visible [data-save-id]').get_attribute('aria-pressed') == 'true'
+                          if name == 'saved':
+                              assert page.locator('#bookmark-list li').count() == 2
+                              page.reload()
+                              assert page.locator('#bookmark-list li').count() == 2
+                              page.locator('[data-saved-filter="story"]').click()
+                              assert page.locator('#bookmark-list li').count() == 1
+                              page.locator('[data-saved-filter="all"]').click()
+                              page.locator('#bookmark-clear').click()
+                              page.locator('#bookmark-cancel').click()
+                              assert page.locator('#bookmark-list li').count() == 2
+                              page.evaluate("localStorage.setItem('journal:bookmark-test', 'preserve')")
+                              page.locator('#bookmark-clear').click()
+                              page.locator('#bookmark-confirm-clear').click()
+                              assert page.locator('#bookmark-list li').count() == 0
+                              assert page.evaluate("localStorage.getItem('journal:bookmark-test')") == 'preserve'
+                          if name == 'explore':
+                              page.locator('.explore-controls').wait_for(state='visible')
+                              assert page.locator('.explore-item:visible').count() == 12
+                              page.locator('[data-explore-kind="article"]').click()
+                              assert page.locator('.explore-item:visible').count() > 0
+                              assert page.locator('.explore-item:visible:not([data-kind="article"])').count() == 0
+                              page.locator('[data-explore-kind="research"]').click()
+                              assert page.locator('.explore-item:visible').count() > 0
+                              assert page.locator('.explore-item:visible:not([data-kind="research"])').count() == 0
+                              with page.expect_popup() as paper_event:
+                                  page.locator('.explore-item:visible a').first.click()
+                              paper_page = paper_event.value
+                              paper_page.locator('.lib-card details[open]').wait_for(state='visible')
+                              target_id = paper_page.evaluate("decodeURIComponent(location.hash.slice(1))")
+                              assert paper_page.locator('.lib-card:has(details[open])').get_attribute('id') == target_id
+                              paper_page.locator('#lib-lang').click()
+                              assert paper_page.locator('.lib-card:has(details[open])').get_attribute('id') == target_id
+                              paper_page.close()
+                              page.locator('[data-explore-kind="all"]').click()
+                              page.locator('#explore-more').click()
+                              assert page.locator('.explore-item:visible').count() == 24
+                              page.locator('#explore-query').fill('Self-compassion')
+                              page.locator('#explore-form button[type="submit"]').click()
+                              assert 'التعاطف مع الذات' in page.locator('.explore-item:visible h2').first.inner_text()
+                              assert page.url.endswith('/explore/')
+                              page.locator('#explore-clear').click()
+                              page.locator('[data-explore-kind="story"]').click()
+                              assert page.locator('.explore-item:visible').count() == 10
+                              page.locator('#explore-query').fill('zzznomatch123')
+                              page.locator('#explore-form button[type="submit"]').click()
+                              assert page.locator('#explore-empty').is_visible()
+                              page.locator('#explore-reset').click()
+                              assert page.locator('.explore-item:visible').count() == 12
+                          if name == 'your-path':
+                              assert page.locator('.yp-topic').count() == 6
+                              page.locator('[data-topic="anxiety"]').click()
+                              page.locator('#yp-preferences').wait_for(state='visible')
+                              page.locator('[data-start="exercise"]').click()
+                              route = page.locator('.yp-route:visible')
+                              assert route.locator('.yp-step').first.get_attribute('data-kind') == 'exercise'
+                              for button in route.locator('[data-complete]').all():
+                                  button.click()
+                              assert page.locator('#yp-finish').is_visible()
+                              route.locator('[data-complete]').first.click()
+                              assert not page.locator('#yp-finish').is_visible()
+                              page.locator('#yp-restart').click()
+                              assert page.locator('.yp-route:visible').count() == 0
                           if name == 'glossary':
                               assert page.locator('h1').inner_text() == 'القاموس النفسي'
                               assert page.locator('.g-entry:visible').count() == glossary_count
@@ -122,6 +223,25 @@ jobs:
                               assert page.get_by_role('heading', name='إيه اللي مش معناه؟').count() == 1
                               assert page.locator('.g-source a').count() == 1
                           page.screenshot(path=f'test-artifacts/{name}-{width}.png', full_page=True)
+                      page.goto('http://127.0.0.1:8765/tests/')
+                      assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'Reference overflow'
+                      page.goto('http://127.0.0.1:8765/challenges/')
+                      assert page.locator('.challenge').count() == 8
+                      page.locator('[data-key="seven-day-journey-1"]').check()
+                      page.goto('http://127.0.0.1:8765/my-space/')
+                      assert page.locator('#journey-count').inner_text() == '1/7'
+                      page.goto('http://127.0.0.1:8765/challenges/')
+                      page.locator('[data-journey-reset]').click()
+                      assert page.locator('#seven-day-journey input:checked').count() == 0
+                      page.goto('http://127.0.0.1:8765/exercise/#feelings-journal')
+                      page.goto('http://127.0.0.1:8765/exercise/#mindful-breathing')
+                      assert page.locator('.ex:visible .breath-go').is_visible(), 'Same-page exercise hash navigation'
+                      page.goto('http://127.0.0.1:8765/exercise/#feelings-journal')
+                      page.clock.install()
+                      page.locator('.ex:visible textarea').first.fill('synthetic CI repair check')
+                      page.locator('.ex:visible .jr-clear').click()
+                      page.clock.run_for(500)
+                      assert page.evaluate("localStorage.getItem('journal:feelings-journal')") is None
                       page.close()
                   browser.close()
           finally:

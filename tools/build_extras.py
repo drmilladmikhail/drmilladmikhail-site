@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
 """Interactive pages added 2026-11-07 (called by tools/build_pages.py):
   /exercise/  «تمرين الأسبوع النفسي»  — content/exercises.json, assets/extras.js (notes saved only on the visitor's device)
-  /stories/   «حكايات التعافي»        — content/stories.json (REAL stories only, sent by readers with consent, anonymised)
+  /stories/   «حكايات التعافي»        — de-identified owner accounts, labelled fiction and consented reader submissions
   /shelf/     «رفّ الترشيحات»          — content/shelf.json
 """
 import json
+import hashlib
 import os
+import re
 from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WA = "https://wa.me/12012758490"
+
+
+def _asset(name):
+    with open(os.path.join(ROOT, "assets", name), "rb") as source:
+        digest = hashlib.sha256(source.read()).hexdigest()[:12]
+    return f"/assets/{name}?v={digest}"
+
+
+def _extras_script():
+    return f'<script src="{_asset("extras.js")}" defer></script>\n</body>'
 
 
 def _load(name, default):
@@ -20,7 +32,9 @@ def _load(name, default):
     return default
 
 
-def exercise_page(ba, page, write, SITE):
+def exercise_page(ba, page, write, SITE, next_steps=None):
+    import build_saved
+    import build_next_steps
     esc = ba.esc
     data = _load("exercises.json", {"items": []})
     items = data["items"]
@@ -37,6 +51,7 @@ def exercise_page(ba, page, write, SITE):
         arts.append(f'''<article class="ex" id="{e["slug"]}" data-n="{n}"{"" if n == 0 else " hidden"}>
         <p class="ex-kicker"><span class="ex-when">تمرين الأسبوع</span> · {e["minutes"]} دقايق</p>
         <h2>{esc(e["title"])}</h2>
+        {build_saved.button(esc, "exercise", e["slug"], e["title"])}
         <p class="ex-goal"><b>الهدف:</b> {esc(e["goal"])}</p>
         <ol class="ex-steps">{steps}</ol>
         {breathing}
@@ -53,13 +68,16 @@ def exercise_page(ba, page, write, SITE):
           <a class="sh sh-fb" href="https://www.facebook.com/sharer/sharer.php?u={quote(SITE + '/exercise/', safe='')}" target="_blank" rel="noopener">فيسبوك</a>
           <a class="sh sh-x" href="https://x.com/intent/post?text={share_txt}" target="_blank" rel="noopener">X</a></div>
         {rel}
+        {build_next_steps.render(esc, "exercise", e["slug"], (next_steps or {}).get("exercise", {}).get(e["slug"]))}
       </article>''')
     archive = "".join(f'<li><a href="#{e["slug"]}" data-n="{n}">{esc(e["title"])}</a></li>' for n, e in enumerate(items))
     body = f'''  <section class="section extras" data-start="{data.get("start", "2026-11-02")}" data-count="{len(items)}">
     <div class="wrap narrow">
       <p class="crumbs"><a href="/">الصفحة الرئيسية</a></p>
       <h1>تمرين الأسبوع النفسي</h1>
+      {build_saved.notice()}
       <p class="section-intro">كل أسبوع تمرين عملي قصير من العلاج النفسي: تدوين المشاعر، الحدود الصحية، التنفس الواعي، والبحث عن المعنى. اقرا الخطوات، جرّبها، واكتب تأملاتك لنفسك.</p>
+      <p class="safety exercise-readonly">كل التمارين متاحة هنا للقراءة. لو تفاعل الصفحة مش شغّال، مساحة كتابة الملاحظات وتشغيل التنفس التفاعلي مش متاحين؛ تقدر تتبع الخطوات المكتوبة عادي.</p>
       {"".join(arts)}
       <p class="related">عايز أدوات قصيرة تانية؟ شوف <a href="/life-tools/">أدوات لحياتك</a>.</p>
       <details class="ex-archive"><summary>كل التمارين (تقدر ترجع لأي تمرين)</summary><ol>{archive}</ol></details>
@@ -69,28 +87,114 @@ def exercise_page(ba, page, write, SITE):
     ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "تمرين الأسبوع النفسي", "url": f"{SITE}/exercise/",
           "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
     html = page("exercise", "تمرين الأسبوع النفسي", "تمرين نفسي عملي جديد كل أسبوع: تدوين المشاعر، الحدود الصحية، التنفس الواعي ورسالة حنية لنفسك، مع مساحة تكتب فيها لنفسك.", body, ld)
-    write("exercise", html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1))
+    html = html.replace("</head>", f'<link rel="stylesheet" href="{_asset("exercise-fallback.css")}">\n</head>', 1)
+    if next_steps is not None:
+        html = build_next_steps.attach(html)
+    write("exercise", build_saved.attach(html.replace("</body>", _extras_script(), 1)))
 
 
-def stories_page(ba, page, write, SITE):
+def story_reflections():
+    """Load optional, separately labelled educational prompts, never case events."""
+    records = {}
+    for item in _load("story-reflections.json", {"items": []}).get("items", []):
+        sid = item.get("story_id", "")
+        options = item.get("options", [])
+        if (not isinstance(sid, str) or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", sid)
+                or sid in records or not isinstance(item.get("question"), str)
+                or not item["question"].strip() or not isinstance(options, list)
+                or len(options) != 3
+                or any(not isinstance(option, dict)
+                       or any(not isinstance(option.get(key), str) or not option[key].strip()
+                              for key in ("label", "text"))
+                       for option in options)):
+            raise ValueError("Invalid or duplicate story reflection: " + repr(sid))
+        records[sid] = item
+    return records
+
+
+def story_reflection_html(esc, item):
+    """Native disclosures: no scripts, submissions, storage, scores or diagnosis."""
+    sid = esc(item["story_id"])
+    choices = "".join(
+        f'''<details class="reflection-option" name="reflection-{sid}">
+          <summary><span class="reflection-number" aria-hidden="true">{number}</span>
+            <span>{esc(option["label"])}</span><span class="reflection-toggle" aria-hidden="true"></span></summary>
+          <div class="reflection-explanation"><p>{esc(option["text"])}</p></div>
+        </details>'''
+        for number, option in zip(("١", "٢", "٣"), item["options"])
+    )
+    return f'''<section class="story-reflection" aria-labelledby="reflect-{sid}">
+        <p class="reflection-kicker">وقفة مع الحكاية</p>
+        <h3 id="reflect-{sid}">لو كنت مكانه، كنت هتعمل إيه؟</h3>
+        <p class="reflection-note">موقف افتراضي للتفكير، مش تكملة لأحداث الحكاية. مفيش درجات أو تشخيص؛ افتح أي اختيار وشوف زاوية للفهم.</p>
+        <p class="reflection-question">{esc(item["question"])}</p>
+        <div class="reflection-choices">{choices}</div>
+      </section>'''
+
+
+def eligible_stories():
+    stories = []
+    for story in _load("stories.json", {"stories": []}).get("stories", []):
+        if story.get("kind") == "illustrative_fiction":
+            stories.append(story)
+        elif (story.get("kind") == "clinician_provided_account"
+              and story.get("owner_approved") is True and story.get("deidentified") is True
+              and story.get("patient_publication_consent") is True):
+            stories.append(story)
+        elif story.get("kind", "reader_submission") == "reader_submission" and story.get("consent") is True:
+            stories.append(story)
+    return stories
+
+
+def stories_page(ba, page, write, SITE, next_steps=None):
+    import build_saved
+    import build_next_steps
     esc = ba.esc
-    stories = [s for s in _load("stories.json", {"stories": []}).get("stories", []) if s.get("consent")]
+    reflections = story_reflections()
+    stories = eligible_stories()
     if stories:
-        cards = "".join(f'''<article class="story"><p class="story-tag">{esc(s.get("tag", ""))}</p><h2>{esc(s["title"])}</h2>
-        {"".join(f"<p>{esc(p)}</p>" for p in s["text"])}
-        <p class="story-by">— {esc(s.get("alias", "صاحب/ة الحكاية"))}، نُشرت بإذنه/ا وبعد إخفاء أي تفاصيل تكشف هويته/ا</p></article>''' for s in stories)
+        parts = []
+        for n, s in enumerate(stories, 1):
+            fictional = s.get("kind") == "illustrative_fiction"
+            clinical = s.get("kind") == "clinician_provided_account"
+            paragraphs = "".join(f"<p>{esc(p)}</p>" for p in s["text"])
+            reflection = (story_reflection_html(esc, reflections[s["id"]])
+                          if s.get("id") in reflections else "")
+            onward = build_next_steps.render(esc, "story", s.get("id"),
+                        (next_steps or {}).get("story", {}).get(s.get("id")))
+            attribution = (
+                '<p class="story-by">حكاية توضيحية متخيّلة، مش حالة حقيقية من العيادة.</p>'
+                if fictional else
+                '<p class="story-by">من داخل العيادة · صياغة تحريرية على لسان صاحب الحكاية، وليست اقتباسًا حرفيًا.</p>'
+                if clinical else
+                f'<p class="story-by">{esc(s.get("alias", "صاحب/ة الحكاية"))}، '
+                'نُشرت بإذنه/ا وبعد إخفاء أي تفاصيل تكشف هويته/ا</p>'
+            )
+            parts.append(f'''<article class="story story-card" id="story-{n}">
+        <details class="story-details"><summary>
+          <span class="story-tag">{esc(s.get("tag", ""))}</span>
+          <h2>{esc(s["title"])}</h2>
+          <span class="story-read"><span class="story-open-label">اقرا الحكاية وجرّب الموقف</span><span class="story-close-label">اقفل الحكاية</span><span class="story-chevron" aria-hidden="true">⌄</span></span>
+        </summary><div class="story-text">{paragraphs}</div>{reflection}{onward}</details>
+        {attribution}{build_saved.button(esc, "story", s.get("id"), s["title"])}</article>''')
+        cards = '<div class="stories-grid">' + "".join(parts) + "</div>"
     else:
-        cards = '''<div class="story-empty"><p class="story-tag">قريباً</p><h2>أول الحكايات في الطريق</h2>
-        <p>الحكايات هنا هتكون حقيقية بس، من ناس عدّوا بقلق أو تعلّق مؤلم أو علاقة مؤذية، وقرروا يشاركوا رحلتهم عشان غيرهم ميحسش إنه لوحده. مش هنكتب حكايات من خيالنا.</p>
-        <p>لو عندك حكاية، ممكن تكون انت أول واحد يفتح الباب ده لغيرك. 💚</p></div>'''
+        cards = '''<div class="story-empty"><p class="story-tag">قريبًا</p><h2>الحكايات بتتجهز</h2>
+        <p>أي حكاية متخيّلة هنا هتكون مكتوب عليها إنها للتوضيح. ومش هننشر تجربة حقيقية يبعتها قارئ من غير موافقته.</p>
+        <p>تقدر تبعت تجربتك من النموذج تحت، من غير تفاصيل تكشف هويتك.</p></div>'''
     cats = ["القلق والتوتر", "التعلّق والعلاقات", "التعافي من علاقة مؤذية", "تقدير الذات وجلد الذات", "الفراغ والبحث عن المعنى", "حاجة تانية"]
     opts = "".join(f"<option>{c}</option>" for c in cats)
-    body = f'''  <section class="section extras">
-    <div class="wrap narrow">
+    body = f'''  <section class="section extras stories-page">
+    <div class="wrap stories-wrap">
       <p class="crumbs"><a href="/">الصفحة الرئيسية</a></p>
-      <h1>حكايات التعافي</h1>
-      <p class="section-intro">حكايات حقيقية من غير أسماء عن رحلة التعافي والنمو: من القلق، ومن أنماط التعلّق المؤلمة، ومن علاقات وجعتنا. هنا مكان دافي وآمن تعرف فيه إنك مش لوحدك.</p>
+      <h1>حكايات من داخل العيادة</h1>
+      <p class="section-intro">ورا كل حكاية فيه وجع ومحاولة للفهم والتغيير. افتح الكارت واقرا عن رحلة مختلفة، وبعدها جرّب تختار رد فعل في موقف افتراضي، من غير مقارنة بين تجربة والتانية.</p>
+      <aside class="stories-note" aria-label="عن طبيعة الحكايات"><h2>من غير أسماء أو تفاصيل تعريفية</h2>
+        <p>الحكايات دي من واقع عيادتي، وبنشرها بموافقة أصحابها، من غير أسماء أو تفاصيل تكشف هويتهم. كل حكاية مكتوبة على لسان صاحبها، مع إعادة الصياغة لحماية الخصوصية؛ مش نقل حرفي لكلامه.</p>
+        <p>كل حكاية بتعرض تجربة فردية، مش تشخيص ولا خطة علاج ولا وعد بنفس النتيجة لكل الناس. وماينفعش تبدأ أو توقف دواء أو تغيّر جرعته اعتمادًا على حكاية هنا.</p></aside>
+      <p class="reflection-privacy">التفاعل اختياري. اختياراتك بتفتح شرحها هنا بس، ومش بتتبعت أو بتتحفظ.</p>
       {cards}
+      <p class="safety">التجارب دي للتوعية والمساندة، مش لتشخيص نفسك أو تغيير علاجك. لو انت في خطر دلوقتي، افتح <a href="/help-now/">محتاج مساعدة دلوقتي</a>.</p>
       <section class="story-send" aria-labelledby="send-h">
         <h2 id="send-h">احكي حكايتك (من غير اسمك)</h2>
         <ul class="story-promise"><li>اكتب باسم مستعار، ومتكتبش أسماء ناس أو أماكن أو أي حاجة تكشفك.</li><li>هقرا الحكاية بنفسي، وممكن أعدّل صياغتها بسيط وأشيل أي تفاصيل حساسة قبل النشر.</li><li>مش هنشر أي حكاية من غير موافقتك الواضحة، وتقدر تطلب حذفها في أي وقت.</li></ul>
@@ -109,10 +213,14 @@ def stories_page(ba, page, write, SITE):
       {ba.discussion_block("stories", SITE + "/stories/", "حكايات التعافي", "كلمة دعم لكل حد لسه في أول الطريق: إيه اللي كنت تتمنى حد يقولهولك؟", "مساحة الدعم")}
     </div>
   </section>'''
-    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "حكايات التعافي", "url": f"{SITE}/stories/", "inLanguage": "ar",
+    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": "حكايات من داخل العيادة", "url": f"{SITE}/stories/", "inLanguage": "ar",
           "author": {"@id": f"{SITE}/#person"}}
-    html = page("stories", "حكايات التعافي", "حكايات تعافي حقيقية من غير أسماء عن القلق والتعلّق والعلاقات المؤذية، ومساحة آمنة تشارك فيها حكايتك وتدعم غيرك.", body, ld)
-    write("stories", html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1))
+    html = page("stories", "حكايات من داخل العيادة", "١٠ حكايات من واقع عيادتي، بنشرها بموافقة أصحابها على لسانهم، من غير أسماء أو تفاصيل تعريفية، مع الحفاظ على خصوصيتهم.", body, ld)
+    html = html.replace("</head>", '<link rel="stylesheet" href="/assets/stories.css?v=20261110-4">\n</head>', 1)
+    html = html.replace('<div class="stories-grid">', build_saved.notice() + '<div class="stories-grid">', 1)
+    if next_steps is not None:
+        html = build_next_steps.attach(html)
+    write("stories", build_saved.attach(html.replace("</body>", _extras_script(), 1)))
 
 
 def shelf_page(ba, page, write, SITE):
@@ -159,12 +267,21 @@ def shelf_page(ba, page, write, SITE):
           "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
           "hasPart": [{"@type": "Book", "name": b["orig"], "author": b["author"], "datePublished": str(b["year"])} for b in d["books"]]}
     html = page("shelf", "رفّ الترشيحات: كتب نفسية وأدوات", "أفضل كتب علم النفس اللي برشّحها مع رأيي فيها ولمين تنفع: المعنى، التعلّق، التعاطف مع الذات، العادات. وأدوات مجانية ومحتوى مسموع.", body, ld)
-    write("shelf", html.replace("</body>", '<script src="/assets/extras.js" defer></script>\n</body>', 1))
+    write("shelf", html.replace("</body>", _extras_script(), 1))
 
 
 def build_all(ba, page, write, SITE):
-    exercise_page(ba, page, write, SITE)
-    stories_page(ba, page, write, SITE)
+    import build_explore
+    build_explore.build(ba, page, write, SITE)
+    import build_saved
+    import build_next_steps
+    next_steps = build_next_steps.load()
+    build_saved.write_catalog()
+    build_saved.build(ba, page, write, SITE)
+    exercise_page(ba, page, write, SITE, next_steps)
+    stories_page(ba, page, write, SITE, next_steps)
+    import build_your_path
+    build_your_path.build(ba, page, write, SITE)
     shelf_page(ba, page, write, SITE)
     import build_life_tools
     build_life_tools.build(ba, page, write, SITE)

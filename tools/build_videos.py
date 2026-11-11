@@ -15,6 +15,7 @@ Everything is merged into assets/videos.json, which keeps growing (a video that
 drops out of the feed is not lost). In that file:
   "hidden":   ids that never show on the site
   "featured": ids shown on the home page, in this order (else the newest)
+  "pinned":   ids shown first on /videos/ («ابدأ بالفيديوهات دي»), in this order
   "categories": the sections of /videos/ (slug, name, optional note), in order
   "category_of": video id -> category slug. A new upload gets a guess from its
                  title (GUESS below); change it here if the guess is wrong.
@@ -318,6 +319,16 @@ def page(vs, data=None):
         <h2 id="h-{c["slug"]}">{esc(c["name"])} <span class="vcount">{len(items)} فيديو</span></h2>{note}
         {body}
       </section>'''
+    by_id = {v["id"]: v for v in vs}
+    pinned = [by_id[i] for i in data.get("pinned", []) if i in by_id]
+    if pinned:
+        sec = f'''<section class="vcat vpinned" id="start" aria-labelledby="h-start">
+        <h2 id="h-start">ابدأ بالفيديوهات دي</h2>
+        <ul class="vcards">
+          {"\n          ".join(vcard(v, "h3") for v in pinned)}
+        </ul>
+      </section>
+      ''' + sec
     if not vs:
         sec = f'<p>الفيديوهات هتظهر هنا قريب. لحد ما تظهر، تقدر تتفرّج على <a href="{HANDLE}">القناة على يوتيوب</a>.</p>'
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "فيديوهات د. ميلاد ميخائيل",

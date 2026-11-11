@@ -55,6 +55,8 @@ def build(ba, page, write, SITE):
           "description": desc, "author": {"@id": f"{SITE}/#person"}, "dateModified": bl.MODIFIED,
           "isPartOf": {"@type": "CollectionPage", "name": "أدوات لحياتك", "url": f"{SITE}/life-tools/"}}
     html = page(SLUG, title, desc, body, ld)
-    html = html.replace("</head>", f'<link rel="stylesheet" href="/assets/{SLUG}/tool.css">\n</head>', 1)
+    # premium.css (2026-11-10, his request «خلي الصفحة برميم تصميم») is hand-written, loaded after tool.css
+    html = html.replace("</head>", f'<link rel="stylesheet" href="/assets/{SLUG}/tool.css">\n'
+                        f'<link rel="stylesheet" href="/assets/{SLUG}/premium.css">\n</head>', 1)
     html = html.replace("</body>", "\n".join(scripts) + "\n</body>", 1)
     write(SLUG, html)

@@ -126,12 +126,12 @@
     var journalName = ar ? r.journal_ar : r.journal;
     var issueTxt = ar ? r.issue_ar : r.issue_en;
     var absArFirst = ar;
-    var absAr = '<div class="abs-block" dir="rtl" lang="ar"><h4>' + esc(LABELS.ar.abstractAr) + '</h4><p>' + esc(r.abstract_ar) + '</p></div>';
-    var absEn = '<div class="abs-block" dir="ltr" lang="en"><h4>' + esc(LABELS.en.abstractEn) + '</h4><p>' + esc(r.abstract) + '</p></div>';
+    var absAr = '<div class="abs-block" dir="rtl" lang="ar"><h3>' + esc(LABELS.ar.abstractAr) + '</h3><p>' + esc(r.abstract_ar) + '</p></div>';
+    var absEn = '<div class="abs-block" dir="ltr" lang="en"><h3>' + esc(LABELS.en.abstractEn) + '</h3><p>' + esc(r.abstract) + '</p></div>';
     return '<article class="lib-card" id="p' + esc(r.pmid || r.doi) + '">' +
       '<p class="tag">' + esc(journalName) + ' · ' + esc(L.vol) + ' ' + esc(r.volume) + ' · ' + esc(L.issue) + ' ' + esc(r.issue) + ' · ' + esc(issueTxt) +
       (isNewToday(r) ? '<span class="new-badge">' + esc(L.newBadge) + '</span>' : '') + '</p>' +
-      '<h3>' + esc(mainTitle) + '</h3>' +
+      '<h2>' + esc(mainTitle) + '</h2>' +
       '<p class="alt-title" dir="' + (ar ? 'ltr' : 'rtl') + '" lang="' + (ar ? 'en' : 'ar') + '">' + esc(secondTitle) + '</p>' +
       '<p class="authors"><b>' + esc(L.authors) + ':</b> <span dir="ltr" lang="en">' + esc(authorsLine(r)) + '</span></p>' +
       '<details class="abs"><summary>' + esc(L.abstracts) + '</summary>' + (absArFirst ? absAr + absEn : absEn + absAr) + '</details>' +
@@ -217,6 +217,32 @@
     if (top) window.scrollTo({ top: top.offsetTop - 90, behavior: 'smooth' });
   }
 
+  // Public study fragments identify a paper, never the visitor's search query.
+  function openLinkedStudy(preserveFilters) {
+    var id;
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
+    var paper = DATA.find(function (r) { return 'p' + (r.pmid || r.doi) === id; });
+    if (!paper) return;
+    if (preserveFilters !== true) {
+      state.q = ''; state.journal = 'all'; state.todayOnly = false;
+      document.getElementById('lib-search').value = '';
+      document.getElementById('lib-journal').value = 'all';
+    }
+    var ordered = sorted(DATA.filter(matches)), index = ordered.indexOf(paper);
+    if (index < 0) return false;
+    state.page = Math.floor(index / PER_PAGE) + 1;
+    render();
+    var target = document.getElementById(id);
+    if (target) {
+      target.querySelector('details.abs').open = true;
+      target.style.scrollMarginTop = '110px';
+      target.tabIndex = -1;
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: 'start' });
+    }
+    return true;
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     if (!DATA.length) return;
     var el = function (id) { return document.getElementById(id); };
@@ -239,18 +265,22 @@
     el('lib-journal').addEventListener('change', function (e) { state.journal = e.target.value; state.page = 1; render(); });
     el('lib-sort').addEventListener('change', function (e) { state.sort = e.target.value; state.page = 1; render(); });
     el('lib-search-btn').addEventListener('click', function () {
-      state.q = ''; state.journal = 'all'; state.page = 1; state.todayOnly = false;
+      state.q = ''; state.journal = 'all'; state.sort = 'journal'; state.page = 1; state.todayOnly = false;
       el('lib-search').value = ''; el('lib-journal').value = 'all'; el('lib-sort').value = 'journal';
       render();
     });
     el('lib-lang').addEventListener('click', function () {
+      var linked;
+      try { linked = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (_) {}
       state.lang = state.lang === 'ar' ? 'en' : 'ar';
-      render();
+      if (!linked || !openLinkedStudy(true)) render();
     });
     el('lib-pager').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-go]');
       if (b) go(parseInt(b.getAttribute('data-go'), 10));
     });
     render();
+    openLinkedStudy();
+    window.addEventListener('hashchange', openLinkedStudy);
   });
 })();

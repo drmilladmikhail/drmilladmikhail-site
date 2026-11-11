@@ -24,7 +24,7 @@ WHO5 = [("طول الوقت", 5), ("معظم الوقت", 4), ("أكتر من ن
         ("أقل من نص الوقت", 2), ("أحياناً", 1), ("ولا مرة", 0)]
 
 SAFETY = ("لو عندك أفكار إنك تأذي نفسك أو إن الحياة مالهاش لازمة، متستناش: كلّم حد بتثق فيه دلوقتي، "
-          "أو اتصل بالخط الساخن للدعم النفسي في مصر <strong>105</strong>، أو في أمريكا اتصل أو ابعت رسالة على "
+          "أو اتصل بالخط الساخن للدعم النفسي في مصر <strong>16328</strong>، أو في أمريكا اتصل أو ابعت رسالة على "
           "<strong>988</strong>، أو روح أقرب طوارئ.")
 
 TESTS = [
@@ -529,8 +529,6 @@ from site_header import TOPBAR  # noqa: E402  (one shared header for all Arabic 
 FOOTER = '''<footer class="footer">
   <div class="wrap footer-grid">
     <div>
-      <p class="names">د. ميلاد ميخائيل <span lang="en" dir="ltr">· Dr. Millad Mikhail</span></p>
-      <p>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA).</p>
       <p class="fine">© 2026. الاختبارات للتوعية وفهم النفس، ومش تشخيص ولا بديل عن تقييم متخصص.</p>
       <p class="fine footer-links"><a href="/sessions/">الجلسات</a> · <a href="/contact/">تواصل</a> · <a href="/help-now/">محتاج مساعدة دلوقتي</a> · <a href="/privacy/">الخصوصية</a> · <a href="/terms/">الشروط</a></p>
     </div>

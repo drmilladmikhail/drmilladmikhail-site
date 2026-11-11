@@ -17,7 +17,7 @@ import re
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 NAME = "د. ميلاد ميخائيل"
-TITLE = "استشاري العلاج النفسي وتطوير الذات"
+TITLE = "استشاري العلاج النفسي والأسري"
 SLOGAN = "راحة بال، وتعديل حال… معاك في الرحلة لحياة أحلى"
 
 # Logo mark: a sunrise arc (حياة أحلى) over the letter م, in the site colours.
@@ -38,6 +38,8 @@ GROUPS = [
         ("/stories/", "حكايات التعافي"),
         ("/shelf/", "رفّ الترشيحات"),
         ("/book/", "كتبي"),
+        ("/glossary/", "القاموس النفسي"),
+        ("/research/", "مرصد الأبحاث النفسية"),
         ("https://blog.drmilladmikhail.com/", "المدونة"),
     ]),
     ("اختبر نفسك واتمرّن", [
@@ -67,11 +69,15 @@ def _links(items):
     return "\n".join(f'          <a href="{h}">{t}</a>' for h, t in items)
 
 RESEARCH_LIBRARY = ("/research/library/", "مكتبة الأكاديميين والباحثين")
+SAVED = ("/saved/", "محفوظاتي")
+EXPLORE = ("/explore/", "دوّر واكتشف")
 
 
 def _menu():
     parts = ['        <a class="m-home" href="/">الصفحة الرئيسية</a>',
              '        <a class="m-start" href="/start/">ابدأ من هنا</a>',
+             f'        <a href="{EXPLORE[0]}">{EXPLORE[1]}</a>',
+             f'        <a href="{SAVED[0]}">{SAVED[1]}</a>',
              f'        <a href="{RESEARCH_LIBRARY[0]}">{RESEARCH_LIBRARY[1]}</a>']
     for title, items in GROUPS:
         parts.append(f'        <p class="m-group">{title}</p>')
@@ -104,7 +110,7 @@ TOPBAR = f'''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
       <a href="/platform/">المنصة</a>
       <a href="/paths/">مسارات التعلّم</a>
 {_dropdown("تمارين وأدوات", GROUPS[1][1][1:])}
-{_dropdown("مكتبتي", [RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6)])}
+{_dropdown("مكتبتي", [EXPLORE, SAVED, RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6, 7, 8)])}
 {_dropdown("عن د. ميلاد", GROUPS[2][1])}
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
     </nav>
