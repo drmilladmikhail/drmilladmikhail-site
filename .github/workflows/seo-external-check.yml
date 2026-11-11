@@ -12,11 +12,29 @@ permissions:
 jobs:
   seo:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Lighthouse on the runner (fallback if the PageSpeed API is out of quota)
+        continue-on-error: true
+        run: |
+          mkdir -p /tmp/lh
+          for p in "" about articles/couples-counseling; do
+            name=$(echo "${p:-home}" | tr '/' '_')
+            for s in mobile desktop; do
+              flag=""; [ "$s" = desktop ] && flag="--preset=desktop"
+              npx -y lighthouse@12 "https://drmilladmikhail.com/$p${p:+/}" $flag --quiet \
+                --chrome-flags="--headless=new --no-sandbox" \
+                --only-categories=performance,accessibility,best-practices,seo \
+                --output=json --output-path="/tmp/lh/$name-$s.json" || true
+            done
+          done
+          ls -la /tmp/lh
       - name: Check the live site with external validators
         run: python tools/seo_external_check.py
