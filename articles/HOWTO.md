@@ -3,6 +3,7 @@
 > **Name rule (2026-11-05, his request):** his display name is **د. ميلاد ميخائيل** / Dr. Millad Mikhail — never write «د. ميلاد منير ميخائيل» in new text. Older forms stay ONLY as aliases (JSON-LD alternateName, the home-page FAQ, llms.txt) and in YouTube video titles.
 
 ## 0. Review rule — nothing health-related goes live without a person's review (master plan, 2026-11-11)
+See also `content/REVIEW-POLICY.md` (applies to glossary terms, English translations and every other kind of health content: deliver as a pull request).
 - A new article is first written as a **draft for review**, NOT pushed to `main`. Drafts never live in this repo (it is public):
   put the full draft in a Claude Doc (or the Project doc `claude/drafts/<slug>.md`) and send him the link.
 - It is published only after **he** (or a specialist he names) has read it and said it can go out.
@@ -48,7 +49,7 @@ Each category has its own page `/articles/category/<slug>/` (built automatically
 - Title = the reader's real question, the way people type it (2–3 web searches first). 45–65 characters.
 - `summary` = the direct answer in 2–3 sentences (shown first as «باختصار» and as `Article.abstract`).
 - `description` 130–155 characters with the main phrase.
-- Original Egyptian Arabic, 700–1200 words, clear `<h2>` questions, a practical Egyptian example, steps the reader can take.
+- Original Egyptian Arabic, 600–1200 words (the length the answer needs, no padding), clear `<h2>` questions, a practical Egyptian example, steps the reader can take.
 - ≥ 2 reliable sources you actually opened (WHO, NIMH, NHS, APA, Mayo Clinic, Cleveland Clinic, peer-reviewed papers with DOI).
 - 2–3 internal links (related article, test, glossary term or tool) — only where they really fit.
 - «امتى تكلم متخصص» + safety note; crisis topics follow safe-messaging (no methods; Egypt 105/122/123, US 988/911).
