@@ -74,10 +74,12 @@ def ensure_social(t):
 
 
 GFONT_RE = re.compile(r'<link\b(?=[^>]*href="https://fonts\.googleapis\.com/css2[^"]*")[^>]*>\n?')
+FONT_TAGS_RE = re.compile(r'(?:<link rel="preload" href="/assets/fonts/[^"]+" as="font"[^>]*>)*<link rel="stylesheet" href="/assets/fonts\.css[^"]*">\n?')
 GPRECONNECT_RE = re.compile(r'<link rel="preconnect" href="https://fonts\.(?:googleapis|gstatic)\.com"[^>]*>\n?')
 FONT_PRELOAD = {
     "ar": ("ibm-plex-sans-arabic-arabic-400-normal.woff2", "noto-naskh-arabic-arabic-700-normal.woff2"),
     "en": ("ibm-plex-sans-latin-400-normal.woff2", "newsreader-latin-opsz-normal.woff2"),
+    "home": ("amiri-arabic-700-normal.woff2", "ibm-plex-sans-arabic-arabic-400-normal.woff2"),
 }
 
 
@@ -89,9 +91,10 @@ def self_host_fonts(t):
     if not had and "/assets/site.css" not in t:
         return t
     t = GPRECONNECT_RE.sub("", GFONT_RE.sub("", t))
-    if "/assets/fonts.css" in t:
-        return t
+    t = FONT_TAGS_RE.sub("", t)  # rebuilt below, so the preload list can change
     lang = "en" if 'lang="en"' in t[:400] else "ar"
+    if lang == "ar" and "/assets/home-clarity.css" in t:
+        lang = "home"  # the homepage title is set in Amiri
     tags = "".join(f'<link rel="preload" href="/assets/fonts/{f}" as="font" type="font/woff2" crossorigin>'
                    for f in FONT_PRELOAD[lang]) + '<link rel="stylesheet" href="/assets/fonts.css">'
     m = re.search(r'<link rel="stylesheet" href="/assets/site\.css[^"]*">', t)
