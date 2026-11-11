@@ -184,7 +184,10 @@
   {
    "id": "sA4QhkoxAWo",
    "title": "ادمان الانترنت",
-   "order": 28
+   "order": 28,
+   "published": "2021-01-21",
+   "description": "والادمان الانترنت فى زمن الكورونا\nخطوات عملية للتخلص من ادمان الانترنت",
+   "duration": 498
   },
   {
    "id": "dPzVtstbNfw",
@@ -229,7 +232,11 @@
   {
    "id": "J6eoKcnJgOA",
    "title": "التفكير خارج الصندوق",
-   "order": 37
+   "order": 37,
+   "published": "2020-08-25",
+   "description": "كبسولة نفسية مع دكتور ميلاد منير",
+   "duration": 137,
+   "short": false
   },
   {
    "id": "OSRtdu8U0lk",
