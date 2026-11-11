@@ -82,7 +82,7 @@ def pic(name, alt, eager=False, sizes="(max-width: 700px) 100vw, 700px"):
             f'<img src="/assets/book/{name}.jpg" width="1200" height="800" alt="{esc(alt)}" {load}></picture>')
 
 
-IMG_RE = re.compile(r'<img src="/assets/book/(love-p\d+)\.jpg" width="1200" height="800" alt="([^"]*)"[^>]*>')
+IMG_RE = re.compile(r'<img src="/assets/book/((?:love-p\d+|art-[a-z0-9-]+))\.jpg" width="1200" height="800" alt="([^"]*)"[^>]*>')
 
 
 def upgrade_imgs(body):

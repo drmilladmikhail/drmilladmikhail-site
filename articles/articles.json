@@ -377,7 +377,9 @@
     ],
     "minutes": 5,
     "date": "2026-11-11",
-    "reviewed_on": "2026-11-11"
+    "reviewed_on": "2026-11-11",
+    "image": "art-panic-attack-what-to-do",
+    "image_alt": "رسم لشخص قاعد وإيده على صدره وقلبه بيدق بسرعة، وحواليه دواير بتعبّر عن موجة الهلع"
   },
   {
     "slug": "telling-children-about-divorce",
@@ -401,7 +403,9 @@
     ],
     "minutes": 5,
     "date": "2026-11-11",
-    "reviewed_on": "2026-11-11"
+    "reviewed_on": "2026-11-11",
+    "image": "art-telling-children-about-divorce",
+    "image_alt": "رسم لأب وأم نازلين لمستوى ابنهم القاعد على الكنبة وبيكلموه بهدوء، وفوقه قلب"
   },
   {
     "slug": "people-pleasing-saying-no",
@@ -421,7 +425,9 @@
     ],
     "minutes": 5,
     "date": "2026-11-11",
-    "reviewed_on": "2026-11-11"
+    "reviewed_on": "2026-11-11",
+    "image": "art-people-pleasing-saying-no",
+    "image_alt": "رسم لشخص شايل كومة صناديق عالية ومتضايق، وناس من الناحيتين لسه بيدّوه صناديق تانية"
   },
   {
     "slug": "burnout-signs-recovery",
@@ -441,7 +447,9 @@
     ],
     "minutes": 6,
     "date": "2026-11-11",
-    "reviewed_on": "2026-11-11"
+    "reviewed_on": "2026-11-11",
+    "image": "art-burnout-signs-recovery",
+    "image_alt": "رسم لموظف منحني على مكتبه قدام اللابتوب وكومة ورق، وفوقه بطارية شبه فاضية وساعة حيطة"
   },
   {
     "slug": "psychiatrist-vs-psychologist",
@@ -461,6 +469,8 @@
     ],
     "minutes": 5,
     "date": "2026-11-11",
-    "reviewed_on": "2026-11-11"
+    "reviewed_on": "2026-11-11",
+    "image": "art-psychiatrist-vs-psychologist",
+    "image_alt": "رسم على نصين: طبيب نفسي ببالطو أبيض ومعاه روشتة ودوا، وأخصائية نفسية قاعدة بتتكلم وحواليها فقاعات حوار"
   }
 ]
