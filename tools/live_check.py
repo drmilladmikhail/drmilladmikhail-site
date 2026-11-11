@@ -74,6 +74,16 @@ def main():
         st, final, _ = fetch(src)
         report["redirects"][src] = {"status": st, "final": final, "ok": st == 200 and final.rstrip("/") == SITE}
 
+    # 1b. the old Netlify copy (a stale duplicate can compete with the real site in Google)
+    for legacy in ("https://drmilladmikhail.netlify.app/", "https://drmilladmikhail.netlify.app/articles/"):
+        st, final, body = fetch(legacy)
+        head = body.decode("utf-8", "replace")[:20000]
+        canon = re.search(r'<link rel="canonical" href="([^"]+)"', head)
+        title = re.search(r"<title>([^<]*)</title>", head)
+        report.setdefault("legacy", {})[legacy] = {
+            "status": st, "final": final, "canonical": canon.group(1) if canon else None,
+            "title": title.group(1) if title else None, "noindex": "noindex" in head.lower()}
+
     # 2. page list from the live sitemap
     st, _, body = fetch(SITE + "/sitemap.xml")
     ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}

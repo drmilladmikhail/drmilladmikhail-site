@@ -279,11 +279,24 @@ def put_block(path, block, before):
         f.write(t)
 
 
+def iso_datetime(d):
+    """Google wants uploadDate as a full ISO 8601 date-time WITH a time zone;
+    a bare date gives a Search Console structured-data warning."""
+    d = (d or "").strip()
+    if len(d) == 10:
+        return d + "T00:00:00+00:00"
+    if d.endswith("Z"):
+        return d[:-1] + "+00:00"
+    if "T" in d and not re.search(r"[+-]\d\d:\d\d$", d):
+        return d + "+00:00"
+    return d
+
+
 def ld_video(v):
     d = {"@type": "VideoObject", "name": v["title"],
          "description": (v.get("description") or v["title"])[:500],
          "thumbnailUrl": [f"https://i.ytimg.com/vi/{v['id']}/hqdefault.jpg"],
-         "uploadDate": v["published"],
+         "uploadDate": iso_datetime(v["published"]),
          "contentUrl": f"https://www.youtube.com/watch?v={v['id']}",
          "embedUrl": f"https://www.youtube-nocookie.com/embed/{v['id']}",
          "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
