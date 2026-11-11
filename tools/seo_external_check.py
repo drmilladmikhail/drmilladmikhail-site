@@ -67,7 +67,14 @@ def summarise(d, source):
     pick = lambda k: a.get(k, {}).get("displayValue")
     failing_seo = [a[r["id"]]["title"] for r in d["categories"]["seo"]["auditRefs"]
                    if r.get("weight") and a.get(r["id"], {}).get("score") not in (1, None)]
-    return {"source": source, "scores": cats, "LCP": pick("largest-contentful-paint"), "CLS": pick("cumulative-layout-shift"),
+    shifts = []
+    for it in (a.get("layout-shifts", {}).get("details") or {}).get("items", [])[:4]:
+        node = it.get("node") or {}
+        causes = [c.get("extra", {}).get("value") or c.get("cause") for c in
+                  ((it.get("subItems") or {}).get("items") or [])]
+        shifts.append({"score": round(it.get("score", 0), 3), "el": (node.get("selector") or node.get("snippet") or "")[:90],
+                       "causes": [str(c)[:90] for c in causes if c][:3]})
+    return {"source": source, "scores": cats, "shifts": shifts, "LCP": pick("largest-contentful-paint"), "CLS": pick("cumulative-layout-shift"),
             "TBT": pick("total-blocking-time"), "FCP": pick("first-contentful-paint"), "SI": pick("speed-index"),
             "seo_failing": failing_seo}
 
