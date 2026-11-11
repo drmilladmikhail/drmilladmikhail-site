@@ -1121,5 +1121,57 @@
   "license": "CC BY 4.0",
   "license_url": "http://creativecommons.org/licenses/by/4.0/",
   "added": "2026-11-10"
+ },
+ {
+  "doi": "10.1371/journal.pmen.0000734",
+  "title": "Suicide risk factors in nursing students: Depressive symptoms, academic burnout and academic efficacy after the pandemic",
+  "title_ar": "عوامل خطر الانتحار لدى طلاب التمريض: أعراض الاكتئاب والاحتراق الأكاديمي والكفاءة الأكاديمية بعد الجائحة",
+  "abstract": "The present study analyze the prevalence and factors associated with suicide risk in nursing students in the post-pandemic context, considering academic burnout, academic engagement, and symptoms of depression, anxiety, and stress as predictors. through a cross-sectional and correlational study conducted in a public university in Northern Chile. with a168 nursing undergraduates’ sample. Validated instruments were administered, including the Beck Hopelessness Scale, the Utrecht Work Engagement Scale, the Maslach Burnout Inventory–Student Survey, and the DASS-21. Descriptive analyses, Pearson correlations, and multiple linear regression were conducted. A total of 11.31% of students met the predefined BHS threshold for elevated suicide-related risk. In the same sample, symptoms of depression, anxiety, and stress showed high prevalence rates. Suicide risk was negatively associated with vigor and dedication, while positively associated with low academic efficacy and depression. The regression model explained 54% of the variance in suicide risk (Adj.R² = 0.54; p < 0.001), with Depression (β = 4.04), Vigor (β = 0.63), Academic Efficacy (β = 0.88), and the interaction between Depression and Vigor (β = -0.69) being significant predictors in the model. Suicide risk in nursing students transcends traditional clinical factors, as it is shaped by the interaction between personal resources and mental health symptoms. These findings underscore the need for prevention and psychosocial support programs in nursing schools.",
+  "abstract_ar": "تحلل الدراسة الحالية مدى انتشار خطر الانتحار والعوامل المرتبطة به لدى طلاب التمريض في سياق ما بعد الجائحة، مع اعتبار الاحتراق الأكاديمي والانخراط الأكاديمي وأعراض الاكتئاب والقلق والضغط النفسي متغيرات تنبؤية. وأُجريت دراسة مقطعية ارتباطية في جامعة حكومية بشمال تشيلي على عينة من 168 طالبًا في مرحلة البكالوريوس في التمريض. وطُبقت أدوات مقننة، شملت مقياس بيك لليأس، ومقياس أوترخت للانخراط في العمل، وقائمة ماسلاش للاحتراق النفسي بصيغتها المخصصة للطلاب، ومقياس الاكتئاب والقلق والضغط النفسي المكون من 21 بندًا. وأُجريت تحليلات وصفية، وحُسبت معاملات ارتباط بيرسون، واستُخدم الانحدار الخطي المتعدد. وبلغت نسبة الطلاب الذين استوفوا العتبة المحددة مسبقًا على مقياس بيك لليأس للدلالة على ارتفاع الخطر المرتبط بالانتحار 11.31%. وفي العينة نفسها، سُجلت معدلات انتشار مرتفعة لأعراض الاكتئاب والقلق والضغط النفسي. وارتبط خطر الانتحار سلبًا بالحيوية والتفاني، وإيجابًا بانخفاض الكفاءة الأكاديمية والاكتئاب. وفسّر نموذج الانحدار 54% من التباين في خطر الانتحار (معامل التحديد المعدل = 0.54؛ p < 0.001)، وكانت متغيرات الاكتئاب (β = 4.04)، والحيوية (β = 0.63)، والكفاءة الأكاديمية (β = 0.88)، والتفاعل بين الاكتئاب والحيوية (β = -0.69) متغيرات تنبؤية دالة في النموذج. ويتجاوز خطر الانتحار لدى طلاب التمريض العوامل السريرية التقليدية، إذ يتشكل من خلال التفاعل بين الموارد الشخصية وأعراض الصحة النفسية. وتؤكد هذه النتائج الحاجة إلى برامج للوقاية والدعم النفسي الاجتماعي في كليات التمريض.",
+  "authors": [
+   "Rodrigo-Alejandro Ardiles-Irarrázabal",
+   "Pablo Alejandro Pérez-Díaz",
+   "Juan-Carlos Pérez-González",
+   "Yenny Valdivia-Rojas",
+   "Miguel Valencia-Contrera"
+  ],
+  "journal": "PLOS Mental Health",
+  "journal_ar": "بلوس للصحة النفسية",
+  "volume": "3",
+  "issue": "11",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "e0000734",
+  "source_urls": [
+   "https://journals.plos.org/mentalhealth/article?id=10.1371/journal.pmen.0000734"
+  ],
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "added": "2026-11-11"
+ },
+ {
+  "doi": "10.1371/journal.pone.0359599",
+  "title": "Modifiable psychosocial risk factors for depression among cancer survivors in the United States",
+  "title_ar": "عوامل الخطر النفسية الاجتماعية القابلة للتعديل للاكتئاب لدى الناجين من السرطان في الولايات المتحدة",
+  "abstract": "Depression is highly prevalent among cancer survivors and contributes to poorer quality of life, reduced treatment adherence, and increased morbidity. Functional limitations, loneliness, and inadequate social and emotional support are important psychosocial factors associated with self-reported lifetime diagnosis of major depressive disorder among cancer survivors. Using a cross-sectional study design, this study examined the independent associations of functional limitations, loneliness, and social/emotional support with a self-reported lifetime diagnosis of major depressive disorder among a large sample of U.S. cancer survivors. Data were drawn from the 2023 and 2024 Behavioral Risk Factor Surveillance System. The analytic sample included 70,620 adult cancer survivors (56.3% female) with depression as the outcome variable. Functional limitations, loneliness, and social/emotional support were primary explanatory variables. Multivariable logistic regression models estimated adjusted odds ratios (AORs) and 95% confidence intervals (CIs), controlling for demographic, socioeconomic, and health-related covariates. Overall, 21.8% of cancer survivors reported depression. In the fully adjusted models, loneliness (AOR = 2.72, 95% CI: 2.44–3.03), functional limitations (AOR = 2.05, 95% CI: 1.81–2.31), and lack of social/emotional support (AOR = 1.43, 95% CI: 1.27–1.62) were independently associated with higher odds of depression. Female sex, low income, cost-related forgone medical care, poor self-rated health, obesity, and current/former smoking were also significantly negatively associated with depression, while physical activity was protective. We found that functional limitations, loneliness, and inadequate social support are robust and independent associated factors of depression among cancer survivors. Screening and interventions targeting these psychosocial factors may improve mental health outcomes and enhance overall survivorship care.",
+  "abstract_ar": "ينتشر الاكتئاب بدرجة كبيرة بين الناجين من السرطان، ويسهم في تدني جودة الحياة، وانخفاض الالتزام بالعلاج، وزيادة الاعتلال. وتُعد القيود الوظيفية والشعور بالوحدة وعدم كفاية الدعم الاجتماعي والعاطفي عوامل نفسية اجتماعية مهمة ترتبط بالإبلاغ الذاتي عن تشخيص اضطراب الاكتئاب الجسيم في أي وقت من الحياة لدى الناجين من السرطان. وباستخدام تصميم دراسة مقطعية، فحصت هذه الدراسة الارتباطات المستقلة للقيود الوظيفية والوحدة والدعم الاجتماعي والعاطفي بالإبلاغ الذاتي عن تشخيص اضطراب الاكتئاب الجسيم في أي وقت من الحياة، لدى عينة كبيرة من الناجين من السرطان في الولايات المتحدة. واستُمدت البيانات من نظام ترصّد عوامل الخطر السلوكية لعامي 2023 و2024. وشملت العينة التحليلية 70,620 شخصًا بالغًا من الناجين من السرطان (56.3% منهم إناث)، مع اعتبار الاكتئاب متغير النتيجة. وكانت القيود الوظيفية والوحدة والدعم الاجتماعي والعاطفي هي المتغيرات التفسيرية الرئيسية. واستُخدمت نماذج الانحدار اللوجستي متعددة المتغيرات لتقدير نسب الأرجحية المعدلة وفواصل الثقة بنسبة 95%، مع ضبط المتغيرات المصاحبة الديموغرافية والاجتماعية الاقتصادية والصحية. وبوجه عام، أفاد 21.8% من الناجين من السرطان بوجود اكتئاب. وفي النماذج المضبوطة بالكامل، ارتبطت الوحدة (نسبة الأرجحية المعدلة = 2.72؛ فاصل الثقة 95%: 2.44–3.03)، والقيود الوظيفية (نسبة الأرجحية المعدلة = 2.05؛ فاصل الثقة 95%: 1.81–2.31)، ونقص الدعم الاجتماعي والعاطفي (نسبة الأرجحية المعدلة = 1.43؛ فاصل الثقة 95%: 1.27–1.62) كلٌّ على نحو مستقل بارتفاع أرجحية الاكتئاب. كما ارتبط كون الشخص أنثى، وانخفاض الدخل، والتخلي عن الرعاية الطبية بسبب التكلفة، وسوء التقييم الذاتي للصحة، والسمنة، والتدخين الحالي أو السابق، ارتباطًا سلبيًا دالًا بالاكتئاب، في حين كان النشاط البدني عاملًا واقيًا. ووجدنا أن القيود الوظيفية والوحدة وعدم كفاية الدعم الاجتماعي عوامل قوية ومستقلة ترتبط بالاكتئاب لدى الناجين من السرطان. وقد يؤدي التحري والتدخلات التي تستهدف هذه العوامل النفسية الاجتماعية إلى تحسين نتائج الصحة النفسية وتعزيز الرعاية الشاملة للناجين من السرطان.",
+  "authors": [
+   "Philip Baiden",
+   "Batholomew Chireh",
+   "Judith S. Anagbonu"
+  ],
+  "journal": "PLOS One",
+  "journal_ar": "بلوس وان",
+  "volume": "21",
+  "issue": "10",
+  "issue_ar": "أكتوبر 2026",
+  "issue_en": "October 2026",
+  "pages": "e0359599",
+  "source_urls": [
+   "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0359599"
+  ],
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "added": "2026-11-11"
  }
 ]
