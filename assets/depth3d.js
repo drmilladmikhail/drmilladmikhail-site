@@ -54,7 +54,13 @@
      sphere with a gold orbit ring and moving glints. Only on computers and
      strong phones, never on Data Saver / slow connections; otherwise the
      CSS sphere stays. It pauses when off screen or in a background tab. */
-  (function () {
+  function whenIdle(fn) {
+    /* start only after the page has loaded and the main thread is free,
+       so the 3D never delays the first view (LCP) or taps (TBT/INP) */
+    function go() { (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(fn, { timeout: 2500 }); }
+    if (document.readyState === 'complete') go(); else window.addEventListener('load', go, { once: true });
+  }
+  whenIdle(function () {
     var core = document.querySelector('.h3d-core');
     if (!core) return;
     var conn = navigator.connection || {};
@@ -66,6 +72,14 @@
     canvas.setAttribute('aria-hidden', 'true');
     var gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false, powerPreference: 'low-power' });
     if (!gl) return;
+    /* no graphics chip (software rendering: SwiftShader, llvmpipe…) → each frame would block the
+       main thread for 100 ms+, so keep the CSS sphere */
+    var dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    var renderer = String(dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER) || '');
+    if (/swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic/i.test(renderer)) {
+      var lose = gl.getExtension('WEBGL_lose_context'); if (lose) lose.loseContext();
+      return;
+    }
     var VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
     var FS = [
       'precision mediump float;',
@@ -145,13 +159,15 @@
     }
     size(); window.addEventListener('resize', size);
     var visible = true, running = false, start = performance.now(), cur = { x: 0, y: 0 };
-    var n = 0, t10 = 0, last = 0, slow = false;
+    var n = 0, t10 = 0, last = 0, slow = false, slowFrames = 0;
     function stop() { slow = true; visible = false; core.classList.remove('h3d-has-gl'); canvas.remove(); }
     function frame(now) {
       if (slow || !visible || document.hidden) { running = false; last = 0; return; }
       /* performance guard: if the first ~60 visible frames average over 34 ms,
          this device can't draw it smoothly, so fall back to the CSS sphere */
       if (last && now - last < 250) { n++; if (n === 10) t10 = now; if (n === 70 && (now - t10) / 60 > 34) { stop(); return; } }
+      /* and a quick exit: two very slow frames (>80 ms) among the first 15 → stop at once */
+      if (last && n < 15 && now - last > 80 && ++slowFrames >= 2) { stop(); return; }
       last = now;
       var tg = window.__h3dTarget || { x: 8, y: -10 };
       cur.x += ((tg.x - 8) * 0.035 - cur.x) * 0.06; cur.y += ((tg.y + 10) * 0.035 - cur.y) * 0.06;
@@ -168,7 +184,7 @@
     document.addEventListener('visibilitychange', run);
     canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); stop(); });
     run();
-  })();
+  });
 
   /* ---------- 2. tilting / pressing cards ---------- */
   var SEL = '[data-d3="card"], .card > a, .concern-card, .weekly, .test-card, .vcard, .g-card, .platform-card, .story-card, ' +
