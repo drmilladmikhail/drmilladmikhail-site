@@ -57,10 +57,16 @@ def start_html(text):
 
 
 def home_html(text):
-    title = 'د. ميلاد ميخائيل | مقالات واختبارات لفهم النفس والعلاقات'
+    # 2026-11-11: name + professional title first — his stated format, and the strongest
+    # signal for people searching his name («دكتور ميلاد ميخائيل») on Google.
+    title = 'د. ميلاد ميخائيل | استشاري العلاج النفسي والأسري'
     text = re.sub(r'<title>.*?</title>', lambda _: '<title>' + title + '</title>', text, count=1, flags=re.S)
     for key in ('og:title', 'twitter:title'):
         text = re.sub(r'(<meta (?:property|name)="' + key + r'" content=")[^"]*(")', lambda m: m[1] + title + m[2], text, count=1)
+    desc = ('دكتور ميلاد ميخائيل (د. ميلاد ميخائيل، Dr. Millad Mikhail)، استشاري العلاج النفسي والأسري، '
+            'حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، عضو الجمعية الأمريكية لعلم النفس (APA)، '
+            'مؤلف كتاب «ليه بنحب اللي بيوجعنا؟» وصاحب قناة «جلسة شيزلونج». يُعرف أيضاً باسم د. ميلاد منير.')
+    text = re.sub(r'(<meta name="description" content=")[^"]*(")', lambda m: m[1] + desc + m[2], text, count=1)
     text = text.replace('11 اختبار نفسي علمي', 'استكشف الاختبارات النفسية')
     text = re.sub(r'<section class="section myth-promo"[^>]*>.*?</section>', '', text, count=1, flags=re.S)
     if '<!-- GROWTH-GUIDE:BEGIN -->' not in text:
