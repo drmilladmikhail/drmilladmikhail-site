@@ -57,7 +57,7 @@ jobs:
           assert all(p.read_bytes() == data for p, data in first.items()), 'Non-idempotent pages'
           sm = ET.parse('sitemap.xml')
           ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          assert not sm.findall('.//s:lastmod', ns)
+          assert all('/articles/' in u.find('s:loc', ns).text for u in sm.findall('.//s:url', ns) if u.find('s:lastmod', ns) is not None)  # lastmod only for articles (real dates)
           assert any(n.text == 'https://drmilladmikhail.com/myth-fact/' for n in sm.findall('.//s:loc', ns))
           article = Path('articles/four-attachment-styles/index.html').read_text(encoding='utf-8')
           assert 'GROWTH-NOTES:BEGIN' in article and 'health.clevelandclinic.org' in article
