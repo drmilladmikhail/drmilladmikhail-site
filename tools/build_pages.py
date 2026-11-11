@@ -726,6 +726,8 @@ def csbd_page():
 def main():
     import pages_trust
     pages_trust.build_all(ba, page, write, SITE)
+    import build_identity
+    build_identity.build_all(ba, page, write, SITE)
     import build_extras
     build_extras.build_all(ba, page, write, SITE)
     import build_partner_series

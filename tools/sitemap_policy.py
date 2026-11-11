@@ -6,6 +6,9 @@ import xml.etree.ElementTree as ET
 
 NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
 SITE = "https://drmilladmikhail.com"
+# 2026-11-11 SEO brief
+IDENTITY = ("about", "about/qualifications", "about/publications", "family", "en/about")
+PRIVATE = {SITE + "/saved/", SITE + "/my-space/", SITE + "/newsletter/thanks/"}
 ET.register_namespace("", NS)
 ET.register_namespace("xhtml", "http://www.w3.org/1999/xhtml")
 
@@ -28,7 +31,17 @@ def apply(root):
     for entry in urls.findall(f"{{{NS}}}url"):
         for date in entry.findall(f"{{{NS}}}lastmod"):
             entry.remove(date)
+    for entry in list(urls.findall(f"{{{NS}}}url")):
+        loc = entry.find(f"{{{NS}}}loc")
+        if loc is not None and loc.text in PRIVATE:
+            urls.remove(entry)
     locations = {node.text for node in urls.findall(f"{{{NS}}}url/{{{NS}}}loc")}
+    for slug in IDENTITY:
+        target = SITE + "/" + slug + "/"
+        if (root / slug / "index.html").is_file() and target not in locations:
+            entry = ET.SubElement(urls, f"{{{NS}}}url")
+            ET.SubElement(entry, f"{{{NS}}}loc").text = target
+            locations.add(target)
     target = SITE + "/myth-fact/"
     if (root / "myth-fact" / "index.html").is_file() and target not in locations:
         entry = ET.SubElement(urls, f"{{{NS}}}url")

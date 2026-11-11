@@ -36,6 +36,40 @@ FOOTER_DUP_RE = re.compile(
     r'\s*<p>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس \(APA\)\.</p>')
 
 
+# 2026-11-11 SEO brief: personal tools that hold nothing public stay out of Google.
+PRIVATE_PAGES = {"saved", "my-space", os.path.join("newsletter", "thanks")}
+
+
+def ensure_robots_meta(t, rel_dir):
+    if rel_dir in PRIVATE_PAGES and 'name="robots"' not in t:
+        t = re.sub(r'(<meta name="viewport"[^>]*>)', r'\1\n<meta name="robots" content="noindex, follow">', t, count=1)
+    return t
+
+
+def ensure_social(t):
+    """Open Graph + Twitter card for pages that were built without them."""
+    head = t.split("</head>", 1)[0]
+    if "</head>" not in t or ("og:title" in head and "twitter:card" in head):
+        return t
+    import html as _h
+    title = re.search(r"<title>([^<]*)</title>", head)
+    desc = re.search(r'<meta name="description" content="([^"]*)"', head)
+    canon = re.search(r'<link rel="canonical" href="([^"]+)"', head)
+    if not (title and canon):
+        return t
+    tt, dd, uu = title.group(1), (desc.group(1) if desc else ""), canon.group(1)
+    img = "https://drmilladmikhail.com/assets/og/home.jpg"
+    tags = []
+    if "og:title" not in head:
+        tags += [f'<meta property="og:type" content="website">', f'<meta property="og:url" content="{uu}">',
+                 f'<meta property="og:title" content="{tt}">', f'<meta property="og:description" content="{dd}">',
+                 f'<meta property="og:image" content="{img}">']
+    if "twitter:card" not in head:
+        tags += ['<meta name="twitter:card" content="summary_large_image">', f'<meta name="twitter:title" content="{tt}">',
+                 f'<meta name="twitter:description" content="{dd}">', f'<meta name="twitter:image" content="{img}">']
+    return t.replace(canon.group(0), canon.group(0) + "\n" + "\n".join(tags), 1)
+
+
 def inject_depth3d(t):
     """Add the light 3D layer (assets/depth3d.css + depth3d.js) to pages that use site.css."""
     if "/assets/site.css" not in t or "</body>" not in t:
@@ -100,6 +134,8 @@ def main():
             t = re.sub(r'(<meta charset="utf-8">\n?)', lambda m: m.group(1) + SECURITY, t, count=1, flags=re.I)
             t = inject_depth3d(t)
             t = FOOTER_DUP_RE.sub("", t)
+            t = ensure_social(t)
+            t = ensure_robots_meta(t, os.path.relpath(dirpath, ROOT))
             if TOKEN not in t:
                 i = t.rfind("</body>")
                 t = t[:i] + SNIPPET + "\n" + t[i:]

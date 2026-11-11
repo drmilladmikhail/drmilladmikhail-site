@@ -8,7 +8,21 @@
     "image": "love-p09",
     "image_alt": "بنت قاعدة على كرسي وقدامها تلات شباب، وكلهم ليهم نفس الضل",
     "chapter": "من الفصل الأول",
-    "minutes": 5
+    "minutes": 5,
+    "refs": [
+      {
+        "title": "Hazan & Shaver (1987). Romantic love conceptualized as an attachment process. Journal of Personality and Social Psychology, 52(3)",
+        "url": "https://doi.org/10.1037/0022-3514.52.3.511"
+      },
+      {
+        "title": "Cleveland Clinic — Attachment Theory",
+        "url": "https://health.clevelandclinic.org/attachment-theory"
+      },
+      {
+        "title": "Cleveland Clinic — Trauma Bonding",
+        "url": "https://health.clevelandclinic.org/trauma-bonding"
+      }
+    ]
   },
   {
     "slug": "four-attachment-styles",
@@ -19,7 +33,21 @@
     "image": "love-p17",
     "image_alt": "بنت بتمد إيدها لشاب، وهو ماشي بعيد وفوق راسه سحابة",
     "chapter": "من الفصل التاني",
-    "minutes": 5
+    "minutes": 5,
+    "refs": [
+      {
+        "title": "Bartholomew & Horowitz (1991). Attachment styles among young adults: A test of a four-category model. Journal of Personality and Social Psychology, 61(2)",
+        "url": "https://doi.org/10.1037/0022-3514.61.2.226"
+      },
+      {
+        "title": "Hazan & Shaver (1987). Romantic love conceptualized as an attachment process. Journal of Personality and Social Psychology, 52(3)",
+        "url": "https://doi.org/10.1037/0022-3514.52.3.511"
+      },
+      {
+        "title": "Cleveland Clinic — Attachment Theory",
+        "url": "https://health.clevelandclinic.org/attachment-theory"
+      }
+    ]
   },
   {
     "slug": "anxious-avoidant-attraction",
@@ -29,7 +57,21 @@
     "image": "love-p23",
     "image_alt": "بنت بتمد إيدها ورا شاب ماشي بعيد عنها، وتحت رجليهم آثار خطوات بتلف في دايرة",
     "chapter": "من الفصل التاني",
-    "minutes": 5
+    "minutes": 5,
+    "refs": [
+      {
+        "title": "Hazan & Shaver (1987). Romantic love conceptualized as an attachment process. Journal of Personality and Social Psychology, 52(3)",
+        "url": "https://doi.org/10.1037/0022-3514.52.3.511"
+      },
+      {
+        "title": "Cleveland Clinic — Anxious Attachment Style",
+        "url": "https://health.clevelandclinic.org/anxious-attachment-style"
+      },
+      {
+        "title": "Cleveland Clinic — Avoidant Attachment Style",
+        "url": "https://health.clevelandclinic.org/avoidant-attachment-style"
+      }
+    ]
   },
   {
     "slug": "dealing-with-narcissistic-partner",
@@ -40,7 +82,17 @@
     "image_alt": "بنت ماسكة صورة لشاب مبتسم ومعاه ورد، وجنبها نفس الشاب في الحقيقة واقف مكتّف إيديه ووشه زعلان",
     "chapter": "مستوحى من الفصل الرابع والخامس",
     "minutes": 6,
-    "discuss": "إيه أكتر حد صغير قدرت تحطه في علاقة صعبة، وفرق معاك؟"
+    "discuss": "إيه أكتر حد صغير قدرت تحطه في علاقة صعبة، وفرق معاك؟",
+    "refs": [
+      {
+        "title": "Mayo Clinic — Narcissistic personality disorder",
+        "url": "https://www.mayoclinic.org/diseases-conditions/narcissistic-personality-disorder/symptoms-causes/syc-20366662"
+      },
+      {
+        "title": "Cleveland Clinic — Narcissistic Personality Disorder",
+        "url": "https://my.clevelandclinic.org/health/diseases/9742-narcissistic-personality-disorder"
+      }
+    ]
   },
   {
     "slug": "couples-counseling",
@@ -51,7 +103,17 @@
     "image_alt": "بنت قاعدة على ركبها بتسقي نبتة صغيرة طالعة من قصرية مشروخة",
     "chapter": "مستوحى من الفصل التالت والسابع",
     "minutes": 6,
-    "discuss": "إيه أكتر حاجة بتخلي الناس عندنا تتردد قبل ما تطلب مساعدة لعلاقتها؟"
+    "discuss": "إيه أكتر حاجة بتخلي الناس عندنا تتردد قبل ما تطلب مساعدة لعلاقتها؟",
+    "refs": [
+      {
+        "title": "Mayo Clinic — Marriage counseling",
+        "url": "https://www.mayoclinic.org/tests-procedures/marriage-counseling/about/pac-20385248"
+      },
+      {
+        "title": "The Gottman Institute — The Four Horsemen: Criticism, Contempt, Defensiveness and Stonewalling",
+        "url": "https://www.gottman.com/blog/the-four-horsemen-recognizing-criticism-contempt-defensiveness-and-stonewalling/"
+      }
+    ]
   },
   {
     "slug": "emotional-communication-couples",
@@ -62,7 +124,17 @@
     "image_alt": "بنت وشاب قاعدين على دكة في هدوء، بيتكلموا ويضحكوا وهما مرتاحين",
     "chapter": "مستوحى من الفصل التاني والسابع",
     "minutes": 5,
-    "discuss": "إيه الجملة اللي لما شريكك بيقولها بتحس إنك مفهوم بجد؟"
+    "discuss": "إيه الجملة اللي لما شريكك بيقولها بتحس إنك مفهوم بجد؟",
+    "refs": [
+      {
+        "title": "The Gottman Institute — The Four Horsemen: Criticism, Contempt, Defensiveness and Stonewalling",
+        "url": "https://www.gottman.com/blog/the-four-horsemen-recognizing-criticism-contempt-defensiveness-and-stonewalling/"
+      },
+      {
+        "title": "Fincham & Beach (1999). Conflict in marriage: Implications for working with couples. Annual Review of Psychology, 50",
+        "url": "https://doi.org/10.1146/annurev.psych.50.1.47"
+      }
+    ]
   },
   {
     "slug": "dealing-with-jealous-partner",
@@ -73,7 +145,17 @@
     "image_alt": "بنت قاعدة على ترابيزة ماسكة عدسة مكبرة وبتبص على خريطة بتدقيق",
     "chapter": "مستوحى من الفصل التاني والرابع",
     "minutes": 5,
-    "discuss": "امتى الغيرة بتبطل تبقى اهتمام وتبتدي تبقى خنقة؟"
+    "discuss": "امتى الغيرة بتبطل تبقى اهتمام وتبتدي تبقى خنقة؟",
+    "refs": [
+      {
+        "title": "Cleveland Clinic — Where jealousy comes from and how to tame it",
+        "url": "https://health.clevelandclinic.org/how-to-deal-with-jealousy"
+      },
+      {
+        "title": "Cleveland Clinic — Retroactive Jealousy",
+        "url": "https://health.clevelandclinic.org/retroactive-jealousy"
+      }
+    ]
   },
   {
     "slug": "dealing-with-stingy-partner",
@@ -84,7 +166,17 @@
     "image_alt": "بنت واقفة عند مفترق طريقين، واحد بيوصل لبيت تحت الشمس والتاني لبيت تحت سحابة ومطر",
     "chapter": "مستوحى من الفصل التالت والسابع",
     "minutes": 5,
-    "discuss": "الفلوس كانت معناها إيه في بيتكم وانت صغير؟"
+    "discuss": "الفلوس كانت معناها إيه في بيتكم وانت صغير؟",
+    "refs": [
+      {
+        "title": "NNEDV — About Financial Abuse",
+        "url": "https://nnedv.org/content/about-financial-abuse/"
+      },
+      {
+        "title": "WomensLaw — What is financial abuse?",
+        "url": "https://www.womenslaw.org/about-abuse/forms-abuse/financial-abuse/basic-info/what-financial-abuse-what-are-signs-look-out"
+      }
+    ]
   },
   {
     "slug": "emotionally-abusive-partner",
@@ -95,7 +187,17 @@
     "image_alt": "بنت ماشية بحذر شديد على أرض مليانة قشر بيض مكسور",
     "chapter": "مستوحى من الفصل الأول والخامس",
     "minutes": 6,
-    "discuss": "إيه اللي بيخلي الأذى النفسي صعب يتشاف حتى من أقرب الناس؟"
+    "discuss": "إيه اللي بيخلي الأذى النفسي صعب يتشاف حتى من أقرب الناس؟",
+    "refs": [
+      {
+        "title": "WomensLaw — Emotional and psychological abuse",
+        "url": "https://www.womenslaw.org/about-abuse/forms-abuse/emotional-and-psychological-abuse"
+      },
+      {
+        "title": "World Health Organization — Violence against women (fact sheet)",
+        "url": "https://www.who.int/news-room/fact-sheets/detail/violence-against-women"
+      }
+    ]
   },
   {
     "slug": "partner-with-depression",
@@ -106,7 +208,17 @@
     "image_alt": "بنت بتمد إيدها لشاب ماشي بعيد، وفوق راسه سحابة سودا",
     "chapter": "مستوحى من الفصل السادس",
     "minutes": 5,
-    "discuss": "إيه الجملة اللي بتفرق معاك لما تكون تعبان نفسياً؟"
+    "discuss": "إيه الجملة اللي بتفرق معاك لما تكون تعبان نفسياً؟",
+    "refs": [
+      {
+        "title": "NIMH — Depression",
+        "url": "https://www.nimh.nih.gov/health/topics/depression"
+      },
+      {
+        "title": "World Health Organization — Depressive disorder (fact sheet)",
+        "url": "https://www.who.int/news-room/fact-sheets/detail/depression"
+      }
+    ]
   },
   {
     "slug": "partner-with-addiction",
@@ -117,7 +229,21 @@
     "image_alt": "بنت واقفة قدام ماكينة قمار عليها قلوب سليمة وقلوب مكسورة، ومترددة تشد الدراع",
     "chapter": "مستوحى من الفصل الخامس",
     "minutes": 6,
-    "discuss": "إيه أصعب حاجة في إنك تحب حد بيأذي نفسه؟"
+    "discuss": "إيه أصعب حاجة في إنك تحب حد بيأذي نفسه؟",
+    "refs": [
+      {
+        "title": "APA Monitor — An underappreciated intervention (CRAFT for families)",
+        "url": "https://www.apa.org/monitor/2017/12/underappreciated-intervention"
+      },
+      {
+        "title": "Community Reinforcement and Family Training (CRAFT): treatment entry for a treatment-resistant loved one (PMC)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5690811/"
+      },
+      {
+        "title": "SAMHSA — National Helpline",
+        "url": "https://www.samhsa.gov/find-help/national-helpline"
+      }
+    ]
   },
   {
     "slug": "dealing-with-angry-partner",
@@ -128,7 +254,17 @@
     "image_alt": "بنت قاعدة ضامة ركبها وحواليها فقاعات كلام كتير فاضية",
     "chapter": "مستوحى من الفصل التالت والرابع",
     "minutes": 5,
-    "discuss": "إيه أكتر حاجة بتساعدك تهدى لما تتعصب؟"
+    "discuss": "إيه أكتر حاجة بتساعدك تهدى لما تتعصب؟",
+    "refs": [
+      {
+        "title": "American Psychological Association — Control anger before it controls you",
+        "url": "https://www.apa.org/topics/anger/control"
+      },
+      {
+        "title": "The Gottman Institute — The Four Horsemen: Criticism, Contempt, Defensiveness and Stonewalling",
+        "url": "https://www.gottman.com/blog/the-four-horsemen-recognizing-criticism-contempt-defensiveness-and-stonewalling/"
+      }
+    ]
   },
   {
     "slug": "dealing-with-lying-partner",
@@ -139,7 +275,17 @@
     "image_alt": "بنت قاعدة لابسة نضارة على شكل قلوب، وحواليها رايات سودا كتير، وهي باصة بس على وردتين",
     "chapter": "مستوحى من الفصل الرابع والخامس",
     "minutes": 5,
-    "discuss": "إيه اللي بيرجّع الثقة بعد كدبة: الاعتذار ولا الأفعال؟"
+    "discuss": "إيه اللي بيرجّع الثقة بعد كدبة: الاعتذار ولا الأفعال؟",
+    "refs": [
+      {
+        "title": "The Gottman Institute — How to build trust",
+        "url": "https://www.gottman.com/blog/how-to-build-trust/"
+      },
+      {
+        "title": "The Gottman Institute — How to rebuild trust after an affair",
+        "url": "https://www.gottman.com/blog/how-to-rebuild-trust-after-an-affair/"
+      }
+    ]
   },
   {
     "slug": "family-interference-marriage",
@@ -150,7 +296,17 @@
     "image_alt": "بنت قاعدة تحت شجرة كبيرة، وتحت الأرض جذور الشجرة متشابكة مع صور أفراد عيلتها",
     "chapter": "مستوحى من الفصل التالت",
     "minutes": 5,
-    "discuss": "إزاي نحب أهلنا ونحترمهم، ونحمي بيتنا في نفس الوقت؟"
+    "discuss": "إزاي نحب أهلنا ونحترمهم، ونحمي بيتنا في نفس الوقت؟",
+    "refs": [
+      {
+        "title": "Psychology Today — Strengthening your marriage with good boundaries",
+        "url": "https://www.psychologytoday.com/us/blog/living-the-questions/201401/strengthening-your-marriage-with-good-boundaries"
+      },
+      {
+        "title": "Fincham & Beach (1999). Conflict in marriage: Implications for working with couples. Annual Review of Psychology, 50",
+        "url": "https://doi.org/10.1146/annurev.psych.50.1.47"
+      }
+    ]
   },
   {
     "slug": "partner-with-anxiety-ocd",
@@ -161,6 +317,16 @@
     "image_alt": "أربع صور لشاب قاعد على كنبة: مرة متوتر وبيبص في موبايله، ومرة مرتاح، ومرة بيبعد الموبايل، ومرة قايم ماشي",
     "chapter": "مستوحى من الفصل التاني والسادس",
     "minutes": 6,
-    "discuss": "إيه الجملة اللي بتطمنك فعلاً لما تكون قلقان؟"
+    "discuss": "إيه الجملة اللي بتطمنك فعلاً لما تكون قلقان؟",
+    "refs": [
+      {
+        "title": "International OCD Foundation — About OCD",
+        "url": "https://iocdf.org/about-ocd/"
+      },
+      {
+        "title": "NIMH — Anxiety disorders",
+        "url": "https://www.nimh.nih.gov/health/topics/anxiety-disorders"
+      }
+    ]
   }
 ]

@@ -159,10 +159,12 @@ def article_page(a, prev_items):
         "inLanguage": "ar",
         "mainEntityOfPage": url,
         "author": {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail",
-                   "alternateName": "د. ميلاد ميخائيل", "url": f"{SITE}/"},
+                   "alternateName": "د. ميلاد ميخائيل", "url": f"{SITE}/about/"},
         "publisher": {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail"},
         "isBasedOn": {"@type": "Book", "name": "ليه بنحب اللي بيوجعنا؟", "url": BOOK_AR},
     }
+    if a.get("refs"):
+        ld["citation"] = [r["url"] for r in a["refs"]]
     rel = related(a, prev_items)
     more = "\n        ".join(card(p, "h3") for p in rel)
     more_block = (f'<div class="more"><h2>مقالات ممكن تعجبك</h2><ul class="cards">\n        {more}\n      </ul></div>' if more else "")
@@ -171,7 +173,17 @@ def article_page(a, prev_items):
         <p>جرّب اختبار نمط التعلق المجاني على الموقع. بياخد دقيقتين، والنتيجة بتطلعلك على طول ومش بتتحفظ في أي مكان.</p>
         <div class="actions"><a class="btn primary" href="/tests/attachment-style/">ابدأ الاختبار</a> <a class="btn" href="/tests/">كل الاختبارات</a></div>
       </div>''')
-    meta = ar_date(a["date"]) + (f" · {a['minutes']} دقايق قراءة" if a.get("minutes") else "")
+    meta = f'<time datetime="{a["date"]}">{ar_date(a["date"])}</time>'
+    if a.get("updated") and a["updated"] != a["date"]:
+        meta += f' · آخر تحديث <time datetime="{a["updated"]}">{ar_date(a["updated"])}</time>'
+    meta += (f" · {a['minutes']} دقايق قراءة" if a.get("minutes") else "")
+    # «مراجع للاستزادة» (2026-11-11): trusted further reading per article, from articles.json "refs"
+    refs = a.get("refs") or []
+    refs_block = ("" if not refs else
+                  '<section class="refs" aria-labelledby="refs-' + a["slug"] + '"><h2 id="refs-' + a["slug"] + '">مراجع للاستزادة</h2>'
+                  '<p class="refs-note">مصادر علمية وموثوقة لو حابب تقرا أكتر عن الموضوع (أغلبها بالإنجليزي).</p><ol>'
+                  + "".join(f'<li><a href="{esc(r["url"])}" target="_blank" rel="noopener" lang="en" dir="ltr">{esc(r["title"])}</a></li>' for r in refs)
+                  + "</ol></section>")
     return f'''<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -196,7 +208,7 @@ def article_page(a, prev_items):
     <div class="wrap narrow">
       <p class="crumbs"><a href="/articles/">المقالات</a>{(" · " + esc(a["chapter"])) if a.get("chapter") else ""}</p>
       <h1>{esc(a["title"])}</h1>
-      <p class="post-meta">د. ميلاد ميخائيل · {meta}</p>
+      <p class="post-meta"><a href="/about/" rel="author">د. ميلاد ميخائيل</a> · {meta}</p>
       <div class="listen" hidden><button type="button" class="btn listen-btn" aria-pressed="false"><span aria-hidden="true">🎧</span> <span class="listen-label">استمع لهذا المقال</span></button><button type="button" class="btn listen-stop" hidden>إيقاف</button><label class="listen-rate">السرعة <select><option value="0.85">أبطأ</option><option value="1" selected>عادي</option><option value="1.2">أسرع</option></select></label><p class="listen-msg" role="status"></p></div>
       <figure class="post-hero">{pic(a["image"], a["image_alt"], eager=True)}</figure>
       <div class="post-body">
@@ -216,9 +228,10 @@ def article_page(a, prev_items):
           </div>
         </div>
       </div>
+      {refs_block}
       <div class="author-box">
         <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد ميخائيل" loading="lazy">
-        <p><strong>د. ميلاد ميخائيل</strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
+        <p><strong><a href="/about/" rel="author">د. ميلاد ميخائيل</a></strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
       </div>
       {share_block(url, a["title"])}
       {discussion_block("article-" + a["slug"], url, a["title"], a.get("discuss"))}
@@ -441,6 +454,11 @@ def llms_txt(items):
         "## About",
         "- [Home (Arabic)](https://drmilladmikhail.com/): bio, credentials, theses, books, FAQ",
         "- [Home (English)](https://drmilladmikhail.com/en/): bio, credentials, theses, books, FAQ",
+        "- [About / Professional biography (Arabic)](https://drmilladmikhail.com/about/): official profile page",
+        "- [About (English)](https://drmilladmikhail.com/en/about/): official English profile page",
+        "- [Academic qualifications](https://drmilladmikhail.com/about/qualifications/): degrees + WES evaluation",
+        "- [Theses & research](https://drmilladmikhail.com/about/publications/): Ph.D. (2022) and master's (2018) theses, conference papers, ORCID",
+        "- [Family & couples education](https://drmilladmikhail.com/family/): all relationship and marriage articles",
         "",
         "## Articles (Arabic)",
     ]

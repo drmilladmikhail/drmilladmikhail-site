@@ -69,10 +69,56 @@ def process(path, sec, root):
     return False
 
 
+AUTO_RE = re.compile(r'<script type="application/ld\+json" id="breadcrumb-ld-auto">.*?</script>\n?', re.S)
+SKIP_TOP = {".git", ".github", "tools", "content", "docs", "node_modules", "gifts", "test-artifacts", "en"}
+
+
+def auto_ld(root):
+    """2026-11-11 SEO brief: BreadcrumbList data for every other Arabic page
+    (Home › section › page), built from the pages' own H1s. Pages that already
+    describe their breadcrumb (BreadcrumbList) are left alone."""
+    n = 0
+    for dirpath, dirnames, filenames in os.walk(root):
+        rel = os.path.relpath(dirpath, root)
+        if rel == ".":
+            dirnames[:] = [d for d in dirnames if d not in SKIP_TOP and not d.startswith(".")]
+            continue
+        if "index.html" not in filenames:
+            continue
+        path = os.path.join(dirpath, "index.html")
+        with open(path, encoding="utf-8") as f:
+            t = old = f.read()
+        base = AUTO_RE.sub("", t)
+        if "BreadcrumbList" in base or 'lang="ar"' not in base[:400] or "noindex" in base.split("</head>")[0]:
+            t = base
+        else:
+            items = [("الرئيسية", "/")]
+            parts = rel.split(os.sep)
+            for i in range(1, len(parts)):
+                parent = os.path.join(root, *parts[:i], "index.html")
+                if os.path.exists(parent):
+                    with open(parent, encoding="utf-8") as f:
+                        name = h1_text(f.read())
+                    if name:
+                        items.append((name, "/" + "/".join(parts[:i]) + "/"))
+            title = h1_text(base)
+            if not title:
+                continue
+            items.append((title, "/" + "/".join(parts) + "/"))
+            block = jsonld(items).replace('id="breadcrumb-ld"', 'id="breadcrumb-ld-auto"')
+            t = base.replace("</head>", block + "</head>", 1)
+        if t != old:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(t)
+            n += 1
+    return n
+
+
 def apply(root):
     n = sum(process(p, s, root) for p, s in targets(root))
-    print(f"breadcrumbs: updated {n} page(s)")
-    return n
+    m = auto_ld(root)
+    print(f"breadcrumbs: updated {n} page(s), breadcrumb data added/refreshed on {m}")
+    return n + m
 
 
 if __name__ == "__main__":

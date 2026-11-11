@@ -1,0 +1,22 @@
+# External SEO checks on the LIVE site: Google PageSpeed Insights (mobile + desktop),
+# W3C Nu HTML Checker and the Schema.org validator. Manual only; the report is printed
+# to the log between SEO-CHECK-BEGIN / SEO-CHECK-END (tools/seo_external_check.py).
+name: SEO external check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check the live site with external validators
+        run: python tools/seo_external_check.py
