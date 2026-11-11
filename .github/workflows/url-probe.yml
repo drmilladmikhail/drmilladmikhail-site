@@ -1,0 +1,28 @@
+# Manual helper: fetch a few URLs from a GitHub runner (the build sandbox can't reach them) and print
+# status, redirects and selected links. Used to check outside links (Amazon author page, old Netlify site).
+name: URL probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: Space-separated URLs
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q playwright && python -m playwright install chromium
+      - name: Probe
+        env:
+          URLS: ${{ github.event.inputs.urls }}
+        run: python tools/url_probe.py $URLS
