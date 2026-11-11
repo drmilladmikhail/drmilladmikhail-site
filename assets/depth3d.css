@@ -44,6 +44,10 @@
 @keyframes h3d-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
 @keyframes h3d-spin { to { transform: rotateX(74deg) rotateZ(360deg); } }
 
+/* WebGL sphere (depth3d.js §4) replaces the CSS sphere + ring when available */
+.h3d-gl { position: absolute; inset: -10% -14%; width: 128%; height: 120%; display: block; }
+.h3d-core.h3d-has-gl .h3d-orb, .h3d-core.h3d-has-gl .h3d-ring { display: none; }
+
 /* Desktop: text + 3D stage side by side (beats the homepage's centered layout) */
 @media (min-width: 900px) {
   html[lang="ar"] body.home-redesign #main .clarity-hero .wrap.h3d-wrap { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr) !important; gap: 48px; align-items: center; max-width: 1180px; text-align: start; }
