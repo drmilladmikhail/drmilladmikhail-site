@@ -358,5 +358,109 @@
     ],
     "summary": "شريكك القلقان مش قاصد يتعبك، هو تعبان من جوه. والمساعدة الحقيقية مش في الطمأنة اللي مبتخلصش، المساعدة إنكم تبقوا فريق، والقلق يتعالج عند متخصص. ومع العلاج، ناس كتير بيعيشوا حياة أهدى بكتير.",
     "category": "relationships-family"
+  },
+  {
+    "slug": "panic-attack-what-to-do",
+    "category": "anxiety-mental-health",
+    "title": "نوبة الهلع: أعراضها إيه وأعمل إيه وقتها؟",
+    "description": "نوبة الهلع أعراضها إيه؟ قلب بيدق ونفس مقطوع وخوف من الموت. اعرف تعمل إيه وقت النوبة خطوة بخطوة، وامتى تكلم متخصص.",
+    "summary": "نوبة الهلع موجة مفاجئة من خوف شديد مع أعراض جسدية قوية زي سرعة ضربات القلب وضيق النفس، وهي مخيفة بس مش خطيرة وبتعدّي. وقتها اقعد مكانك، ونفّس ببطء وعمق، وفكّر نفسك إنها هتعدّي. ولو النوبات بتتكرر أو بقيت بتتجنب أماكن بسببها، كلّم متخصص لأنها بتتعالج.",
+    "refs": [
+      {
+        "title": "NHS: Panic disorder",
+        "url": "https://www.nhs.uk/mental-health/conditions/panic-disorder/"
+      },
+      {
+        "title": "HSE (Ireland): Panic attacks",
+        "url": "https://www2.hse.ie/conditions/panic-attacks"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-11",
+    "reviewed_on": "2026-11-11"
+  },
+  {
+    "slug": "telling-children-about-divorce",
+    "category": "relationships-family",
+    "title": "إزاي أقول لعيالي إننا هنطلق؟ خطوات تحميهم",
+    "description": "إزاي تقولوا لعيالكم عن الطلاق؟ امتى تتكلموا، وإيه الكلام اللي يطمّنهم إنه مش ذنبهم، وإيه اللي لازم تبعدوا عنه حسب سنهم.",
+    "summary": "قولوا لعيالكم لما يبقى القرار نهائي، ويا ريت مع بعض، بكلام بسيط وصريح على قد سنهم. أهم رسالة إن الطلاق مش ذنبهم ومش مسؤوليتهم يصلحوه، وإنكم الاتنين هتفضلوا تحبوهم. اشرحوا اللي هيتغير في يومهم، وابعدوا عن اللوم وإنكم تدخّلوهم في خلافاتكم.",
+    "refs": [
+      {
+        "title": "HealthyChildren.org (American Academy of Pediatrics): Adjusting to Divorce",
+        "url": "https://www.healthychildren.org/English/family-life/family-dynamics/types-of-families/Pages/Adjusting-to-Divorce.aspx"
+      },
+      {
+        "title": "HealthyChildren.org (AAP): How to Talk to Your Children about Divorce",
+        "url": "https://www.healthychildren.org/English/healthy-living/emotional-wellness/Building-Resilience/Pages/How-to-Talk-to-Your-Children-about-Divorce.aspx"
+      },
+      {
+        "title": "Child Mind Institute: How to Tell Kids About a Divorce",
+        "url": "https://childmind.org/article/how-to-tell-kids-about-a-divorce/"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-11",
+    "reviewed_on": "2026-11-11"
+  },
+  {
+    "slug": "people-pleasing-saying-no",
+    "category": "personality-behavior",
+    "title": "ليه مش قادر أقول لأ؟ إرضاء الناس على حساب نفسك",
+    "description": "مش قادر تقول لأ وبترضي الناس على حساب نفسك؟ اعرف علامات إرضاء الناس وأسبابه، و6 خطوات تتعلم بيها تقول لأ من غير ما تخسر حد.",
+    "summary": "إرضاء الناس مش تشخيص نفسي، ده نمط بيخليك تقدّم راحة الناس على احتياجاتك خوفًا من زعلهم أو رفضهم، وغالبًا بيبدأ من الطفولة. علامته الأوضح إن «لأ» صعبة جدًا، وإنك بتحس بإرهاق وغيظ مكتوم. تقدر تغيّره بخطوات صغيرة: تكسب وقت قبل الرد، وتقول «لأ» بوضوح ومن غير تبرير طويل، وتستحمل إحساس الذنب في الأول.",
+    "refs": [
+      {
+        "title": "Cleveland Clinic: Signs You're a People-Pleaser — and How To Stop",
+        "url": "https://health.clevelandclinic.org/how-to-stop-being-a-people-pleaser"
+      },
+      {
+        "title": "Mayo Clinic: Being assertive: Reduce stress, communicate better",
+        "url": "https://www.mayoclinic.org/healthy-lifestyle/stress-management/in-depth/assertive/art-20044644"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-11",
+    "reviewed_on": "2026-11-11"
+  },
+  {
+    "slug": "burnout-signs-recovery",
+    "category": "resilience-recovery",
+    "title": "الاحتراق النفسي: أعرف منين إني وصلت للآخر وأبدأ أتعافى إزاي؟",
+    "description": "علامات الاحتراق النفسي من الشغل حسب منظمة الصحة العالمية، والفرق بينه وبين الاكتئاب، و6 خطوات عملية تبدأ بيها التعافي.",
+    "summary": "الاحتراق النفسي حسب منظمة الصحة العالمية نتيجة ضغط شغل مزمن ماتعاملناش معاه كويس، وعلاماته تلاتة: استنزاف، وبعد نفسي أو سخرية من الشغل، وإحساس إن إنتاجيتك قلّت. هو مش مرض طبي، بس ممكن يزوّد احتمال الاكتئاب. التعافي بيبدأ إنك تحدد اللي بيستنزفك، وتطلب دعم، وترجّع النوم والحركة، وتحط حدود لوقت الشغل.",
+    "refs": [
+      {
+        "title": "WHO: Burn-out an \"occupational phenomenon\": International Classification of Diseases",
+        "url": "https://www.who.int/news-room/detail/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases"
+      },
+      {
+        "title": "Mayo Clinic: Job burnout: How to spot it and take action",
+        "url": "https://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/burnout/art-20046642"
+      }
+    ],
+    "minutes": 6,
+    "date": "2026-11-11",
+    "reviewed_on": "2026-11-11"
+  },
+  {
+    "slug": "psychiatrist-vs-psychologist",
+    "category": "research-education",
+    "title": "الفرق بين الطبيب النفسي والأخصائي النفسي: أروح لمين؟",
+    "description": "إيه الفرق بين الطبيب النفسي والأخصائي النفسي والمعالج؟ مين بيكتب دوا ومين بيعمل جلسات، وتبدأ بمين حسب حالتك، وإزاي تتأكد إنه مؤهل.",
+    "summary": "الطبيب النفسي دكتور بشري متخصص في الطب النفسي، يقدر يعمل علاج بالكلام ويكتب أدوية. والأخصائي النفسي دارس علم النفس، وبيعمل تقييم وعلاج نفسي بالكلام، ومش بيكتب أدوية في أغلب الدول. لو الأعراض شديدة أو فيه خطر على حياتك ابدأ بطبيب نفسي. ولو محتاج تفهم نفسك أو تتعامل مع ضغط أو مشاكل علاقات، ابدأ بأخصائي أو معالج مؤهل.",
+    "refs": [
+      {
+        "title": "American Psychiatric Association: What Is Psychiatry?",
+        "url": "https://www.psychiatry.org/patients-families/what-is-psychiatry"
+      },
+      {
+        "title": "American Psychological Association: Psychotherapy professionals (PTSD guideline)",
+        "url": "https://www.apa.org/ptsd-guideline/patients-and-families/psychotherapy-professionals"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-11",
+    "reviewed_on": "2026-11-11"
   }
 ]
