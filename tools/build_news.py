@@ -145,6 +145,24 @@ BLOCK_RE = re.compile(r'<script type="application/json" id="site-news">.*?</scri
 _CACHE = {}
 
 
+BAR_RE = re.compile(r'<aside class="site-announcement" data-k="[^"]*".*?</aside>\n?', re.S)
+TOPBAR_RE = re.compile(r'<header class="topbar[^"]*"[^>]*>.*?</header>\n?', re.S)
+
+
+def _bar(news):
+    """The «جديد» bar as real HTML right under the header, so the page doesn't jump when it appears
+    (nav.js only wires the × button and the per-visit dismissal)."""
+    from html import escape
+    links = "".join(f'<a class="site-announcement-link" href="{escape(n["u"])}">{escape(n["t"])}</a>' for n in news)
+    copy = "".join(f'<a class="site-announcement-link" href="{escape(n["u"])}" aria-hidden="true" tabindex="-1">{escape(n["t"])}</a>'
+                   for n in news)
+    secs = max(24, round(sum(len(n["t"]) for n in news) * 0.22))
+    return (f'<aside class="site-announcement" data-k="{escape(news[0]["k"])}" aria-label="الجديد على الموقع">'
+            f'<span class="site-announcement-label">جديد</span><div class="site-announcement-viewport">'
+            f'<div class="site-announcement-track" style="animation-duration:{secs}s">{links}{copy}</div></div>'
+            f'<button class="site-announcement-close" type="button" aria-label="إخفاء الإعلان">×</button></aside>\n')
+
+
 def _block(news):
     payload = json.dumps(news, ensure_ascii=False).replace("</", "<\\/")
     return f'<script type="application/json" id="site-news">{payload}</script>\n'
@@ -159,11 +177,16 @@ def inject(t, block=None):
         block = _CACHE["block"]
     if "/assets/nav.js" not in t or 'lang="ar"' not in t[:400]:
         return t
-    new = BLOCK_RE.sub("", t)
+    new = BAR_RE.sub("", BLOCK_RE.sub("", t))
     i = new.find('<script src="/assets/nav.js')
     if i < 0:
         return t
-    return new[:i] + block + new[i:]
+    new = new[:i] + block + new[i:]
+    news = json.loads(block[block.find(">") + 1:block.rfind("</script>")].replace("<\\/", "</"))
+    top = TOPBAR_RE.search(new)
+    if news and top:
+        new = new[:top.end()] + _bar(news) + new[top.end():]
+    return new
 
 
 def apply(root=ROOT):

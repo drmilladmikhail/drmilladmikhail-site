@@ -995,7 +995,7 @@ details.fold[open] .fold-hint { display: none; }
 
 /* ================= 2026-11-07: listen button + discussion ================= */
 .listen { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 6px 0 18px; padding: 10px 12px; border-radius: 14px; background: var(--mist); }
-.listen[hidden] { display: none; }
+.listen[hidden] { display: flex; visibility: hidden; } /* keeps its space until the script shows it, so the article doesn't jump (CLS) */
 .listen .btn { min-height: 42px; }
 .listen-btn { background: var(--eucalyptus); color: var(--eucalyptus-ink); border-color: var(--eucalyptus); }
 .listen.is-playing .listen-btn span[aria-hidden] { animation: pulse 1.2s ease-in-out infinite; display: inline-block; }

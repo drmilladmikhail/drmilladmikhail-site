@@ -8,7 +8,7 @@ TOKEN = "49dc5ec3f58f4825b6e04626f92dd475"
 SNIPPET = ("<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' "
            "data-cf-beacon='{\"token\": \"" + TOKEN + "\"}'></script><!-- End Cloudflare Web Analytics -->")
 CSP = ("default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; "
-       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; "
+       "style-src 'self' 'unsafe-inline'; font-src 'self'; "
        "img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; "
        "frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; "
        "object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests")
@@ -70,6 +70,33 @@ def ensure_social(t):
     return t.replace(canon.group(0), canon.group(0) + "\n" + "\n".join(tags), 1)
 
 
+GFONT_RE = re.compile(r'<link\b(?=[^>]*href="https://fonts\.googleapis\.com/css2[^"]*")[^>]*>\n?')
+GPRECONNECT_RE = re.compile(r'<link rel="preconnect" href="https://fonts\.(?:googleapis|gstatic)\.com"[^>]*>\n?')
+FONT_PRELOAD = {
+    "ar": ("ibm-plex-sans-arabic-arabic-400-normal.woff2", "noto-naskh-arabic-arabic-700-normal.woff2"),
+    "en": ("ibm-plex-sans-latin-400-normal.woff2", "newsreader-latin-opsz-normal.woff2"),
+}
+
+
+def self_host_fonts(t):
+    """2026-11-11: serve the web fonts from our own domain (assets/fonts.css + assets/fonts/*.woff2)
+    instead of Google Fonts, and preload the two the first screen needs. Fonts that arrive late make
+    the text change size and the page jump (CLS); same-origin + preload makes them arrive with the CSS."""
+    had = bool(GFONT_RE.search(t))
+    if not had and "/assets/site.css" not in t:
+        return t
+    t = GPRECONNECT_RE.sub("", GFONT_RE.sub("", t))
+    if "/assets/fonts.css" in t:
+        return t
+    lang = "en" if 'lang="en"' in t[:400] else "ar"
+    tags = "".join(f'<link rel="preload" href="/assets/fonts/{f}" as="font" type="font/woff2" crossorigin>'
+                   for f in FONT_PRELOAD[lang]) + '<link rel="stylesheet" href="/assets/fonts.css">'
+    m = re.search(r'<link rel="stylesheet" href="/assets/site\.css[^"]*">', t)
+    if m:
+        return t[:m.start()] + tags + "\n" + t[m.start():]
+    return t.replace("</head>", tags + "\n</head>", 1)
+
+
 def inject_depth3d(t):
     """Add the light 3D layer (assets/depth3d.css + depth3d.js) to pages that use site.css."""
     if "/assets/site.css" not in t or "</body>" not in t:
@@ -92,7 +119,7 @@ def version_assets(root):
     vers = {}
     names = ("site.css", "nav.js", "home-clarity.css", "home-redesign.css",
              "extras.js", "challenges.js", "my-space.js", "helper.js", "partner-check.js", "relcheck.js",
-             "share.js", "quiz.js", "depth3d.css", "depth3d.js", "nav-layout.css")
+             "share.js", "quiz.js", "depth3d.css", "depth3d.js", "nav-layout.css", "fonts.css")
     for name in names:
         path = os.path.join(root, "assets", name)
         if os.path.isfile(path):
@@ -135,7 +162,7 @@ def main():
             old = t
             t = re.sub(r'<meta http-equiv="Content-Security-Policy"[^>]*>\n?<meta name="referrer"[^>]*>\n?', "", t)
             t = re.sub(r'(<meta charset="utf-8">\n?)', lambda m: m.group(1) + SECURITY, t, count=1, flags=re.I)
-            t = inject_depth3d(t)
+            t = self_host_fonts(inject_depth3d(t))
             t = FOOTER_DUP_RE.sub("", t)
             t = ensure_social(t)
             t = ensure_robots_meta(t, os.path.relpath(dirpath, ROOT))

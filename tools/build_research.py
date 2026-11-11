@@ -5,7 +5,7 @@ import json
 import hashlib
 import xml.etree.ElementTree as ET
 from site_header import header_for, NAV_JS
-from add_analytics import SECURITY, SNIPPET, inject_depth3d, ensure_social
+from add_analytics import SECURITY, SNIPPET, inject_depth3d, ensure_social, self_host_fonts
 import build_news
 from breadcrumbs import process as add_breadcrumbs, auto_ld
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,8 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def version_shared_assets(page, root):
     """Match the shared asset versioner so rebuilding creates no stale diffs."""
-    page = ensure_social(build_news.inject(inject_depth3d(page)))
-    for name in ('site.css', 'nav.js', 'depth3d.css', 'depth3d.js', 'nav-layout.css'):
+    page = ensure_social(build_news.inject(self_host_fonts(inject_depth3d(page))))
+    for name in ('site.css', 'nav.js', 'depth3d.css', 'depth3d.js', 'nav-layout.css', 'fonts.css'):
         path = Path(root) / 'assets' / name
         if path.is_file():
             digest = hashlib.md5(path.read_bytes()).hexdigest()[:8]

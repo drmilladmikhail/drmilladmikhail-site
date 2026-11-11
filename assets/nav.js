@@ -41,6 +41,17 @@
    Nothing new → the previous items keep showing. Dismissing hides it for this
    visit until something newer goes up. */
 (function () {
+  var built = document.querySelector('.site-announcement[data-k]');
+  if (built) {
+    var k = built.getAttribute('data-k');
+    try { if (sessionStorage.getItem('siteAnnouncementDismissed') === k) { built.remove(); return; } } catch (e) {}
+    var btn = built.querySelector('.site-announcement-close');
+    if (btn) btn.addEventListener('click', function () {
+      built.remove();
+      try { sessionStorage.setItem('siteAnnouncementDismissed', k); } catch (e) {}
+    });
+    return;
+  }
   var header = document.querySelector('.topbar');
   if (!header || document.querySelector('.site-announcement')) return;
   var src = document.getElementById('site-news');
@@ -95,25 +106,27 @@
   bar.appendChild(close);
   header.insertAdjacentElement('afterend', bar);
 
-  var style = document.createElement('style');
-  style.textContent = [
-    '.site-announcement{position:relative;z-index:20;display:flex;align-items:center;gap:12px;min-height:46px;padding:7px max(16px,calc((100% - 1080px)/2));background:#173f38;color:#fff;border-bottom:1px solid rgba(255,255,255,.14);overflow:hidden;font:600 14px/1.5 inherit}',
-    '.site-announcement-label{flex:none;padding:3px 10px;border-radius:999px;background:#e2b35a;color:#20352f;font-size:12px;font-weight:700}',
-    '.site-announcement-viewport{flex:1;min-width:0;overflow:hidden}',
-    '.site-announcement-track{display:flex;width:max-content;direction:rtl;animation:site-announcement-scroll 24s linear infinite}',
-    '.site-announcement-link{display:block;flex:none;padding-inline:32px;color:#fff;text-decoration:none;white-space:nowrap}',
-    '.site-announcement-link+.site-announcement-link{border-inline-start:1px solid rgba(226,179,90,.55)}',
-    '.site-announcement-link:hover{text-decoration:underline}',
-    '.site-announcement-close{position:relative;z-index:2;flex:none;width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font:400 22px/1 Arial,sans-serif;cursor:pointer}',
-    '.site-announcement-close:hover{background:rgba(255,255,255,.22)}',
-    '@keyframes site-announcement-scroll{from{transform:translateX(0)}to{transform:translateX(50%)}}',
-    'html[lang="en"] .site-announcement-track{direction:ltr;animation-name:site-announcement-scroll-en}',
-    '@keyframes site-announcement-scroll-en{from{transform:translateX(-50%)}to{transform:translateX(0)}}',
-    '@media(hover:hover){.site-announcement-viewport:hover .site-announcement-track{animation-play-state:paused}}',
-    '@media(max-width:480px){.site-announcement{gap:8px;min-height:44px;padding-inline:10px;font-size:12px}.site-announcement-link{padding-inline:22px}}',
-    '@media(prefers-reduced-motion:reduce){.site-announcement-track{animation:none!important;width:100%}.site-announcement-link[aria-hidden="true"]{display:none}.site-announcement-link{white-space:normal;padding:2px 8px}}'
-  ].join('');
-  document.head.appendChild(style);
+  if (!document.getElementById('nav-layout-fix')) {
+    var style = document.createElement('style');
+    style.textContent = [
+      '.site-announcement{position:relative;z-index:20;display:flex;align-items:center;gap:12px;min-height:46px;padding:7px max(16px,calc((100% - 1080px)/2));background:#173f38;color:#fff;border-bottom:1px solid rgba(255,255,255,.14);overflow:hidden;font:600 14px/1.5 inherit}',
+      '.site-announcement-label{flex:none;padding:3px 10px;border-radius:999px;background:#e2b35a;color:#20352f;font-size:12px;font-weight:700}',
+      '.site-announcement-viewport{flex:1;min-width:0;overflow:hidden}',
+      '.site-announcement-track{display:flex;width:max-content;direction:rtl;animation:site-announcement-scroll 24s linear infinite}',
+      '.site-announcement-link{display:block;flex:none;padding-inline:32px;color:#fff;text-decoration:none;white-space:nowrap}',
+      '.site-announcement-link+.site-announcement-link{border-inline-start:1px solid rgba(226,179,90,.55)}',
+      '.site-announcement-link:hover{text-decoration:underline}',
+      '.site-announcement-close{position:relative;z-index:2;flex:none;width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font:400 22px/1 Arial,sans-serif;cursor:pointer}',
+      '.site-announcement-close:hover{background:rgba(255,255,255,.22)}',
+      '@keyframes site-announcement-scroll{from{transform:translateX(0)}to{transform:translateX(50%)}}',
+      'html[lang="en"] .site-announcement-track{direction:ltr;animation-name:site-announcement-scroll-en}',
+      '@keyframes site-announcement-scroll-en{from{transform:translateX(-50%)}to{transform:translateX(0)}}',
+      '@media(hover:hover){.site-announcement-viewport:hover .site-announcement-track{animation-play-state:paused}}',
+      '@media(max-width:480px){.site-announcement{gap:8px;min-height:44px;padding-inline:10px;font-size:12px}.site-announcement-link{padding-inline:22px}}',
+      '@media(prefers-reduced-motion:reduce){.site-announcement-track{animation:none!important;width:100%}.site-announcement-link[aria-hidden="true"]{display:none}.site-announcement-link{white-space:normal;padding:2px 8px}}'
+    ].join('');
+    document.head.appendChild(style);
+  }
 })();
 
 /* Persistent, accessible route back to the homepage on every page using the shared navigation script. */
