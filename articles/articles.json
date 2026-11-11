@@ -22,7 +22,8 @@
         "title": "Cleveland Clinic — Trauma Bonding",
         "url": "https://health.clevelandclinic.org/trauma-bonding"
       }
-    ]
+    ],
+    "summary": "تكرار نفس العلاقة المؤذية مش معناه إنك غبي أو ضعيف أو «حظك وحش»؛ ممكن يكون فيه نمط محتاج تفهمه. المألوف مش معناه إنه مناسب، والاهتمام المتقطع والخوف من الوحدة ونظرتنا لنفسنا ممكن يصعّبوا البعد. وفهم اختياراتك مش معناه إنك مسؤول عن أذى شخص تاني؛ مسؤولية الأذى على اللي بيؤذي."
   },
   {
     "slug": "four-attachment-styles",
@@ -47,7 +48,8 @@
         "title": "Cleveland Clinic — Attachment Theory",
         "url": "https://health.clevelandclinic.org/attachment-theory"
       }
-    ]
+    ],
+    "summary": "أنماط التعلّق بتوصف اختلافات في إحساسنا بالأمان والقرب داخل العلاقات. التصنيفات الشائعة بتشمل الآمن والقلق والمتجنب والخائف المتجنب. دي أوصاف تساعد على الفهم، مش تشخيصات ولا هويات ثابتة، وممكن تتغير مع الوعي والعلاقات الآمنة والعلاج."
   },
   {
     "slug": "anxious-avoidant-attraction",
@@ -71,7 +73,8 @@
         "title": "Cleveland Clinic — Avoidant Attachment Style",
         "url": "https://health.clevelandclinic.org/avoidant-attachment-style"
       }
-    ]
+    ],
+    "summary": "القلقان والمتجنب بيتشدوا لبعض لأن كل واحد شايف في التاني اللي ناقصه. ولما يدخلوا في الرقصة، كل لفة بتزوّد التعلق والوجع مع بعض. بس أول ما واحد منهم يشوف الدايرة بوضوح، يقدر يغيّر خطوته، والرقصة كلها تبدأ تتغير. خد وقتك، ومتستعجلش على نفسك ولا على اللي قدامك."
   },
   {
     "slug": "dealing-with-narcissistic-partner",
@@ -92,7 +95,8 @@
         "title": "Cleveland Clinic — Narcissistic Personality Disorder",
         "url": "https://my.clevelandclinic.org/health/diseases/9742-narcissistic-personality-disorder"
       }
-    ]
+    ],
+    "summary": "مش مهم تعرف إذا كان شريكك «نرجسي» بالتشخيص. المهم تشوف السلوك بوضوح، وتحط حدودك، وتفضل قريب من ناسك ومن نفسك. ولو حاسس إنك تهت جوه العلاقة، ده مش عيب فيك. ده معناه إنك تستاهل دعم يمشي معاك الطريق."
   },
   {
     "slug": "couples-counseling",
@@ -113,7 +117,8 @@
         "title": "The Gottman Institute — The Four Horsemen: Criticism, Contempt, Defensiveness and Stonewalling",
         "url": "https://www.gottman.com/blog/the-four-horsemen-recognizing-criticism-contempt-defensiveness-and-stonewalling/"
       }
-    ]
+    ],
+    "summary": "طلب المساعدة مش معناه إن علاقتكم فاشلة. معناه إنكم مهتمين بيها كفاية إنكم تتعبوا عشانها. ومش لازم توصلوا لحافة الطلاق: تكرار نفس الخناقة، أو إنكم بقيتوا عايشين زي «زمايل سكن»، أو أزمة كبيرة، كلها علامات إن الوقت مناسب."
   },
   {
     "slug": "emotional-communication-couples",
@@ -134,7 +139,8 @@
         "title": "Fincham & Beach (1999). Conflict in marriage: Implications for working with couples. Annual Review of Psychology, 50",
         "url": "https://doi.org/10.1146/annurev.psych.50.1.47"
       }
-    ]
+    ],
+    "summary": "التواصل العاطفي مش كلام رومانسي طويل. هو إنك تعرف إحساسك، وتقوله من غير هجوم، وتسمع من غير دفاع، وتلحق اللحظات الصغيرة قبل ما تعدي. خطوة صغيرة كل يوم أقوى من وعد كبير مرة في السنة."
   },
   {
     "slug": "dealing-with-jealous-partner",
@@ -155,7 +161,8 @@
         "title": "Cleveland Clinic — Retroactive Jealousy",
         "url": "https://health.clevelandclinic.org/retroactive-jealousy"
       }
-    ]
+    ],
+    "summary": "الغيرة البسيطة ممكن تتقال وتهدى. أما الشك اللي بيفتش ويتهم ويعزلك، فده مش «حب زيادة»، ده خوف أو تحكم محتاج يتواجه. اتكلم بهدوء، وحط حدود، ومتتنازلش عن خصوصيتك وناسك عشان تثبت براءة مفيش محكمة هتحكم فيها أبداً."
   },
   {
     "slug": "dealing-with-stingy-partner",
@@ -176,7 +183,8 @@
         "title": "WomensLaw — What is financial abuse?",
         "url": "https://www.womenslaw.org/about-abuse/forms-abuse/financial-abuse/basic-info/what-financial-abuse-what-are-signs-look-out"
       }
-    ]
+    ],
+    "summary": "مش كل حرص بخل، ومش كل بخل تحكم. الحرص بيتحل بالكلام والميزانية والاتفاق. أما لما الفلوس تبقى وسيلة تذلّك أو تعزلك أو تخليك محتاج، فده أذى حقيقي محتاج تتعامل معاه بجد."
   },
   {
     "slug": "emotionally-abusive-partner",
@@ -197,7 +205,8 @@
         "title": "World Health Organization — Violence against women (fact sheet)",
         "url": "https://www.who.int/news-room/fact-sheets/detail/violence-against-women"
       }
-    ]
+    ],
+    "summary": "مش لازم تكون فيه كدمات عشان يبقى فيه أذى. لو بتحس إنك بتختفي، وخايف، وبتخبي، فده يستاهل تاخده بجد. انت مش «حساس زيادة»، وتستاهل علاقة تحس فيها بالأمان."
   },
   {
     "slug": "partner-with-depression",
@@ -218,7 +227,8 @@
         "title": "World Health Organization — Depressive disorder (fact sheet)",
         "url": "https://www.who.int/news-room/fact-sheets/detail/depression"
       }
-    ]
+    ],
+    "summary": "الشريك المكتئب محتاج صبر وفهم ودعم يوصله للعلاج، مش لوم وضغط. وانت محتاج تحافظ على نفسك عشان تقدر تكمل. الاكتئاب بيتعالج، وناس كتير بيرجعوا يحسوا بالحياة تاني بالمساعدة الصح."
   },
   {
     "slug": "partner-with-addiction",
@@ -243,7 +253,8 @@
         "title": "SAMHSA — National Helpline",
         "url": "https://www.samhsa.gov/find-help/national-helpline"
       }
-    ]
+    ],
+    "summary": "الإدمان مرض بيتعالج، وشريكك محتاج علاج متخصص، مش حد يغطي عليه ولا حد يجلده. دورك إنك تحط حدود واضحة، وتشجع العلاج، وتحمي نفسك وعيالك، وتطلب دعم ليك انت كمان."
   },
   {
     "slug": "dealing-with-angry-partner",
@@ -264,7 +275,8 @@
         "title": "The Gottman Institute — The Four Horsemen: Criticism, Contempt, Defensiveness and Stonewalling",
         "url": "https://www.gottman.com/blog/the-four-horsemen-recognizing-criticism-contempt-defensiveness-and-stonewalling/"
       }
-    ]
+    ],
+    "summary": "الغضب نفسه مش المشكلة. المشكلة لما يتحول لصريخ وإهانة وخوف دايم. الهدوء وقت الانفجار، والاتفاق على وقفة، والحدود الواضحة، بيفرقوا كتير. وانت مش مسؤول عن غضبه، ولا لازم تعيش خايف في بيتك."
   },
   {
     "slug": "dealing-with-lying-partner",
@@ -285,7 +297,8 @@
         "title": "The Gottman Institute — How to rebuild trust after an affair",
         "url": "https://www.gottman.com/blog/how-to-rebuild-trust-after-an-affair/"
       }
-    ]
+    ],
+    "summary": "الكدب الصغير ممكن يتعالج بالكلام والأمان. أما الكدب المتكرر في الحاجات المهمة، أو الكدب اللي بيخليك تشك في نفسك، فده علامة حمرا تستاهل تقف عندها. وانت تستاهل علاقة متحتاجش فيها تحقق في كل كلمة."
   },
   {
     "slug": "family-interference-marriage",
@@ -306,7 +319,8 @@
         "title": "Fincham & Beach (1999). Conflict in marriage: Implications for working with couples. Annual Review of Psychology, 50",
         "url": "https://doi.org/10.1146/annurev.psych.50.1.47"
       }
-    ]
+    ],
+    "summary": "العيلة نعمة، والقرب منها حلو. بس البيت الجديد محتاج حدود تحميه، والحدود دي لازم تطلع من الزوجين مع بعض. لما تبقوا فريق واحد، الأهل غالباً بيتعودوا مع الوقت. ولو الموضوع بقى سبب خناق دايم، الاستشارة الزوجية ممكن تساعدكم تتفقوا."
   },
   {
     "slug": "partner-with-anxiety-ocd",
@@ -327,6 +341,7 @@
         "title": "NIMH — Anxiety disorders",
         "url": "https://www.nimh.nih.gov/health/topics/anxiety-disorders"
       }
-    ]
+    ],
+    "summary": "شريكك القلقان مش قاصد يتعبك، هو تعبان من جوه. والمساعدة الحقيقية مش في الطمأنة اللي مبتخلصش، المساعدة إنكم تبقوا فريق، والقلق يتعالج عند متخصص. ومع العلاج، ناس كتير بيعيشوا حياة أهدى بكتير."
   }
 ]

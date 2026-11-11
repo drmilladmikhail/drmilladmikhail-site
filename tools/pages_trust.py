@@ -171,7 +171,7 @@ def contact_page(ba, page, write, SITE):
     ]
     cl = "\n".join(f'''<li class="c-card"><h2>{t}</h2><p>{d}</p><a class="btn{' primary' if i == 0 else ''}" href="{h}"{' target="_blank" rel="noopener"' if h.startswith('http') else ''}>{b}</a></li>''' for i, (t, d, h, b) in enumerate(cards))
     socials = [("قناة «جلسة شيزلونج» على يوتيوب", "https://www.youtube.com/@DrMilladMikhail"), ("مدونة «راحة البال»", "https://blog.drmilladmikhail.com/"),
-               ("صفحة المؤلف على أمازون", "https://www.amazon.com/author/drmilladmikhail"), ("LinkedIn", "https://www.linkedin.com/in/dr-millad-mikhail-a57b0b215"),
+               ("صفحة المؤلف على أمازون", "https://www.amazon.com/stores/author/B0HQ931MJP"), ("LinkedIn", "https://www.linkedin.com/in/dr-millad-mikhail-a57b0b215"),
                ("ORCID (الأبحاث)", "https://orcid.org/0009-0002-9254-367X")]
     sl = "\n".join(f'<li><a href="{u}" target="_blank" rel="me noopener">{n}</a></li>' for n, u in socials)
     body = f'''  <section class="page-hero">

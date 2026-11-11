@@ -74,7 +74,17 @@ def summarise(d, source):
                   ((it.get("subItems") or {}).get("items") or [])]
         shifts.append({"score": round(it.get("score", 0), 3), "el": (node.get("selector") or node.get("snippet") or "")[:90],
                        "causes": [str(c)[:90] for c in causes if c][:3]})
-    return {"source": source, "scores": cats, "shifts": shifts, "LCP": pick("largest-contentful-paint"), "CLS": pick("cumulative-layout-shift"),
+    lcp = {}
+    for blk in (a.get("largest-contentful-paint-element", {}).get("details") or {}).get("items", []):
+        if blk.get("type") == "table":
+            for it in blk.get("items", []):
+                if isinstance(it.get("node"), dict):
+                    lcp["element"] = (it["node"].get("selector") or it["node"].get("snippet") or "")[:90]
+                elif it.get("phase"):
+                    lcp[it["phase"]] = round(it.get("timing", 0))
+    blocking = [(r.get("url", "").replace("https://drmilladmikhail.com", "")[:60], round(r.get("wastedMs", 0)))
+                for r in (a.get("render-blocking-resources", {}).get("details") or {}).get("items", [])][:6]
+    return {"source": source, "scores": cats, "shifts": shifts, "lcp_detail": lcp, "render_blocking": blocking, "LCP": pick("largest-contentful-paint"), "CLS": pick("cumulative-layout-shift"),
             "TBT": pick("total-blocking-time"), "FCP": pick("first-contentful-paint"), "SI": pick("speed-index"),
             "seo_failing": failing_seo}
 

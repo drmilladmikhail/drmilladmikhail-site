@@ -2,6 +2,9 @@
 """Finalize navigation, security, analytics, sitemap and reviewed homepage."""
 import os
 import re
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import identity_ld  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TOKEN = "49dc5ec3f58f4825b6e04626f92dd475"
@@ -162,7 +165,8 @@ def main():
             old = t
             t = re.sub(r'<meta http-equiv="Content-Security-Policy"[^>]*>\n?<meta name="referrer"[^>]*>\n?', "", t)
             t = re.sub(r'(<meta charset="utf-8">\n?)', lambda m: m.group(1) + SECURITY, t, count=1, flags=re.I)
-            t = self_host_fonts(inject_depth3d(t))
+            t = identity_ld.apply_page(self_host_fonts(inject_depth3d(t)))
+            t = identity_ld.apply_hub(t, os.path.relpath(dirpath, ROOT).replace(os.sep, '/'))
             t = FOOTER_DUP_RE.sub("", t)
             t = ensure_social(t)
             t = ensure_robots_meta(t, os.path.relpath(dirpath, ROOT))

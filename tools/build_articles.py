@@ -56,7 +56,7 @@ FOOTER = '''<footer class="footer">
       <h2>تابعني</h2>
       <ul>
         <li><a href="https://www.youtube.com/@DrMilladMikhail" target="_blank" rel="noopener">يوتيوب</a></li>
-        <li><a href="https://www.amazon.com/author/drmilladmikhail" target="_blank" rel="noopener">أمازون</a></li>
+        <li><a href="https://www.amazon.com/stores/author/B0HQ931MJP" target="_blank" rel="noopener">أمازون</a></li>
         <li><a href="https://www.linkedin.com/in/dr-millad-mikhail-a57b0b215" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="https://orcid.org/0009-0002-9254-367X" target="_blank" rel="me noopener">ORCID</a></li>
         <li><a href="/en/" hreflang="en" lang="en">English</a></li>
@@ -142,6 +142,29 @@ def load():
     return sorted(items, key=lambda a: (a["date"], a["slug"]), reverse=True)
 
 
+H2_RE = re.compile(r'<h2(\s[^>]*)?>(.*?)</h2>', re.S)
+
+
+def number_sections(body):
+    """Give every section heading a stable id (q1, q2, …) and return the list for the contents box.
+    Sources/further-reading headings stay out of the list."""
+    toc, n = [], 0
+
+    def repl(m):
+        nonlocal n
+        attrs, text = m.group(1) or "", m.group(2)
+        n += 1
+        hid = re.search(r'\bid="([^"]+)"', attrs)
+        if not hid:
+            attrs = f' id="q{n}"' + attrs
+        sid = hid.group(1) if hid else f"q{n}"
+        plain = re.sub(r"<[^>]+>", "", text).strip()
+        if not re.search(r"مصادر|المراجع|مراجع", plain):
+            toc.append((sid, esc(plain)))
+        return f"<h2{attrs}>{text}</h2>"
+    return H2_RE.sub(repl, body), toc
+
+
 def article_page(a, prev_items):
     url = f"{SITE}/articles/{a['slug']}/"
     img = f"{SITE}/assets/book/{a['image']}.jpg"
@@ -165,6 +188,17 @@ def article_page(a, prev_items):
     }
     if a.get("refs"):
         ld["citation"] = [r["url"] for r in a["refs"]]
+    # Answer first (2026-11-11, phase 2): his own conclusion at the top + the article's questions as a
+    # contents list, so readers, search engines and AI answers get the direct answer and can cite a section.
+    body, toc = number_sections(body)
+    answer_block = ""
+    if a.get("summary"):
+        ld["abstract"] = a["summary"]
+        items = "".join(f'<li><a href="#{i}">{t}</a></li>' for i, t in toc)
+        answer_block = (f'<aside class="answer-box" aria-labelledby="ans-{a["slug"]}">'
+                        f'<h2 id="ans-{a["slug"]}">باختصار</h2><p>{esc(a["summary"])}</p>'
+                        + (f'<nav class="toc" aria-label="في المقال ده"><p class="toc-title">في المقال ده</p><ol>{items}</ol></nav>' if items else "")
+                        + '</aside>')
     rel = related(a, prev_items)
     more = "\n        ".join(card(p, "h3") for p in rel)
     more_block = (f'<div class="more"><h2>مقالات ممكن تعجبك</h2><ul class="cards">\n        {more}\n      </ul></div>' if more else "")
@@ -211,6 +245,7 @@ def article_page(a, prev_items):
       <p class="post-meta"><a href="/about/" rel="author">د. ميلاد ميخائيل</a> · {meta}</p>
       <div class="listen" hidden><button type="button" class="btn listen-btn" aria-pressed="false"><span aria-hidden="true">🎧</span> <span class="listen-label">استمع لهذا المقال</span></button><button type="button" class="btn listen-stop" hidden>إيقاف</button><label class="listen-rate">السرعة <select><option value="0.85">أبطأ</option><option value="1" selected>عادي</option><option value="1.2">أسرع</option></select></label><p class="listen-msg" role="status"></p></div>
       <figure class="post-hero">{pic(a["image"], a["image_alt"], eager=True)}</figure>
+      {answer_block}
       <div class="post-body">
 {body}
       </div>
@@ -231,7 +266,7 @@ def article_page(a, prev_items):
       {refs_block}
       <div class="author-box">
         <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد ميخائيل" loading="lazy">
-        <p><strong><a href="/about/" rel="author">د. ميلاد ميخائيل</a></strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
+        <p><strong><a href="/about/" rel="author">د. ميلاد ميخائيل</a></strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA).<br><a href="/about/">السيرة المهنية</a> · <a href="/about/qualifications/">المؤهلات</a> · <a href="/about/publications/">الأبحاث</a> · <a href="/book/">كتاب «ليه بنحب اللي بيوجعنا؟»</a></p>
       </div>
       {share_block(url, a["title"])}
       {discussion_block("article-" + a["slug"], url, a["title"], a.get("discuss"))}
@@ -471,7 +506,7 @@ def llms_txt(items):
     L += ["", "## Books",
           "- [ليه بنحب اللي بيوجعنا؟ (Arabic, Amazon)](https://www.amazon.com/dp/B0HPNCYWWS)",
           "- [Why Do We Love What Hurts Us? (English, Amazon)](https://www.amazon.com/dp/B0HPRPSPWF)",
-          "- [Amazon author page](https://www.amazon.com/author/drmilladmikhail)",
+          "- [Amazon author page](https://www.amazon.com/stores/author/B0HQ931MJP)",
           "", "## Elsewhere",
           "- [YouTube: جلسة شيزلونج](https://www.youtube.com/@DrMilladMikhail)",
           "- [Blog: راحة البال](https://blog.drmilladmikhail.com/)",
