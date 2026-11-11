@@ -171,7 +171,10 @@
   {
    "id": "IarZfy0k1Yo",
    "title": "صحة جسميه وصحة نفسية وصحة اخلاقية",
-   "order": 26
+   "order": 26,
+   "published": "2021-01-21",
+   "description": "اكتساب الصحة الجسمية والصحة النفسية والصحة الاخلاقية",
+   "duration": 581
   },
   {
    "id": "p290ypWyHSQ",
@@ -192,7 +195,9 @@
   {
    "id": "dPzVtstbNfw",
    "title": "الدعم النفسي وتعزيز الصحة النفسية",
-   "order": 29
+   "order": 29,
+   "published": "2021-01-21",
+   "duration": 285
   },
   {
    "id": "0vF0mOkTUwY",
@@ -207,7 +212,11 @@
   {
    "id": "hnDbE9o4xKU",
    "title": "الفيل لم يهرب !!",
-   "order": 32
+   "order": 32,
+   "published": "2020-09-18",
+   "description": "كبسولة نفسية مع دكتور ميلاد منير",
+   "duration": 105,
+   "short": false
   },
   {
    "id": "zo-Ztw7Jvpk",
@@ -241,7 +250,11 @@
   {
    "id": "OSRtdu8U0lk",
    "title": "طردك من شغلك بداية لنجاحك",
-   "order": 38
+   "order": 38,
+   "published": "2020-08-24",
+   "description": "كبسولة نفسية  مع دكتور ميلاد منير",
+   "duration": 140,
+   "short": false
   },
   {
    "id": "hEvJB07-Yd0",
