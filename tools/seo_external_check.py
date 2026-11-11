@@ -20,7 +20,8 @@ import urllib.request
 
 SITE = "https://drmilladmikhail.com"
 PAGES = ["/", "/about/", "/about/qualifications/", "/about/publications/", "/family/", "/en/about/",
-         "/articles/couples-counseling/", "/book/", "/sessions/", "/tests/"]
+         "/articles/couples-counseling/", "/book/", "/sessions/", "/tests/",
+         "/articles/", "/articles/category/relationships-family/"]
 PSI_PAGES = ["/", "/about/", "/articles/couples-counseling/"]
 UA = {"User-Agent": "Mozilla/5.0 drmilladmikhail-seo-check"}
 
