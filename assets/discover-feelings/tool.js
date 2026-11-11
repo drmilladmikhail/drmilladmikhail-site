@@ -1,22 +1,31 @@
-// Draft: runs only in the browser. Nothing a visitor types is sent, logged, stored or put in the URL.
+// «اكتشاف مشاعرك»: a five-step guided flow. Runs only in the browser.
+// Nothing a visitor types or picks is sent, logged, stored or put in the URL: answers live in memory until the page closes.
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
-  var PATHS = window.DF_PATHS || {};
-  var FE = window.DF_FEELINGS || [], GROUPS = window.DF_GROUPS || [], BODY = window.DF_BODY || [];
-  var statusEl = $('status');
-  var state = {};
-  function say(t) { statusEl.textContent = ''; setTimeout(function () { statusEl.textContent = t; }, 30); }
+  var FE = window.DF_FEELINGS || [], GROUPS = window.DF_GROUPS || [], BODY = window.DF_BODY || [], PATHS = window.DF_PATHS || {};
+  var CHIPS = window.DF_CHIPS || [], NEEDS = window.DF_NEEDS || {}, GDEF = window.DF_GROUP_DEFAULT || {}, OVR = window.DF_OVERRIDE || {};
+  var QS = window.DF_QUESTIONS || [], MORE_NEED = window.DF_MORE_NEED || {}, AFFECT = window.DF_AFFECT || {}, BREATH = window.DF_BREATH || {};
+  if (!$('jr') || !FE.length) return;
+  var MAX = 3;
+  var LABEL = {}; CHIPS.forEach(function (c) { LABEL[c[1]] = c[0]; });
+  var state;
+  function fresh() { return { screen: 'welcome', sel: [], ans: {}, qi: 0, near: {}, step: '', from: 'feel' }; }
+
   function ar(n) { return Number(n).toLocaleString('ar-EG'); }
   function el(tag, text, cls) { var e = document.createElement(tag); if (text) e.textContent = text; if (cls) e.className = cls; return e; }
   function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+  function byId(id) { for (var i = 0; i < FE.length; i++) if (FE[i].id === id) return FE[i]; }
+  function nameOf(f) { return LABEL[f.id] || f.n; }
+  function say(t) { var s = $('jr-status'); s.textContent = ''; setTimeout(function () { s.textContent = t; }, 30); }
+  function joinAr(list) { return list.length < 2 ? list.join('') : list.slice(0, -1).join('، ') + ' و' + list[list.length - 1]; }
 
   // ---------- text normalising and safety ----------
   function norm(s) {
     return String(s).toLowerCase()
       .replace(/[ً-ْـ]/g, '')
       .replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه')
-      .replace(/[؟?!.,،:؛"'«»()]/g, ' ').replace(/\s+/g, ' ').trim();
+      .replace(/[؟?!.,،:؛"'«»()…]/g, ' ').replace(/\s+/g, ' ').trim();
   }
   var DANGER = [
     /انتحر/, /(عايز|عاوز|عايزه|عاوزه|نفسي|ناوي|ناويه|حابب|حابه)\s+(اموت|اخلص)/, /مش\s+(عايز|عاوز|عايزه|عاوزه)\s+اعيش/,
@@ -28,22 +37,90 @@
   ];
   function dangerous(q) { var n = norm(q); for (var i = 0; i < DANGER.length; i++) if (DANGER[i].test(n)) return true; return false; }
 
-  // ---------- screens ----------
-  var screens = document.querySelectorAll('.df-screen');
-  function show(id, focus) {
-    for (var i = 0; i < screens.length; i++) screens[i].hidden = screens[i].id !== id;
-    $('bar').hidden = (id === 's-home');
-    if (focus !== false) { var h = $(id).querySelector('h2'); if (h) h.focus(); }
-    window.scrollTo(0, 0);
+  // ---------- screens and progress ----------
+  var STAGE = { welcome: 1, feel: 2, body: 2, ask: 3, needs: 4, result: 5, helpscreen: 0 };
+  var screens = document.querySelectorAll('.jr-screen');
+  function show(name, focus) {
+    state.screen = name;
+    for (var i = 0; i < screens.length; i++) screens[i].hidden = screens[i].id !== 'jr-' + name;
+    var st = STAGE[name];
+    $('jr-top').hidden = name === 'welcome';
+    $('jr-progress').hidden = $('jr-count').hidden = !st;
+    if (st) {
+      $('jr-count').textContent = 'الخطوة ' + ar(st) + ' من ٥';
+      $('jr-fill').style.width = ((st - 1) / 4 * 100) + '%';
+      Array.prototype.forEach.call($('jr-progress').children, function (li) {
+        var n = Number(li.getAttribute('data-s'));
+        li.className = n < st ? 'is-done' : n === st ? 'is-now' : '';
+        if (n === st) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+      });
+    }
+    if (focus !== false) {
+      var h = $('jr-' + name).querySelector('h2');
+      if (h) h.focus({ preventScroll: true });
+      var hd = document.querySelector('header.topbar'), off = (hd && hd.offsetHeight ? hd.offsetHeight : 0) + 16;
+      var top = $('jr').getBoundingClientRect().top + window.pageYOffset - off;
+      if (window.pageYOffset > top) window.scrollTo(0, Math.max(0, top));
+    }
   }
-  Array.prototype.forEach.call(document.querySelectorAll('[data-go]'), function (b) {
-    b.addEventListener('click', function () { show('s-' + b.getAttribute('data-go')); });
-  });
+  function back() {
+    var s = state.screen;
+    if (s === 'feel') show('welcome');
+    else if (s === 'body') show('feel');
+    else if (s === 'ask') { if (state.qi > 0) { state.qi--; renderAsk(); show('ask'); } else show('feel'); }
+    else if (s === 'needs') { state.qi = QS.length - 1; renderAsk(); show('ask'); }
+    else if (s === 'result') show('needs');
+    else if (s === 'helpscreen') show(state.from);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-back]'), function (b) { b.addEventListener('click', back); });
+  $('jr-start').addEventListener('click', function () { show('feel'); });
 
-  // ---------- search ----------
-  var idx = FE.map(function (f) { return { f: f, words: [f.n].concat(f.w).map(norm) }; });
+  // ---------- step 2: pick feelings ----------
+  var toggles = [];           // every toggle button for a feeling, so all copies stay in sync
+  function isSel(id) { return state.sel.indexOf(id) > -1; }
+  function sync() {
+    toggles = toggles.filter(function (t) { return document.body.contains(t.b); });
+    toggles.forEach(function (t) { t.b.setAttribute('aria-pressed', isSel(t.id) ? 'true' : 'false'); });
+    var tray = $('jr-tray'); clear(tray);
+    if (!state.sel.length) { tray.appendChild(el('p', 'لسه ما اخترتش شعور.', 'jr-hint')); return; }
+    tray.appendChild(el('span', 'اخترت (' + ar(state.sel.length) + ' من ' + ar(MAX) + '):', 'jr-tray-l'));
+    state.sel.forEach(function (id) {
+      var f = byId(id), b = el('button', '', 'jr-picked'); b.type = 'button';
+      b.appendChild(el('span', nameOf(f))); var x = el('span', '×', 'jr-x'); x.setAttribute('aria-hidden', 'true'); b.appendChild(x);
+      b.setAttribute('aria-label', 'شيل ' + nameOf(f) + ' من اختياراتك');
+      b.addEventListener('click', function () { toggle(id); $('jr-q').focus(); });
+      tray.appendChild(b);
+    });
+  }
+  function toggle(id) {
+    var i = state.sel.indexOf(id), err = $('jr-feel-err');
+    err.hidden = true;
+    if (i > -1) state.sel.splice(i, 1);
+    else if (state.sel.length >= MAX) { err.textContent = 'تقدر تختار لحد ' + ar(MAX) + ' مشاعر. شيل واحد من اختياراتك الأول.'; err.hidden = false; }
+    else state.sel.push(id);
+    sync();
+  }
+  function chip(f, cls, withDesc) {
+    var b = el('button', '', cls || 'jr-chip'); b.type = 'button'; b.setAttribute('aria-pressed', 'false');
+    if (withDesc) { b.appendChild(el('strong', nameOf(f))); b.appendChild(el('span', f.d)); } else b.textContent = nameOf(f);
+    b.addEventListener('click', function () { toggle(f.id); });
+    toggles.push({ b: b, id: f.id }); return b;
+  }
+  CHIPS.forEach(function (c) { var f = byId(c[1]); if (f) $('jr-chips').appendChild(chip(f)); });
+  (function () {
+    var all = $('jr-all');
+    $('jr-all-sum').textContent = 'استكشف كل المشاعر (' + ar(FE.length) + ')';
+    GROUPS.forEach(function (g) {
+      all.appendChild(el('h3', g[1]));
+      var wrap = el('div', '', 'jr-chips jr-chips-small');
+      FE.filter(function (f) { return f.g === g[0]; }).forEach(function (f) { wrap.appendChild(chip(f)); });
+      all.appendChild(wrap);
+    });
+  })();
+
+  var idx = FE.map(function (f) { return { f: f, words: [f.n, LABEL[f.id] || ''].concat(f.w).filter(Boolean).map(norm) }; });
   function search(q) {
-    var nq = norm(q); if (nq.length < 2) return [];
+    var nq = norm(q); if (nq.length < 2) return null;
     var toks = nq.split(' ').filter(function (t) { return t.length >= 2; });
     var out = [];
     idx.forEach(function (it) {
@@ -57,237 +134,184 @@
     out.sort(function (a, b) { return b.s - a.s; });
     return out.slice(0, 4).map(function (x) { return x.f; });
   }
-  function pickButton(f) {
-    var li = el('li'); var b = el('button', '', 'df-pick'); b.type = 'button';
-    b.appendChild(el('strong', f.n)); b.appendChild(el('span', f.d));
-    b.addEventListener('click', function () { choose(f); }); li.appendChild(b); return li;
-  }
-  function renderResults(box, list, emptyMsg) {
+  function renderPicks(box, list, emptyMsg) {
     clear(box);
-    if (!list.length) { box.appendChild(el('p', emptyMsg, 'hint')); return; }
-    box.appendChild(el('p', 'ممكن يكون جواك أكتر من إحساس. إيه الأقرب ليك؟', 'df-q'));
-    var ul = el('ul', '', 'df-picks'); list.forEach(function (f) { ul.appendChild(pickButton(f)); }); box.appendChild(ul);
+    if (!list) return;
+    if (!list.length) { box.appendChild(el('p', emptyMsg, 'jr-empty')); return; }
+    box.appendChild(el('p', 'إيه الأقرب ليك؟ دوس عليه عشان تختاره.', 'jr-label'));
+    var ul = el('ul', '', 'jr-picks');
+    list.forEach(function (f) { var li = el('li'); li.appendChild(chip(f, 'jr-pick', true)); ul.appendChild(li); });
+    box.appendChild(ul); sync();
   }
-  $('search-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var q = $('q').value;
-    if (dangerous(q)) { $('q').value = ''; clear($('results')); show('s-help'); return; }
-    renderResults($('results'), search(q), 'مش لاقي وصف قريب. جرّب كلمة تانية، أو دوس «مش عارف أنا حاسس بإيه».');
-    say('ظهرت الاقتراحات تحت.');
-  });
-  function byId(id) { for (var i = 0; i < FE.length; i++) if (FE[i].id === id) return FE[i]; }
-  var doors = $('doors');
-  ['anxiety', 'sadness', 'anger', 'loneliness'].forEach(function (id) {
-    var f = byId(id); var b = el('button', f.n, 'btn btn-quiet'); b.type = 'button';
-    b.addEventListener('click', function () { choose(f); }); doors.appendChild(b);
-  });
-  var all = $('all');
-  GROUPS.forEach(function (g) {
-    all.appendChild(el('h3', g[1]));
-    var wrap = el('div', '', 'df-doors');
-    FE.filter(function (f) { return f.g === g[0]; }).forEach(function (f) {
-      var b = el('button', f.n, 'btn btn-quiet'); b.type = 'button'; b.addEventListener('click', function () { choose(f); }); wrap.appendChild(b);
-    });
-    all.appendChild(wrap);
+  function toHelp(from) { state.from = from; $('jr-q').value = ''; clear($('jr-results')); show('helpscreen'); }
+  function runSearch(announce) {
+    var q = $('jr-q').value;
+    if (dangerous(q)) { toHelp('feel'); return; }
+    var list = search(q);
+    renderPicks($('jr-results'), list, 'مش لاقي وصف قريب. جرّب كلمة تانية، أو اختار من تحت، أو دوس «مش عارف أحدد شعوري».');
+    if (announce && list) say(list.length ? 'ظهرت ' + ar(list.length) + ' اقتراحات تحت خانة الكتابة.' : 'مفيش اقتراحات قريبة.');
+  }
+  var timer;
+  $('jr-q').addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { runSearch(false); }, 220); });
+  $('jr-search').addEventListener('submit', function (e) { e.preventDefault(); clearTimeout(timer); runSearch(true); });
+  $('jr-feel-next').addEventListener('click', function () {
+    var err = $('jr-feel-err');
+    if (!state.sel.length) {
+      err.textContent = 'اختار شعور واحد على الأقل عشان نكمّل. ولو مش عارف تسمّيه، دوس «مش عارف أحدد شعوري».'; err.hidden = false; return;
+    }
+    err.hidden = true; state.qi = 0; renderAsk(); show('ask');
   });
 
-  // ---------- "مش عارف" ----------
-  var bodyOpts = $('body-opts');
-  BODY.forEach(function (b) {
-    var d = el('div', '', 'df-opt'); var i = el('input'); i.type = 'checkbox'; i.id = 'bd-' + b[0]; i.value = b[0];
-    var l = el('label', b[1]); l.setAttribute('for', i.id); d.appendChild(i); d.appendChild(l); bodyOpts.appendChild(d);
-  });
-  $('unknown').addEventListener('click', function () { show('s-body'); });
-  $('body-go').addEventListener('click', function () {
+  // "مش عارف أحدد شعوري"
+  BODY.forEach(function (b) { $('jr-body-opts').appendChild(optionRow('checkbox', 'jr-bd', 'jr-bd-' + b[0], b[0], b[1])); });
+  $('jr-unknown').addEventListener('click', function () { show('body'); });
+  $('jr-body-go').addEventListener('click', function () {
     var tally = {}, n = 0;
-    BODY.forEach(function (b) { if ($('bd-' + b[0]).checked) { n++; b[2].forEach(function (id) { tally[id] = (tally[id] || 0) + 1; }); } });
+    BODY.forEach(function (b) { if ($('jr-bd-' + b[0]).checked) { n++; b[2].forEach(function (id) { tally[id] = (tally[id] || 0) + 1; }); } });
     var ids = Object.keys(tally).sort(function (a, b) { return tally[b] - tally[a]; }).slice(0, 4);
-    renderResults($('body-results'), ids.map(byId), 'اختار حاجة أو اتنين من اللي فوق الأول.');
-    say(n ? 'ظهرت اقتراحات قريبة.' : 'اختار حاجة من اللي فوق الأول.');
+    renderPicks($('jr-body-results'), ids.map(byId), 'اختار حاجة أو اتنين من اللي فوق الأول.');
+    if (n) {
+      var done = el('p'); var b = el('button', 'تمام، رجّعني أكمّل', 'jr-btn jr-btn-main'); b.type = 'button';
+      b.addEventListener('click', function () { show('feel'); }); done.appendChild(b); $('jr-body-results').appendChild(done);
+    }
+    say(n ? 'ظهرت مشاعر قريبة. اختار منها وبعدين ارجع كمّل.' : 'اختار حاجة من اللي فوق الأول.');
   });
 
-  // ---------- choosing a feeling ----------
-  function choose(f) {
-    state.feeling = f;
-    if (f.p && PATHS[f.p]) { state.path = PATHS[f.p]; applyPath(state.path); show('s-agree'); return; }
-    $('soon-name').textContent = f.n; $('soon-desc').textContent = f.d;
-    var ul = $('soon-links'); clear(ul);
-    function add(h, t) { var li = el('li'); var a = el('a', t); a.href = h; li.appendChild(a); ul.appendChild(li); }
-    (f.l || []).forEach(function (x) { add(x[0], x[1]); });
-    if (f.gl) add('/glossary/' + f.gl + '/', 'عن الإحساس ده في قاموس المصطلحات');
-    add('/feelings/', 'عجلة المشاعر: سمّي إحساسك');
-    add('/life-tools/', 'أدوات لحياتك');
-    add('/help-now/', 'محتاج مساعدة دلوقتي؟');
-    show('s-soon');
-  }
-
-  // ---------- path ----------
-  var LABEL = { name: 'التسمية', rate: 'خط البداية', understand: 'الفهم', train: 'التدريب', learn: 'تعلّم', progress: 'إيه اللي اتغيّر؟', kit: 'حقيبتي' };
-  var ORDER = {
-    understand: ['name', 'rate', 'understand', 'train', 'learn', 'progress', 'kit'],
-    calm: ['name', 'rate', 'train', 'understand', 'learn', 'progress', 'kit']
-  };
-  function firstUndone() { for (var i = 0; i < state.order.length; i++) if (!state.done[state.order[i]]) return i; return state.order.length - 1; }
-  function renderStepper() {
-    var ol = $('stepper'); clear(ol); var open = firstUndone();
-    state.order.forEach(function (k, i) {
-      var li = el('li'); var b = el('button', (i + 1) + '. ' + LABEL[k], 'df-step'); b.type = 'button';
-      if (state.done[k]) b.className += ' is-done';
-      if (i === state.idx) b.setAttribute('aria-current', 'step');
-      if (i > open) { b.setAttribute('aria-disabled', 'true'); b.title = 'بتفتح بعد ما تخلّص اللي قبلها'; }
-      b.addEventListener('click', function () { if (i <= firstUndone()) showStation(i); else say('المحطة دي بتفتح بعد ما تخلّص اللي قبلها.'); });
-      li.appendChild(b); ol.appendChild(li);
-    });
-  }
-  function updateNav() {
-    var k = state.order[state.idx], last = state.idx === state.order.length - 1;
-    $('prev').disabled = state.idx === 0;
-    $('next').hidden = last; $('next-hint').hidden = last;
-    $('next').disabled = !state.done[k];
-  }
-  function showStation(i) {
-    state.idx = i; var k = state.order[i];
-    Array.prototype.forEach.call(document.querySelectorAll('.df-station'), function (s) { s.hidden = s.id !== 'st-' + k; });
-    if (k === 'kit') buildSummary();
-    renderStepper(); updateNav();
-    var h = $('st-' + k).querySelector('h2'); if (h) h.focus();
-    window.scrollTo(0, 0);
-  }
-  function complete(k) {
-    var was = state.done[k]; state.done[k] = true; renderStepper(); updateNav();
-    if (!was && state.idx < state.order.length - 1) say('تمام. المحطة اللي بعدها اتفتحت.');
-  }
-  $('next').addEventListener('click', function () { if (state.done[state.order[state.idx]]) showStation(state.idx + 1); });
-  $('prev').addEventListener('click', function () { if (state.idx > 0) showStation(state.idx - 1); });
-  Array.prototype.forEach.call(document.querySelectorAll('[data-start]'), function (b) {
-    b.addEventListener('click', function () {
-      state.mode = b.getAttribute('data-start'); state.order = ORDER[state.mode]; state.done = {}; state.idx = 0;
-      show('s-path', false); showStation(0);
-    });
-  });
-
-  // station: name (options built per path)
-  function onNameChange(v) { state.named = v; $('nm-ok').hidden = false; complete('name'); }
-  // station: rate
-    function fillChecks(id, prefix, list) {
-    var box = $(id); clear(box); list.forEach(function (t, i) {
-      var d = el('div', '', 'df-opt'); var c = el('input'); c.type = 'checkbox'; c.id = prefix + i; c.value = t;
-      var l = el('label', t); l.setAttribute('for', c.id); d.appendChild(c); d.appendChild(l); box.appendChild(d);
-    });
-  }
-  $('r1').addEventListener('input', function () { $('r1o').textContent = ar($('r1').value); });
-  $('r2').addEventListener('input', function () { $('r2o').textContent = ar($('r2').value); });
-  $('r1-save').addEventListener('click', function () {
-    state.r1 = Number($('r1').value);
-    var p = $('r1-saved'); p.hidden = false; p.textContent = 'اتسجّل تقديرك: ' + ar(state.r1) + ' من ١٠.';
-    complete('rate');
-  });
-  function radioRow(name, id, value, label, onchange) {
-    var d = el('div', '', 'df-opt'); var i = el('input'); i.type = 'radio'; i.name = name; i.id = id; i.value = value;
+  // ---------- step 3: one question per screen ----------
+  function optionRow(type, name, id, value, label, onchange) {
+    var d = el('div', '', 'jr-option'); var i = el('input'); i.type = type; i.name = name; i.id = id; i.value = value;
     var l = el('label', label); l.setAttribute('for', id); d.appendChild(i); d.appendChild(l);
-    i.addEventListener('change', function () { onchange(value); }); return d;
+    if (onchange) i.addEventListener('change', function () { onchange(value, i); });
+    return d;
   }
-  function applyPath(p) {
-    $('h-agree').textContent = p.title; $('nm-ok').textContent = p.ack;
-    var no = $('nm-opts'); clear(no);
-    p.names.forEach(function (n, i) { no.appendChild(radioRow('nm', 'nm' + (i + 1), n[0], n[1], onNameChange)); });
-    $('r1-l').textContent = p.word + ' شدته كام عندك دلوقتي؟ (٠ = مش موجود، ١٠ = أقصى شدة تتخيلها)';
-    $('r2-l').textContent = p.word + ' شدته كام دلوقتي؟ (٠ = مش موجود، ١٠ = أقصى شدة)';
-    $('urge-l').textContent = '(اختياري) ' + p.word + ' بيخليك عايز تعمل إيه؟';
-    fillChecks('rate-body', 'rb', p.bodies); fillChecks('rate-urge', 'ru', p.urges);
-    $('h-train').textContent = p.trainTitle; $('train-intro').textContent = p.trainIntro;
-    var ts = $('train-steps'); clear(ts); p.trainSteps.forEach(function (t) { ts.appendChild(el('li', t)); });
-    var ap = $('train-altp'); clear(ap); ap.appendChild(el('b', 'بديل: ')); ap.appendChild(document.createTextNode(p.trainAlt));
-    $('h-learn').textContent = p.learnTitle;
-    var ll = $('learn-list'); clear(ll); p.learn.forEach(function (t) { ll.appendChild(el('li', t)); });
-    var so = $('ns-opts'); clear(so);
-    p.steps.forEach(function (t, i) { so.appendChild(radioRow('ns', 'ns' + (i + 1), t, t, function (v) { own.hidden = true; state.step = v; complete('learn'); })); });
-    var kl = $('kit-links'); clear(kl);
-    function kadd(h, t) { var li = el('li'); var a = el('a', t); a.href = h; li.appendChild(a); kl.appendChild(li); }
-    kadd('/glossary/' + p.gl + '/', p.word + ' في قاموس المصطلحات');
-    p.tryLinks.forEach(function (x) { kadd(x[0], x[1]); });
-    kadd('/worksheets/', 'أوراق تمرين للطباعة'); if (p.scale) kadd(p.scale[0], p.scale[1]);
-  }
-  // station: understand
-  function doneUnderstand(alt) {
-    state.sit = $('u-sit').value.trim(); state.th = $('u-th').value.trim(); state.ev = $('u-ev').value.trim(); state.bal = $('u-bal').value.trim();
-    state.uAlt = !!alt; complete('understand');
-  }
-  $('u-done').addEventListener('click', function () { doneUnderstand(false); });
-  $('u-alt').addEventListener('click', function () { doneUnderstand(true); });
-  // station: train
-  var TRAIN = {};
-  Array.prototype.forEach.call(document.querySelectorAll('[data-train]'), function (b) {
-    b.addEventListener('click', function () {
-      var v = b.getAttribute('data-train'); state.train = v === 'done' ? state.path.trainMainName : v === 'alt' ? state.path.trainAltName : 'جرّبت ومكملتش (مش مرتاح)';
-      var m = $('train-msg'); m.hidden = false;
-      $('train-alt').hidden = v !== 'alt';
-      m.textContent = v === 'done' ? 'تمام. لاحظ إن مش لازم القلق يختفي، المهم إنك جرّبت.'
-        : v === 'alt' ? 'جرّب البديل اللي ظهر فوق، وبعدها كمّل.' : 'تمام، وقّف. ده اختيارك، وممكن ترجع له بعدين.';
-      complete('train');
+  function renderAsk() {
+    var Q = QS[state.qi], box = $('jr-ask-opts'); clear(box);
+    $('jr-ask-n').textContent = 'سؤال ' + ar(state.qi + 1) + ' من ' + ar(QS.length);
+    $('jr-h-ask').textContent = Q.q; $('jr-ask-err').hidden = true;
+    Q.o.forEach(function (o) {
+      var row = optionRow('radio', 'jr-a-' + Q.k, 'jr-a-' + Q.k + '-' + o[0], o[0], o[1], function (v) { state.ans[Q.k] = v; $('jr-ask-err').hidden = true; });
+      if (state.ans[Q.k] === o[0]) row.firstChild.checked = true;
+      box.appendChild(row);
     });
+    $('jr-ask-next').textContent = state.qi === QS.length - 1 ? 'اكتشف احتياجك' : 'متابعة';
+  }
+  $('jr-ask-next').addEventListener('click', function () {
+    var Q = QS[state.qi], err = $('jr-ask-err');
+    if (!state.ans[Q.k]) { err.textContent = 'اختار إجابة واحدة عشان نكمّل. لو مش متأكد، في اختيار لكده.'; err.hidden = false; return; }
+    if (state.qi < QS.length - 1) { state.qi++; renderAsk(); show('ask'); } else { renderNeeds(); show('needs'); }
   });
-  // station: learn
-  var lr = $('learn-res');
-  function link(box, h, t) { var p = el('p'); var a = el('a', t); a.href = h; p.appendChild(a); box.appendChild(p); }
-  Array.prototype.forEach.call(document.querySelectorAll('input[name="lm"]'), function (r) {
-    r.addEventListener('change', function () {
-      clear(lr); lr.hidden = false;
-      if (r.value === 'read') { link(lr, '/glossary/' + state.path.gl + '/', 'اقرأ عن ' + state.path.word + ' في قاموس المصطلحات'); link(lr, '/articles/', 'المقالات'); }
-      else if (r.value === 'try') { state.path.tryLinks.forEach(function (x) { link(lr, x[0], x[1]); }); }
-      else lr.appendChild(el('p', 'التسجيل الصوتي لسه مش متاح. لحد ما ينزل، جرّب القراءة أو التمرين.'));
+
+  // ---------- step 4: possible needs ----------
+  function conf(f) { var g = GDEF[f.g] || { nd: ['understand'], x: '' }, o = OVR[f.id] || {}; return { nd: o.nd || g.nd, x: o.x !== undefined ? o.x : (f.p || g.x), a: o.a || [] }; }
+  function phrase(k) { var Q = QS.filter(function (q) { return q.k === k; })[0], v = state.ans[k], out = ''; if (Q) Q.o.forEach(function (o) { if (o[0] === v) out = o[2]; }); return out; }
+  function needKeys() {
+    var keys = [], add = function (k) { if (k && NEEDS[k] && keys.indexOf(k) < 0) keys.push(k); };
+    state.sel.forEach(function (id) { add(conf(byId(id)).nd[0]); });
+    add(MORE_NEED[state.ans.more]);
+    state.sel.forEach(function (id) { conf(byId(id)).nd.slice(1).forEach(add); });
+    return keys.slice(0, 3);
+  }
+  function contextLine() {
+    var parts = [], w = phrase('when'), m = phrase('more'), a = phrase('affect');
+    if (w) parts.push('بيظهر غالبًا ' + w);
+    if (m) parts.push('وأكتر حاجة بتزوّده ' + m);
+    if (a) parts.push('وبيأثر على ' + a);
+    return parts.length ? parts.join('، ').replace(/^و/, '') + '.' : '';
+  }
+  function renderNeeds() {
+    var names = state.sel.map(function (id) { return nameOf(byId(id)); });
+    $('jr-needs-intro').textContent = 'اخترت: ' + joinAr(names) + '. ' + contextLine() + ' من ده، ممكن تكون محتاج:';
+    var ul = $('jr-needs-list'); clear(ul);
+    needKeys().forEach(function (k) {
+      var n = NEEDS[k], li = el('li', '', 'jr-need');
+      li.appendChild(el('h3', n.t)); li.appendChild(el('p', n.d));
+      var b = el('button', 'ده قريب مني', 'jr-near'); b.type = 'button'; b.setAttribute('aria-pressed', state.near[k] ? 'true' : 'false');
+      b.addEventListener('click', function () { state.near[k] = !state.near[k]; b.setAttribute('aria-pressed', state.near[k] ? 'true' : 'false'); });
+      li.appendChild(b); ul.appendChild(li);
     });
-  });
-  var own = $('ns-own');
-  $('ns4').addEventListener('change', function () { own.hidden = false; own.focus(); state.step = own.value.trim(); if (state.step) complete('learn'); });
-  own.addEventListener('input', function () { state.step = own.value.trim(); if (state.step) complete('learn'); });
-  $('learn-skip').addEventListener('click', function () { state.step = state.step || ''; complete('learn'); });
-  // station: progress
-  function meter(label, v) {
-    var row = el('div', '', 'df-meter'); row.setAttribute('role', 'img'); row.setAttribute('aria-label', label + ': ' + ar(v) + ' من ١٠');
-    row.appendChild(el('span', label, 'df-meter-l')); var bar = el('span', '', 'df-meter-b'); var fill = el('span', '', 'df-meter-f'); fill.style.width = (v * 10) + '%';
-    bar.appendChild(fill); row.appendChild(bar); row.appendChild(el('span', ar(v), 'df-meter-n')); return row;
   }
-  $('r2-save').addEventListener('click', function () {
-    state.r2 = Number($('r2').value); var c = $('compare'); clear(c); c.hidden = false;
-    c.appendChild(meter('قبل', state.r1)); c.appendChild(meter('دلوقتي', state.r2));
-    c.appendChild(el('p', 'تقديرك لشدة ' + state.path.word + ' كان ' + ar(state.r1) + ' من ١٠، وبقى ' + ar(state.r2) + ' من ١٠ حسب تقديرك دلوقتي. ده وصف للتغيّر اللي لاحظته، مش نسبة تعافٍ ولا ضمان إن الإحساس مش هيرجع.'));
-    if (state.r2 >= state.r1) c.appendChild(el('p', 'مش لازم الإحساس يقل في كل مرة. تقدر توقف، تجرّب بديلًا، أو تطلب دعمًا.', 'df-ok'));
-    c.appendChild(el('p', 'سؤال أخير لنفسك: هل بقيت فاهم إحساسك أكتر؟ وهل طلعت بخطوة تقدر تعملها؟', 'hint'));
-    complete('progress');
-  });
-  // kit
-  function summaryRows() {
-    var rows = [['الإحساس اللي سمّيته', state.named || (state.feeling ? state.feeling.n : '')]];
-    if (state.r1 !== undefined) rows.push(['شدة الإحساس في البداية (تقدير شخصي)', ar(state.r1) + ' من ١٠']);
-    if (state.r2 !== undefined) rows.push(['شدته بعد المحطات (تقدير شخصي)', ar(state.r2) + ' من ١٠']);
-    rows.push(['الموقف', state.sit || '—'], ['الفكرة اللي لاحظتها', state.th || '—'], ['تفسير أكتر اتزانًا', state.bal || '—']);
-    rows.push(['المهارة اللي جرّبتها', state.train || '—'], ['خطوتي الجاية', state.step || '—']);
-    rows.push(['متابعة', state.path.scaleName ? 'لو حبيت تتابع بمقياس ' + state.path.scaleName + '، الأحسن تعيده بعد أسبوعين.' : 'ممكن تعيد التقدير بعد كام يوم وتقارن بنفسك.']);
-    return rows;
+  $('jr-needs-next').addEventListener('click', function () { renderResult(); show('result'); });
+
+  // ---------- step 5: results ----------
+  function exercise() {
+    for (var i = 0; i < state.sel.length; i++) {
+      var p = PATHS[conf(byId(state.sel[i])).x];
+      if (p) return { title: p.trainMainName, intro: p.trainIntro, steps: p.trainSteps, alt: p.trainAlt, next: p.steps, path: p };
+    }
+    return { title: BREATH.title, intro: BREATH.intro, steps: BREATH.steps, alt: '', next: BREATH.next, path: null };
   }
-  function buildSummary() {
-    var dl = $('kit-sum'); clear(dl);
-    summaryRows().forEach(function (r) { dl.appendChild(el('dt', r[0])); dl.appendChild(el('dd', r[1])); });
+  function chosenNeeds() { var all = needKeys(), near = all.filter(function (k) { return state.near[k]; }); return near.length ? near : all; }
+  function resultData() {
+    var feelings = state.sel.map(byId), first = feelings[0], ex = exercise(), needs = chosenNeeds();
+    var pattern = [];
+    var fp = PATHS[first.p];
+    if (fp) pattern = fp.learn.slice(0, 3); else pattern.push(nameOf(first) + ': ' + first.d);
+    feelings.slice(1).forEach(function (f) { pattern.push(nameOf(f) + ': ' + f.d); });
+    var questions = needs.map(function (k) { return NEEDS[k].q; });
+    var af = AFFECT[state.ans.affect]; if (af) questions.push(af.q);
+    var links = [], seen = {}, addL = function (x) { if (x && !seen[x[0]]) { seen[x[0]] = 1; links.push(x); } };
+    feelings.forEach(function (f) { conf(f).a.forEach(addL); });
+    needs.forEach(function (k) { addL(NEEDS[k].l); });
+    if (af) addL(af.l);
+    feelings.forEach(function (f) { (f.l || []).forEach(addL); var p = PATHS[f.p]; if (p) p.tryLinks.forEach(addL); });
+    feelings.forEach(function (f) { if (f.gl) addL(['/glossary/' + f.gl + '/', nameOf(f) + ' في قاموس المصطلحات']); });
+    feelings.forEach(function (f) { var p = PATHS[f.p]; if (p && p.scale) addL(p.scale); });
+    return { feelings: feelings, ex: ex, needs: needs, pattern: pattern, questions: questions, links: links.slice(0, 7), cta: links.filter(function (x) { return x[0].indexOf('/life-tools/') === 0; })[0] || ['/life-tools/', 'أدوات لحياتك'] };
+  }
+  function fillList(id, items) { var ul = $(id); clear(ul); items.forEach(function (t) { ul.appendChild(el('li', t)); }); }
+  function renderResult() {
+    var r = resultData();
+    var box = $('jr-r-feel'); clear(box); r.feelings.forEach(function (f) { box.appendChild(el('span', nameOf(f), 'jr-chip is-static')); });
+    $('jr-r-context').textContent = contextLine() || 'لسه مش واضح إمتى بيظهر أو إيه اللي بيزوّده، وده طبيعي. الملاحظة مع الوقت بتوضّح.';
+    var needsP = el('p', 'اللي ممكن تكون محتاجه: ' + joinAr(r.needs.map(function (k) { return NEEDS[k].t.replace(/^تحتاج (إلى )?/, ''); })) + '.');
+    $('jr-r-context').appendChild(document.createElement('br')); $('jr-r-context').appendChild(needsP.firstChild);
+    fillList('jr-r-pattern', r.pattern); fillList('jr-r-questions', r.questions);
+    $('jr-r-ex-title').textContent = r.ex.title; $('jr-r-ex-intro').textContent = r.ex.intro; fillList('jr-r-ex-steps', r.ex.steps);
+    $('jr-r-ex-altbox').hidden = !r.ex.alt; $('jr-r-ex-alt').textContent = r.ex.alt;
+    var ul = $('jr-r-links'); clear(ul);
+    r.links.forEach(function (x) { var li = el('li'); var a = el('a', x[1]); a.href = x[0]; li.appendChild(a); ul.appendChild(li); });
+    var so = $('jr-r-steps'); clear(so);
+    r.ex.next.forEach(function (t, i) {
+      var row = optionRow('radio', 'jr-step', 'jr-step-' + i, t, t, function (v) { state.step = v; var c = $('jr-r-chosen'); c.hidden = false; c.textContent = 'خطوتي النهارده: ' + v + '. خطوة صغيرة كفاية.'; });
+      if (state.step === t) row.firstChild.checked = true;
+      so.appendChild(row);
+    });
+    var ch = $('jr-r-chosen'); ch.hidden = !state.step; if (state.step) ch.textContent = 'خطوتي النهارده: ' + state.step + '. خطوة صغيرة كفاية.';
+    $('jr-r-cta').href = r.cta[0];
+    var flagged = r.feelings.filter(function (f) { return f.s; }), sf = $('jr-safety'); clear(sf); sf.hidden = !flagged.length;
+    if (flagged.length) {
+      sf.appendChild(el('b', 'لو الشعور ده تقيل عليك أو مستمر: '));
+      sf.appendChild(document.createTextNode('كلّم حد تثق فيه أو متخصص. ولو في خطر عليك دلوقتي افتح '));
+      var a = el('a', 'محتاج مساعدة دلوقتي'); a.href = '/help-now/'; sf.appendChild(a); sf.appendChild(document.createTextNode('.'));
+    }
   }
   function buildPrint() {
     var body = $('print-body'); clear(body);
-    if (!state.order) return;
-    summaryRows().forEach(function (r) { body.appendChild(el('h3', r[0])); body.appendChild(el('p', r[1])); });
+    if (!state.sel.length) return;
+    var r = resultData();
+    function sec(h, lines) { body.appendChild(el('h3', h)); lines.forEach(function (t) { body.appendChild(el('p', t)); }); }
+    sec('مشاعري دلوقتي', [joinAr(r.feelings.map(nameOf)), contextLine()]);
+    sec('اللي ممكن أكون محتاجه', r.needs.map(function (k) { return NEEDS[k].t; }));
+    sec('أسئلة للتأمل', r.questions);
+    sec('تمرين: ' + r.ex.title, r.ex.steps.map(function (t, i) { return ar(i + 1) + '. ' + t; }));
+    sec('خطوتي النهارده', [state.step || '—']);
+    sec('تنبيه', ['ملخص للتأمل الذاتي من drmilladmikhail.com. ليس تشخيصًا ولا بديلًا عن تقييم متخصص.']);
   }
   window.addEventListener('beforeprint', buildPrint);
-  $('kit-print').addEventListener('click', function () { buildPrint(); window.print(); });
+  $('jr-print').addEventListener('click', function () { buildPrint(); window.print(); });
 
   // ---------- restart ----------
-  $('restart').addEventListener('click', function () {
-    state = {};
-    Array.prototype.forEach.call(document.querySelectorAll('textarea, input[type=text]'), function (t) { t.value = ''; });
-    Array.prototype.forEach.call(document.querySelectorAll('input[type=radio], input[type=checkbox]'), function (c) { c.checked = false; });
-    ['r1', 'r2'].forEach(function (id) { $(id).value = 5; $(id + 'o').textContent = ar(5); });
-    ['nm-ok', 'r1-saved', 'train-alt', 'train-msg', 'learn-res', 'compare', 'ns-own'].forEach(function (id) { $(id).hidden = true; });
-    clear($('results')); clear($('body-results')); clear($('print-body')); clear($('kit-sum'));
-    show('s-home'); say('تم مسح كل اللي كتبته من الصفحة.');
-  });
+  function restart() {
+    state = fresh();
+    $('jr-q').value = '';
+    Array.prototype.forEach.call($('jr').querySelectorAll('input[type=radio], input[type=checkbox]'), function (c) { c.checked = false; });
+    ['jr-results', 'jr-body-results', 'print-body'].forEach(function (id) { clear($(id)); });
+    ['jr-feel-err', 'jr-ask-err'].forEach(function (id) { $(id).hidden = true; });
+    sync(); show('welcome'); say('اتمسحت كل إجاباتك من الصفحة. تقدر تبدأ من جديد.');
+  }
+  $('jr-restart').addEventListener('click', restart);
+  $('jr-restart2').addEventListener('click', restart);
 
-  show('s-home', false);
+  state = fresh(); sync(); show('welcome', false);
+  $('jr').className += ' is-ready';
 })();
