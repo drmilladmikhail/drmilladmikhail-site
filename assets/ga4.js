@@ -7,6 +7,10 @@
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
   window.gtag = gtag;
+  /* Consent Mode: no advertising storage anywhere; for visitors in the EU/EEA, UK and Switzerland
+     analytics runs cookieless (no _ga cookie) because the site has no consent banner. */
+  gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+  gtag('consent', 'default', { analytics_storage: 'denied', region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH'] });
   gtag('js', new Date());
   /* IP anonymisation is automatic in GA4; no ad personalisation signals */
   gtag('config', id, { allow_google_signals: false, allow_ad_personalization_signals: false });
