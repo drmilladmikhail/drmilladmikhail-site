@@ -77,6 +77,9 @@ def inject_depth3d(t):
     if "/assets/depth3d.css" not in t:
         t = re.sub(r'(<link rel="stylesheet" href="/assets/site\.css[^"]*">)',
                    lambda m: m.group(1) + '<link rel="stylesheet" href="/assets/depth3d.css">', t, count=1)
+    if 'id="nav-layout-fix"' not in t and 'lang="ar"' in t[:400] and "</head>" in t:
+        # Arabic header layout as a real stylesheet, so the header has its final size on first paint (no CLS).
+        t = t.replace("</head>", '<link rel="stylesheet" id="nav-layout-fix" href="/assets/nav-layout.css">\n</head>', 1)
     if "/assets/depth3d.js" not in t:
         i = t.rfind("</body>")
         t = t[:i] + '<script src="/assets/depth3d.js" defer></script>\n' + t[i:]
@@ -89,7 +92,7 @@ def version_assets(root):
     vers = {}
     names = ("site.css", "nav.js", "home-clarity.css", "home-redesign.css",
              "extras.js", "challenges.js", "my-space.js", "helper.js", "partner-check.js", "relcheck.js",
-             "share.js", "quiz.js", "depth3d.css", "depth3d.js")
+             "share.js", "quiz.js", "depth3d.css", "depth3d.js", "nav-layout.css")
     for name in names:
         path = os.path.join(root, "assets", name)
         if os.path.isfile(path):

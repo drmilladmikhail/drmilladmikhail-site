@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def version_shared_assets(page, root):
     """Match the shared asset versioner so rebuilding creates no stale diffs."""
     page = ensure_social(build_news.inject(inject_depth3d(page)))
-    for name in ('site.css', 'nav.js', 'depth3d.css', 'depth3d.js'):
+    for name in ('site.css', 'nav.js', 'depth3d.css', 'depth3d.js', 'nav-layout.css'):
         path = Path(root) / 'assets' / name
         if path.is_file():
             digest = hashlib.md5(path.read_bytes()).hexdigest()[:8]
