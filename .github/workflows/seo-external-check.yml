@@ -1,5 +1,5 @@
-# External SEO checks on the LIVE site: Google PageSpeed Insights (mobile + desktop),
-# W3C Nu HTML Checker and the Schema.org validator. Manual only; the report is printed
+# External SEO checks on the LIVE site: Lighthouse (or PageSpeed Insights) mobile + desktop,
+# W3C Nu HTML Checker (vnu.jar) and the Schema.org validator. Manual only; the report is printed
 # to the log between SEO-CHECK-BEGIN / SEO-CHECK-END (tools/seo_external_check.py).
 name: SEO external check
 
@@ -12,7 +12,7 @@ permissions:
 jobs:
   seo:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,5 +36,10 @@ jobs:
             done
           done
           ls -la /tmp/lh
+      - name: Install the W3C Nu checker (vnu.jar)
+        continue-on-error: true
+        run: npm install --no-save --prefix /tmp/vnu vnu-jar@latest && java -version
       - name: Check the live site with external validators
+        env:
+          VNU_JAR: /tmp/vnu/node_modules/vnu-jar/build/dist/vnu.jar
         run: python tools/seo_external_check.py

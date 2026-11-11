@@ -12,6 +12,8 @@ Google's Rich Results Test has no public API, so it stays a manual check.
 """
 import json
 import os
+import subprocess
+import tempfile
 import time
 import urllib.parse
 import urllib.request
@@ -35,16 +37,14 @@ def get(url, data=None, headers=None, timeout=120):
 
 
 def psi(path, strategy):
+    local = lighthouse_local(path, strategy)
+    if local:
+        return local
     q = urllib.parse.urlencode([("url", SITE + path), ("strategy", strategy)] +
                                [("category", c) for c in ("performance", "accessibility", "best-practices", "seo")])
-    for attempt in range(3):
-        st, body = get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed?" + q, timeout=180)
-        if st == 200:
-            break
-        time.sleep(20)
+    st, body = get("https://www.googleapis.com/pagespeedonline/v5/runPagespeed?" + q, timeout=180)
     if st != 200:
-        local = lighthouse_local(path, strategy)
-        return local or {"error": st, "detail": body[:200]}
+        return {"error": st, "detail": body[:200]}
     return summarise(json.loads(body)["lighthouseResult"], "PageSpeed Insights")
 
 
@@ -72,18 +72,31 @@ def summarise(d, source):
             "seo_failing": failing_seo}
 
 
+VNU = os.environ.get("VNU_JAR", "")
+
+
 def w3c(path):
-    for attempt in range(4):
-        st, body = get("https://validator.w3.org/nu/?" + urllib.parse.urlencode({"doc": SITE + path, "out": "json"}))
-        if st != 429:
-            break
-        time.sleep(30 * (attempt + 1))
+    """W3C Nu checker. The same checker the W3C site runs (vnu.jar), run on the runner
+    against the live page's HTML, because validator.w3.org rate-limits (429) after a few pages."""
+    st, html = get(SITE + path)
     if st != 200:
         return {"error": st}
-    msgs = json.loads(body).get("messages", [])
+    if VNU and os.path.exists(VNU):
+        with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as f:
+            f.write(html)
+        out = subprocess.run(["java", "-jar", VNU, "--format", "json", f.name],
+                             capture_output=True, text=True, timeout=300).stderr
+        os.unlink(f.name)
+        line = next((l for l in out.splitlines() if l.startswith('{"messages"')), '{"messages":[]}')
+        msgs, source = json.loads(line).get("messages", []), "vnu.jar on runner"
+    else:
+        st, body = get("https://validator.w3.org/nu/?" + urllib.parse.urlencode({"doc": SITE + path, "out": "json"}))
+        if st != 200:
+            return {"error": st}
+        msgs, source = json.loads(body).get("messages", []), "validator.w3.org"
     errs = [m for m in msgs if m.get("type") == "error"]
     warns = [m for m in msgs if m.get("subType") == "warning"]
-    return {"errors": len(errs), "warnings": len(warns),
+    return {"source": source, "errors": len(errs), "warnings": len(warns),
             "first_errors": sorted({m.get("message", "")[:140] for m in errs})[:6]}
 
 
@@ -113,7 +126,7 @@ def main():
             rep["pagespeed"][f"{p} {s}"] = psi(p, s)
     for p in PAGES:
         rep["w3c"][p] = w3c(p)
-        time.sleep(10)
+        time.sleep(1)
         rep["schema"][p] = schema(p)
     print("SEO-CHECK-BEGIN")
     print(json.dumps(rep, ensure_ascii=False, indent=1))
