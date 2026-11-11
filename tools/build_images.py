@@ -143,10 +143,14 @@ def main():
         items = json.load(f)
     me = "د. ميلاد ميخائيل"
     jobs = []
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from build_articles import CATEGORIES
     for a in items:
-        src = os.path.join(BOOK, a["image"] + ".jpg")
-        jobs.append((os.path.join(OG, a["slug"] + ".jpg"), src,
-                     "من كتاب «ليه بنحب اللي بيوجعنا؟»", a["title"], me, True))
+        img = a.get("image") or ("cat-" + a.get("category", "relationships-family"))
+        src = os.path.join(BOOK, img + ".jpg")
+        kicker = ("من كتاب «ليه بنحب اللي بيوجعنا؟»" if a.get("chapter")
+                  else CATEGORIES.get(a.get("category"), ("مقال",))[0])
+        jobs.append((os.path.join(OG, a["slug"] + ".jpg"), src, kicker, a["title"], me, True))
     portrait = os.path.join(ROOT, "assets", "millad.jpg")
     jobs += [
         (os.path.join(OG, "home.jpg"), portrait, "حاصل على الدكتوراه في الصحة النفسية",

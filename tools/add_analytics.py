@@ -26,6 +26,23 @@ try:
                   .replace("connect-src 'self' ", f"connect-src 'self' {_h} "))
 except (OSError, ValueError):
     pass
+# Google Analytics 4 (2026-11-11 master plan): OFF until his Measurement ID (G-XXXXXXXXXX) is put in
+# content/analytics.json → {"ga4_measurement_id": "G-…"}. Then every page loads assets/ga4.js and the CSP
+# opens only the Google hosts GA4 needs. Without an ID nothing changes and no Google request is made.
+GA4_ID = ""
+try:
+    with open(os.path.join(ROOT, "content", "analytics.json"), encoding="utf-8") as _f:
+        GA4_ID = (_json.load(_f).get("ga4_measurement_id") or "").strip()
+except (OSError, ValueError, NameError):
+    GA4_ID = ""
+if not re.fullmatch(r"G-[A-Z0-9]{4,15}", GA4_ID):
+    GA4_ID = ""
+if GA4_ID:
+    CSP = (CSP.replace("script-src 'self' ", "script-src 'self' https://www.googletagmanager.com ")
+              .replace("connect-src 'self' ", "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com ")
+              .replace("img-src 'self' ", "img-src 'self' https://*.google-analytics.com https://www.googletagmanager.com "))
+GA4_TAG = f'<script src="/assets/ga4.js" data-ga4="{GA4_ID}" defer></script>' if GA4_ID else ""
+GA4_RE = re.compile(r'<script src="/assets/ga4\.js[^"]*" data-ga4="[^"]*" defer></script>\n?')
 SECURITY = (f'<meta http-equiv="Content-Security-Policy" content="{CSP}">\n'
             '<meta name="referrer" content="strict-origin-when-cross-origin">\n')
 SKIP_DIRS = {".git", ".github", "tools", "node_modules", "content", "docs"}
@@ -125,7 +142,7 @@ def version_assets(root):
     vers = {}
     names = ("site.css", "nav.js", "home-clarity.css", "home-redesign.css",
              "extras.js", "challenges.js", "my-space.js", "helper.js", "partner-check.js", "relcheck.js",
-             "share.js", "quiz.js", "depth3d.css", "depth3d.js", "nav-layout.css", "fonts.css")
+             "share.js", "quiz.js", "library-search.js", "ga4.js", "depth3d.css", "depth3d.js", "nav-layout.css", "fonts.css")
     for name in names:
         path = os.path.join(root, "assets", name)
         if os.path.isfile(path):
@@ -176,6 +193,10 @@ def main():
             if TOKEN not in t:
                 i = t.rfind("</body>")
                 t = t[:i] + SNIPPET + "\n" + t[i:]
+            t = GA4_RE.sub("", t)
+            if GA4_TAG and "</body>" in t:
+                i = t.rfind("</body>")
+                t = t[:i] + GA4_TAG + "\n" + t[i:]
             if t == old:
                 continue
             with open(path, "w", encoding="utf-8") as f:

@@ -1142,3 +1142,18 @@ html[lang="ar"] body.home-redesign .topbar-dark .nav .dd-panel a[aria-current="p
 .answer-box .toc ol { margin: 0; padding-inline-start: 22px; display: grid; gap: 4px; font-size: 15.5px; }
 .answer-box .toc a { color: var(--ink); }
 .post-body h2[id] { scroll-margin-top: 90px; }
+
+/* Article library: category links + search (build_articles.listing_page, 2026-11-11). */
+.cat-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 14px; }
+.cat-nav a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); text-decoration: none; font-weight: 500; }
+.cat-nav a span { font-size: 13px; color: var(--muted); }
+.cat-nav a:hover { border-color: var(--eucalyptus); }
+.cat-nav a[aria-current="page"] { background: var(--eucalyptus); border-color: var(--eucalyptus); color: var(--eucalyptus-ink); }
+.cat-nav a[aria-current="page"] span { color: inherit; }
+.lib-search { margin: 0 0 18px; max-width: 520px; }
+.lib-search label { display: block; font-weight: 600; margin-bottom: 6px; }
+.lib-search input { width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); font: inherit; }
+.lib-count { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+.lib-count:empty { display: none; }
+.empty-cat { list-style: none; color: var(--muted); padding: 20px 0; }
+.post-disclaimer { margin: 24px 0; padding: 14px 16px; border-radius: 12px; background: var(--mist); font-size: 15.5px; }

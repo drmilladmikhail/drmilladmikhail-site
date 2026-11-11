@@ -43,6 +43,7 @@ jobs:
           python -m unittest discover -s tools -p test_next_steps.py -v
           python -m unittest discover -s tools -p test_explore.py -v
           python -m unittest discover -s tools -p test_site_repairs.py -v
+          python -m unittest discover -s tools -p test_article_gate.py -v
           python tools/growth_package.py
           python tools/build_articles.py
           python tools/home_clarity.py
