@@ -100,8 +100,10 @@ def catalog():
     return out
 
 
-def dated(items, today=None):
-    """Give every item a date: its own, or the day the builder first saw it."""
+def dated(items, today=None, write=True):
+    """Give every item a date: its own, or the day the builder first saw it.
+    write=False (used when a single page is rebuilt, e.g. build_research.py)
+    never touches content/news-state.json."""
     today = today or datetime.date.today().isoformat()
     state = _load("content/news-state.json", None)
     first_run = state is None
@@ -114,7 +116,7 @@ def dated(items, today=None):
             state[it["k"]] = BASELINE if first_run else today
             changed = True
         it["d"] = state[it["k"]]
-    if changed:
+    if changed and write:
         with open(STATE, "w", encoding="utf-8") as f:
             json.dump(dict(sorted(state.items())), f, ensure_ascii=False, indent=1)
             f.write("\n")
@@ -140,12 +142,34 @@ def _short(text, limit=110):
 
 
 BLOCK_RE = re.compile(r'<script type="application/json" id="site-news">.*?</script>\n?', re.S)
+_CACHE = {}
+
+
+def _block(news):
+    payload = json.dumps(news, ensure_ascii=False).replace("</", "<\\/")
+    return f'<script type="application/json" id="site-news">{payload}</script>\n'
+
+
+def inject(t, block=None):
+    """Put the ticker data into one Arabic page (idempotent). Used by apply() and
+    by builders that rebuild a page after add_analytics (build_research.py)."""
+    if block is None:
+        if "block" not in _CACHE:
+            _CACHE["block"] = _block(pick(dated(catalog(), write=False)))
+        block = _CACHE["block"]
+    if "/assets/nav.js" not in t or 'lang="ar"' not in t[:400]:
+        return t
+    new = BLOCK_RE.sub("", t)
+    i = new.find('<script src="/assets/nav.js')
+    if i < 0:
+        return t
+    return new[:i] + block + new[i:]
 
 
 def apply(root=ROOT):
     news = pick(dated(catalog()))
-    payload = json.dumps(news, ensure_ascii=False).replace("</", "<\\/")
-    block = f'<script type="application/json" id="site-news">{payload}</script>\n'
+    block = _block(news)
+    _CACHE["block"] = block
     changed = 0
     for dirpath, dirnames, filenames in os.walk(root):
         dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS and not d.startswith(".")]
@@ -155,13 +179,7 @@ def apply(root=ROOT):
             path = os.path.join(dirpath, fn)
             with open(path, encoding="utf-8") as f:
                 t = f.read()
-            if "/assets/nav.js" not in t or 'lang="ar"' not in t[:400]:
-                continue
-            new = BLOCK_RE.sub("", t)
-            i = new.find('<script src="/assets/nav.js')
-            if i < 0:
-                continue
-            new = new[:i] + block + new[i:]
+            new = inject(t, block)
             if new != t:
                 with open(path, "w", encoding="utf-8") as f:
                     f.write(new)

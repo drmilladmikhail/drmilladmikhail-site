@@ -6,13 +6,14 @@ import hashlib
 import xml.etree.ElementTree as ET
 from site_header import header_for, NAV_JS
 from add_analytics import SECURITY, SNIPPET, inject_depth3d
+import build_news
 from breadcrumbs import process as add_breadcrumbs
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def version_shared_assets(page, root):
     """Match the shared asset versioner so rebuilding creates no stale diffs."""
-    page = inject_depth3d(page)
+    page = build_news.inject(inject_depth3d(page))
     for name in ('site.css', 'nav.js', 'depth3d.css', 'depth3d.js'):
         path = Path(root) / 'assets' / name
         if path.is_file():

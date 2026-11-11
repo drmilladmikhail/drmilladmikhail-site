@@ -108,13 +108,13 @@
 .ses-pills li { padding: 6px 13px; border-radius: 999px; background: #e9f2ee; color: #1f4a40; border: 1px solid #cfe0d8; font-size: 14.5px; line-height: 1.5; }
 .ses-pills-tx li { background: #faf3e3; color: #5b430d; border-color: #ead7ab; }
 .ses-price { display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 16px; padding: 10px 18px; border-radius: 16px;
-  background: linear-gradient(135deg, #173f38, #2f6f62); color: #e8f1ed; box-shadow: 0 16px 30px -18px rgba(15,58,51,.8); }
+  background: linear-gradient(135deg, #173f38, #2f6f62); color: #e8f1ed; box-shadow: 0 16px 30px -18px rgba(15,58,51,.8); background-color: #1f5a4e; }
 .ses-price b { color: #f0cf8a; font-size: 18px; }
 .ses-medical { margin: 10px 0 0; padding: 12px 16px; border-inline-start: 4px solid #e2b35a; background: #fbf6ea; border-radius: 10px; color: #4a3a12; font-size: 15px; }
 .topic-cards-tx li { border-color: #ead7ab; background: linear-gradient(180deg, #fffdf8, #fbf4e4); }
 .price-card { position: relative; overflow: hidden; border-radius: 26px !important; border: 1px solid rgba(226,179,90,.5) !important;
   background: radial-gradient(120% 90% at 100% 0%, rgba(226,179,90,.28), rgba(226,179,90,0) 55%), linear-gradient(150deg, #0f3a33, #1b4e44 50%, #2f6f62) !important;
-  color: #eef5f2 !important; box-shadow: 0 34px 60px -30px rgba(15,58,51,.75) !important; }
+  color: #eef5f2 !important; box-shadow: 0 34px 60px -30px rgba(15,58,51,.75) !important; background-color: #1b4e44 !important; }
 .price-card .price-num { color: #f0cf8a !important; }
 .price-card .price-unit, .price-card .price-facts li, .price-card .price-note { color: #e3eee9 !important; }
 .price-card .btn.primary { background: #e2b35a !important; border-color: #e2b35a !important; color: #1d2a26 !important; }

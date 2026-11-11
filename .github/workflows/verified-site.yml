@@ -93,13 +93,24 @@ jobs:
                                           });
                                           return rgb[0] * .2126 + rgb[1] * .7152 + rgb[2] * .0722;
                                       };
+                                      // contrast against the nearest painted background (the «تأمل اليوم»
+                                      // card is deep green with light text since 2026-11-10)
+                                      const bgOf = el => {
+                                          for (let n = el; n; n = n.parentElement) {
+                                              const c = getComputedStyle(n).backgroundColor;
+                                              const a = (c.match(/[\\d.]+/g) || [])[3];
+                                              if (c !== 'transparent' && (a === undefined || Number(a) > .9)) return c;
+                                          }
+                                          return 'rgb(255, 255, 255)';
+                                      };
+                                      const ratio = (a, b) => { const x = luminance(a), y = luminance(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
                                       return ['.daily-text', '.daily-kicker', '.daily-date',
                                           '.daily figcaption', '.daily-copy', '.weekly > span'].flatMap(selector =>
                                           [...document.querySelectorAll(selector)].map(el =>
-                                              [selector, 1.05 / (luminance(getComputedStyle(el).color) + .05)]));
+                                              [selector, ratio(getComputedStyle(el).color, bgOf(el))]));
                                   }""")
                                   assert all(ratio >= 4.5 for _, ratio in contrast), contrast
-                                  assert page.locator('.daily').evaluate("(el) => getComputedStyle(el).backgroundColor") == 'rgb(255, 255, 255)'
+                                  assert page.locator('.daily').evaluate("(el) => getComputedStyle(el).backgroundColor") not in ('transparent', 'rgba(0, 0, 0, 0)')
                                   assert page.locator('.weekly').evaluate("(el) => getComputedStyle(el).backgroundColor") == 'rgb(255, 255, 255)'
                               page.emulate_media(color_scheme='light')
                           if name == 'research':
