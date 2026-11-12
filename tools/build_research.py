@@ -5,16 +5,17 @@ import json
 import hashlib
 import xml.etree.ElementTree as ET
 from site_header import header_for, NAV_JS
-from add_analytics import SECURITY, SNIPPET, inject_depth3d
+from add_analytics import SECURITY, SNIPPET, GA4_TAG, inject_depth3d, ensure_social, self_host_fonts
 import build_news
-from breadcrumbs import process as add_breadcrumbs
+import identity_ld
+from breadcrumbs import process as add_breadcrumbs, auto_ld
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def version_shared_assets(page, root):
     """Match the shared asset versioner so rebuilding creates no stale diffs."""
-    page = build_news.inject(inject_depth3d(page))
-    for name in ('site.css', 'nav.js', 'depth3d.css', 'depth3d.js'):
+    page = identity_ld.apply_page(ensure_social(build_news.inject(self_host_fonts(inject_depth3d(page)))))
+    for name in ('site.css', 'nav.js', 'depth3d.css', 'depth3d.js', 'nav-layout.css', 'fonts.css'):
         path = Path(root) / 'assets' / name
         if path.is_file():
             digest = hashlib.md5(path.read_bytes()).hexdigest()[:8]
@@ -85,7 +86,7 @@ def build_library(root=ROOT):
             ''.join('<script src="/assets/' + name + '?v=' +
                     hashlib.sha256((root / 'assets' / name).read_bytes()).hexdigest()[:12] +
                     '" defer></script>' for name in ('research-library-data.js', 'research-library.js')) +
-            NAV_JS + SNIPPET + '</body></html>')
+            NAV_JS + SNIPPET + GA4_TAG + '</body></html>')
     out = root / 'research/library/index.html'
     out.parent.mkdir(parents=True, exist_ok=True)
     page = version_shared_assets(page, root)
@@ -108,11 +109,12 @@ def build(root=ROOT):
     body = (root / 'content/research-body.html').read_text(encoding='utf-8')
     assert body.count('<h1>') == 1 and 'id="main"' in body
     head = '<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">' + SECURITY + '<meta name="viewport" content="width=device-width,initial-scale=1"><title>مرصد الأبحاث النفسية | د. ميلاد ميخائيل</title><meta name="description" content="أبحاث علم النفس بعرض أكاديمي نقدي وشرح مبسط، مع المصدر الإنجليزي والترجمة العربية وحدود الاستنتاج."><link rel="canonical" href="https://drmilladmikhail.com/research/"><link rel="stylesheet" href="/assets/site.css"><style>' + CSS + '</style></head><body>'
-    page = head + header_for('research/index.html') + body + '<footer class="footer"><div class="wrap"><a href="/articles/">المقالات</a> · <a href="/contact/">تواصل</a></div></footer>' + NAV_JS + SNIPPET + '</body></html>'
+    page = head + header_for('research/index.html') + body + '<footer class="footer"><div class="wrap"><a href="/articles/">المقالات</a> · <a href="/contact/">تواصل</a></div></footer>' + NAV_JS + SNIPPET + GA4_TAG + '</body></html>'
     output = root / 'research/index.html'
     output.parent.mkdir(parents=True, exist_ok=True)
     page = version_shared_assets(page, root)
     output.write_text(page, encoding='utf-8')
+    auto_ld(root)  # same BreadcrumbList data add_analytics gives other pages
     ns = 'http://www.sitemaps.org/schemas/sitemap/0.9'
     ET.register_namespace('', ns)
     path = root / 'sitemap.xml'

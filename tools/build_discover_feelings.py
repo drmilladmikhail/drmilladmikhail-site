@@ -12,7 +12,7 @@ import build_life_tools as bl
 ROOT = bl.ROOT
 SLUG = "discover-feelings"
 ASSETS = os.path.join(ROOT, "assets", SLUG)
-CARD_BLURB = "ابحث عن اللي جواك بكلماتك، وسمّي إحساسك، وجرّب مهارة صغيرة، وراجع تجربتك."
+CARD_BLURB = "خمس خطوات: سمِّ شعورك، افهم إمتى بيظهر، واكتشف اللي محتاجه وخطوتك الجاية."
 
 
 def available():
@@ -22,10 +22,10 @@ def available():
 def card_html(esc):
     return f'''      <li class="test-card">
         <a href="/{SLUG}/">
-          <span class="tc-body">
+          <div class="tc-body">
             <h2>اكتشاف مشاعرك</h2>
             <span class="card-desc">{esc(CARD_BLURB)}</span>
-          </span>
+          </div>
         </a>
       </li>'''
 
@@ -52,11 +52,11 @@ def build(ba, page, write, SITE):
     body = f'  <section class="section">\n    <div class="wrap narrow xtool">{main}</div>\n  </section>'
     url = f"{SITE}/{SLUG}/"
     ld = {"@context": "https://schema.org", "@type": "WebPage", "name": title, "url": url, "inLanguage": "ar",
-          "description": desc, "author": {"@id": f"{SITE}/#person"}, "dateModified": bl.MODIFIED,
+          "description": desc, "author": {"@id": f"{SITE}/#person"}, "dateModified": "2026-11-11",
           "isPartOf": {"@type": "CollectionPage", "name": "أدوات لحياتك", "url": f"{SITE}/life-tools/"}}
     html = page(SLUG, title, desc, body, ld)
-    # premium.css (2026-11-10, his request «خلي الصفحة برميم تصميم») is hand-written, loaded after tool.css
+    # journey.css (2026-11-11, the five-step redesign he asked for) is hand-written, loaded after tool.css
     html = html.replace("</head>", f'<link rel="stylesheet" href="/assets/{SLUG}/tool.css">\n'
-                        f'<link rel="stylesheet" href="/assets/{SLUG}/premium.css">\n</head>', 1)
+                        f'<link rel="stylesheet" href="/assets/{SLUG}/journey.css">\n</head>', 1)
     html = html.replace("</body>", "\n".join(scripts) + "\n</body>", 1)
     write(SLUG, html)

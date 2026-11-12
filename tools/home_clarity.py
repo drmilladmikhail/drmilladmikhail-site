@@ -6,6 +6,7 @@ import re
 HERO = """<section class="hero hero-dark clarity-hero">
   <div class="wrap h3d-wrap"><div class="hero-text hero-card" data-d3="card">
     <span class="hero-card-glow" aria-hidden="true"></span>
+    <p class="hero-kicker">د. ميلاد ميخائيل <span>· استشاري العلاج النفسي والأسري</span></p>
     <h1 class="hero-name">افهم نفسك… وخد خطوة لحياة أهدى</h1>
     <p class="statement">مقالات مبسطة وأدوات توعوية وتمارين عملية لفهم مشاعرك وعلاقاتك، بالعربي البسيط.</p>
     <div class="actions"><a class="btn btn-gold" href="/discover-feelings/">اكتشف مشاعرك</a> <a class="btn btn-ghost" href="#concern-title">اختار اللي شاغل بالك</a></div>

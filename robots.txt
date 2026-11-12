@@ -1,3 +1,25 @@
+# drmilladmikhail.com — the official site of Dr. Millad Mikhail (د. ميلاد ميخائيل)
+# Search engines and AI search crawlers are welcome to read every public page.
+# (A crawler that matches a named group ignores the * group, so each group repeats the rules.)
+
+User-agent: Googlebot
+Allow: /
+Disallow: /gifts/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /gifts/
+
+# ChatGPT Search (shows and links pages in ChatGPT answers)
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /gifts/
+
+# OpenAI's training crawler: not allowed to use the site's content to train models (his decision, 2026-11-11).
+# This does NOT affect ChatGPT Search (OAI-SearchBot above) or answers that link to the site.
+User-agent: GPTBot
+Disallow: /
+
 User-agent: *
 Allow: /
 Disallow: /gifts/

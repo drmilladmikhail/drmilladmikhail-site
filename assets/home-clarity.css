@@ -74,3 +74,7 @@ html[lang="ar"] body.home-redesign #main .today .daily .daily-wa{background:#e2b
 html[lang="ar"] body.home-redesign #main .today .daily .daily-copy{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
 html[lang="ar"] body.home-redesign #main .today .daily a:focus-visible,html[lang="ar"] body.home-redesign #main .today .daily button:focus-visible{outline-color:#f0cf8a}
 html[lang="ar"] body.home-redesign #main .ses-topics{list-style:none;padding:0;margin:0 0 14px}
+/* 2026-11-11: his name back at the top of the hero card (Google name searches) */
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker{display:inline-block;margin:0 0 14px;padding:5px 14px;border-radius:999px;background:#e9f2ee;border:1px solid #cfe0d8;color:#1f5247;font-size:15px;font-weight:700;line-height:1.6}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker span{color:#4a5b53;font-weight:600}
+@media(max-width:420px){html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker{font-size:13.5px;padding:4px 12px}}

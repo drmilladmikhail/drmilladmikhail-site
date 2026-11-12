@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://*.google-analytics.com https://www.googletagmanager.com data: https://images.unsplash.com https://i.ytimg.com; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>اختبار القلق (GAD-7): قلقك طبيعي ولا زيادة؟ | د. ميلاد ميخائيل</title>
@@ -22,10 +22,8 @@
 <meta name="twitter:image" content="https://drmilladmikhail.com/assets/og/tests.jpg">
 <meta property="og:locale" content="ar_EG">
 <meta name="theme-color" content="#2f6f62">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Naskh+Arabic:wght@600;700&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=b24ad6c4"><link rel="stylesheet" href="/assets/depth3d.css?v=94601c30">
+<link rel="preload" href="/assets/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-naskh-arabic-arabic-700-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/fonts.css?v=256db9ca">
+<link rel="stylesheet" href="/assets/site.css?v=d3854309"><link rel="stylesheet" href="/assets/depth3d.css?v=94601c30">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -39,6 +37,7 @@
   }
 }
 </script>
+<link rel="stylesheet" id="nav-layout-fix" href="/assets/nav-layout.css?v=50ab5a7b">
 <script type="application/ld+json" id="breadcrumb-ld">
 {
   "@context": "https://schema.org",
@@ -108,13 +107,15 @@
           <a href="/book/">كتبي</a>
           <a href="/glossary/">القاموس النفسي</a>
           <a href="/research/">مرصد الأبحاث النفسية</a>
+          <a href="/family/">التوعية الأسرية والزوجية</a>
         </div>
       </details>
       <details class="dd">
         <summary>عن د. ميلاد</summary>
         <div class="dd-panel">
-          <a href="/#about">نبذة</a>
-          <a href="/#credentials">المؤهلات</a>
+          <a href="/about/">نبذة وسيرة مهنية</a>
+          <a href="/about/qualifications/">المؤهلات العلمية</a>
+          <a href="/about/publications/">الرسائل العلمية والأبحاث</a>
           <a href="/sessions/">الجلسات</a>
           <a href="/ask/">اسأل من غير اسمك</a>
           <a href="/contact/">تواصل</a>
@@ -141,6 +142,7 @@
         <a href="/book/">كتبي</a>
         <a href="/glossary/">القاموس النفسي</a>
         <a href="/research/">مرصد الأبحاث النفسية</a>
+        <a href="/family/">التوعية الأسرية والزوجية</a>
         <a href="https://blog.drmilladmikhail.com/">المدونة</a>
         <p class="m-group">اختبر نفسك واتمرّن</p>
         <a href="/discover-feelings/">اكتشاف مشاعرك</a>
@@ -154,8 +156,9 @@
         <a href="/relationship-check/">علاقتك صحية؟</a>
         <a href="/worksheets/">أوراق تمرين</a>
         <p class="m-group">عن د. ميلاد</p>
-        <a href="/#about">نبذة</a>
-        <a href="/#credentials">المؤهلات</a>
+        <a href="/about/">نبذة وسيرة مهنية</a>
+        <a href="/about/qualifications/">المؤهلات العلمية</a>
+        <a href="/about/publications/">الرسائل العلمية والأبحاث</a>
         <a href="/sessions/">الجلسات</a>
         <a href="/ask/">اسأل من غير اسمك</a>
         <a href="/contact/">تواصل</a>
@@ -165,6 +168,7 @@
     </details>
   </div>
 </header>
+<aside class="site-announcement" data-k="research:10.1371/journal.pmen.0000737" aria-label="الجديد على الموقع"><span class="site-announcement-label">جديد</span><div class="site-announcement-viewport"><div class="site-announcement-track" style="animation-duration:45s"><a class="site-announcement-link" href="/research/library/#p10.1371%2Fjournal.pmen.0000737">بحث جديد في مكتبة الأبحاث: انتفاضات بدء النوم: وصف الظاهرة وارتباطاتها بخصائص النوم والخصائص النفسية والديموغ…</a><a class="site-announcement-link" href="/articles/panic-attack-what-to-do/">مقال جديد: نوبة الهلع: أعراضها إيه وأعمل إيه وقتها؟</a><a class="site-announcement-link" href="/glossary/overgeneralization/">مصطلح جديد في القاموس النفسي: التعميم الزائد</a><a class="site-announcement-link" href="/research/library/#p10.1371%2Fjournal.pmen.0000737" aria-hidden="true" tabindex="-1">بحث جديد في مكتبة الأبحاث: انتفاضات بدء النوم: وصف الظاهرة وارتباطاتها بخصائص النوم والخصائص النفسية والديموغ…</a><a class="site-announcement-link" href="/articles/panic-attack-what-to-do/" aria-hidden="true" tabindex="-1">مقال جديد: نوبة الهلع: أعراضها إيه وأعمل إيه وقتها؟</a><a class="site-announcement-link" href="/glossary/overgeneralization/" aria-hidden="true" tabindex="-1">مصطلح جديد في القاموس النفسي: التعميم الزائد</a></div></div><button class="site-announcement-close" type="button" aria-label="إخفاء الإعلان">×</button></aside>
 <main id="main">
   <section class="section test">
     <div class="wrap narrow">
@@ -257,7 +261,7 @@
       <h2>تابعني</h2>
       <ul>
         <li><a href="https://www.youtube.com/@DrMilladMikhail" target="_blank" rel="noopener">يوتيوب</a></li>
-        <li><a href="https://www.amazon.com/author/drmilladmikhail" target="_blank" rel="noopener">أمازون</a></li>
+        <li><a href="https://www.amazon.com/stores/author/B0HQ931MJP" target="_blank" rel="noopener">أمازون</a></li>
         <li><a href="https://www.linkedin.com/in/dr-millad-mikhail-a57b0b215" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="https://orcid.org/0009-0002-9254-367X" target="_blank" rel="me noopener">ORCID</a></li>
         <li><a href="/en/" hreflang="en" lang="en">English</a></li>
@@ -269,9 +273,10 @@
 <script src="/assets/quiz.js?v=08c8d13f" defer></script>
 <script src="/assets/share.js?v=f681aeb8" defer></script>
 <script src="/assets/helper.js?v=8916c70c" defer></script>
-<script type="application/json" id="site-news">[{"k": "research:10.1371/journal.pmen.0000734", "t": "بحث جديد في مكتبة الأبحاث: عوامل خطر الانتحار لدى طلاب التمريض: أعراض الاكتئاب والاحتراق الأكاديمي والكفاءة ا…", "u": "/research/library/#p10.1371%2Fjournal.pmen.0000734"}, {"k": "article:dealing-with-angry-partner", "t": "مقال جديد: التعامل مع الشريك العصبي: إزاي تهدّي الخناقة وتحمي نفسك", "u": "/articles/dealing-with-angry-partner/"}, {"k": "glossary:panic-attack", "t": "مصطلح جديد في القاموس النفسي: نوبة الهلع", "u": "/glossary/panic-attack/"}]</script>
-<script src="/assets/nav.js?v=f373e788" defer></script>
+<script type="application/json" id="site-news">[{"k": "research:10.1371/journal.pmen.0000737", "t": "بحث جديد في مكتبة الأبحاث: انتفاضات بدء النوم: وصف الظاهرة وارتباطاتها بخصائص النوم والخصائص النفسية والديموغ…", "u": "/research/library/#p10.1371%2Fjournal.pmen.0000737"}, {"k": "article:panic-attack-what-to-do", "t": "مقال جديد: نوبة الهلع: أعراضها إيه وأعمل إيه وقتها؟", "u": "/articles/panic-attack-what-to-do/"}, {"k": "glossary:overgeneralization", "t": "مصطلح جديد في القاموس النفسي: التعميم الزائد", "u": "/glossary/overgeneralization/"}]</script>
+<script src="/assets/nav.js?v=f60c389d" defer></script>
+<script src="/assets/depth3d.js?v=22e39f2b" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49dc5ec3f58f4825b6e04626f92dd475"}'></script><!-- End Cloudflare Web Analytics -->
-<script src="/assets/depth3d.js?v=4f919f32" defer></script>
+<script src="/assets/ga4.js?v=171a7eff" data-ga4="G-SGZ53QSWQJ" defer></script>
 </body>
 </html>

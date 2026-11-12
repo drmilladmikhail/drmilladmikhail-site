@@ -1,4 +1,4 @@
-// Draft data for «اكتشاف مشاعرك». All static, matched in the browser only (nothing is sent or stored).
+// Data for «اكتشاف مشاعرك». All static, matched in the browser only (nothing is sent or stored).
 // Fields: id, n = name, g = group, w = colloquial words, d = one-line description (not a diagnosis),
 // p = 'anxiety' when a full path exists, gl = glossary slug, l = extra links [[href, text]].
 window.DF_GROUPS = [
@@ -13,13 +13,17 @@ window.DF_FEELINGS = [
     w: ['متوتر', 'شد في جسمي', 'متشنج', 'مش عارف اهدا', 'مضغوط', 'ضغط', 'على اعصابي', 'اعصابي تعبانة'] },
   { id: 'fear', n: 'خوف', g: 'fear', gl: 'fear', d: 'رد فعل على خطر حقيقي أو متخيَّل.',
     w: ['خايف', 'خوف', 'فزعان', 'رعب', 'مرعوب', 'بخاف'] },
-  { id: 'panic', n: 'نوبة فزع', g: 'fear', gl: 'anxiety', d: 'موجة خوف شديدة وسريعة بتعدّي في الغالب. لو في ألم صدر أو صعوبة تنفس مستمرة اطلب طوارئ.',
+  { id: 'panic', s: 1, n: 'نوبة فزع', g: 'fear', gl: 'anxiety', d: 'موجة خوف شديدة وسريعة بتعدّي في الغالب. لو في ألم صدر أو صعوبة تنفس مستمرة اطلب طوارئ.',
     w: ['نوبة ذعر', 'ذعر', 'قلبي هيقف', 'مش قادر اتنفس', 'اختناق فجأة', 'فزع', 'حاسس اني هموت من الخوف'] },
   { id: 'overthinking', n: 'تفكير زائد', g: 'fear', gl: 'rumination', d: 'تلف في نفس الأفكار من غير ما توصل لخطوة.',
     w: ['بفكر كتير', 'تفكير زايد', 'دماغي مش بتسكت', 'بلف في نفس الفكرة', 'افكار بتلف', 'بحلل كل حاجة', 'اوفر ثنكينج'],
     l: [['/life-tools/overthinking-path/', 'خطوات لفهم التفكير الزائد والتعامل معاه']] },
   { id: 'socialfear', n: 'رهبة من الناس', g: 'fear', gl: 'fear', d: 'قلق من حكم الناس أو من الإحراج في المواقف الاجتماعية.',
     w: ['بتكسف', 'كسوف', 'خايف من كلام الناس', 'بخاف اتكلم قدام ناس', 'رهبة', 'مرتبك قدام الناس'] },
+  { id: 'unsafe', n: 'عدم الأمان', g: 'fear', gl: 'trust', s: 1, d: 'إحساس إنك مش مطمّن: على نفسك، أو على مكانك عند الناس، أو على اللي جاي. لو في خطر حقيقي من حد، اطلب مساعدة.',
+    w: ['مش مطمن', 'مش حاسس بامان', 'عدم امان', 'مش امن', 'مهدد', 'خايف على نفسي', 'مش مستقر'] },
+  { id: 'indecision', n: 'صعوبة اتخاذ القرار', g: 'fear', gl: 'coping', d: 'واقف قدام اختيار ومش قادر تحسم، وكل ما تفكر تتعب أكتر.',
+    w: ['مش قادر اقرر', 'مش عارف اختار', 'متردد', 'تردد', 'قرار صعب', 'خايف اختار غلط', 'اختار ايه'] },
   { id: 'confusion', n: 'حيرة', g: 'fear', gl: 'coping', d: 'مش قادر تحدد اتجاه أو قرار، وده بيتعب.',
     w: ['محتار', 'تايه', 'مش عارف اعمل ايه', 'مش عارف اقرر', 'حيرة', 'مشوش'] },
   // حزن وفقد
@@ -27,7 +31,7 @@ window.DF_FEELINGS = [
     w: ['حزين', 'زعلان', 'مكسور', 'مش مبسوط', 'قلبي تقيل', 'عايز اعيط', 'بعيط', 'زعل'] },
   { id: 'grief', n: 'فقد وحداد', g: 'sad', gl: 'grief', d: 'وجع على شخص أو حاجة فقدتها.',
     w: ['فقدت', 'مات', 'وفاة', 'وحشني', 'حداد', 'فراق', 'اتوفى'] },
-  { id: 'hopeless', n: 'يأس', g: 'sad', gl: 'learned-helplessness', d: 'إحساس إن مفيش حاجة هتتغير. لو الإحساس ده تقيل أو مستمر، كلّم حد تثق فيه أو متخصص.',
+  { id: 'hopeless', s: 1, n: 'يأس', g: 'sad', gl: 'learned-helplessness', d: 'إحساس إن مفيش حاجة هتتغير. لو الإحساس ده تقيل أو مستمر، كلّم حد تثق فيه أو متخصص.',
     w: ['يأسان', 'مفيش امل', 'مفيش فايدة', 'مش شايف مخرج', 'كل حاجة سودة', 'ياس'] },
   { id: 'frustration', n: 'إحباط', g: 'sad', gl: 'coping', d: 'بتحاول ومش شايف نتيجة.',
     w: ['محبط', 'محبطة', 'مفيش تقدم', 'بحاول ومفيش نتيجة', 'زهقت من المحاولة', 'احباط'] },
@@ -35,7 +39,7 @@ window.DF_FEELINGS = [
     w: ['خيبة', 'خيبة امل', 'اتصدمت', 'كنت مستني اكتر', 'متضايق من النتيجة'] },
   { id: 'longing', n: 'اشتياق وحنين', g: 'sad', gl: 'sadness', d: 'شوق لحد أو لوقت فات.',
     w: ['مشتاق', 'اشتياق', 'حنين', 'نفسي ارجع لزمان', 'وحشتني ايام'] },
-  { id: 'lowmood', n: 'انطفاء وثقل', g: 'sad', gl: 'depression', d: 'مزاج تقيل وطاقة قليلة. لو بقاله أسابيع ومأثر على حياتك يستاهل يتفحص عند متخصص.',
+  { id: 'lowmood', s: 1, n: 'انطفاء وثقل', g: 'sad', gl: 'depression', d: 'مزاج تقيل وطاقة قليلة. لو بقاله أسابيع ومأثر على حياتك يستاهل يتفحص عند متخصص.',
     w: ['مش قادر اقوم', 'مفيش حاجة بتفرحني', 'مكتئب', 'اكتئاب', 'مفيش طاقة', 'مطفي'],
     l: [['/tests/depression-phq8/', 'مقياس PHQ-8 (اختياري، مش تشخيص)']] },
   // غضب وضيق
@@ -113,7 +117,7 @@ window.DF_FEELINGS = [
   { id: 'ambivalence', n: 'تردد في علاقة', g: 'rel', gl: 'boundaries', d: 'مش عارف تكمل ولا تبعد.',
     w: ['مش عارف اكمل ولا لأ', 'محتار في علاقتي', 'اسيب ولا افضل'],
     l: [['/worksheets/', 'أوراق تمرين: قبل ما أرجع لعلاقة قديمة']] },
-  { id: 'smothered', n: 'اختناق في علاقة', g: 'rel', gl: 'boundaries', d: 'إحساس إنك محتاج مساحة أكبر. لو في تهديد أو خوف من الشخص التاني اطلب مساعدة.',
+  { id: 'smothered', s: 1, n: 'اختناق في علاقة', g: 'rel', gl: 'boundaries', d: 'إحساس إنك محتاج مساحة أكبر. لو في تهديد أو خوف من الشخص التاني اطلب مساعدة.',
     w: ['حاسس اني متراقب', 'مخنوق من علاقتي', 'محتاج مساحة', 'مخنوق من شريكي'],
     l: [['/life-tools/communication-simulator/', 'أقول إيه في الموقف ده؟']] }
 ];
@@ -228,3 +232,83 @@ window.DF_PATHS.exhaustion = {
   steps: ['أحدد حاجة أخففها الأسبوع ده', 'أنام أبكر الليلة', 'أطلب مساعدة من حد في حاجة'],
   tryLinks: [['/life-tools/rest-without-guilt/', 'راحة من غير ذنب'], ['/life-tools/before-i-say-yes/', 'قبل ما أقول أيوه']]
 };
+
+
+// ---------- Guided five-step flow (2026-11-11). Reflection prompts, not a diagnosis. ----------
+// The twelve quick choices on step 2: [label shown, feeling id].
+window.DF_CHIPS = [
+  ['القلق', 'anxiety'], ['الحزن', 'sadness'], ['الغضب', 'anger'], ['الخوف', 'fear'],
+  ['الوحدة', 'loneliness'], ['الضغط النفسي', 'tension'], ['فقدان الشغف', 'nomotivation'], ['الارتباك', 'confusion'],
+  ['الشعور بالذنب', 'guilt'], ['عدم الأمان', 'unsafe'], ['الفراغ الداخلي', 'emptiness'], ['صعوبة اتخاذ القرار', 'indecision']
+];
+// Possible needs. t = title, d = plain explanation, q = a question to reflect on, l = one tool on the site.
+window.DF_NEEDS = {
+  safety: { t: 'تحتاج إلى الشعور بالأمان', d: 'ممكن يكون جواك جزء مستني يطمّن: إن اللي جاي هيعدّي، أو إن مكانك عند اللي بتحبهم ثابت. الطمأنة بتبدأ من حاجات صغيرة ثابتة في يومك.',
+    q: 'إيه أو مين اللي بيخليني أحس إني مطمّن، ولو شوية؟', l: ['/life-tools/within-my-control/', 'إيه اللي في إيدي؟'] },
+  rest: { t: 'تحتاج إلى مساحة للراحة', d: 'ممكن يكون الحِمل بقاله فترة أكبر من الراحة المتاحة. الراحة هنا مش كسل، دي شحن عشان تقدر تكمّل.',
+    q: 'إيه أصغر راحة حقيقية أقدر آخدها النهارده؟', l: ['/life-tools/rest-without-guilt/', 'راحة من غير ذنب'] },
+  understand: { t: 'تحتاج إلى فهم ما يحدث داخلك', d: 'ساعات الإحساس بيبقى ملخبط: موقف، وفكرة عن الموقف، وإحساس جه معاها. لما تفصلهم عن بعض الصورة بتوضح.',
+    q: 'إيه الفكرة اللي بتيجي في بالي قبل الإحساس ده على طول؟', l: ['/life-tools/situation-thought-feeling/', 'موقف، فكرة، إحساس'] },
+  boundaries: { t: 'تحتاج إلى وضع حدود صحية', d: 'ممكن تكون بتدّي أو بتتحمّل أكتر من طاقتك، أو في حاجة بتتعدّى عليك وساكت عنها. الحدود مش قسوة، دي طريقة تحافظ بيها على نفسك وعلى العلاقة.',
+    q: 'إيه الحاجة اللي بقول لها «أيوه» وأنا جوايا «لأ»؟', l: ['/life-tools/before-i-say-yes/', 'قبل ما أقول أيوه'] },
+  support: { t: 'تحتاج إلى دعم ومساندة', d: 'ممكن تكون شايل لوحدك حاجة تقيلة. الحاجة لحد يسمعك حاجة إنسانية، مش ضعف.',
+    q: 'مين شخص واحد أقدر أحكي له جزء صغير من اللي جوايا؟', l: ['/life-tools/what-do-i-need/', 'أنا محتاج إيه؟'] },
+  kindness: { t: 'تحتاج إلى رفق بنفسك', d: 'ممكن يكون الصوت اللي جواك قاسي عليك أكتر من اللازم. الرفق بالنفس مش تدليل، ده إنك تكلّم نفسك زي ما بتكلّم حد بتحبه.',
+    q: 'لو صاحبي في نفس موقفي، كنت هقول له إيه؟', l: ['/tests/self-compassion-scs/', 'مقياس التعاطف مع الذات (اختياري، مش تشخيص)'] },
+  meaning: { t: 'تحتاج إلى معنى واتجاه', d: 'ممكن تكون الأيام ماشية من غير حاجة تحس إنها بتاعتك. المعنى غالبًا بييجي من حاجة صغيرة ليها قيمة عندك، مش من هدف كبير.',
+    q: 'إيه آخر حاجة عملتها وحسيت إن ليها قيمة عندي؟', l: ['/tests/meaning-in-life-mlq/', 'مقياس المعنى في الحياة (اختياري، مش تشخيص)'] },
+  clarity: { t: 'تحتاج إلى وضوح وخطوة صغيرة', d: 'ممكن تكون الصورة كبيرة ومتزاحمة، فمش عارف تبدأ منين. خطوة واحدة صغيرة وواضحة بتفتح الطريق أكتر من محاولة حل كل حاجة مرة واحدة.',
+    q: 'إيه أصغر خطوة أقدر آخدها من غير ما أحسم كل حاجة؟', l: ['/life-tools/within-my-control/', 'إيه اللي في إيدي؟'] },
+  savor: { t: 'تحتاج تثبّت اللحظة الحلوة', d: 'الإحساس الحلو بيعدّي بسرعة لو ما وقفناش عنده. إنك تلاحظه وتسمّيه بيخليه يفضل معاك أكتر.',
+    q: 'إيه اللي خلّى الإحساس الحلو ده ييجي؟ وأقدر أكرره إزاي؟', l: ['/tests/wellbeing-who5/', 'مقياس WHO-5 للعافية (اختياري، مش تشخيص)'] }
+};
+// Per group: nd = the two needs suggested first, x = which written exercise to show (a key of DF_PATHS, or '' for the breathing one).
+window.DF_GROUP_DEFAULT = {
+  fear: { nd: ['safety', 'understand'], x: 'anxiety' }, sad: { nd: ['support', 'kindness'], x: 'sadness' },
+  anger: { nd: ['boundaries', 'understand'], x: 'anger' }, social: { nd: ['support', 'safety'], x: 'loneliness' },
+  self: { nd: ['kindness', 'understand'], x: 'guilt' }, empty: { nd: ['rest', 'meaning'], x: 'exhaustion' },
+  pos: { nd: ['savor'], x: '' }, rel: { nd: ['boundaries', 'safety'], x: '' }
+};
+// Per feeling overrides: nd = needs, x = exercise, a = articles/tools on the site [[href, text]].
+window.DF_OVERRIDE = {
+  anxiety: { a: [['/articles/panic-attack-what-to-do/', 'مقال: نوبة الهلع، أعراضها وأعمل إيه وقتها']] },
+  panic: { a: [['/articles/panic-attack-what-to-do/', 'مقال: نوبة الهلع، أعراضها وأعمل إيه وقتها']] },
+  tension: { nd: ['rest', 'boundaries'], x: 'exhaustion', a: [['/articles/burnout-signs-recovery/', 'مقال: الاحتراق النفسي، علاماته والتعافي منه']] },
+  exhaustion: { a: [['/articles/burnout-signs-recovery/', 'مقال: الاحتراق النفسي، علاماته والتعافي منه']] },
+  burnout: { nd: ['rest', 'boundaries'], a: [['/articles/burnout-signs-recovery/', 'مقال: الاحتراق النفسي، علاماته والتعافي منه']] },
+  nomotivation: { nd: ['meaning', 'rest'] }, emptiness: { nd: ['meaning', 'support'], x: 'sadness' },
+  confusion: { nd: ['clarity', 'understand'] }, indecision: { nd: ['clarity', 'safety'] },
+  overthinking: { nd: ['understand', 'clarity'] }, unsafe: { nd: ['safety', 'support'] },
+  guilt: { a: [['/articles/people-pleasing-saying-no/', 'مقال: ليه مش قادر أقول لأ؟']] },
+  cantrefuse: { nd: ['boundaries', 'kindness'], x: 'guilt', a: [['/articles/people-pleasing-saying-no/', 'مقال: ليه مش قادر أقول لأ؟']] },
+  abandonment: { nd: ['safety', 'support'], x: 'anxiety' }, loneliness: { nd: ['support', 'safety'] },
+  anger: { nd: ['boundaries', 'understand'] }, sadness: { nd: ['support', 'kindness'] }
+};
+// Step 3: one question per screen. Each option: [value, label, short phrase used in the summary].
+window.DF_QUESTIONS = [
+  { k: 'when', q: 'إمتى بيظهر الشعور ده غالبًا؟', o: [
+    ['morning', 'الصبح أول ما أصحى', 'الصبح أول ما تصحى'], ['work', 'وسط الشغل أو المذاكرة', 'وسط الشغل أو المذاكرة'],
+    ['alone', 'لما أبقى لوحدي', 'لما تبقى لوحدك'], ['people', 'وسط الناس أو بعد خلاف', 'وسط الناس أو بعد خلاف'],
+    ['night', 'بالليل قبل النوم', 'بالليل قبل النوم'], ['allday', 'أغلب اليوم', 'أغلب اليوم'], ['unsure', 'مش متأكد', ''] ] },
+  { k: 'more', q: 'إيه أكتر حاجة بتزوّده؟', o: [
+    ['load', 'ضغط الشغل أو المسؤوليات', 'ضغط الشغل أو المسؤوليات'], ['conflict', 'خلاف أو كلام مع حد قريب', 'خلاف أو كلام مع حد قريب'],
+    ['future', 'التفكير في المستقبل', 'التفكير في المستقبل'], ['compare', 'مقارنة نفسي بغيري', 'مقارنة نفسك بغيرك'],
+    ['tired', 'قلة النوم أو التعب', 'قلة النوم أو التعب'], ['lonely', 'إني أبقى لوحدي', 'إنك تبقى لوحدك'], ['unsure', 'مش عارف', ''] ] },
+  { k: 'affect', q: 'إزاي بيأثر على يومك؟', o: [
+    ['sleep', 'على نومي', 'نومك'], ['focus', 'على تركيزي وشغلي', 'تركيزك وشغلك'], ['relations', 'على علاقاتي', 'علاقاتك'],
+    ['energy', 'على طاقتي وحماسي', 'طاقتك وحماسك'], ['food', 'على أكلي', 'أكلك'], ['little', 'مش بيأثر كتير', ''] ] }
+];
+// What an answer to «إيه أكتر حاجة بتزوّده؟» adds to the suggested needs.
+window.DF_MORE_NEED = { load: 'rest', conflict: 'boundaries', future: 'safety', compare: 'kindness', tired: 'rest', lonely: 'support' };
+// A reflection question and a tool per answer to «إزاي بيأثر على يومك؟».
+window.DF_AFFECT = {
+  sleep: { q: 'إيه اللي بيدور في دماغي قبل النوم؟ وأقدر أكتبه على ورقة وأسيبه لبكرة؟', l: ['/life-tools/overthinking-path/', 'خطوات للتعامل مع التفكير الزائد'] },
+  focus: { q: 'إيه المهمة الواحدة اللي لو خلصتها النهارده هرتاح شوية؟', l: ['/life-tools/within-my-control/', 'إيه اللي في إيدي؟'] },
+  relations: { q: 'إيه اللي نفسي الشخص القريب مني يعرفه عن اللي أنا حاسس بيه؟', l: ['/life-tools/communication-simulator/', 'أقول إيه في الموقف ده؟'] },
+  energy: { q: 'إيه الحاجة اللي بتاخد طاقتي أكتر؟ وإيه اللي بيرجّعها؟', l: ['/life-tools/rest-without-guilt/', 'راحة من غير ذنب'] },
+  food: { q: 'هل أكلي بيتغيّر لما الإحساس يزيد؟ وإيه اللي بيحصل قبلها على طول؟', l: ['/life-tools/what-do-i-need/', 'أنا محتاج إيه؟'] }
+};
+// The breathing exercise (same wording as the anxiety alternative) for feelings without a written exercise.
+window.DF_BREATH = { title: 'تنفّس بزفير أطول', intro: 'تمرين قصير بيهدّي الجسم شوية ويفتح مساحة للتفكير. مش هدفه يلغي الإحساس.',
+  steps: ['اقعد مرتاح وحط رجليك على الأرض.', 'خد شهيق من مناخيرك وعدّ لـ٤.', 'طلّع زفير بطيء من بقك وعدّ لـ٦.', 'كرّر ٥ مرات.', 'لو حسيت بدوخة أو مش مرتاح، وقّف ورجّع لتنفسك العادي.'],
+  next: ['أسمّي إحساسي لنفسي بجملة واحدة', 'أكتب اللي حاسس بيه وأرجع له بعدين', 'أكلم حد قريب مني'] };

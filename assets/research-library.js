@@ -28,6 +28,7 @@
       abstracts: 'الملخصات (عربي + English)',
       abstractAr: 'الملخص العربي',
       abstractEn: 'Original abstract (English)',
+      translationNotice: 'النص العربي ترجمة من إعداد الموقع؛ النص الإنجليزي هو الملخص الأصلي.',
       source: 'المصدر',
       pmid: 'PMID',
       toggle: 'English',
@@ -60,6 +61,7 @@
       abstracts: 'Abstracts (English + العربية)',
       abstractAr: 'الملخص العربي',
       abstractEn: 'Original abstract (English)',
+      translationNotice: 'Arabic translation by this website; the English text is the original abstract.',
       source: 'Source',
       pmid: 'PMID',
       toggle: 'العربية',
@@ -138,7 +140,9 @@
       '<p class="src"><b>' + esc(L.source) + ':</b> ' +
       (r.pmid ? '<a href="https://pubmed.ncbi.nlm.nih.gov/' + esc(r.pmid) + '/">' + esc(L.pmid) + ' ' + esc(r.pmid) + '</a> · ' : '') +
       '<a href="https://doi.org/' + esc(r.doi) + '" dir="ltr">DOI: ' + esc(r.doi) + '</a>' +
+      (r.copyright ? ' · <span dir="ltr" lang="en">' + esc(r.copyright) + '</span>' : '') +
       (r.license && r.license_url ? ' · <a rel="license" href="' + esc(r.license_url) + '" dir="ltr">' + esc(r.license) + '</a>' : '') + '</p>' +
+      (r.license ? '<p class="src translation-notice">' + esc(L.translationNotice) + '</p>' : '') +
       '</article>';
   }
 

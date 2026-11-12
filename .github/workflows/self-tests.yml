@@ -27,7 +27,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install playwright pillow
-          python -m playwright install --with-deps chromium
+          # Ubuntu apt mirrors are sometimes unreachable from runners (2026-11-11 outage).
+          # The runner image already has Chrome's system libraries, so try without apt first.
+          python -m playwright install chromium
+          if python -c "from playwright.sync_api import sync_playwright as s; p=s().start(); p.chromium.launch().close(); p.stop()"; then
+            echo "Chromium runs without extra system packages"
+          else
+            for i in 1 2 3; do python -m playwright install --with-deps chromium && break; [ "$i" = 3 ] && exit 1; echo "apt failed, retrying in 45s"; sleep 45; done
+          fi
       - name: Rebuild self-tests and sitemap
         run: |
           python3 tools/build_tests.py

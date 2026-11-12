@@ -56,7 +56,7 @@ FOOTER = '''<footer class="footer">
       <h2>تابعني</h2>
       <ul>
         <li><a href="https://www.youtube.com/@DrMilladMikhail" target="_blank" rel="noopener">يوتيوب</a></li>
-        <li><a href="https://www.amazon.com/author/drmilladmikhail" target="_blank" rel="noopener">أمازون</a></li>
+        <li><a href="https://www.amazon.com/stores/author/B0HQ931MJP" target="_blank" rel="noopener">أمازون</a></li>
         <li><a href="https://www.linkedin.com/in/dr-millad-mikhail-a57b0b215" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="https://orcid.org/0009-0002-9254-367X" target="_blank" rel="me noopener">ORCID</a></li>
         <li><a href="/en/" hreflang="en" lang="en">English</a></li>
@@ -82,7 +82,7 @@ def pic(name, alt, eager=False, sizes="(max-width: 700px) 100vw, 700px"):
             f'<img src="/assets/book/{name}.jpg" width="1200" height="800" alt="{esc(alt)}" {load}></picture>')
 
 
-IMG_RE = re.compile(r'<img src="/assets/book/(love-p\d+)\.jpg" width="1200" height="800" alt="([^"]*)"[^>]*>')
+IMG_RE = re.compile(r'<img src="/assets/book/((?:love-p\d+|art-[a-z0-9-]+))\.jpg" width="1200" height="800" alt="([^"]*)"[^>]*>')
 
 
 def upgrade_imgs(body):
@@ -102,7 +102,8 @@ def chapter_no(a):
 def related(a, others, n=3):
     """Same chapter first, then neighbouring chapters, then newest."""
     me = chapter_no(a)
-    return sorted(others, key=lambda o: (abs(chapter_no(o) - me), o["date"] < a["date"], o["date"]), )[:n]
+    return sorted(others, key=lambda o: (o.get("category") != a.get("category"), abs(chapter_no(o) - me),
+                                         o["date"] < a["date"], o["date"]), )[:n]
 
 
 def social(url, title, desc, image, alt, kind="article"):
@@ -122,12 +123,27 @@ def social(url, title, desc, image, alt, kind="article"):
 <meta name="twitter:image" content="{image}">'''
 
 
+# The five editorial categories of the knowledge platform (2026-11-11 master plan).
+CATEGORIES = {
+    "anxiety-mental-health": ("القلق والصحة النفسية", "القلق والاكتئاب والضغط النفسي: تفهم اللي بيحصل جواك وامتى تطلب مساعدة."),
+    "relationships-family": ("العلاقات والأسرة", "الحب والجواز والتعلق والأهل: إزاي نبني علاقات أصح ونحمي نفسنا من الأذى."),
+    "personality-behavior": ("الشخصية والسلوك", "عاداتنا وطباعنا وأفكارنا عن نفسنا: ليه بنعمل اللي بنعمله وإزاي نغيّره."),
+    "resilience-recovery": ("المرونة النفسية والتعافي", "إزاي نقوم بعد الوجع والفقد والأزمات، ونبني مناعة نفسية."),
+    "research-education": ("الأبحاث والتعليم النفسي", "العلاج النفسي والبحث العلمي بالبساطة: إيه اللي العلم بيقوله فعلًا."),
+}
+# Articles dated on/after this day must be reviewed by a person before they are published (master plan rule).
+REVIEW_REQUIRED_FROM = "2026-11-12"
+
+
 def load():
     with open(os.path.join(ROOT, "articles", "articles.json"), encoding="utf-8") as f:
         items = json.load(f)
     slugs = set()
     for a in items:
-        for k in ("slug", "title", "description", "date", "image", "image_alt"):
+        if not a.get("image") and a.get("category") in CATEGORIES:
+            # no illustration of its own → the section's decorative picture (cards/share card only, no hero)
+            a["image"], a["image_alt"] = "cat-" + a["category"], ""
+        for k in ("slug", "title", "description", "date", "image"):
             if not a.get(k):
                 sys.exit(f"article missing '{k}': {a}")
         if not re.fullmatch(r"[a-z0-9-]+", a["slug"]):
@@ -139,7 +155,40 @@ def load():
             sys.exit(f"image not found: assets/book/{a['image']}.jpg")
         if not os.path.exists(os.path.join(ROOT, "articles", "content", a["slug"] + ".html")):
             sys.exit(f"content not found: articles/content/{a['slug']}.html")
+        if a.get("category") not in CATEGORIES:
+            sys.exit(f"article {a['slug']}: 'category' must be one of {sorted(CATEGORIES)}")
+        if a["date"] >= REVIEW_REQUIRED_FROM:
+            # quality gate for new articles: direct answer, sources, human review
+            if not a.get("summary"):
+                sys.exit(f"article {a['slug']}: missing 'summary' (the direct answer)")
+            if len(a.get("refs") or []) < 2:
+                sys.exit(f"article {a['slug']}: needs at least 2 'refs' (reliable sources)")
+            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(a.get("reviewed_on", ""))):
+                sys.exit(f"article {a['slug']}: not published — missing 'reviewed_on' (date of human review)")
     return sorted(items, key=lambda a: (a["date"], a["slug"]), reverse=True)
+
+
+H2_RE = re.compile(r'<h2(\s[^>]*)?>(.*?)</h2>', re.S)
+
+
+def number_sections(body):
+    """Give every section heading a stable id (q1, q2, …) and return the list for the contents box.
+    Sources/further-reading headings stay out of the list."""
+    toc, n = [], 0
+
+    def repl(m):
+        nonlocal n
+        attrs, text = m.group(1) or "", m.group(2)
+        n += 1
+        hid = re.search(r'\bid="([^"]+)"', attrs)
+        if not hid:
+            attrs = f' id="q{n}"' + attrs
+        sid = hid.group(1) if hid else f"q{n}"
+        plain = re.sub(r"<[^>]+>", "", text).strip()
+        if not re.search(r"مصادر|المراجع|مراجع", plain):
+            toc.append((sid, esc(plain)))
+        return f"<h2{attrs}>{text}</h2>"
+    return H2_RE.sub(repl, body), toc
 
 
 def article_page(a, prev_items):
@@ -159,10 +208,36 @@ def article_page(a, prev_items):
         "inLanguage": "ar",
         "mainEntityOfPage": url,
         "author": {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail",
-                   "alternateName": "د. ميلاد ميخائيل", "url": f"{SITE}/"},
+                   "alternateName": "د. ميلاد ميخائيل", "url": f"{SITE}/about/"},
         "publisher": {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail"},
         "isBasedOn": {"@type": "Book", "name": "ليه بنحب اللي بيوجعنا؟", "url": BOOK_AR},
     }
+    if a.get("refs"):
+        ld["citation"] = [r["url"] for r in a["refs"]]
+    cat_name = CATEGORIES[a["category"]][0]
+    cat_url = f"/articles/category/{a['category']}/"
+    ld["articleSection"] = cat_name
+    crumbs_ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "الرئيسية", "item": f"{SITE}/"},
+        {"@type": "ListItem", "position": 2, "name": "المقالات", "item": f"{SITE}/articles/"},
+        {"@type": "ListItem", "position": 3, "name": cat_name, "item": SITE + cat_url},
+        {"@type": "ListItem", "position": 4, "name": a["title"], "item": url}]}
+    disclaimer = ("" if "وقفة أمان" in body else
+                  '<p class="post-disclaimer"><strong>وقفة أمان:</strong> المقال ده للتوعية، ومش تشخيص ولا بديل عن الطبيب أو الأخصائي النفسي. '
+                  'لو حاسس إنك في خطر، كلّم حد حالًا من <a href="/help-now/">صفحة المساعدة العاجلة</a>.</p>')
+    # Answer first (2026-11-11, phase 2): his own conclusion at the top + the article's questions as a
+    # contents list, so readers, search engines and AI answers get the direct answer and can cite a section.
+    body, toc = number_sections(body)
+    # «مثال توضيحي» paragraphs get their own editorial style (2026-11-11 visual refresh)
+    body = re.sub(r'<p>\((مثال توضيحي[^)]*)\)\s*', lambda m: f'<p class="example"><span class="example-tag">{m.group(1)}</span> ', body)
+    answer_block = ""
+    if a.get("summary"):
+        ld["abstract"] = a["summary"]
+        items = "".join(f'<li><a href="#{i}">{t}</a></li>' for i, t in toc)
+        answer_block = (f'<aside class="answer-box" aria-labelledby="ans-{a["slug"]}">'
+                        f'<h2 id="ans-{a["slug"]}">باختصار</h2><p>{esc(a["summary"])}</p>'
+                        + (f'<nav class="toc" aria-label="في المقال ده"><p class="toc-title">في المقال ده</p><ol>{items}</ol></nav>' if items else "")
+                        + '</aside>')
     rel = related(a, prev_items)
     more = "\n        ".join(card(p, "h3") for p in rel)
     more_block = (f'<div class="more"><h2>مقالات ممكن تعجبك</h2><ul class="cards">\n        {more}\n      </ul></div>' if more else "")
@@ -171,7 +246,17 @@ def article_page(a, prev_items):
         <p>جرّب اختبار نمط التعلق المجاني على الموقع. بياخد دقيقتين، والنتيجة بتطلعلك على طول ومش بتتحفظ في أي مكان.</p>
         <div class="actions"><a class="btn primary" href="/tests/attachment-style/">ابدأ الاختبار</a> <a class="btn" href="/tests/">كل الاختبارات</a></div>
       </div>''')
-    meta = ar_date(a["date"]) + (f" · {a['minutes']} دقايق قراءة" if a.get("minutes") else "")
+    meta = f'<time datetime="{a["date"]}">{ar_date(a["date"])}</time>'
+    if a.get("updated") and a["updated"] != a["date"]:
+        meta += f' · آخر تحديث <time datetime="{a["updated"]}">{ar_date(a["updated"])}</time>'
+    meta += (f" · {a['minutes']} دقايق قراءة" if a.get("minutes") else "")
+    # «مراجع للاستزادة» (2026-11-11): trusted further reading per article, from articles.json "refs"
+    refs = a.get("refs") or []
+    refs_block = ("" if not refs else
+                  '<section class="refs" aria-labelledby="refs-' + a["slug"] + '"><h2 id="refs-' + a["slug"] + '">مراجع للاستزادة</h2>'
+                  '<p class="refs-note">مصادر علمية وموثوقة لو حابب تقرا أكتر عن الموضوع (أغلبها بالإنجليزي).</p><ol>'
+                  + "".join(f'<li><a href="{esc(r["url"])}" target="_blank" rel="noopener" lang="en" dir="ltr">{esc(r["title"])}</a></li>' for r in refs)
+                  + "</ol></section>")
     return f'''<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -188,27 +273,32 @@ def article_page(a, prev_items):
 <script type="application/ld+json">
 {json.dumps(ld, ensure_ascii=False, indent=2)}
 </script>
+<script type="application/ld+json">
+{json.dumps(crumbs_ld, ensure_ascii=False, indent=2)}
+</script>
 </head>
 <body>
 {TOPBAR}
 <main id="main">
   <article class="post">
     <div class="wrap narrow">
-      <p class="crumbs"><a href="/articles/">المقالات</a>{(" · " + esc(a["chapter"])) if a.get("chapter") else ""}</p>
+      <p class="crumbs"><a href="/articles/">المقالات</a> · <a href="{cat_url}">{esc(cat_name)}</a>{(" · " + esc(a["chapter"])) if a.get("chapter") else ""}</p>
       <h1>{esc(a["title"])}</h1>
-      <p class="post-meta">د. ميلاد ميخائيل · {meta}</p>
+      <p class="post-meta"><a href="/about/" rel="author">د. ميلاد ميخائيل</a> · {meta}</p>
       <div class="listen" hidden><button type="button" class="btn listen-btn" aria-pressed="false"><span aria-hidden="true">🎧</span> <span class="listen-label">استمع لهذا المقال</span></button><button type="button" class="btn listen-stop" hidden>إيقاف</button><label class="listen-rate">السرعة <select><option value="0.85">أبطأ</option><option value="1" selected>عادي</option><option value="1.2">أسرع</option></select></label><p class="listen-msg" role="status"></p></div>
-      <figure class="post-hero">{pic(a["image"], a["image_alt"], eager=True)}</figure>
+      {"" if a["image"].startswith("cat-") else '<figure class="post-hero">' + pic(a["image"], a["image_alt"], eager=True) + '</figure>'}
+      {answer_block}
       <div class="post-body">
 {body}
       </div>
+      {disclaimer}
       <div class="book-box">
         <picture class="cover-img">
           <source srcset="/assets/love-cover-ar.webp" type="image/webp">
           <img src="/assets/love-cover-ar.jpg" width="480" height="768" alt="غلاف كتاب ليه بنحب اللي بيوجعنا؟" loading="lazy">
         </picture>
         <div>
-          <p class="book-box-title">المقال ده من كتاب «ليه بنحب اللي بيوجعنا؟»</p>
+          <p class="book-box-title">{"المقال ده من كتاب «ليه بنحب اللي بيوجعنا؟»" if a.get("chapter") else "من كتب د. ميلاد: «ليه بنحب اللي بيوجعنا؟»"}</p>
           <p>دليل عملي تفهم بيه نمط تعلقك وتختار شريك حياتك صح، فيه تمارين واختبارات ورسومات.</p>
           <div class="actions">
             <a class="btn primary" href="{BOOK_AR}" target="_blank" rel="noopener">اقرأ الكتاب على أمازون</a>
@@ -216,9 +306,10 @@ def article_page(a, prev_items):
           </div>
         </div>
       </div>
+      {refs_block}
       <div class="author-box">
         <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد ميخائيل" loading="lazy">
-        <p><strong>د. ميلاد ميخائيل</strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
+        <p><strong><a href="/about/" rel="author">د. ميلاد ميخائيل</a></strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA).<br><a href="/about/">السيرة المهنية</a> · <a href="/about/qualifications/">المؤهلات</a> · <a href="/about/publications/">الأبحاث</a> · <a href="/book/">كتاب «ليه بنحب اللي بيوجعنا؟»</a></p>
       </div>
       {share_block(url, a["title"])}
       {discussion_block("article-" + a["slug"], url, a["title"], a.get("discuss"))}
@@ -287,37 +378,71 @@ def share_block(url, title, label="شارك المقال"):
 
 
 def card(a, heading="h2"):
-    return f'''<li class="card">
+    return f'''<li class="card" data-cat="{a.get('category', '')}">
         <a href="/articles/{a["slug"]}/">
           {pic(a["image"], a["image_alt"], sizes="(max-width: 640px) 100vw, 380px")}
-          <span class="card-body">
+          <div class="card-body">
             <{heading}>{esc(a["title"])}</{heading}>
             <span class="card-desc">{esc(a["description"])}</span>
             <span class="card-date">{ar_date(a["date"])}</span>
-          </span>
+          </div>
         </a>
       </li>'''
 
 
-def index_page(items):
-    cards = "\n      ".join(card(a) for a in items)
-    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "مقالات د. ميلاد ميخائيل",
-          "url": f"{SITE}/articles/", "inLanguage": "ar",
-          "author": {"@id": f"{SITE}/#person"},
-          "hasPart": [{"@type": "Article", "headline": a["title"], "url": f"{SITE}/articles/{a['slug']}/"} for a in items]}
-    return f'''<!doctype html>
+def cat_nav(items, current=None):
+    """Category chips: plain links, so the library works without JavaScript."""
+    counts = {k: sum(1 for a in items if a.get("category") == k) for k in CATEGORIES}
+    cur = ' aria-current="page"'
+    links = [f'<a href="/articles/"{cur if current is None else ""}>كل المقالات <span>{len(items)}</span></a>']
+    links += [f'<a href="/articles/category/{k}/"{cur if current == k else ""}>{esc(v[0])} <span>{counts[k]}</span></a>'
+              for k, v in CATEGORIES.items() if counts[k] or current == k]  # empty sections stay hidden
+    return '<nav class="cat-nav" aria-label="أقسام المقالات">' + "".join(links) + "</nav>"
+
+
+SEARCH_BOX = ('<div class="lib-search" hidden><label for="lib-q">ابحث في المقالات</label>'
+              '<input id="lib-q" type="search" placeholder="مثلًا: القلق، الغيرة، الاكتئاب…" autocomplete="off">'
+              '<p class="lib-count" role="status" aria-live="polite"></p></div>')
+
+
+def listing_page(items, all_items, category=None):
+    """/articles/ (all) or /articles/category/<slug>/: server-rendered cards + category links + search."""
+    if category:
+        name, intro = CATEGORIES[category]
+        url, title, h1 = f"{SITE}/articles/category/{category}/", f"{name} | مقالات د. ميلاد ميخائيل", name
+        desc = intro
+    else:
+        url, title, h1 = f"{SITE}/articles/", "مقالات | د. ميلاد ميخائيل", "المقالات"
+        intro = "مقالات بالعامية في الصحة النفسية والعلاقات والأسرة، كل مقال بيجاوب على سؤال حقيقي، ومعاه مصادر علمية."
+        desc = ("مقالات د. ميلاد ميخائيل بالعامية المصرية: القلق والاكتئاب، العلاقات والأسرة، الشخصية والسلوك، "
+                "المرونة النفسية والتعافي، والأبحاث النفسية.")
+    cards = "\n      ".join(card(a) for a in items) or '<li class="empty-cat">مقالات القسم ده جاية قريب.</li>'
+    crumbs = [{"@type": "ListItem", "position": 1, "name": "الرئيسية", "item": f"{SITE}/"},
+              {"@type": "ListItem", "position": 2, "name": "المقالات", "item": f"{SITE}/articles/"}]
+    if category:
+        crumbs.append({"@type": "ListItem", "position": 3, "name": h1, "item": url})
+    ld = [{"@context": "https://schema.org", "@type": "CollectionPage", "name": title.split(" | ")[0], "url": url,
+           "inLanguage": "ar", "description": desc, "author": {"@id": f"{SITE}/#person"},
+           "isPartOf": {"@id": f"{SITE}/#website"},
+           "hasPart": [{"@type": "Article", "headline": a["title"], "url": f"{SITE}/articles/{a['slug']}/"} for a in items]},
+          {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": crumbs}]
+    crumb_html = ('<p class="crumbs"><a href="/">الرئيسية</a> · <a href="/articles/">المقالات</a></p>' if category else "")
+    ld_json = json.dumps(ld, ensure_ascii=False, indent=2)
+    # an empty section isn't worth indexing yet (thin page); it opens to search engines with its first article
+    robots = "" if items else '\n<meta name="robots" content="noindex, follow">'
+    return f"""<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>مقالات | د. ميلاد ميخائيل</title>
-<meta name="description" content="مقالات بالعامية عن الحب والتعلق والعلاقات المؤذية واختيار شريك الحياة، من كتب د. ميلاد ميخائيل.">
-<link rel="canonical" href="{SITE}/articles/">
-{social(SITE + "/articles/", "مقالات د. ميلاد ميخائيل", "مقالات بالعامية عن الحب والتعلق والعلاقات المؤذية واختيار شريك الحياة.", SITE + "/assets/og/articles.jpg", "مقالات د. ميلاد ميخائيل", "website")}
+<title>{esc(title)}</title>
+<meta name="description" content="{esc(desc)}">
+<link rel="canonical" href="{url}">{robots}
+{social(url, title.split(" | ")[0], desc, SITE + "/assets/og/articles.jpg", "مقالات د. ميلاد ميخائيل", "website")}
 <meta name="theme-color" content="#2f6f62">
 {FONTS}
 <script type="application/ld+json">
-{json.dumps(ld, ensure_ascii=False, indent=2)}
+{ld_json}
 </script>
 </head>
 <body>
@@ -325,9 +450,12 @@ def index_page(items):
 <main id="main">
   <section class="section articles-index">
     <div class="wrap">
-      <h1>المقالات</h1>
-      <p class="section-intro">مقالات بالعامية عن الحب والتعلق والعلاقات، مأخوذة من كتبي. مقال جديد كل اثنين وخميس.</p>
-      <ul class="cards">
+      {crumb_html}
+      <h1>{esc(h1)}</h1>
+      <p class="section-intro">{esc(intro)}</p>
+      {cat_nav(all_items, category)}
+      {SEARCH_BOX}
+      <ul class="cards" id="lib-cards">
       {cards}
       </ul>
     </div>
@@ -335,9 +463,14 @@ def index_page(items):
 </main>
 {FOOTER}
 <script src="/assets/helper.js" defer></script>
+<script src="/assets/library-search.js" defer></script>
 </body>
 </html>
-'''
+"""
+
+
+def index_page(items):
+    return listing_page(items, items)
 
 
 def update_home(items):
@@ -374,6 +507,10 @@ def sitemap(items):
         (f"{SITE}/en/", "2026-11-04", True),
         (f"{SITE}/articles/", newest, False),
     ] + [(f"{SITE}/articles/{a['slug']}/", a.get("updated", a["date"]), False) for a in items]
+    for k in CATEGORIES:
+        mine = [a.get("updated", a["date"]) for a in items if a.get("category") == k]
+        if mine:
+            urls.append((f"{SITE}/articles/category/{k}/", max(mine or [newest]), False))
     tj = os.path.join(ROOT, "tests", "tests.json")
     if os.path.exists(tj):
         with open(tj, encoding="utf-8") as f:
@@ -441,6 +578,11 @@ def llms_txt(items):
         "## About",
         "- [Home (Arabic)](https://drmilladmikhail.com/): bio, credentials, theses, books, FAQ",
         "- [Home (English)](https://drmilladmikhail.com/en/): bio, credentials, theses, books, FAQ",
+        "- [About / Professional biography (Arabic)](https://drmilladmikhail.com/about/): official profile page",
+        "- [About (English)](https://drmilladmikhail.com/en/about/): official English profile page",
+        "- [Academic qualifications](https://drmilladmikhail.com/about/qualifications/): degrees + WES evaluation",
+        "- [Theses & research](https://drmilladmikhail.com/about/publications/): Ph.D. (2022) and master's (2018) theses, conference papers, ORCID",
+        "- [Family & couples education](https://drmilladmikhail.com/family/): all relationship and marriage articles",
         "",
         "## Articles (Arabic)",
     ]
@@ -453,7 +595,7 @@ def llms_txt(items):
     L += ["", "## Books",
           "- [ليه بنحب اللي بيوجعنا؟ (Arabic, Amazon)](https://www.amazon.com/dp/B0HPNCYWWS)",
           "- [Why Do We Love What Hurts Us? (English, Amazon)](https://www.amazon.com/dp/B0HPRPSPWF)",
-          "- [Amazon author page](https://www.amazon.com/author/drmilladmikhail)",
+          "- [Amazon author page](https://www.amazon.com/stores/author/B0HQ931MJP)",
           "", "## Elsewhere",
           "- [YouTube: جلسة شيزلونج](https://www.youtube.com/@DrMilladMikhail)",
           "- [Blog: راحة البال](https://blog.drmilladmikhail.com/)",
@@ -477,6 +619,11 @@ def main():
             f.write(article_page(a, others))
     with open(os.path.join(ROOT, "articles", "index.html"), "w", encoding="utf-8") as f:
         f.write(index_page(items))
+    for k in CATEGORIES:
+        d = os.path.join(ROOT, "articles", "category", k)
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+            f.write(listing_page([a for a in items if a.get("category") == k], items, k))
     update_home(items)
     sitemap(items)
     llms_txt(items)

@@ -13,8 +13,18 @@ Key facts:
 ## About
 - [Home (Arabic)](https://drmilladmikhail.com/): bio, credentials, theses, books, FAQ
 - [Home (English)](https://drmilladmikhail.com/en/): bio, credentials, theses, books, FAQ
+- [About / Professional biography (Arabic)](https://drmilladmikhail.com/about/): official profile page
+- [About (English)](https://drmilladmikhail.com/en/about/): official English profile page
+- [Academic qualifications](https://drmilladmikhail.com/about/qualifications/): degrees + WES evaluation
+- [Theses & research](https://drmilladmikhail.com/about/publications/): Ph.D. (2022) and master's (2018) theses, conference papers, ORCID
+- [Family & couples education](https://drmilladmikhail.com/family/): all relationship and marriage articles
 
 ## Articles (Arabic)
+- [إزاي أقول لعيالي إننا هنطلق؟ خطوات تحميهم](https://drmilladmikhail.com/articles/telling-children-about-divorce/): إزاي تقولوا لعيالكم عن الطلاق؟ امتى تتكلموا، وإيه الكلام اللي يطمّنهم إنه مش ذنبهم، وإيه اللي لازم تبعدوا عنه حسب سنهم.
+- [الفرق بين الطبيب النفسي والأخصائي النفسي: أروح لمين؟](https://drmilladmikhail.com/articles/psychiatrist-vs-psychologist/): إيه الفرق بين الطبيب النفسي والأخصائي النفسي والمعالج؟ مين بيكتب دوا ومين بيعمل جلسات، وتبدأ بمين حسب حالتك، وإزاي تتأكد إنه مؤهل.
+- [ليه مش قادر أقول لأ؟ إرضاء الناس على حساب نفسك](https://drmilladmikhail.com/articles/people-pleasing-saying-no/): مش قادر تقول لأ وبترضي الناس على حساب نفسك؟ اعرف علامات إرضاء الناس وأسبابه، و6 خطوات تتعلم بيها تقول لأ من غير ما تخسر حد.
+- [نوبة الهلع: أعراضها إيه وأعمل إيه وقتها؟](https://drmilladmikhail.com/articles/panic-attack-what-to-do/): نوبة الهلع أعراضها إيه؟ قلب بيدق ونفس مقطوع وخوف من الموت. اعرف تعمل إيه وقت النوبة خطوة بخطوة، وامتى تكلم متخصص.
+- [الاحتراق النفسي: أعرف منين إني وصلت للآخر وأبدأ أتعافى إزاي؟](https://drmilladmikhail.com/articles/burnout-signs-recovery/): علامات الاحتراق النفسي من الشغل حسب منظمة الصحة العالمية، والفرق بينه وبين الاكتئاب، و6 خطوات عملية تبدأ بيها التعافي.
 - [شريكي عنده قلق أو وسواس: إزاي أدعمه من غير ما أزوّده؟](https://drmilladmikhail.com/articles/partner-with-anxiety-ocd/): إزاي تدعم شريك عنده قلق أو وسواس قهري؟ الفرق بين القلق والوسواس، وفخ الطمأنة المتكررة، و٦ طرق تبقوا بيها فريق ضد القلق.
 - [تدخل الأهل في الحياة الزوجية: إزاي تحطوا حدود من غير قطيعة](https://drmilladmikhail.com/articles/family-interference-marriage/): تدخل الأهل في الحياة الزوجية والشريك المعتمد على أهله: الفرق بين القرب والتدخل، وليه بيحصل، وخطوات تحطوا بيها حدود باحترام.
 - [التعامل مع الشريك الكداب: إزاي ترجع الثقة وامتى توقف](https://drmilladmikhail.com/articles/dealing-with-lying-partner/): إزاي تتعامل مع الشريك اللي بيكدب؟ أنواع الكدب في العلاقة وأسبابه، وخطوات عملية للمواجهة، وهل الثقة ممكن ترجع بعد الكدب.
@@ -48,7 +58,7 @@ Key facts:
 ## Books
 - [ليه بنحب اللي بيوجعنا؟ (Arabic, Amazon)](https://www.amazon.com/dp/B0HPNCYWWS)
 - [Why Do We Love What Hurts Us? (English, Amazon)](https://www.amazon.com/dp/B0HPRPSPWF)
-- [Amazon author page](https://www.amazon.com/author/drmilladmikhail)
+- [Amazon author page](https://www.amazon.com/stores/author/B0HQ931MJP)
 
 ## Elsewhere
 - [YouTube: جلسة شيزلونج](https://www.youtube.com/@DrMilladMikhail)

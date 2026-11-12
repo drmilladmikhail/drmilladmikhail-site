@@ -40,6 +40,7 @@ GROUPS = [
         ("/book/", "كتبي"),
         ("/glossary/", "القاموس النفسي"),
         ("/research/", "مرصد الأبحاث النفسية"),
+        ("/family/", "التوعية الأسرية والزوجية"),
         ("https://blog.drmilladmikhail.com/", "المدونة"),
     ]),
     ("اختبر نفسك واتمرّن", [
@@ -55,8 +56,9 @@ GROUPS = [
         ("/worksheets/", "أوراق تمرين"),
     ]),
     ("عن د. ميلاد", [
-        ("/#about", "نبذة"),
-        ("/#credentials", "المؤهلات"),
+        ("/about/", "نبذة وسيرة مهنية"),
+        ("/about/qualifications/", "المؤهلات العلمية"),
+        ("/about/publications/", "الرسائل العلمية والأبحاث"),
         ("/sessions/", "الجلسات"),
         ("/ask/", "اسأل من غير اسمك"),
         ("/contact/", "تواصل"),
@@ -110,7 +112,7 @@ TOPBAR = f'''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
       <a href="/platform/">المنصة</a>
       <a href="/paths/">مسارات التعلّم</a>
 {_dropdown("تمارين وأدوات", GROUPS[1][1][1:])}
-{_dropdown("مكتبتي", [EXPLORE, SAVED, RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6, 7, 8)])}
+{_dropdown("مكتبتي", [EXPLORE, SAVED, RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6, 7, 8, 9)])}
 {_dropdown("عن د. ميلاد", GROUPS[2][1])}
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
     </nav>

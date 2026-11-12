@@ -140,10 +140,10 @@ def build(ba, page, write, SITE):
         write(f"life-tools/{slug}", html)
         cards.append(f'''      <li class="test-card">
         <a href="/life-tools/{slug}/">
-          <span class="tc-body">
+          <div class="tc-body">
             <h2>{esc(title)}</h2>
             <span class="card-desc">{esc(blurb)}</span>
-          </span>
+          </div>
         </a>
       </li>''')
     try:

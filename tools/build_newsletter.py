@@ -91,7 +91,7 @@ def landing_page(page, write):
     else:
         archive = ('<div class="nl-archive"><h2>أعداد سابقة</h2>'
                    '<p class="nl-empty">أول عدد لسه نازل — اشترك عشان يوصلك أول واحد، وتقدر تقرأه بعدين هنا.</p></div>')
-    body = f'''{CSS}
+    body = f'''
 <section class="nl-hero">
   <div class="wrap">
     <p class="kicker">نشرة أسبوعية مجانية</p>
@@ -128,7 +128,7 @@ def landing_page(page, write):
 
 
 def thanks_page(page, write):
-    body = f'''{CSS}
+    body = f'''
 <section class="nl-hero">
   <div class="wrap">
     <p class="kicker">تمام</p>
@@ -158,7 +158,7 @@ def issue_pages(page, write):
             f'<a class="go" href="{ba.esc(p.get("url", "#"))}">الملخص الكامل في مكتبة الأبحاث ←</a></div>'
             for p in i.get("papers", []))
         refl = f'<blockquote>{ba.esc(i.get("reflection", ""))}</blockquote>' if i.get("reflection") else ""
-        body = f'''{CSS}
+        body = f'''
 <section class="nl-body">
   <div class="wrap nl-issue-page">
     <p class="kicker">نشرة راحة البال · عدد {ba.esc(i["date"])}</p>
@@ -180,6 +180,9 @@ def issue_pages(page, write):
 
 
 def build_all(ba_, page, write, SITE_):
+    _page = page
+    def page(*a, **k):
+        return _page(*a, **k).replace('</head>', CSS.strip() + '\n</head>', 1)
     landing_page(page, write)
     thanks_page(page, write)
     issue_pages(page, write)

@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://*.google-analytics.com https://www.googletagmanager.com data: https://images.unsplash.com https://i.ytimg.com; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>أنماط التعلّق الأربعة: الفرق بينها وتأثيرها على العلاقات | د. ميلاد ميخائيل</title>
@@ -25,10 +25,8 @@
 <meta name="twitter:image" content="https://drmilladmikhail.com/assets/og/four-attachment-styles.jpg">
 <meta property="article:published_time" content="2026-11-05">
 <meta name="theme-color" content="#2f6f62">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Naskh+Arabic:wght@600;700&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=b24ad6c4"><link rel="stylesheet" href="/assets/depth3d.css?v=94601c30">
+<link rel="preload" href="/assets/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/noto-naskh-arabic-arabic-700-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/fonts.css?v=256db9ca">
+<link rel="stylesheet" href="/assets/site.css?v=d3854309"><link rel="stylesheet" href="/assets/depth3d.css?v=94601c30">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,20 +46,61 @@
     "@id": "https://drmilladmikhail.com/#person",
     "name": "Dr. Millad Mikhail",
     "alternateName": "د. ميلاد ميخائيل",
-    "url": "https://drmilladmikhail.com/"
+    "url": "https://drmilladmikhail.com/about/"
   },
   "publisher": {
     "@type": "Person",
     "@id": "https://drmilladmikhail.com/#person",
-    "name": "Dr. Millad Mikhail"
+    "name": "Dr. Millad Mikhail",
+    "url": "https://drmilladmikhail.com/about/"
   },
   "isBasedOn": {
     "@type": "Book",
     "name": "ليه بنحب اللي بيوجعنا؟",
     "url": "https://www.amazon.com/dp/B0HPNCYWWS"
-  }
+  },
+  "citation": [
+    "https://doi.org/10.1037/0022-3514.61.2.226",
+    "https://doi.org/10.1037/0022-3514.52.3.511",
+    "https://health.clevelandclinic.org/attachment-theory"
+  ],
+  "articleSection": "العلاقات والأسرة",
+  "abstract": "أنماط التعلّق بتوصف اختلافات في إحساسنا بالأمان والقرب داخل العلاقات. التصنيفات الشائعة بتشمل الآمن والقلق والمتجنب والخائف المتجنب. دي أوصاف تساعد على الفهم، مش تشخيصات ولا هويات ثابتة، وممكن تتغير مع الوعي والعلاقات الآمنة والعلاج."
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "الرئيسية",
+      "item": "https://drmilladmikhail.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "المقالات",
+      "item": "https://drmilladmikhail.com/articles/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "العلاقات والأسرة",
+      "item": "https://drmilladmikhail.com/articles/category/relationships-family/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "أنماط التعلّق الأربعة: الفرق بينها وتأثيرها على العلاقات",
+      "item": "https://drmilladmikhail.com/articles/four-attachment-styles/"
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" id="nav-layout-fix" href="/assets/nav-layout.css?v=50ab5a7b">
 <script type="application/ld+json" id="breadcrumb-ld">
 {
   "@context": "https://schema.org",
@@ -131,13 +170,15 @@
           <a href="/book/">كتبي</a>
           <a href="/glossary/">القاموس النفسي</a>
           <a href="/research/">مرصد الأبحاث النفسية</a>
+          <a href="/family/">التوعية الأسرية والزوجية</a>
         </div>
       </details>
       <details class="dd">
         <summary>عن د. ميلاد</summary>
         <div class="dd-panel">
-          <a href="/#about">نبذة</a>
-          <a href="/#credentials">المؤهلات</a>
+          <a href="/about/">نبذة وسيرة مهنية</a>
+          <a href="/about/qualifications/">المؤهلات العلمية</a>
+          <a href="/about/publications/">الرسائل العلمية والأبحاث</a>
           <a href="/sessions/">الجلسات</a>
           <a href="/ask/">اسأل من غير اسمك</a>
           <a href="/contact/">تواصل</a>
@@ -164,6 +205,7 @@
         <a href="/book/">كتبي</a>
         <a href="/glossary/">القاموس النفسي</a>
         <a href="/research/">مرصد الأبحاث النفسية</a>
+        <a href="/family/">التوعية الأسرية والزوجية</a>
         <a href="https://blog.drmilladmikhail.com/">المدونة</a>
         <p class="m-group">اختبر نفسك واتمرّن</p>
         <a href="/discover-feelings/">اكتشاف مشاعرك</a>
@@ -177,8 +219,9 @@
         <a href="/relationship-check/">علاقتك صحية؟</a>
         <a href="/worksheets/">أوراق تمرين</a>
         <p class="m-group">عن د. ميلاد</p>
-        <a href="/#about">نبذة</a>
-        <a href="/#credentials">المؤهلات</a>
+        <a href="/about/">نبذة وسيرة مهنية</a>
+        <a href="/about/qualifications/">المؤهلات العلمية</a>
+        <a href="/about/publications/">الرسائل العلمية والأبحاث</a>
         <a href="/sessions/">الجلسات</a>
         <a href="/ask/">اسأل من غير اسمك</a>
         <a href="/contact/">تواصل</a>
@@ -188,26 +231,28 @@
     </details>
   </div>
 </header>
+<aside class="site-announcement" data-k="research:10.1371/journal.pmen.0000737" aria-label="الجديد على الموقع"><span class="site-announcement-label">جديد</span><div class="site-announcement-viewport"><div class="site-announcement-track" style="animation-duration:45s"><a class="site-announcement-link" href="/research/library/#p10.1371%2Fjournal.pmen.0000737">بحث جديد في مكتبة الأبحاث: انتفاضات بدء النوم: وصف الظاهرة وارتباطاتها بخصائص النوم والخصائص النفسية والديموغ…</a><a class="site-announcement-link" href="/articles/panic-attack-what-to-do/">مقال جديد: نوبة الهلع: أعراضها إيه وأعمل إيه وقتها؟</a><a class="site-announcement-link" href="/glossary/overgeneralization/">مصطلح جديد في القاموس النفسي: التعميم الزائد</a><a class="site-announcement-link" href="/research/library/#p10.1371%2Fjournal.pmen.0000737" aria-hidden="true" tabindex="-1">بحث جديد في مكتبة الأبحاث: انتفاضات بدء النوم: وصف الظاهرة وارتباطاتها بخصائص النوم والخصائص النفسية والديموغ…</a><a class="site-announcement-link" href="/articles/panic-attack-what-to-do/" aria-hidden="true" tabindex="-1">مقال جديد: نوبة الهلع: أعراضها إيه وأعمل إيه وقتها؟</a><a class="site-announcement-link" href="/glossary/overgeneralization/" aria-hidden="true" tabindex="-1">مصطلح جديد في القاموس النفسي: التعميم الزائد</a></div></div><button class="site-announcement-close" type="button" aria-label="إخفاء الإعلان">×</button></aside>
 <main id="main">
   <article class="post">
     <div class="wrap narrow">
-      <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a> · <a href="/articles/">المقالات</a> · من الفصل التاني</nav>
+      <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a> · <a href="/articles/">المقالات</a> · <a href="/articles/category/relationships-family/">العلاقات والأسرة</a> · من الفصل التاني</nav>
       <h1>أنماط التعلّق الأربعة: الفرق بينها وتأثيرها على العلاقات</h1>
-      <p class="post-meta">د. ميلاد ميخائيل · 5 نوفمبر 2026 · 5 دقايق قراءة</p>
+      <p class="post-meta"><a href="/about/" rel="author">د. ميلاد ميخائيل</a> · <time datetime="2026-11-05">5 نوفمبر 2026</time> · آخر تحديث <time datetime="2026-11-08">8 نوفمبر 2026</time> · 5 دقايق قراءة</p>
       <div class="listen" hidden><button type="button" class="btn listen-btn" aria-pressed="false"><span aria-hidden="true">🎧</span> <span class="listen-label">استمع لهذا المقال</span></button><button type="button" class="btn listen-stop" hidden>إيقاف</button><label class="listen-rate">السرعة <select><option value="0.85">أبطأ</option><option value="1" selected>عادي</option><option value="1.2">أسرع</option></select></label><p class="listen-msg" role="status"></p></div>
       <figure class="post-hero"><picture><source type="image/webp" srcset="/assets/book/love-p17-600.webp 600w, /assets/book/love-p17.webp 1000w" sizes="(max-width: 700px) 100vw, 700px"><img src="/assets/book/love-p17.jpg" width="1200" height="800" alt="بنت بتمد إيدها لشاب، وهو ماشي بعيد وفوق راسه سحابة" fetchpriority="high" decoding="async"></picture></figure>
+      <aside class="answer-box" aria-labelledby="ans-four-attachment-styles"><h2 id="ans-four-attachment-styles">باختصار</h2><p>أنماط التعلّق بتوصف اختلافات في إحساسنا بالأمان والقرب داخل العلاقات. التصنيفات الشائعة بتشمل الآمن والقلق والمتجنب والخائف المتجنب. دي أوصاف تساعد على الفهم، مش تشخيصات ولا هويات ثابتة، وممكن تتغير مع الوعي والعلاقات الآمنة والعلاج.</p><nav class="toc" aria-label="في المقال ده"><p class="toc-title">في المقال ده</p><ol><li><a href="#q1">يعني إيه نمط تعلق؟</a></li><li><a href="#q2">أنماط التعلق الأربعة</a></li><li><a href="#q3">مقارنة سريعة بين الأنماط</a></li><li><a href="#q4">نمط التعلق مش حكم نهائي</a></li><li><a href="#q5">إزاي تستخدم الفكرة من غير ما تحكم على نفسك؟</a></li><li><a href="#q6">هل اختبار التعلّق بيشخّص مشكلة نفسية؟</a></li><li><a href="#q7">هل التعلّق المتجنب معناه إن الشخص مش بيحب؟</a></li></ol></nav></aside>
       <div class="post-body">
 <!-- GROWTH-INTRO:BEGIN --><p>أنماط التعلّق بتوصف اختلافات في إحساسنا بالأمان والقرب داخل العلاقات. التصنيفات الشائعة بتشمل الآمن والقلق والمتجنب والخائف المتجنب. دي أوصاف تساعد على الفهم، مش تشخيصات ولا هويات ثابتة، وماينفعش نحكم بيها على شخص من موقف واحد.</p><!-- GROWTH-INTRO:END -->
 <p>أمير عنده 30 سنة، ناجح في شغله وكل الناس بتحبه. بس أول ما أي بنت تقرب منه بجد وتقوله «أنا محتاجاك»، بيحس إنه متخنق، ويبدأ يبعد من غير ما يعرف ليه.</p>
 <p>أمير شخصية متجمعة من قصص كتير، ومش شخص حقيقي بعينه. وأمير مش وحش ولا بارد. <strong>السلوك ده ممكن يتفهم من منظور أنماط التعلّق، لكنه مش كفاية لوحده لتحديد نمط أمير.</strong> وفي المقال ده هنشرح <strong>أنماط التعلق الأربعة</strong>، وإزاي تعرف انت أقرب لأنهي نمط.</p>
 
-<h2>يعني إيه نمط تعلق؟</h2>
+<h2 id="q1">يعني إيه نمط تعلق؟</h2>
 <figure><picture><source type="image/webp" srcset="/assets/book/love-p18-600.webp 600w, /assets/book/love-p18.webp 1000w" sizes="(max-width: 700px) 100vw, 700px"><img src="/assets/book/love-p18.jpg" width="1200" height="800" alt="طفلة صغيرة بتجري فاتحة إيديها ناحية أمها، والأم مستنياها بحضن" loading="lazy" decoding="async"></picture></figure>
 <p>في الخمسينات والستينات، الطبيب النفسي البريطاني <strong>جون بولبي</strong> وضع «نظرية التعلق»، وقال إن الطفل بيتعلم من أول سنين في حياته إجابة سؤال مهم جداً: <em>«لما أحتاج حد، هلاقيه؟»</em></p>
 <p>وبعدها، الباحثة <strong>ماري أينسورث</strong> عملت تجربة مشهورة اسمها «الموقف الغريب»، ولاحظت إن الأطفال بيتعاملوا مع غياب الأم ورجوعها بطرق مختلفة. وفي الثمانينات، باحثين تانيين نقلوا الفكرة دي لعلاقات الكبار العاطفية، وطلعت الأنماط الأربعة.</p>
 <p>الإجابة اللي اتعلمناها وإحنا صغيرين ممكن تفضل معانا، وتظهر تاني لما نكبر ونحب. بس الرابط ده <strong>مش حتمي</strong>: التجارب اللي بنعيشها بعد كده، زي صداقة آمنة أو علاقة حلوة أو علاج، بتقدر تغيّر الصورة.</p>
 
-<h2>أنماط التعلق الأربعة</h2>
+<h2 id="q2">أنماط التعلق الأربعة</h2>
 <figure><picture><source type="image/webp" srcset="/assets/book/love-p19-600.webp 600w, /assets/book/love-p19.webp 1000w" sizes="(max-width: 700px) 100vw, 700px"><img src="/assets/book/love-p19.jpg" width="1200" height="800" alt="أربع صور لنفس الشاب: قلقان ماسك الموبايل، مرتاح على الكنبة، متردد يمد إيده للموبايل، وماشي بعيد" loading="lazy" decoding="async"></picture></figure>
 <p><strong>١. النمط الآمن:</strong> غالباً اتعلم وهو صغير إن اللي بيحبوه موجودين لما يحتاجهم. بيبقى مرتاح في القرب، ومش بيخاف من البعد. يقدر يقول «أنا زعلان» من غير دراما، ويسمع شريكه من غير ما يحس إنه متهاجم.<br>
 جملته من جوه: <em>«أنا أستاهل الحب، والناس غالباً بيتوثق فيهم.»</em></p>
@@ -218,7 +263,7 @@
 <p><strong>٤. النمط الخايف المتجنب:</strong> عايز القرب جداً وخايف منه جداً في نفس الوقت. يقرب ويبعد، وعلاقاته غالباً فيها تقلبات شديدة.<br>
 جملته من جوه: <em>«محتاجك، بس لو قربت هتأذيني.»</em></p>
 
-<h2>مقارنة سريعة بين الأنماط</h2>
+<h2 id="q3">مقارنة سريعة بين الأنماط</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>النمط</th><th>في القرب بيحس بإيه؟</th><th>لما فيه مشكلة بيعمل إيه؟</th></tr></thead>
 <tbody>
@@ -234,18 +279,18 @@
 <p>ارجع للأربع جمل اللي فوق، واختار الجملة اللي بتحس إنها بتطلع منك أكتر وقت الخلاف أو البعد. اكتبها، واكتب جنبها آخر موقف حسيت فيه بيها.</p>
 <p>ولو حابب تتأمل إجاباتك عن العلاقات، ممكن تجرّب <a href="/tests/attachment-style/">اختبار نمط التعلق المجاني</a> (أداة توعوية من 9 أسئلة، والنتيجة مش تشخيصًا).</p></div>
 
-<h2>نمط التعلق مش حكم نهائي</h2>
+<h2 id="q4">نمط التعلق مش حكم نهائي</h2>
 <p><strong>الخبر الحلو:</strong> نمط التعلق مش عيب فيك. ده طريقة دماغك اتعلمت تحميك بيها. وفيه أبحاث كتير بتقول إن الأنماط دي ممكن تتغير مع الوعي والعلاقات الآمنة والعلاج.</p>
 <p class="safety"><strong>وقفة أمان:</strong> المقال ده للتوعية وفهم النفس، ومش تشخيص ولا بديل عن العلاج النفسي.</p>
 
 <!-- GROWTH-NOTES:BEGIN -->
-<h2>إزاي تستخدم الفكرة من غير ما تحكم على نفسك؟</h2>
+<h2 id="q5">إزاي تستخدم الفكرة من غير ما تحكم على نفسك؟</h2>
 <p>لاحظ السلوك المتكرر والسياق، بدل ما تعتبر كل تأخير في الرد رفضًا أو كل طلب لمساحة علامة على التجنّب. تجربة واحدة مش كفاية لتحديد نمط شخص، والتجارب اللاحقة والعلاقات ممكن تأثر على طريقتنا في القرب.</p>
-<h2>هل اختبار التعلّق بيشخّص مشكلة نفسية؟</h2>
+<h2 id="q6">هل اختبار التعلّق بيشخّص مشكلة نفسية؟</h2>
 <p>لأ. الاختبار الذاتي أداة للتأمل في إجاباتك، مش تشخيصًا ولا إثباتًا إنك أو شريكك نمط ثابت. لو العلاقات بتسبب ضيقًا مستمرًا أو بتأثر على حياتك، التقييم مع متخصص مؤهل يساعدك تفهم السياق بدل الاعتماد على نتيجة اختبار وحدها.</p>
-<h2>هل التعلّق المتجنب معناه إن الشخص مش بيحب؟</h2>
+<h2 id="q7">هل التعلّق المتجنب معناه إن الشخص مش بيحب؟</h2>
 <p>مش بالضرورة. عدم الارتياح للقرب العاطفي ممكن يتواجد مع الرغبة في الحب والعلاقة. وفي نفس الوقت، وصف نمط التعلّق مش مبرر للإهانة أو التحكم أو الأذى.</p>
-<h2>المصادر والقراءة الإضافية</h2>
+<h2 id="q8">المصادر والقراءة الإضافية</h2>
 <ul>
 <li><a href="https://health.clevelandclinic.org/attachment-theory" target="_blank" rel="noopener">Cleveland Clinic: نظرية التعلّق وتأثير الخبرات اللاحقة</a></li>
 <li><a href="https://health.clevelandclinic.org/anxious-attachment-style" target="_blank" rel="noopener">Cleveland Clinic: فهم التعلّق القلق</a></li>
@@ -254,6 +299,7 @@
 <p>المصادر دي للشرح العام، ومش إثباتًا لصلاحية النسخة العربية من أي اختبار على الموقع.</p>
 <!-- GROWTH-NOTES:END -->
       </div>
+      
       <div class="book-box">
         <picture class="cover-img">
           <source srcset="/assets/love-cover-ar.webp" type="image/webp">
@@ -268,9 +314,10 @@
           </div>
         </div>
       </div>
+      <section class="refs" aria-labelledby="refs-four-attachment-styles"><h2 id="refs-four-attachment-styles">مراجع للاستزادة</h2><p class="refs-note">مصادر علمية وموثوقة لو حابب تقرا أكتر عن الموضوع (أغلبها بالإنجليزي).</p><ol><li><a href="https://doi.org/10.1037/0022-3514.61.2.226" target="_blank" rel="noopener" lang="en" dir="ltr">Bartholomew &amp; Horowitz (1991). Attachment styles among young adults: A test of a four-category model. Journal of Personality and Social Psychology, 61(2)</a></li><li><a href="https://doi.org/10.1037/0022-3514.52.3.511" target="_blank" rel="noopener" lang="en" dir="ltr">Hazan &amp; Shaver (1987). Romantic love conceptualized as an attachment process. Journal of Personality and Social Psychology, 52(3)</a></li><li><a href="https://health.clevelandclinic.org/attachment-theory" target="_blank" rel="noopener" lang="en" dir="ltr">Cleveland Clinic — Attachment Theory</a></li></ol></section>
       <div class="author-box">
         <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد ميخائيل" loading="lazy">
-        <p><strong>د. ميلاد ميخائيل</strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA). <a href="/">اعرف أكتر</a></p>
+        <p><strong><a href="/about/" rel="author">د. ميلاد ميخائيل</a></strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA).<br><a href="/about/">السيرة المهنية</a> · <a href="/about/qualifications/">المؤهلات</a> · <a href="/about/publications/">الأبحاث</a> · <a href="/book/">كتاب «ليه بنحب اللي بيوجعنا؟»</a></p>
       </div>
       <aside class="share" data-url="https://drmilladmikhail.com/articles/four-attachment-styles/" data-title="أنماط التعلّق الأربعة: الفرق بينها وتأثيرها على العلاقات" aria-label="شارك المقال">
         <p class="share-title">شارك المقال مع حد ممكن يحتاجه</p>
@@ -296,34 +343,34 @@
         <div class="actions"><a class="btn primary" href="/tests/attachment-style/">ابدأ الاختبار</a> <a class="btn" href="/tests/">كل الاختبارات</a></div>
       </div>
       <div class="more"><h2>مقالات ممكن تعجبك</h2><ul class="cards">
-        <li class="card">
+        <li class="card" data-cat="relationships-family">
         <a href="/articles/emotional-communication-couples/">
           <picture><source type="image/webp" srcset="/assets/book/love-p59-600.webp 600w, /assets/book/love-p59.webp 1000w" sizes="(max-width: 640px) 100vw, 380px"><img src="/assets/book/love-p59.jpg" width="1200" height="800" alt="بنت وشاب قاعدين على دكة في هدوء، بيتكلموا ويضحكوا وهما مرتاحين" loading="lazy" decoding="async"></picture>
-          <span class="card-body">
+          <div class="card-body">
             <h3>تحسين التواصل العاطفي بين الزوجين: ٦ خطوات عملية تقرّبكم</h3>
             <span class="card-desc">تحسين التواصل العاطفي بين الزوجين بخطوات بسيطة: إزاي تقول إحساسك من غير هجوم، وتسمع من غير دفاع، وتختلفوا بأمان، مع تمرين أسبوع.</span>
             <span class="card-date">9 نوفمبر 2026</span>
-          </span>
+          </div>
         </a>
       </li>
-        <li class="card">
+        <li class="card" data-cat="relationships-family">
         <a href="/articles/dealing-with-jealous-partner/">
           <picture><source type="image/webp" srcset="/assets/book/love-p16-600.webp 600w, /assets/book/love-p16.webp 1000w" sizes="(max-width: 640px) 100vw, 380px"><img src="/assets/book/love-p16.jpg" width="1200" height="800" alt="بنت قاعدة على ترابيزة ماسكة عدسة مكبرة وبتبص على خريطة بتدقيق" loading="lazy" decoding="async"></picture>
-          <span class="card-body">
+          <div class="card-body">
             <h3>التعامل مع الشريك الشكاك: الفرق بين الغيرة والشك المؤذي</h3>
             <span class="card-desc">إزاي تتعامل مع الشريك الشكاك؟ الفرق بين الغيرة العادية والشك المؤذي، وأسباب الشك، و٦ خطوات تحمي بيها خصوصيتك وعلاقتك.</span>
             <span class="card-date">9 نوفمبر 2026</span>
-          </span>
+          </div>
         </a>
       </li>
-        <li class="card">
+        <li class="card" data-cat="relationships-family">
         <a href="/articles/anxious-avoidant-attraction/">
           <picture><source type="image/webp" srcset="/assets/book/love-p23-600.webp 600w, /assets/book/love-p23.webp 1000w" sizes="(max-width: 640px) 100vw, 380px"><img src="/assets/book/love-p23.jpg" width="1200" height="800" alt="بنت بتمد إيدها ورا شاب ماشي بعيد عنها، وتحت رجليهم آثار خطوات بتلف في دايرة" loading="lazy" decoding="async"></picture>
-          <span class="card-body">
+          <div class="card-body">
             <h3>علاقة القلق والمتجنب: ليه بيتشدوا لبعض وإزاي تكسر الدايرة؟</h3>
             <span class="card-desc">ليه الشخص القلق بينجذب للمتجنب؟ شرح علاقة القلق والمتجنب والرقصة المؤلمة في 6 خطوات، وإزاي طرف واحد يقدر يكسر الدايرة، مع تمرين صغير.</span>
             <span class="card-date">9 نوفمبر 2026</span>
-          </span>
+          </div>
         </a>
       </li>
       </ul></div>
@@ -349,7 +396,7 @@
       <h2>تابعني</h2>
       <ul>
         <li><a href="https://www.youtube.com/@DrMilladMikhail" target="_blank" rel="noopener">يوتيوب</a></li>
-        <li><a href="https://www.amazon.com/author/drmilladmikhail" target="_blank" rel="noopener">أمازون</a></li>
+        <li><a href="https://www.amazon.com/stores/author/B0HQ931MJP" target="_blank" rel="noopener">أمازون</a></li>
         <li><a href="https://www.linkedin.com/in/dr-millad-mikhail-a57b0b215" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="https://orcid.org/0009-0002-9254-367X" target="_blank" rel="me noopener">ORCID</a></li>
         <li><a href="/en/" hreflang="en" lang="en">English</a></li>
@@ -360,9 +407,10 @@
 <script src="/assets/listen.js" defer></script>
 <script src="/assets/share.js?v=f681aeb8" defer></script>
 <script src="/assets/helper.js?v=8916c70c" defer></script>
-<script type="application/json" id="site-news">[{"k": "research:10.1371/journal.pmen.0000734", "t": "بحث جديد في مكتبة الأبحاث: عوامل خطر الانتحار لدى طلاب التمريض: أعراض الاكتئاب والاحتراق الأكاديمي والكفاءة ا…", "u": "/research/library/#p10.1371%2Fjournal.pmen.0000734"}, {"k": "article:dealing-with-angry-partner", "t": "مقال جديد: التعامل مع الشريك العصبي: إزاي تهدّي الخناقة وتحمي نفسك", "u": "/articles/dealing-with-angry-partner/"}, {"k": "glossary:panic-attack", "t": "مصطلح جديد في القاموس النفسي: نوبة الهلع", "u": "/glossary/panic-attack/"}]</script>
-<script src="/assets/nav.js?v=f373e788" defer></script>
-<script src="/assets/depth3d.js?v=4f919f32" defer></script>
+<script type="application/json" id="site-news">[{"k": "research:10.1371/journal.pmen.0000737", "t": "بحث جديد في مكتبة الأبحاث: انتفاضات بدء النوم: وصف الظاهرة وارتباطاتها بخصائص النوم والخصائص النفسية والديموغ…", "u": "/research/library/#p10.1371%2Fjournal.pmen.0000737"}, {"k": "article:panic-attack-what-to-do", "t": "مقال جديد: نوبة الهلع: أعراضها إيه وأعمل إيه وقتها؟", "u": "/articles/panic-attack-what-to-do/"}, {"k": "glossary:overgeneralization", "t": "مصطلح جديد في القاموس النفسي: التعميم الزائد", "u": "/glossary/overgeneralization/"}]</script>
+<script src="/assets/nav.js?v=f60c389d" defer></script>
+<script src="/assets/depth3d.js?v=22e39f2b" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49dc5ec3f58f4825b6e04626f92dd475"}'></script><!-- End Cloudflare Web Analytics -->
+<script src="/assets/ga4.js?v=171a7eff" data-ga4="G-SGZ53QSWQJ" defer></script>
 </body>
 </html>
