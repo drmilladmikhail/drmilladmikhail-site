@@ -168,3 +168,19 @@
   ].join('');
   document.head.appendChild(style);
 })();
+
+/* Floating buttons step aside while the visitor reads down, and come back on scroll up (2026-11-11). */
+(function () {
+  var root = document.documentElement, last = window.pageYOffset, ticking = false;
+  function update() {
+    var y = window.pageYOffset, d = y - last;
+    if (Math.abs(d) > 6) {
+      if (d > 0 && y > 240) root.classList.add('fab-away'); else root.classList.remove('fab-away');
+      last = y;
+    }
+    if (window.innerHeight + y >= document.documentElement.scrollHeight - 80) root.classList.remove('fab-away');
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  document.addEventListener('focusin', function (e) { if (e.target.closest && e.target.closest('.floating-home, .helper')) root.classList.remove('fab-away'); });
+})();

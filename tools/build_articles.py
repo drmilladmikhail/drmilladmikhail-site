@@ -228,6 +228,8 @@ def article_page(a, prev_items):
     # Answer first (2026-11-11, phase 2): his own conclusion at the top + the article's questions as a
     # contents list, so readers, search engines and AI answers get the direct answer and can cite a section.
     body, toc = number_sections(body)
+    # «مثال توضيحي» paragraphs get their own editorial style (2026-11-11 visual refresh)
+    body = re.sub(r'<p>\((مثال توضيحي[^)]*)\)\s*', lambda m: f'<p class="example"><span class="example-tag">{m.group(1)}</span> ', body)
     answer_block = ""
     if a.get("summary"):
         ld["abstract"] = a["summary"]
@@ -296,7 +298,7 @@ def article_page(a, prev_items):
           <img src="/assets/love-cover-ar.jpg" width="480" height="768" alt="غلاف كتاب ليه بنحب اللي بيوجعنا؟" loading="lazy">
         </picture>
         <div>
-          <p class="book-box-title">المقال ده من كتاب «ليه بنحب اللي بيوجعنا؟»</p>
+          <p class="book-box-title">{"المقال ده من كتاب «ليه بنحب اللي بيوجعنا؟»" if a.get("chapter") else "من كتب د. ميلاد: «ليه بنحب اللي بيوجعنا؟»"}</p>
           <p>دليل عملي تفهم بيه نمط تعلقك وتختار شريك حياتك صح، فيه تمارين واختبارات ورسومات.</p>
           <div class="actions">
             <a class="btn primary" href="{BOOK_AR}" target="_blank" rel="noopener">اقرأ الكتاب على أمازون</a>
