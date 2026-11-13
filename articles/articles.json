@@ -472,5 +472,31 @@
     "reviewed_on": "2026-11-11",
     "image": "art-psychiatrist-vs-psychologist",
     "image_alt": "رسم على نصين: طبيب نفسي ببالطو أبيض ومعاه روشتة ودوا، وأخصائية نفسية قاعدة بتتكلم وحواليها فقاعات حوار"
+  },
+  {
+    "slug": "sadness-vs-depression",
+    "category": "anxiety-mental-health",
+    "title": "الفرق بين الحزن والاكتئاب: أعرف منين؟",
+    "description": "إزاي أفرّق بين الحزن والاكتئاب؟ علامات بسيطة في المدة والمتعة والنوم والأكل، وخطوات عملية تساعدك، وامتى لازم تكلم متخصص نفسي بدل ما تستنى.",
+    "summary": "الحزن إحساس طبيعي بييجي بعد موقف صعب وغالبًا بيخف مع الوقت، ولسه بتقدر تستمتع بحاجات وسطه. الاكتئاب بيفضل أغلب اليوم، كل يوم تقريبًا، لأسبوعين أو أكتر، ومعاه فقدان متعة وتغيير في النوم والأكل والطاقة وتأثير على حياتك. لو ده حالك، كلّم متخصص؛ الاكتئاب ليه علاج فعّال.",
+    "refs": [
+      {
+        "title": "World Health Organization: Depressive disorder (depression) — fact sheet",
+        "url": "https://www.who.int/news-room/fact-sheets/detail/depression"
+      },
+      {
+        "title": "NHS: Clinical depression — Symptoms",
+        "url": "https://www.nhs.uk/conditions/clinical-depression/symptoms/"
+      },
+      {
+        "title": "NIMH: Depression",
+        "url": "https://www.nimh.nih.gov/health/topics/depression"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-12",
+    "reviewed_on": "2026-11-12",
+    "image": "art-sadness-vs-depression",
+    "image_alt": "رسم لست قاعدة على كرسي تحت سحابة صغيرة بتمطر، والشمس طالعة من وراها"
   }
 ]

@@ -78,10 +78,14 @@ A['art-psychiatrist-vs-psychologist']=bg(f'<path d="M600,90 V720" stroke="{W}" s
 # 5b choosing a door
 def door(x,c,icon): return f'<rect x="{x}" y="250" width="210" height="400" rx="20" fill="{c}"/><rect x="{x+18}" y="268" width="174" height="382" rx="12" fill="{W}" opacity=".18"/><circle cx="{x+172}" cy="460" r="10" fill="{W}"/>'+icon
 A['art-psychiatrist-vs-psychologist-2']=bg()+ground()+door(170,T,f'<path d="M245,330 h22 v-22 h16 v22 h22 v16 h-22 v22 h-16 v-22 h-22 z" fill="{W}"/>')+door(820,GD,f'<rect x="878" y="312" width="94" height="56" rx="22" fill="{W}"/><path d="M900,366 l-10,20 l28,-20 z" fill="{W}"/>')+person(600,700,320,shirt=R,hair=N,la=[(-50,30),(-70,-30)],ra=[(50,30),(70,-30)],face='smile')+f'<path d="M520,560 C460,600 420,640 390,690" fill="none" stroke="{N}" stroke-width="7" stroke-dasharray="4 20" stroke-linecap="round"/><path d="M680,560 C740,600 780,640 810,690" fill="none" stroke="{N}" stroke-width="7" stroke-dasharray="4 20" stroke-linecap="round"/>'+f'<circle cx="600" cy="180" r="46" fill="{G}"/><path d="M586,168 q0,-20 16,-20 q18,0 16,18 q-2,12 -16,16 v10" fill="none" stroke="{N}" stroke-width="8" stroke-linecap="round"/><circle cx="602" cy="210" r="5" fill="{N}"/>'+END
+def cloud(x,y,s,c='#b8c4cc'): return f'<g transform="translate({x},{y}) scale({s})" fill="{c}"><circle cx="-60" cy="10" r="46"/><circle cx="0" cy="-14" r="62"/><circle cx="66" cy="8" r="48"/><rect x="-106" y="8" width="220" height="50" rx="25"/></g>'
+def rain(x0,x1,y,c=LB): return ''.join(f'<path d="M{x},{y+(x%3)*14} l-8,26" stroke="{c}" stroke-width="6" stroke-linecap="round"/>' for x in range(x0,x1,34))
+A['art-sadness-vs-depression']=bg(sun(720,200,62)+cloud(600,230,1.25))+ground()+rain(500,720,330)+chair(500,566,190)+person(595,700,330,shirt=T,hair=N,pose='sit',la=[(-10,60),(40,95)],ra=[(20,60),(60,95)],face='sad',dir=1,hairstyle='long')+plant(980,640,.9)+heart(250,330,2.4,R)+END
+A['art-sadness-vs-depression-2']=bg(f'<rect x="600" y="0" width="600" height="800" fill="#c9d3d8" opacity=".55"/><path d="M600,60 V740" stroke="{W}" stroke-width="10" stroke-dasharray="8 26" stroke-linecap="round"/>'+sun(380,170,56)+cloud(260,210,.9)+''.join(cloud(x,y,1.2,'#9aa7b0') for x,y in((740,170),(940,140),(1100,210),(840,260))))+ground()+person(320,700,280,shirt=G,hair=N,ra=[(50,-10),(90,-60)],face='smile')+rain(780,1100,330,'#7d8fa0')+person(900,700,280,shirt='#5d6b7a',hair=N,pose='stand',la=[(-20,70),(10,110)],ra=[(20,70),(-10,110)],face='sad',dir=-1)+END
 for k,v in A.items():
     open(k+'.svg','w').write(v); subprocess.run(['rsvg-convert','-w','1200',k+'.svg','-o',k+'.png'],check=True)
 from PIL import Image
-ks=list(A); sheet=Image.new('RGB',(2*600+30,5*400+60),(255,255,255))
+ks=list(A); sheet=Image.new('RGB',(2*600+30,((len(ks)+1)//2)*410+20),(255,255,255))
 for i,k in enumerate(ks):
     im=Image.open(k+'.png').convert('RGB').resize((600,400)); sheet.paste(im,(10+(i%2)*610,10+(i//2)*410))
 sheet.save('sheet.png'); print(len(ks))
