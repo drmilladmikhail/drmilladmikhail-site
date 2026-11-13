@@ -191,8 +191,13 @@ def number_sections(body):
     return H2_RE.sub(repl, body), toc
 
 
-def article_page(a, prev_items):
+def article_page(a, prev_items, en_slugs=frozenset()):
     url = f"{SITE}/articles/{a['slug']}/"
+    hreflang = ""
+    if a["slug"] in en_slugs:  # English adaptation exists (tools/build_en_articles.py)
+        hreflang = (f'<link rel="alternate" hreflang="ar" href="{url}">\n'
+                    f'<link rel="alternate" hreflang="en" href="{SITE}/en/articles/{a["slug"]}/">\n'
+                    f'<link rel="alternate" hreflang="x-default" href="{url}">\n')
     img = f"{SITE}/assets/book/{a['image']}.jpg"
     og = f"{SITE}/assets/og/{a['slug']}.jpg"
     with open(os.path.join(ROOT, "articles", "content", a["slug"] + ".html"), encoding="utf-8") as f:
@@ -265,7 +270,7 @@ def article_page(a, prev_items):
 <title>{esc(a["title"])} | د. ميلاد ميخائيل</title>
 <meta name="description" content="{esc(a["description"])}">
 <meta name="author" content="Dr. Millad Mikhail">
-<link rel="canonical" href="{url}">
+{hreflang}<link rel="canonical" href="{url}">
 {social(url, a["title"], a["description"], og, a["title"])}
 <meta property="article:published_time" content="{a["date"]}">
 <meta name="theme-color" content="#2f6f62">
@@ -501,6 +506,8 @@ def update_home(items):
 
 
 def sitemap(items):
+    import build_en_articles
+    en_items = build_en_articles.load()
     newest = items[0]["date"] if items else "2026-11-04"
     urls = [
         (f"{SITE}/", newest, True),
@@ -536,9 +543,20 @@ def sitemap(items):
     for path in sorted((Path(ROOT) / "glossary").glob("**/index.html")):
         slug = path.parent.relative_to(ROOT).as_posix()
         urls.append((f"{SITE}/{slug}/", "2026-11-08", False))
+    # English adaptations (/en/articles/): each pair links ar <-> en
+    pairs = {}
+    if en_items:
+        urls.append((f"{SITE}/en/articles/", max(a["date"] for a in en_items), False))
+        for e in en_items:
+            ar_u, en_u = f"{SITE}/articles/{e['slug']}/", f"{SITE}/en/articles/{e['slug']}/"
+            urls.append((en_u, e.get("updated", e["date"]), False))
+            pairs[ar_u] = pairs[en_u] = (ar_u, en_u)
     parts = []
     for loc, mod, alt in urls:
         alts = ""
+        if loc in pairs:
+            alts = (f'\n    <xhtml:link rel="alternate" hreflang="ar" href="{pairs[loc][0]}"/>'
+                    f'\n    <xhtml:link rel="alternate" hreflang="en" href="{pairs[loc][1]}"/>')
         if alt:
             alts = (f'\n    <xhtml:link rel="alternate" hreflang="ar" href="{SITE}/"/>'
                     f'\n    <xhtml:link rel="alternate" hreflang="en" href="{SITE}/en/"/>')
@@ -609,6 +627,8 @@ def llms_txt(items):
 
 def main():
     items = load()
+    import build_en_articles
+    en_slugs = build_en_articles.slugs()
     import subprocess
     subprocess.run([sys.executable, os.path.join(ROOT, "tools", "build_images.py")], check=True)
     for i, a in enumerate(items):
@@ -616,7 +636,7 @@ def main():
         os.makedirs(d, exist_ok=True)
         others = items[:i] + items[i + 1:]
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
-            f.write(article_page(a, others))
+            f.write(article_page(a, others, en_slugs))
     with open(os.path.join(ROOT, "articles", "index.html"), "w", encoding="utf-8") as f:
         f.write(index_page(items))
     for k in CATEGORIES:
@@ -625,6 +645,7 @@ def main():
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
             f.write(listing_page([a for a in items if a.get("category") == k], items, k))
     update_home(items)
+    build_en_articles.build()
     sitemap(items)
     llms_txt(items)
     # small public index used by the on-site helper (assets/helper.js)

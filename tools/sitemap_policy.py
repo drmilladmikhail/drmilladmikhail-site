@@ -40,6 +40,13 @@ def apply(root):
                 real[f"{SITE}/articles/{a['slug']}/"] = str(d)[:10]
     except (OSError, ValueError):
         pass
+    try:  # English adaptations (en/articles/articles.json)
+        for a in json.loads((root / "en/articles/articles.json").read_text(encoding="utf-8")):
+            d = a.get("updated") or a.get("date")
+            if a.get("slug") and d:
+                real[f"{SITE}/en/articles/{a['slug']}/"] = str(d)[:10]
+    except (OSError, ValueError):
+        pass
     for entry in urls.findall(f"{{{NS}}}url"):
         for date in entry.findall(f"{{{NS}}}lastmod"):
             entry.remove(date)
