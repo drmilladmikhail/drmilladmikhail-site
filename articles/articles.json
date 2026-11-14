@@ -528,5 +528,43 @@
     "reviewed_on": "2026-11-13",
     "image": "art-marital-silence",
     "image_alt": "رسم لزوج وزوجة قاعدين على نفس الكنبة، كل واحد ماسك موبايله، وبينهم حيطة طوب صغيرة"
+  },
+  {
+    "slug": "life-satisfaction",
+    "category": "resilience-recovery",
+    "title": "الرضا عن الحياة: ليه مش راضي عن حياتي مع إن عندي حاجات كتير؟",
+    "description": "ليه ممكن تكون مش راضي عن حياتك مع إن عندك شغل وبيت وعيلة؟ الفرق بين الرضا والسعادة، وإيه اللي الأبحاث بتقول إنه بيفرق، وخطوات عملية تبدأ بيها.",
+    "summary": "الرضا عن الحياة هو حكمك على حياتك ككل، ومش بيتحسب بعدد الحاجات اللي عندك. ممكن يقلّ لما نتعوّد على الحلو، أو لما العلاقات والمعنى يقلّوا على حساب الشغل والفلوس، أو لما نحقق أهداف مش بتاعتنا. الأبحاث بتقول إن الرضا ممكن يتغير، وإن العلاقات القريبة والمعنى والامتنان من أهم الحاجات اللي بترفعه.",
+    "refs": [
+      {
+        "title": "Diener, Emmons, Larsen & Griffin (1985). The Satisfaction With Life Scale. Journal of Personality Assessment, 49(1), 71–75",
+        "url": "https://doi.org/10.1207/s15327752jpa4901_13"
+      },
+      {
+        "title": "Diener, Oishi & Tay (2018). Advances in subjective well-being research. Nature Human Behaviour, 2, 253–260",
+        "url": "https://doi.org/10.1038/s41562-018-0307-6"
+      },
+      {
+        "title": "Diener, Lucas & Scollon (2006). Beyond the hedonic treadmill: Revising the adaptation theory of well-being. American Psychologist, 61(4), 305–314",
+        "url": "https://doi.org/10.1037/0003-066X.61.4.305"
+      },
+      {
+        "title": "Emmons & McCullough (2003). Counting blessings versus burdens. Journal of Personality and Social Psychology, 84(2), 377–389",
+        "url": "https://doi.org/10.1037/0022-3514.84.2.377"
+      },
+      {
+        "title": "Harvard Gazette (2017). Over nearly 80 years, Harvard study has been showing how to live a healthy and happy life",
+        "url": "https://news.harvard.edu/gazette/story/2017/04/over-nearly-80-years-harvard-study-has-been-showing-how-to-live-a-healthy-and-happy-life/"
+      },
+      {
+        "title": "Diener — Understanding scores on the Satisfaction With Life Scale",
+        "url": "https://labs.psychology.illinois.edu/~ediener/Documents/Diener%20Proof%20chapter%2014.pdf"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-14",
+    "reviewed_on": "2026-11-14",
+    "image": "art-life-satisfaction",
+    "image_alt": "رسم لشخص قاعد على كرسي وحواليه بيت وعربية وكاس، وفوق دماغه علامة استفهام"
   }
 ]
