@@ -5,9 +5,10 @@ Done:
 - 2026-11-05 porn-use-bps (Brief Pornography Screen, Kraus et al. 2020, CC BY-NC 4.0)
 - 2026-11-07 personality-big-five (Mini-IPIP), mindfulness-maas (MAAS), self-compassion-scs (SCS-SF), burnout-cbi (CBI), meaning-in-life-mlq (MLQ)
 - 2026-11-08 depression-cesd (CES-D, Radloff 1977) — 20 items, public domain; added instead of scheduling MLQ (already present on the site)
+- 2026-11-14 life-satisfaction-swls (SWLS, Diener et al. 1985) — free use for professionals with credit (Diener lab page); bands from Diener's "Understanding SWLS scores". Delivered as PR for review per content/REVIEW-POLICY.md
 
 Next (verify the free-use permission and exact items from the official source before building; skip any that can't be verified):
-1. Satisfaction With Life Scale — SWLS (Diener, Emmons, Larsen & Griffin, 1985).
+1. ~~Satisfaction With Life Scale — SWLS~~ — done 2026-11-14 (life-satisfaction-swls).
 2. Ten-Item Personality Inventory — TIPI (Gosling, Rentfrow & Swann, 2003): Big Five.
 3. Kessler Psychological Distress Scale — K10 (Kessler et al., 2002). Safety: True.
 4. Adult ADHD Self-Report Scale — ASRS v1.1 Part A, 6 items (WHO / Kessler et al., 2005).
