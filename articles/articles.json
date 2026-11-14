@@ -498,5 +498,35 @@
     "reviewed_on": "2026-11-12",
     "image": "art-sadness-vs-depression",
     "image_alt": "رسم لست قاعدة على كرسي تحت سحابة صغيرة بتمطر، والشمس طالعة من وراها"
+  },
+  {
+    "slug": "marital-silence",
+    "category": "relationships-family",
+    "title": "الخرس الزوجي: ليه بطلنا نتكلم مع بعض وإزاي نرجع؟",
+    "description": "الخرس الزوجي: ليه بنبطل نتكلم مع شريك حياتنا؟ دايرة «طرف يطالب وطرف ينسحب»، ليه الطرف التاني بيقفل وقت الخناق، وخطوات عملية ترجّعكم لبعض.",
+    "summary": "الخرس الزوجي إن كلام المشاعر والاهتمام يختفي ويفضل كلام الإدارة اليومية، وغالبًا بيكبر من دايرة طرف بيضغط عشان يتغير حاجة وطرف بيسكت وينسحب. الدايرة دي بتتكسر لما تسمّوها كفريق، وتبدأوا بطلب مش لوم، وتاخدوا استراحة لما الانفعال يعلى وترجعوا تكملوا. ولو السكوت طوّل أو بقى عقاب أو معاه إهانة، كلّموا متخصص.",
+    "refs": [
+      {
+        "title": "Schrodt, Witt & Shimkowski (2014). A meta-analytical review of the demand/withdraw pattern of interaction. Communication Monographs, 81(1)",
+        "url": "https://doi.org/10.1080/03637751.2013.813632"
+      },
+      {
+        "title": "Holley, Sturm & Levenson (2010). Exploring the basis for gender differences in the demand-withdraw pattern. Journal of Homosexuality, 57(5)",
+        "url": "https://doi.org/10.1080/00918361003712145"
+      },
+      {
+        "title": "The Gottman Institute — Self-Care for Stonewalling (Part I)",
+        "url": "https://www.gottman.com/blog/self-care-stonewalling-part-i/"
+      },
+      {
+        "title": "The Gottman Institute — Weekend Homework Assignment: Physiological Self-Soothing",
+        "url": "https://www.gottman.com/blog/weekend-homework-assignment-physiological-self-soothing/"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-13",
+    "reviewed_on": "2026-11-13",
+    "image": "art-marital-silence",
+    "image_alt": "رسم لزوج وزوجة قاعدين على نفس الكنبة، كل واحد ماسك موبايله، وبينهم حيطة طوب صغيرة"
   }
 ]
