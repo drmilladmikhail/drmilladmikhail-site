@@ -56,6 +56,7 @@ Key facts:
 - [اختبار التعاطف مع الذات (SCS-SF): بتعامل نفسك إزاي وقت الوجع؟](https://drmilladmikhail.com/tests/self-compassion-scs/)
 - [اختبار الاحتراق النفسي (كوبنهاجن): بطاريتك فاضلة فيها كام؟](https://drmilladmikhail.com/tests/burnout-cbi/)
 - [اختبار معنى الحياة (MLQ): حياتك ليها معنى؟ ولا لسه بتدوّر؟](https://drmilladmikhail.com/tests/meaning-in-life-mlq/)
+- [اختبار الرضا عن الحياة (SWLS): انت راضي عن حياتك قد إيه؟](https://drmilladmikhail.com/tests/life-satisfaction-swls/)
 
 ## Books
 - [ليه بنحب اللي بيوجعنا؟ (Arabic, Amazon)](https://www.amazon.com/dp/B0HPNCYWWS)
