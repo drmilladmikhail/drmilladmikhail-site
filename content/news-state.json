@@ -138,6 +138,7 @@
  "test:burnout-cbi": "2000-01-01",
  "test:depression-cesd": "2000-01-01",
  "test:depression-phq8": "2000-01-01",
+ "test:life-satisfaction-swls": "2026-11-14",
  "test:meaning-in-life-mlq": "2000-01-01",
  "test:mindfulness-maas": "2000-01-01",
  "test:personality-big-five": "2000-01-01",
