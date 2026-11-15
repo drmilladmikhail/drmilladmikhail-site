@@ -185,3 +185,14 @@ main#main > .section::after { width: min(460px, 80vw); aspect-ratio: 1; inset-bl
 }
 @media print { main#main > .section { background: #fff !important; color: #000 !important; } main#main > .section::before, main#main > .section::after { display: none; }
   .xtool, .print-copy h2, .print-copy h3, .print-copy p { color: #000 !important; } }
+
+
+/* Optional instrumental listening library */
+.jr-music-panel > p { color: var(--jr-soft); }
+.jr-music-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 12px; }
+.jr-music-item { display: grid; grid-template-columns: minmax(0,1fr) minmax(220px,1.1fr); align-items: center; gap: 12px; padding: 14px; border: 1px solid var(--jr-line); border-radius: 16px; background: rgba(255,255,255,.035); }
+.jr-music-copy { display: grid; gap: 3px; }
+.jr-music-copy b { color: #fff; }
+.jr-music-copy span { color: var(--jr-soft); font-size: 13px; text-align: start; }
+.jr-music-item audio { width: 100%; min-width: 0; height: 42px; }
+@media (max-width: 620px) { .jr-music-item { grid-template-columns: 1fr; gap: 8px; } }
