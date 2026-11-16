@@ -237,6 +237,45 @@
         "NHS — Obsessive compulsive disorder (reassurance seeking, compulsions)"
       ],
       "added": "2026-11-05"
+    },
+    {
+      "id": "impostor-feeling",
+      "section": "feelings",
+      "q": "حاسس إني بخدع الناس… وإني مش شاطر زي ما فاكرين، وفي يوم هيكشفوني",
+      "a": [
+        "ده شائع جدًا، حتى عند ناس ناجحة فعلًا، وليه اسم في علم النفس: «ظاهرة المحتال» أو «متلازمة المحتال». هي مش مرض ولا تشخيص، هي إحساس إنك مش مستحق نجاحك، وإن اللي وصلته جه بالحظ أو بالصدفة.",
+        "الإحساس ده غالبًا بيمشي مع الكمالية والقلق والمقارنة بالناس. كل ما تنجح، عقلك بيقولك «المرة دي عدّت، بس المرة الجاية هيبان»، فتشتغل زيادة عن اللزوم وتتعب، ومهما حد يمدحك مش بتصدّق.",
+        "جرّب تكتب كل أسبوع 3 حاجات عملتها كويس ودورك فيها إيه بالظبط، بدل ما ترجّعها للحظ. وفرّق بين «أنا لسه بتعلم» و«أنا فاشل»: مش عارف حاجة يعني محتاج تتعلمها، مش إنك بتخدع حد. وكلّم حد بتثق فيه عن الإحساس ده، هتتفاجئ قد إيه ناس كتير حاسّة بيه."
+      ],
+      "when": "لو الإحساس ده مخليك تهرب من فرص، أو تشتغل لحد ما تنهار، أو جايبلك حزن وقلق معظم الوقت، كلّم متخصص.",
+      "sources": [
+        "Bravata DM et al. (2020) Prevalence, predictors, and treatment of impostor syndrome: a systematic review. J Gen Intern Med — https://pubmed.ncbi.nlm.nih.gov/31848865/",
+        "Clance PR & Imes SA (1978) The imposter phenomenon in high achieving women. Psychotherapy: Theory, Research & Practice",
+        "Frontiers in Psychology (2024) systematic review on impostor phenomenon — https://www.frontiersin.org/articles/10.3389/fpsyg.2024.1360540/full",
+        "APA Monitor — Feel like a fraud? (impostor phenomenon is not a DSM diagnosis)"
+      ],
+      "added": "2026-11-15"
+    },
+    {
+      "id": "attach-too-fast",
+      "section": "relationships",
+      "q": "بتعلّق بسرعة بأي حد يهتم بيا… وفي الآخر بتجرح",
+      "a": [
+        "ده شائع، ومش معناه إنك ضعيف أو «رخيص». الاحتياج للقرب والاهتمام احتياج إنساني طبيعي، بس عند بعض الناس الإحساس ده بيبقى قوي وسريع لدرجة إنهم بيتعلقوا قبل ما يعرفوا الشخص كويس.",
+        "علم النفس بيربط ده غالبًا بـ«التعلق القلق»: نمط بيتكوّن بدري في الحياة، فيه خوف قوي من الهجر، وأي اهتمام بيحس كأنه أمان لازم تمسك فيه بسرعة. والخبر الحلو إن أنماط التعلق مش ثابتة، وممكن تتغير مع الوعي وعلاقات آمنة ومساعدة متخصصة.",
+        "جرّب تبطّأ: ادّي نفسك وقت تعرف الشخص من أفعاله مش من كلامه بس. خلّي حياتك مليانة بحاجات تانية — صحاب، هوايات، شغل — عشان شخص واحد ميبقاش هو مصدر الأمان كله. ولما القلق يعلى، اسأل نفسك: «أنا محتاج الشخص ده، ولا محتاج أحس إني مش لوحدي؟»"
+      ],
+      "when": "لو التعلق ده بيتكرر وبيوجعك كل مرة، أو بيخليك تفضل في علاقات بتأذيك، كلّم متخصص.",
+      "link": [
+        "/articles/four-attachment-styles/",
+        "أنماط التعلق الأربعة"
+      ],
+      "sources": [
+        "Cleveland Clinic — Anxious attachment style: what it is and how to cope — https://health.clevelandclinic.org/anxious-attachment-style",
+        "Cleveland Clinic — Attachment theory and attachment styles — https://health.clevelandclinic.org/attachment-theory-and-attachment-styles",
+        "Mikulincer M & Shaver PR (2016) Attachment in Adulthood (2nd ed.) — attachment styles can change"
+      ],
+      "added": "2026-11-15"
     }
   ]
 }
