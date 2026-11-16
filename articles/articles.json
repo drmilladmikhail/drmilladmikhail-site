@@ -629,5 +629,59 @@
     "discuss": "أنهي حبل من الخمسة حاسس إنه الأقوى عند الناس اللي حواليك؟",
     "image": "art-why-is-it-hard-to-leave",
     "image_alt": "رسم لبنت واقفة قدام باب مفتوح فيه شمس وقلب، وخمس حبال من سحابة رمادي بتشدها لورا"
+  },
+  {
+    "slug": "early-red-flags-love-bombing",
+    "category": "relationships-family",
+    "title": "العلامات الحمرا في أول التعارف: إزاي تعرف القصف بالحب بدري؟",
+    "description": "إزاي تشوف العلامات الحمرا في أول التعارف قبل ما تتعلق؟ يعني إيه القصف بالحب، وإشارة المرور بين الأحمر والأصفر والأخضر، و٥ خطوات تحمي بيها نفسك.",
+    "summary": "العلامات الحمرا غالبًا بتظهر بدري، وأخطرها «القصف بالحب»: اهتمام واستعجال زيادة عن اللزوم في الأول. الفرق بين الحماس الصادق والتلاعب بيبان لما تقول «لأ»: هل بيحترم حدودك ولا بيضغط؟ امشي على مهلك، وخلّي صحابك قريبين، ولو فيه تهديد أو أذى اطلب مساعدة فورًا.",
+    "refs": [
+      {
+        "title": "Cleveland Clinic — Love Bombing",
+        "url": "https://health.clevelandclinic.org/love-bombing/"
+      },
+      {
+        "title": "Cleveland Clinic — How To Spot Relationship Red Flags",
+        "url": "https://health.clevelandclinic.org/domestic-abuse-how-to-spot-relationship-red-flags/"
+      },
+      {
+        "title": "Strutzenberg, Wiersma-Mosley, Jozkowski & Becnel (2017). Love-bombing: A narcissistic approach to relationship formation. Discovery, 18(1), 81–89",
+        "url": "https://scholarworks.uark.edu/discoverymag/vol18/iss1/14/"
+      }
+    ],
+    "minutes": 6,
+    "date": "2026-11-16",
+    "chapter": "من الفصل الرابع",
+    "discuss": "إيه أكتر علامة حمرا الناس بتقول عليها «عادي» في أول التعارف؟",
+    "image": "art-early-red-flags-love-bombing",
+    "image_alt": "رسم لبنت ماسكة موبايل وقدامها فقاعات رسايل كتير كلها قلوب"
+  },
+  {
+    "slug": "first-days-after-breakup",
+    "category": "resilience-recovery",
+    "title": "أول أيام بعد الانفصال: خطة تعافي بسيطة ترجّعك لنفسك",
+    "description": "إزاي تعدي أول أيام بعد الانفصال؟ ليه الوجع بيبقى زي الاشتياق، وخطة ٣ أسابيع بخطوة صغيرة كل يوم تهدّي بيها جسمك وترجع لنفسك، وامتى تكلم متخصص.",
+    "summary": "وجع أول أيام بعد الانفصال حقيقي، والمخ بيتعامل معاه زي اشتياق. التعافي بيبدأ بخطوات صغيرة: ترجّع نومك وروتينك، وترد على الصوت اللي بيجلدك بحنية، وترجع لناسك وهواياتك. ولو الحزن فضل تقيل أسابيع أو جتلك أفكار إنك تؤذي نفسك، كلم متخصص.",
+    "refs": [
+      {
+        "title": "Fisher, Brown, Aron, Strong & Mashek (2010). Reward, addiction, and emotion regulation systems associated with rejection in love. Journal of Neurophysiology (Rutgers news release)",
+        "url": "https://www.rutgers.edu/news/study-finds-romantic-rejection-stimulates-areas-brain-involved-motivation-reward-and-addiction"
+      },
+      {
+        "title": "Larson & Sbarra (2015). Participating in research on romantic breakups promotes emotional recovery via changes in self-concept clarity. Social Psychological and Personality Science, 6(4), 399–406",
+        "url": "https://experts.arizona.edu/en/publications/participating-in-research-on-romantic-breakups-promotes-emotional/"
+      },
+      {
+        "title": "Cleveland Clinic — How To Get Over a Breakup",
+        "url": "https://health.clevelandclinic.org/how-to-get-over-a-breakup"
+      }
+    ],
+    "minutes": 6,
+    "date": "2026-11-16",
+    "chapter": "من الفصل السادس",
+    "discuss": "إيه الحاجة الصغيرة اللي ساعدتك أو ساعدت حد تعرفه بعد انفصال؟",
+    "image": "art-first-days-after-breakup",
+    "image_alt": "رسم لبنت قاعدة على كنبة ماسكة كوباية شاي، وجنبها شباك بتطلع منه الشمس"
   }
 ]
