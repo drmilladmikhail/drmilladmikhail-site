@@ -566,5 +566,36 @@
     "reviewed_on": "2026-11-14",
     "image": "art-life-satisfaction",
     "image_alt": "رسم لشخص قاعد على كرسي وحواليه بيت وعربية وكاس، وفوق دماغه علامة استفهام"
+  },
+  {
+    "slug": "helping-someone-in-abusive-relationship",
+    "category": "relationships-family",
+    "title": "إزاي أساعد صاحبتي أو أختي لو جوزها بيأذيها؟ خطوات آمنة",
+    "description": "صاحبتك أو أختك جوزها بيأذيها؟ إزاي تفتح معاها الكلام من غير لوم، وإيه الكلام اللي بيأذي، وخطوات خطة أمان بسيطة وأرقام المساعدة في مصر.",
+    "summary": "أهم حاجة تعملها إنك تصدّقها، وتقولها إن الأذى مش ذنبها، وتفضل جنبها من غير ما تضغط عليها تمشي. الخروج من علاقة مؤذية رحلة ممكن تاخد وقت، ودورك إنك تكون المكان الآمن: تعرض مساعدة محددة، وتساعدها في خطة أمان، وتكلم النجدة 122 لو فيه خطر دلوقتي.",
+    "refs": [
+      {
+        "title": "World Health Organization — Violence against women (fact sheet, 2026)",
+        "url": "https://www.who.int/news-room/fact-sheets/detail/violence-against-women"
+      },
+      {
+        "title": "Office on Women's Health (womenshealth.gov) — How to help a friend who is being abused",
+        "url": "https://womenshealth.gov/relationships-and-safety/get-help/how-help-friend"
+      },
+      {
+        "title": "Refuge — Support someone I know who is being abused",
+        "url": "https://refuge.org.uk/what-is-domestic-abuse/support-someone-i-know-who-is-being-abused/"
+      },
+      {
+        "title": "UN Women — 16 Days of Activism 2026",
+        "url": "https://asiapacific.unwomen.org/en/stories/announcement/2026/08/16-days-of-activism-2026"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-15",
+    "reviewed_on": "2026-11-15",
+    "discuss": "إيه أصعب حاجة في إنك تساعد حد قريب منك بيتعرض لأذى في بيته؟",
+    "image": "art-helping-someone-in-abusive-relationship",
+    "image_alt": "رسم لصاحبتين قاعدين على ترابيزة قدامهم قهوة، واحدة بتسمع وبتمد إيدها للتانية، وفوقهم فقاعة كلام فيها قلب"
   }
 ]
