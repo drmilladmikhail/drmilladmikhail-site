@@ -86,6 +86,7 @@ def build_all(ba, page, write, SITE):
     <div class="wrap">
       <h2>حلقات السلسلة</h2>
       <ul class="cards">{eps}</ul>
+      <p>ولو لاحظت إن نفس النوع من الشركاء بيتكرر معاك كل مرة، اقرا: <a href="/articles/why-we-choose-the-same-person/">تكرار العلاقات المؤذية: ليه بتختار نفس الشخص كل مرة؟</a></p>
       <h2>أدوات تساعدكم تقرّبوا</h2>
       <ul class="cards">{tools}</ul>
       <p>ولو حاسس إنك محتاج حد يسمعك، فيه <a href="/sessions/">جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي</a>. ولو في خطر دلوقتي، شوف <a href="/help-now/">محتاج مساعدة دلوقتي</a>.</p>
