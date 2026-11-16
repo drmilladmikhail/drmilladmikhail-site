@@ -33,6 +33,9 @@ def person(cx,base,h,shirt=T,hair=N,skin=S1,pants=N,pose='stand',la=None,ra=None
     # neck + head
     o.append(f'<rect x="{cx-r*0.32:.0f}" y="{hy+r*0.7:.0f}" width="{r*0.64:.0f}" height="{r:.0f}" fill="{skin}"/>')
     if hairstyle=='long': o.append(f'<path d="M{cx-r*1.15:.0f},{hy:.0f} a{r*1.15:.0f},{r*1.2:.0f} 0 0 1 {r*2.3:.0f},0 v{r*1.9:.0f} h-{r*2.3:.0f} z" fill="{hair}"/>')
+    if hairstyle=='loose':  # visible shoulder-length wavy hair (no head cover)
+        L=cx-r*1.25; R_=cx+r*1.25; b=hy+r*1.75
+        o.append(f'<path d="M{L:.0f},{hy:.0f} a{r*1.25:.0f},{r*1.3:.0f} 0 0 1 {r*2.5:.0f},0 C{R_+r*0.15:.0f},{hy+r*0.8:.0f} {R_+r*0.25:.0f},{b-r*0.3:.0f} {R_:.0f},{b:.0f} q-{r*0.3:.0f},{r*0.25:.0f} -{r*0.6:.0f},0 q-{r*0.3:.0f},-{r*0.25:.0f} -{r*0.6:.0f},0 L{cx-r*0.1:.0f},{hy+r*0.9:.0f} L{L+r*1.2:.0f},{b:.0f} q-{r*0.3:.0f},{r*0.25:.0f} -{r*0.6:.0f},0 q-{r*0.3:.0f},-{r*0.25:.0f} -{r*0.6:.0f},0 C{L-r*0.25:.0f},{b-r*0.3:.0f} {L-r*0.15:.0f},{hy+r*0.8:.0f} {L:.0f},{hy:.0f} z" fill="{hair}"/>')
     o.append(f'<circle cx="{cx:.0f}" cy="{hy:.0f}" r="{r:.0f}" fill="{skin}"/>')
     if hairstyle=='hijab':
         o.append(f'<path d="M{cx-r*1.12:.0f},{hy+r*0.2:.0f} a{r*1.12:.0f},{r*1.25:.0f} 0 0 1 {r*2.24:.0f},0 l{r*0.2:.0f},{r*1.6:.0f} h-{r*2.64:.0f} z" fill="{hair}"/><ellipse cx="{cx:.0f}" cy="{hy+r*0.12:.0f}" rx="{r*0.72:.0f}" ry="{r*0.82:.0f}" fill="{skin}"/>')
@@ -115,7 +118,7 @@ A['art-why-is-it-hard-to-leave']=bg()+ground()+f'<rect x="900" y="210" width="22
 def scale(x,y): return f'<rect x="{x-10}" y="{y}" width="20" height="300" rx="8" fill="{N}"/><rect x="{x-90}" y="{y+290}" width="180" height="24" rx="10" fill="{N}"/><path d="M{x-230},{y+30} L{x+230},{y-10}" stroke="{N}" stroke-width="14" stroke-linecap="round"/><path d="M{x-230},{y+30} l-60,120 h120 z M{x+230},{y-10} l-60,120 h120 z" fill="none" stroke="{N}" stroke-width="6"/><path d="M{x-300},{y+150} h140 a70,30 0 0 1 -140,0 z" fill="{G}"/><path d="M{x+160},{y+110} h140 a70,30 0 0 1 -140,0 z" fill="{T}"/>'
 A['art-why-is-it-hard-to-leave-2']=bg()+ground()+scale(520,260)+house(245,346,90,R,'#b85f52')+heart(750,350,1.6,R)+person(980,700,340,shirt=LB,hair=N,skin=S2,face='calm',hairstyle='short',la=[(-40,50),(-70,10)],ra=[(30,60),(40,100)])+qmark(940,250,1.2,N)+plant(160,650,.7)+END
 # red flags 1: a girl looking at a phone flooded with many heart bubbles (love bombing)
-A['art-early-red-flags-love-bombing']=bg()+ground()+''.join(bubble(560+(i%3)*170,110+(i//3)*95,140,62,[W,T,G][i%3],1)+heart(630+(i%3)*170,145+(i//3)*95,1.2,R if i%3!=1 else W) for i in range(9))+person(330,700,350,shirt=R,hair=N,skin=S1,face='calm',hairstyle='long',la=[(-30,60),(-10,110)],ra=[(40,40),(90,10)])+phone(466,446)+plant(1100,650,.7)+END
+A['art-early-red-flags-love-bombing']=bg()+ground()+''.join(bubble(560+(i%3)*170,110+(i//3)*95,140,62,[W,T,G][i%3],1)+heart(630+(i%3)*170,145+(i//3)*95,1.2,R if i%3!=1 else W) for i in range(9))+person(330,700,350,shirt=R,hair='#5b3a29',skin=S1,face='smile',hairstyle='loose',la=[(-30,60),(-10,110)],ra=[(40,40),(90,10)])+phone(466,446)+plant(1100,650,.7)+END
 # red flags 2: a traffic light (red / amber / green) next to a thoughtful young man
 def tlight(x,y): return f'<rect x="{x-14}" y="{y+300}" width="28" height="260" rx="10" fill="{N}"/><rect x="{x-80}" y="{y}" width="160" height="320" rx="40" fill="{N}"/><circle cx="{x}" cy="{y+60}" r="42" fill="{R}"/><circle cx="{x}" cy="{y+160}" r="42" fill="{G}"/><circle cx="{x}" cy="{y+260}" r="42" fill="#5fb08f"/>'
 A['art-early-red-flags-love-bombing-2']=bg(sun(160,150,50))+ground()+tlight(470,120)+person(790,700,340,shirt=T,hair=N,skin=S2,face='calm',hairstyle='short',la=[(-40,50),(-60,10)],ra=[(30,60),(40,110)])+qmark(860,230,1.1,N)+plant(1080,650,.7)+END
