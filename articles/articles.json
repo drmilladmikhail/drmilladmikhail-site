@@ -685,5 +685,47 @@
     "image": "art-first-days-after-breakup",
     "image_alt": "رسم لبنت قاعدة على كنبة ماسكة كوباية شاي، وجنبها شباك بتطلع منه الشمس",
     "reviewed_on": "2026-11-16"
+  },
+  {
+    "slug": "procrastination-not-laziness",
+    "category": "personality-behavior",
+    "title": "التسويف مش كسل: ليه بأجّل كل حاجة لآخر لحظة وإزاي أبدأ؟",
+    "description": "ليه بأجّل كل حاجة رغم إني عارف إنها مهمة؟ التسويف مش كسل، ده هروب من إحساس تقيل. اعرف أسبابه وخطوات عملية تبدأ بيها، وامتى تكلم متخصص.",
+    "summary": "التسويف مش كسل؛ الأبحاث بتقول إنه في الغالب هروب مؤقت من إحساس مش مريح زي الملل أو الخوف من الفشل أو الشك في النفس، والتمن بندفعه بعدين. البداية بتسهل لما تسمّي الإحساس، وتقسّم المهمة لخطوة صغيرة جدًا، وتسامح نفسك على اللي فات بدل ما تجلدها. ولو التأجيل مأثر بوضوح على حياتك أو جاي مع حزن مستمر، كلم متخصص.",
+    "refs": [
+      {
+        "title": "Centre for Clinical Interventions (CCI) — Putting Off Procrastinating, Module 1: Understanding Procrastination",
+        "url": "https://cci.health.wa.gov.au/-/media/CCI/Consumer-Modules/Put-Off-Procrastinating/Putting-Off-Procrastinating---01---Understanding-Procrastination-Part-1.pdf"
+      },
+      {
+        "title": "CCI — Putting Off Procrastinating, Module 2: Understanding Procrastination Part 2",
+        "url": "https://www.cci.health.wa.gov.au/~/media/CCI/Consumer%20Modules/Put%20Off%20Procrastinating/Putting%20Off%20Procrastinating%20-%2002%20-%20Understanding%20Procrastination%20Part%202.pdf"
+      },
+      {
+        "title": "CCI — Putting Off Procrastinating, Module 5: Practical Techniques to Stop Procrastination",
+        "url": "https://www.cci.health.wa.gov.au/~/media/CCI/Consumer-Modules/Put-Off-Procrastinating/Putting-Off-Procrastinating---05---Practical-Techniques-to-stop-Procrastination.pdf"
+      },
+      {
+        "title": "Sirois & Pychyl (2013). Procrastination and the priority of short-term mood regulation: Consequences for future self. Social and Personality Psychology Compass, 7(2), 115–127. doi:10.1111/spc3.12011",
+        "url": "https://doi.org/10.1111/spc3.12011"
+      },
+      {
+        "title": "Steel (2007). The nature of procrastination: A meta-analytic and theoretical review of quintessential self-regulatory failure. Psychological Bulletin, 133(1), 65–94. doi:10.1037/0033-2909.133.1.65 (ScienceDaily summary)",
+        "url": "https://www.sciencedaily.com/releases/2007/01/070110090851.htm"
+      },
+      {
+        "title": "Wohl, Pychyl & Bennett (2010). I forgive myself, now I can study. Personality and Individual Differences, 48(7), 803–808. doi:10.1016/j.paid.2010.01.029 (BPS Research Digest summary)",
+        "url": "https://bps.org.uk/research-digest/cure-procrastination-forgive-yourself"
+      },
+      {
+        "title": "NIMH — Attention-Deficit/Hyperactivity Disorder (ADHD)",
+        "url": "https://www.nimh.nih.gov/health/topics/attention-deficit-hyperactivity-disorder-adhd"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-16",
+    "image": "art-procrastination-not-laziness",
+    "image_alt": "رسم لبنت قاعدة على كرسي ماسكة موبايل منوّر وزعلانة، وجنبها ترابيزة عليها لابتوب مقفول وساعة على الحيطة",
+    "reviewed_on": "2026-11-16"
   }
 ]
