@@ -1228,5 +1228,57 @@
   "license": "CC BY 4.0",
   "license_url": "http://creativecommons.org/licenses/by/4.0/",
   "added": "2026-11-12"
+ },
+ {
+  "doi": "10.1371/journal.pone.0359579",
+  "title": "Post-failure resilience and athletes’ training engagement: The chain-mediating roles of perceived meaning in training and value identification",
+  "title_ar": "الصمود النفسي بعد الإخفاق وانخراط الرياضيين في التدريب: الأدوار الوسيطة المتسلسلة للمعنى المُدرَك للتدريب والتماهي القيمي",
+  "abstract": "Based on theories of sport resilience, meaning construction, and self-determination, this study developed and tested a serial mediation model linking post-failure resilience, perceived meaning in training, value identification, and training engagement. Specifically, the study examined the association between post-failure resilience and training engagement and assessed the serial indirect effect operating through perceived meaning in training and value identification. A final sample of 768 active athletes was recruited from multiple regions and training organizations across China. Data were analyzed using SPSS 26.0 and AMOS 24.0, with descriptive statistics, correlation analysis, confirmatory factor analysis, and structural equation modeling. The results indicated that post-failure resilience was significantly and positively associated with perceived meaning in training, which, in turn, was significantly and positively associated with value identification. Among the focal structural pathways, the association between value identification and training engagement was the strongest. Moreover, the serial indirect effect of post-failure resilience on training engagement through perceived meaning in training and value identification was statistically significant. Multi-group structural equation modeling further revealed no consistent differences in the core structural pathways across sport type, training stage, or gender, suggesting that the proposed pattern of associations was broadly stable across the examined subgroups. These findings provide empirical evidence for the association between post-failure resilience and training engagement in competitive sport and clarify the potential psychological pathways through which this association may operate. The study also provides a theoretical basis and practical implications for structured training management practices, particularly those involving debriefing, feedback processes, and goal alignment.",
+  "abstract_ar": "استنادًا إلى نظريات الصمود النفسي في الرياضة، وبناء المعنى، وتقرير المصير، طوّرت هذه الدراسة واختبرت نموذجًا للوساطة المتسلسلة يربط بين الصمود النفسي بعد الإخفاق، والمعنى المُدرَك للتدريب، والتماهي القيمي، والانخراط في التدريب. وعلى وجه التحديد، فحصت الدراسة الارتباط بين الصمود النفسي بعد الإخفاق والانخراط في التدريب، وقيّمت الأثر غير المباشر المتسلسل الذي يمر عبر المعنى المُدرَك للتدريب والتماهي القيمي. وجرت الاستعانة بعينة نهائية تضم 768 رياضيًا ممارسًا من مناطق ومؤسسات تدريبية متعددة في الصين. وحُلّلت البيانات باستخدام برنامجي SPSS 26.0 وAMOS 24.0، بالاستعانة بالإحصاءات الوصفية، وتحليل الارتباط، والتحليل العاملي التوكيدي، ونمذجة المعادلات البنائية. وأشارت النتائج إلى أن الصمود النفسي بعد الإخفاق ارتبط ارتباطًا إيجابيًا دالًا إحصائيًا بالمعنى المُدرَك للتدريب، الذي ارتبط بدوره ارتباطًا إيجابيًا دالًا إحصائيًا بالتماهي القيمي. ومن بين المسارات البنائية الرئيسية، كان الارتباط بين التماهي القيمي والانخراط في التدريب هو الأقوى. وعلاوة على ذلك، كان الأثر غير المباشر المتسلسل للصمود النفسي بعد الإخفاق في الانخراط في التدريب، عبر المعنى المُدرَك للتدريب والتماهي القيمي، دالًا إحصائيًا. وكشفت نمذجة المعادلات البنائية متعددة المجموعات أيضًا عن عدم وجود فروق متسقة في المسارات البنائية الأساسية باختلاف نوع الرياضة أو مرحلة التدريب أو النوع الاجتماعي، مما يشير إلى أن نمط الارتباطات المقترح كان مستقرًا بوجه عام عبر المجموعات الفرعية التي جرى فحصها. وتقدّم هذه النتائج أدلة تجريبية على الارتباط بين الصمود النفسي بعد الإخفاق والانخراط في التدريب في الرياضة التنافسية، وتوضح المسارات النفسية المحتملة التي قد يعمل من خلالها هذا الارتباط. كما توفّر الدراسة أساسًا نظريًا ودلالات تطبيقية لممارسات الإدارة المنظّمة للتدريب، ولا سيما تلك التي تتضمن استخلاص الدروس من الخبرات، وعمليات التغذية الراجعة، ومواءمة الأهداف.",
+  "authors": [
+   "Longqiang Chen",
+   "Yao Liu"
+  ],
+  "journal": "PLOS One",
+  "journal_ar": "بلوس وان",
+  "volume": "21",
+  "issue": "11",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "e0359579",
+  "published": "2026-11-13",
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "copyright": "© 2026 Chen, Liu. This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "source_urls": [
+   "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0359579"
+  ],
+  "added": "2026-11-16"
+ },
+ {
+  "doi": "10.1371/journal.pone.0362802",
+  "title": "Problem-solving and social support appraisals in the cross-sectional association between social media integration and PCL-5 symptom severity",
+  "title_ar": "تقييمات حل المشكلات والدعم الاجتماعي في الارتباط المقطعي بين اندماج وسائل التواصل الاجتماعي في الحياة وشدة أعراض مقياس PCL-5",
+  "abstract": "The present study investigated the relationship between social media integration and PTSD-consistent symptomatology among South African university students, with a specific focus on the roles of problem-solving appraisal and perceived social support. Participants were 491 students who completed the Social Media Use Integration Scale, the Problem-Solving Inventory-20, the Multidimensional Scale of Perceived Social Support, and the Post-Traumatic Stress Disorder Checklist for DSM-5 (PCL-5). Data were analysed using descriptive statistics, correlations, and mediation and moderation analyses with PROCESS. Social media integration was positively associated with overall PTSD-consistent symptomatology and all symptom clusters measured by the PCL-5. Problem-solving appraisal was negatively associated with PCL-5 symptom severity. It partially mediated the relationship between social media integration and PCL-5 symptom severity. Perceived social support showed a more selective pattern of association, with higher support linked to lower negative alterations in cognition and mood, as well as hyperarousal. In addition, social support moderated the relationship between social media use and PCL-5 symptom severity, avoidance, negative alterations in cognition and mood, and hyperarousal. These findings suggest that greater social media integration is associated with higher PCL-5 symptom severity, whereas problem-solving appraisal and perceived social support serve as important protective factors. Interventions aimed at strengthening coping appraisals and supportive social networks may help reduce trauma-related distress among young adults in the context of frequent social media use.",
+  "abstract_ar": "بحثت الدراسة الحالية العلاقة بين اندماج وسائل التواصل الاجتماعي في الحياة والأعراض المتسقة مع اضطراب ما بعد الصدمة لدى طلاب جامعات في جنوب أفريقيا، مع التركيز تحديدًا على دورَي تقييم القدرة على حل المشكلات والدعم الاجتماعي المُدرَك. وشارك في الدراسة 491 طالبًا أكملوا مقياس اندماج استخدام وسائل التواصل الاجتماعي، وقائمة حل المشكلات المكوّنة من 20 بندًا، والمقياس متعدد الأبعاد للدعم الاجتماعي المُدرَك، وقائمة أعراض اضطراب ما بعد الصدمة وفق الدليل التشخيصي والإحصائي للاضطرابات النفسية، الإصدار الخامس (PCL-5). وحُلّلت البيانات باستخدام الإحصاءات الوصفية، والارتباطات، وتحليلات الوساطة والتعديل باستخدام PROCESS. وارتبط اندماج وسائل التواصل الاجتماعي في الحياة ارتباطًا إيجابيًا بمجمل الأعراض المتسقة مع اضطراب ما بعد الصدمة وبجميع مجموعات الأعراض التي يقيسها مقياس PCL-5. وارتبط تقييم القدرة على حل المشكلات ارتباطًا سلبيًا بشدة أعراض مقياس PCL-5. كما أدّى دور الوسيط الجزئي في العلاقة بين اندماج وسائل التواصل الاجتماعي في الحياة وشدة أعراض مقياس PCL-5. وأظهر الدعم الاجتماعي المُدرَك نمطًا أكثر انتقائية من الارتباطات، إذ ارتبط ارتفاع الدعم بانخفاض التغيرات السلبية في الإدراك والمزاج، وكذلك بانخفاض فرط الاستثارة. وإضافة إلى ذلك، عدّل الدعم الاجتماعي العلاقة بين استخدام وسائل التواصل الاجتماعي وكل من شدة أعراض مقياس PCL-5، والتجنب، والتغيرات السلبية في الإدراك والمزاج، وفرط الاستثارة. وتشير هذه النتائج إلى أن ازدياد اندماج وسائل التواصل الاجتماعي في الحياة يرتبط بارتفاع شدة أعراض مقياس PCL-5، بينما يمثّل تقييم القدرة على حل المشكلات والدعم الاجتماعي المُدرَك عاملَي حماية مهمَّين. وقد تساعد التدخلات التي تستهدف تعزيز تقييمات القدرة على المواجهة وشبكات العلاقات الاجتماعية الداعمة في الحد من الضيق المرتبط بالصدمات لدى الشباب البالغين في سياق الاستخدام المتكرر لوسائل التواصل الاجتماعي.",
+  "authors": [
+   "Tyrone B. Pretorius",
+   "Anita Padmanabhanunni"
+  ],
+  "journal": "PLOS One",
+  "journal_ar": "بلوس وان",
+  "volume": "21",
+  "issue": "11",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "e0362802",
+  "published": "2026-11-12",
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "copyright": "© 2026 Pretorius, Padmanabhanunni. This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "source_urls": [
+   "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0362802"
+  ],
+  "added": "2026-11-16"
  }
 ]
