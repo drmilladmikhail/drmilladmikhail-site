@@ -20,7 +20,10 @@ with sync_playwright() as p:
             out.append({"url": u, "status": r.status if r else None, "final": pg.url, "title": pg.title()[:150],
                         "author_links": links, "byline": re.findall(r'class="author[^"]*"[^>]*>.{0,300}', html)[:2],
                         # YouTube: uploader of a video page, and video ids/titles on a channel or search page
-                        "yt_owner": list(dict.fromkeys(re.findall(r'"ownerChannelName":"([^"]+)"', html)))[:3],
+                        "yt_owner": list(dict.fromkeys(re.findall(r'"ownerChannelName":"([^"]+)"', html) + re.findall(r'"author":"([^"]+)"', html)))[:3],
+                        "yt_embeddable": list(dict.fromkeys(re.findall(r'"playableInEmbed":(true|false)', html)))[:2],
+                        # JSON endpoints (e.g. YouTube oEmbed): the first part of the body
+                        "body": (r.text()[:500] if r and "json" in r.headers.get("content-type", "") else None),
                         "yt_videos": list(dict.fromkeys(re.findall(r'"videoId":"([\w-]{11})"', html)))[:12],
                         "yt_titles": list(dict.fromkeys(re.findall(r'"title":\{"runs":\[\{"text":"([^"]{5,120})"', html)))[:12],
                         "yt_pairs": list(dict.fromkeys(re.findall(r'"videoRenderer":\{"videoId":"([\w-]{11})".{0,1500}?"title":\{"runs":\[\{"text":"((?:[^"\\]|\\.){3,160})"', html)))[:15]})
