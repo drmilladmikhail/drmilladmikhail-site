@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build «سينما ونفس» (/cinema/): psychological readings of films, in simple Egyptian Arabic.
+"""Build «سينما على الشيزلونج» (/cinema/): psychological readings of films, in simple Egyptian Arabic.
 
 Source of truth:
   content/cinema.json             one entry per film (see the fields below)
@@ -148,7 +148,7 @@ def film_page(f, others):
         "dateModified": f.get("updated", f["date"]),
         "inLanguage": "ar",
         "mainEntityOfPage": url,
-        "articleSection": "سينما ونفس",
+        "articleSection": "سينما على الشيزلونج",
         "about": [{"@type": "Movie", "name": f["film"], "dateCreated": f["year"],
                    "director": {"@type": "Person", "name": f["director"]}},
                   {"@type": "Thing", "name": f["theme"]}],
@@ -161,7 +161,7 @@ def film_page(f, others):
     body = f'''
   <article class="post">
     <div class="wrap narrow">
-      <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a> · <a href="/cinema/">سينما ونفس</a></nav>
+      <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a> · <a href="/cinema/">سينما على الشيزلونج</a></nav>
       <h1>{esc(f["title"])}</h1>
       <p class="post-meta"><a href="/about/" rel="author">د. ميلاد ميخائيل</a> · <time datetime="{f["date"]}">{ba.ar_date(f["date"])}</time>{f" · {f['minutes']} دقايق قراءة" if f.get("minutes") else ""}</p>
       <figure class="post-hero">{pic(f, eager=True)}<figcaption>رسم توضيحي، مش من الفيلم</figcaption></figure>
@@ -171,7 +171,7 @@ def film_page(f, others):
       <div class="post-body">
 {body_html}
       </div>
-      <p class="film-note">«سينما ونفس» قراءة نفسية لشخصيات خيالية بهدف التوعية. مش تقييم للفيلم، ولا تشخيص لأي حد.</p>
+      <p class="film-note">«سينما على الشيزلونج» قراءة نفسية لشخصيات خيالية بهدف التوعية. مش تقييم للفيلم، ولا تشخيص لأي حد.</p>
       {more_block}
       <p class="back-link"><a class="btn" href="/cinema/">كل الأفلام</a></p>
     </div>
@@ -181,15 +181,16 @@ def film_page(f, others):
 
 def index_page(items):
     cards = "\n      ".join(card(f) for f in items)
-    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "سينما ونفس",
+    ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "سينما على الشيزلونج: تحليل نفسي للأفلام",
           "url": f"{SITE}/cinema/", "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
           "hasPart": [{"@type": "Article", "headline": f["title"], "url": f"{SITE}/cinema/{f['slug']}/"} for f in items]}
     desc = "تحليل نفسي للأفلام بالعربي البسيط: نفهم الشخصيات ومشاعرها، ونشوف نفسنا فيها، من غير ما نشخّص حد."
     body = f'''
   <section class="section cinema-hero">
     <div class="wrap">
-      <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a> · سينما ونفس</nav>
-      <h1>سينما ونفس</h1>
+      <nav class="crumbs" aria-label="مسار التصفح"><a href="/">الرئيسية</a> · سينما على الشيزلونج</nav>
+      <h1>سينما على الشيزلونج</h1>
+      <p class="cinema-sub">تحليل نفسي للأفلام</p>
       <p class="section-intro">بنتفرّج على الأفلام بعين نفسية: نفهم ليه الشخصيات بتعمل اللي بتعمله، ونشوف نفسنا فيها، من غير ما نشخّص حد.</p>
     </div>
   </section>
@@ -201,7 +202,7 @@ def index_page(items):
       <p class="film-note">كل التحليلات قراءة لشخصيات خيالية بهدف التوعية، وفيها تنبيه قبل حرق الأحداث. الرسومات أصلية، مش صور من الأفلام.</p>
     </div>
   </section>'''
-    return shell("cinema", "سينما ونفس: تحليل نفسي للأفلام", desc, f"{SITE}/assets/og/home.jpg", "website", ld, body)
+    return shell("cinema", "سينما على الشيزلونج: تحليل نفسي للأفلام", desc, f"{SITE}/assets/og/home.jpg", "website", ld, body)
 
 
 def build(root=ROOT):
