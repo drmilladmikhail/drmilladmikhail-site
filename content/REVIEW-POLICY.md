@@ -16,5 +16,10 @@ How a scheduled task delivers new health content:
    or comment, e.g. «موافق»، «تمام انشر») and it isn't merged, merge it and confirm the deploy run. If he asked for changes, make them
    on the same branch and reply on the PR. Never approve or merge on your own judgement; silence is not approval.
 
+Exception — English adaptations (his standing approval, 2026-11-17: «فعّل وصول GitHub للتاسك ده (push) عشان المرات الجاية تتنشر على طول على https://drmilladmikhail.com/en/articles/»):
+the translation task may push English adaptations straight to `main` (no review PR) ONLY for Arabic articles that already have a
+"reviewed_on" date. The English entry's "reviewed_on" = the Arabic original's date. It must translate only: no new facts, sources or
+claims, every safety note kept. Anything else in English that is new health content still follows the review steps above.
+
 Also: his display name is د. ميلاد ميخائيل (never «ميلاد منير» in new text). Hosting is GitHub Pages (not Netlify).
 Never invent research, citations, numbers, qualifications, licences or experience.
