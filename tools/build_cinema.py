@@ -9,7 +9,10 @@ Source of truth:
 
 Each entry: {"slug", "film", "film_ar", "year", "director", "title", "theme", "description",
              "summary", "date", "minutes", "image", "image_alt", "spoilers", "related", "refs",
-             "reviewed_on"}
+             "trailer" (optional: {"youtube_id", "channel", "title"}), "reviewed_on"}
+Trailer: only an OFFICIAL trailer (studio channel or a licensed trailer channel such as Movieclips),
+never a clip that spoils the ending. It is click-to-play via assets/videos.js (youtube-nocookie,
+nothing loads from YouTube until the visitor presses play).
 Review rule (content/REVIEW-POLICY.md): an entry goes live only when it has "reviewed_on"
 (the date Dr. Millad approved it). Without it the entry is skipped, and /cinema/ isn't built
 until at least one entry is reviewed. CINEMA_PREVIEW=1 builds unreviewed entries for a local
@@ -91,6 +94,7 @@ def shell(rel, title, description, og, kind, ld, body):
 {ba.FOOTER}
 <script src="/assets/nav.js" defer></script>
 <script src="/assets/helper.js" defer></script>
+<script src="/assets/videos.js" defer></script>
 </body>
 </html>
 '''
@@ -107,6 +111,20 @@ def card(f):
           </span>
         </a>
       </li>'''
+
+
+def trailer_block(f):
+    t = f.get("trailer")
+    if not t or not re.fullmatch(r"[\w-]{11}", t.get("youtube_id", "")):
+        return ""
+    vid = t["youtube_id"]
+    return f'''<figure class="film-trailer">
+        <a class="yt" href="https://www.youtube.com/watch?v={vid}" data-id="{vid}" target="_blank" rel="noopener" aria-label="شغّل الفيديو: الإعلان الرسمي لفيلم {esc(f["film"])}">
+          <img src="https://i.ytimg.com/vi_webp/{vid}/hqdefault.webp" width="480" height="360" alt="" loading="lazy" decoding="async">
+          <span class="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path class="bg" d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2.4 34 .4 34 .4s-21.2 0-26.5 1.3a8.5 8.5 0 0 0-6 6C.2 13 .2 24 .2 24s0 11 1.3 16.3a8.5 8.5 0 0 0 6 6c5.3 1.3 26.5 1.3 26.5 1.3s21.2 0 26.5-1.3a8.5 8.5 0 0 0 6-6C67.8 35 67.8 24 67.8 24s0-11-1.3-16.3Z"/><path class="fg" d="M45 24 27 14v20"/></svg></span>
+        </a>
+        <figcaption>الإعلان الرسمي للفيلم من قناة <span lang="en" dir="ltr">{esc(t.get("channel", "YouTube"))}</span> على يوتيوب. مفيهوش حرق للنهاية، والفيديو مش بيشتغل غير لما تضغط.</figcaption>
+      </figure>'''
 
 
 def film_page(f, others):
@@ -149,6 +167,7 @@ def film_page(f, others):
       <figure class="post-hero">{pic(f, eager=True)}<figcaption>رسم توضيحي، مش من الفيلم</figcaption></figure>
       <aside class="answer-box" aria-labelledby="ans-{f["slug"]}"><h2 id="ans-{f["slug"]}">باختصار</h2><p>{esc(f["summary"])}</p>
       <nav class="toc" aria-label="في التحليل ده"><p class="toc-title">في التحليل ده</p><ol>{toc}</ol></nav></aside>
+      {trailer_block(f)}
       <div class="post-body">
 {body_html}
       </div>

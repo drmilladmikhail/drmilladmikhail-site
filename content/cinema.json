@@ -15,12 +15,29 @@
       "image": "shutter-island",
       "image_alt": "رسم لجزيرة صخرية وسط بحر هايج وعليها فنار، والضباب مغطي نصها",
       "spoilers": true,
-      "related": ["/articles/why-is-it-hard-to-leave/", "/glossary/"],
+      "related": [
+        "/articles/why-is-it-hard-to-leave/",
+        "/glossary/"
+      ],
       "refs": [
-        {"title": "Wikipedia: Shutter Island (film)", "url": "https://en.wikipedia.org/wiki/Shutter_Island_(film)"},
-        {"title": "Simply Psychology: Denial as a Defense Mechanism", "url": "https://www.simplypsychology.org/denial-as-a-defense-mechanism.html"},
-        {"title": "Cleveland Clinic: Grief — what's normal, what's not", "url": "https://health.clevelandclinic.org/grief-whats-normal-whats-not-and-13-tips-to-get-through-it/"}
-      ]
+        {
+          "title": "Wikipedia: Shutter Island (film)",
+          "url": "https://en.wikipedia.org/wiki/Shutter_Island_(film)"
+        },
+        {
+          "title": "Simply Psychology: Denial as a Defense Mechanism",
+          "url": "https://www.simplypsychology.org/denial-as-a-defense-mechanism.html"
+        },
+        {
+          "title": "Cleveland Clinic: Grief — what's normal, what's not",
+          "url": "https://health.clevelandclinic.org/grief-whats-normal-whats-not-and-13-tips-to-get-through-it/"
+        }
+      ],
+      "trailer": {
+        "youtube_id": "v8yrZSkKxTA",
+        "channel": "Movieclips Classic Trailers",
+        "title": "Shutter Island (2010) Trailer #1"
+      }
     }
   ]
 }
