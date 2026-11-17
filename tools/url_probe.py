@@ -22,7 +22,8 @@ with sync_playwright() as p:
                         # YouTube: uploader of a video page, and video ids/titles on a channel or search page
                         "yt_owner": list(dict.fromkeys(re.findall(r'"ownerChannelName":"([^"]+)"', html)))[:3],
                         "yt_videos": list(dict.fromkeys(re.findall(r'"videoId":"([\w-]{11})"', html)))[:12],
-                        "yt_titles": list(dict.fromkeys(re.findall(r'"title":\{"runs":\[\{"text":"([^"]{5,120})"', html)))[:12]})
+                        "yt_titles": list(dict.fromkeys(re.findall(r'"title":\{"runs":\[\{"text":"([^"]{5,120})"', html)))[:12],
+                        "yt_pairs": list(dict.fromkeys(re.findall(r'"videoRenderer":\{"videoId":"([\w-]{11})".{0,1500}?"title":\{"runs":\[\{"text":"((?:[^"\\]|\\.){3,160})"', html)))[:15]})
         except Exception as e:
             out.append({"url": u, "error": str(e)[:200]})
         pg.close()
