@@ -276,6 +276,7 @@
       if (state.step === t) row.firstChild.checked = true;
       so.appendChild(row);
     });
+    suggestMusic();
     var ch = $('jr-r-chosen'); ch.hidden = !state.step; if (state.step) ch.textContent = 'خطوتي النهارده: ' + state.step + '. خطوة صغيرة كفاية.';
     $('jr-r-cta').href = r.cta[0];
     var flagged = r.feelings.filter(function (f) { return f.s; }), sf = $('jr-safety'); clear(sf); sf.hidden = !flagged.length;
@@ -284,6 +285,25 @@
       sf.appendChild(document.createTextNode('كلّم حد تثق فيه أو متخصص. ولو في خطر عليك دلوقتي افتح '));
       var a = el('a', 'محتاج مساعدة دلوقتي'); a.href = '/help-now/'; sf.appendChild(a); sf.appendChild(document.createTextNode('.'));
     }
+  }
+
+  // ---------- the music at the end (optional; plays only when the visitor presses play) ----------
+  var tracks = Array.prototype.slice.call(document.querySelectorAll('#jr-music .jr-music-item'));
+  function players() { return Array.prototype.slice.call(document.querySelectorAll('#jr-music audio')); }
+  function stopMusic() { players().forEach(function (a) { a.pause(); }); }
+  players().forEach(function (a) {
+    a.volume = 0.7;
+    a.addEventListener('play', function () { players().forEach(function (o) { if (o !== a) o.pause(); }); });
+  });
+  function suggestMusic() {
+    var first = byId(state.sel[0]); if (!first || !tracks.length) return;
+    var key = first.id === 'overthinking' || first.id === 'confusion' ? 'think' : first.g, pick = null;
+    tracks.forEach(function (li) {
+      var on = li.getAttribute('data-for') === key && !pick; if (on) pick = li;
+      li.classList.toggle('is-pick', on); li.querySelector('.jr-music-tag').hidden = !on;
+    });
+    var note = $('jr-music-pick'); note.hidden = !pick;
+    if (pick) note.textContent = 'عشان اخترت «' + nameOf(first) + '»، ممكن تبدأ بـ «' + pick.querySelector('b').textContent.replace(/^[^·]*·\s*/, '') + '». أو اختار اللي يريحك.';
   }
   function buildPrint() {
     var body = $('print-body'); clear(body);
@@ -302,6 +322,7 @@
 
   // ---------- restart ----------
   function restart() {
+    stopMusic();
     state = fresh();
     $('jr-q').value = '';
     Array.prototype.forEach.call($('jr').querySelectorAll('input[type=radio], input[type=checkbox]'), function (c) { c.checked = false; });

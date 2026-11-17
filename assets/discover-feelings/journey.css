@@ -196,3 +196,9 @@ main#main > .section::after { width: min(460px, 80vw); aspect-ratio: 1; inset-bl
 .jr-music-copy span { color: var(--jr-soft); font-size: 13px; text-align: start; }
 .jr-music-item audio { width: 100%; min-width: 0; height: 42px; }
 @media (max-width: 620px) { .jr-music-item { grid-template-columns: 1fr; gap: 8px; } }
+.jr-music-panel { border-color: rgba(166,236,216,.28); background: linear-gradient(160deg, rgba(88,205,180,.09), rgba(255,255,255,.025)); }
+.jr-music-pick { margin-top: 4px !important; color: var(--jr-gold) !important; font-weight: 600; }
+.jr-music-pick[hidden], .jr-music-tag[hidden] { display: none; }
+.jr-music-tag { justify-self: start; margin-top: 4px; padding: 2px 10px; border-radius: 999px; font-style: normal; font-size: 12.5px; font-weight: 700; color: #06241f; background: linear-gradient(135deg, var(--jr-gold), var(--jr-mint)); }
+.jr-music-item.is-pick { border-color: var(--jr-gold); background: rgba(232,205,146,.08); box-shadow: 0 0 0 3px rgba(232,205,146,.12); }
+@media print { .jr-music-panel { display: none !important; } }
