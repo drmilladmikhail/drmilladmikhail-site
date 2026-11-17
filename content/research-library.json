@@ -1280,5 +1280,70 @@
    "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0362802"
   ],
   "added": "2026-11-16"
+ },
+ {
+  "doi": "10.1371/journal.pmen.0000730",
+  "title": "Assessing the validity and reliability of computational phenotyping of motivation",
+  "title_ar": "تقييم صدق وثبات التنميط الظاهري الحاسوبي للدافعية",
+  "abstract": "Motivational disorders are a core clinical feature in neuropsychiatric disorders. The conventional method to assess motivation relies on clinical scales, however, an alternative approach is to use behavioral tasks, that can be combined with computational modelling. This is the so-called “computational phenotyping of motivation” approach. Nevertheless, if one wants to use computational phenotyping of motivation in longitudinal studies, it is crucial to assess the internal validity and the reliability of this approach. We employed two types of reward/effort trade-off tasks: preference tasks, where participants rated or selected among different options involving effort, punishment, and/or reward, and a performance task, where participants exerted motor effort to obtain rewards. Using a simulation approach, we verified the robustness of the computational models used to analyze these tasks. To assess test-retest effects, a sample of 72 healthy volunteers performed the tasks twice, 4 weeks apart. We also assessed the effect of demographic variables such as age and gender. In silico analyses demonstrated robust recovery of computational parameters for most aspects, even under strong data degradation conditions. Similarly, the test-retest reliability of our approach between visits was satisfactory. With the exception of a minor increase of sensitivity to reward in the performance task, no systematic differences were observed between the first and the second visits. Moreover, for most parameters the correlation between the two visits (across participants) was significant and above 0.5. Computational phenotyping of motivation seems reliable and largely unaltered by test-retest procedures, at least when evaluations are performed four weeks apart. These findings indicate that any disparities observed between two assessments can be readily interpreted, hence providing a solid methodological foundation for future longitudinal studies.",
+  "abstract_ar": "تمثّل اضطرابات الدافعية سمة سريرية أساسية في الاضطرابات العصبية النفسية. وتعتمد الطريقة التقليدية لتقييم الدافعية على المقاييس السريرية، إلا أن هناك مقاربة بديلة تتمثل في استخدام مهام سلوكية يمكن دمجها مع النمذجة الحاسوبية. وهذه هي المقاربة المعروفة باسم «التنميط الظاهري الحاسوبي للدافعية». ومع ذلك، إذا أُريد استخدام التنميط الظاهري الحاسوبي للدافعية في الدراسات الطولية، فمن الضروري تقييم الصدق الداخلي لهذه المقاربة وثباتها. استخدمنا نوعين من مهام المفاضلة بين المكافأة والجهد: مهام التفضيل، التي قيّم فيها المشاركون خيارات مختلفة تتضمن الجهد أو العقاب أو المكافأة، أو اختاروا من بينها؛ ومهمة أداء بذل فيها المشاركون جهدًا حركيًا للحصول على مكافآت. وتحققنا، باستخدام مقاربة قائمة على المحاكاة، من متانة النماذج الحاسوبية المستخدمة في تحليل هذه المهام. ولتقييم آثار الاختبار وإعادة الاختبار، أدّت عينة تضم 72 متطوعًا سليمًا المهام مرتين بفاصل زمني قدره 4 أسابيع. كما قيّمنا أثر المتغيرات الديموغرافية مثل العمر والنوع الاجتماعي. وأظهرت التحليلات الحاسوبية استعادة متينة للمعلمات الحاسوبية في معظم الجوانب، حتى في ظروف التدهور الشديد في جودة البيانات. وبالمثل، كان ثبات الاختبار وإعادة الاختبار لمقاربتنا بين الزيارتين مُرضيًا. وباستثناء زيادة طفيفة في الحساسية للمكافأة في مهمة الأداء، لم تُلاحظ فروق منهجية بين الزيارتين الأولى والثانية. وعلاوة على ذلك، كان الارتباط بين الزيارتين عبر المشاركين دالًا إحصائيًا وأعلى من 0.5 في معظم المعلمات. ويبدو التنميط الظاهري الحاسوبي للدافعية ثابتًا ولا يتغير بدرجة كبيرة بفعل إجراءات الاختبار وإعادة الاختبار، على الأقل عندما تُجرى التقييمات بفاصل زمني قدره أربعة أسابيع. وتشير هذه النتائج إلى إمكان تفسير أي اختلافات تُلاحظ بين تقييمين بسهولة، مما يوفّر أساسًا منهجيًا متينًا للدراسات الطولية المستقبلية.",
+  "authors": [
+   "Claire Jaffré",
+   "Pablo Carrillo",
+   "Etienne Pigeon",
+   "Jean Daunizeau",
+   "Raphaël Le Bouc",
+   "Jacob Dhôte",
+   "Mathias Pessiglione",
+   "Fabien Vinckier"
+  ],
+  "journal": "PLOS Mental Health",
+  "journal_ar": "بلوس للصحة النفسية",
+  "volume": "3",
+  "issue": "11",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "e0000730",
+  "published": "2026-11-16",
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "copyright": "© 2026 Jaffré et al. This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "source_urls": [
+   "https://journals.plos.org/mentalhealth/article?id=10.1371/journal.pmen.0000730"
+  ],
+  "added": "2026-11-17"
+ },
+ {
+  "doi": "10.1371/journal.pone.0362807",
+  "title": "Implementation of mental health screening tools among women refugees and asylum seekers in the United States: A systematic review",
+  "title_ar": "تطبيق أدوات فحص الصحة النفسية لدى النساء اللاجئات وطالبات اللجوء في الولايات المتحدة: مراجعة منهجية",
+  "abstract": "Globally, displaced populations face significant mental health challenges, with women refugees and asylum seekers experiencing greater risks of anxiety, depression, and post-traumatic stress disorder. Despite the widespread use of mental health screening tools such as the Patient Health Questionnaire (PHQ-9), the Generalized Anxiety Disorder (GAD-7), and the Post-Traumatic Stress Disorder Checklist (PCL-5), their implementation among refugee women remains underexplored. This systematic review examines the adoption, appropriateness, acceptability, and fidelity of use of mental health screening tools for adult women refugees and asylum seekers in the United States. By identifying and synthesizing evidence on critical gaps, this study aims to inform improvements in mental health screening and care for this vulnerable population. A systematic search across ten databases identified relevant studies examining the four key implementation research outcomes (i.e., adoption, appropriateness, acceptability, and fidelity). No restrictions were applied regarding publication year or language. Screening and data extraction were conducted using Covidence, focusing on study design, relevant screening tools for common mental health disorders, and demographic details. Both quantitative and qualitative analyses were performed to synthesize the data. Our search identified 2,011 studies, from which 1,041 duplicates were removed by Covidence and an additional 49 were manually deduplicated, leaving 921 studies for screening. Ultimately, 37 studies met the inclusion criteria, however only three specifically addressed our population of interest. These reported qualitative data on appropriateness and acceptability, demonstrating positive outcomes. This systematic review underscores significant gaps in the implementation of mental health screening tools for women refugees and asylum seekers in the U.S. Data remains limited, with inconsistent reporting on key implementation research outcomes including adoption, appropriateness, acceptability, and fidelity. Our findings point to a need for research explicitly examining implementation processes and outcomes to guide evidence-based practices and ensure culturally responsive mental health care for refugee women.",
+  "abstract_ar": "تواجه الفئات السكانية النازحة على مستوى العالم تحديات كبيرة في الصحة النفسية، وتتعرض النساء اللاجئات وطالبات اللجوء لمخاطر أكبر للإصابة بالقلق والاكتئاب واضطراب ما بعد الصدمة. وعلى الرغم من شيوع استخدام أدوات فحص الصحة النفسية، مثل استبيان صحة المريض (PHQ-9)، ومقياس اضطراب القلق المعمم (GAD-7)، وقائمة أعراض اضطراب ما بعد الصدمة (PCL-5)، فإن تطبيقها لدى النساء اللاجئات لا يزال غير مستكشف بالقدر الكافي. وتبحث هذه المراجعة المنهجية تبنّي أدوات فحص الصحة النفسية للنساء البالغات من اللاجئات وطالبات اللجوء في الولايات المتحدة، وملاءمتها، ومقبوليتها، ومدى الالتزام بأصول استخدامها. ومن خلال تحديد الأدلة المتعلقة بالفجوات الجوهرية وتوليفها، تهدف هذه الدراسة إلى الاسترشاد بها في تحسين فحص الصحة النفسية ورعايتها لهذه الفئة الهشّة. وحدّد بحث منهجي في عشر قواعد بيانات الدراسات ذات الصلة التي تناولت النواتج الأربعة الرئيسية لبحوث التنفيذ، وهي التبنّي والملاءمة والمقبولية والالتزام بأصول التطبيق. ولم تُفرض قيود تتعلق بسنة النشر أو اللغة. وأُجري فرز الدراسات واستخراج البيانات باستخدام منصة Covidence، مع التركيز على تصميم الدراسة، وأدوات الفحص ذات الصلة بالاضطرابات النفسية الشائعة، والتفاصيل الديموغرافية. وأُجريت تحليلات كمية ونوعية لتوليف البيانات. وحدّد بحثنا 2,011 دراسة، أزالت منها منصة Covidence عددًا قدره 1,041 دراسة مكررة، وأُزيلت يدويًا 49 دراسة مكررة إضافية، ليتبقى 921 دراسة للفرز. وفي النهاية، استوفت 37 دراسة معايير الإدراج، إلا أن ثلاث دراسات فقط تناولت تحديدًا الفئة السكانية محل اهتمامنا. وقدّمت هذه الدراسات بيانات نوعية عن الملاءمة والمقبولية أظهرت نتائج إيجابية. وتؤكد هذه المراجعة المنهجية وجود فجوات كبيرة في تطبيق أدوات فحص الصحة النفسية لدى النساء اللاجئات وطالبات اللجوء في الولايات المتحدة. ولا تزال البيانات محدودة، مع عدم الاتساق في الإبلاغ عن النواتج الرئيسية لبحوث التنفيذ، بما فيها التبنّي والملاءمة والمقبولية والالتزام بأصول التطبيق. وتشير نتائجنا إلى الحاجة إلى أبحاث تفحص صراحةً عمليات التنفيذ ونواتجه، لتوجيه الممارسات القائمة على الأدلة وضمان رعاية للصحة النفسية تستجيب للاعتبارات الثقافية لدى النساء اللاجئات.",
+  "authors": [
+   "Pierre J. Amiel",
+   "Shalini Suresh",
+   "Abdulaziz Almuhanna",
+   "Pratik Chhetri",
+   "John Pateña",
+   "Joyce Gyamfi",
+   "Dorice Vieira",
+   "Chukwuemeka Iloegbu",
+   "Emmanuel Peprah"
+  ],
+  "journal": "PLOS One",
+  "journal_ar": "بلوس وان",
+  "volume": "21",
+  "issue": "11",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "e0362807",
+  "published": "2026-11-16",
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "copyright": "© 2026 Amiel et al. This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "source_urls": [
+   "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0362807"
+  ],
+  "added": "2026-11-17"
  }
 ]
