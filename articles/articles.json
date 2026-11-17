@@ -597,5 +597,135 @@
     "discuss": "إيه أصعب حاجة في إنك تساعد حد قريب منك بيتعرض لأذى في بيته؟",
     "image": "art-helping-someone-in-abusive-relationship",
     "image_alt": "رسم لصاحبتين قاعدين على ترابيزة قدامهم قهوة، واحدة بتسمع وبتمد إيدها للتانية، وفوقهم فقاعة كلام فيها قلب"
+  },
+  {
+    "slug": "why-is-it-hard-to-leave",
+    "category": "relationships-family",
+    "title": "ليه صعب أسيب علاقة مؤذية؟ ٥ حبال بتشدك وإزاي تفكها",
+    "description": "ليه صعب تسيب علاقة مؤذية حتى وانت عارف إنها غلط؟ الارتباط الصادم و٥ أسباب نفسية بتشدك، وخطوات عملية وآمنة تبدأ بيها تبعد من غير ما تجلد نفسك.",
+    "summary": "صعوبة إنك تسيب علاقة بتأذيك مش ضعف ولا غباء. فيه ٥ حبال نفسية بتشدك: الارتباط الصادم، واللي صرفته من عمرك، والأمل في النسخة الحلوة، والخوف، ولوم النفس. لما تعرف أقوى حبل عندك تقدر تفكه بخطوات صغيرة، ولو خايف على سلامتك خطط للبعد بهدوء ومع حد بتثق فيه.",
+    "refs": [
+      {
+        "title": "Dutton & Painter (1993). Emotional attachments in abusive relationships: A test of traumatic bonding theory. Violence and Victims, 8(2), 105–120",
+        "url": "https://www.ojp.gov/ncjrs/virtual-library/abstracts/emotional-attachments-abusive-relationships-test-traumatic-bonding"
+      },
+      {
+        "title": "Rusbult & Martz (1995). Remaining in an abusive relationship: An investment model analysis of nonvoluntary dependence. Personality and Social Psychology Bulletin",
+        "url": "https://journals.sagepub.com/doi/10.1177/0146167295216002"
+      },
+      {
+        "title": "Campbell et al. (2003). Risk factors for femicide in abusive relationships: Results from a multisite case control study. American Journal of Public Health, 93(7), 1089–1097",
+        "url": "https://ideas.repec.org/a/aph/ajpbhl/20039371089-1097_4.html"
+      },
+      {
+        "title": "Cleveland Clinic — Trauma Bonding",
+        "url": "https://health.clevelandclinic.org/trauma-bonding"
+      }
+    ],
+    "minutes": 6,
+    "date": "2026-11-16",
+    "reviewed_on": "2026-11-16",
+    "chapter": "من الفصل الخامس",
+    "discuss": "أنهي حبل من الخمسة حاسس إنه الأقوى عند الناس اللي حواليك؟",
+    "image": "art-why-is-it-hard-to-leave",
+    "image_alt": "رسم لبنت واقفة قدام باب مفتوح فيه شمس وقلب، وخمس حبال من سحابة رمادي بتشدها لورا"
+  },
+  {
+    "slug": "early-red-flags-love-bombing",
+    "category": "relationships-family",
+    "title": "العلامات الحمرا في أول التعارف: إزاي تعرف القصف بالحب بدري؟",
+    "description": "إزاي تشوف العلامات الحمرا في أول التعارف قبل ما تتعلق؟ يعني إيه القصف بالحب، وإشارة المرور بين الأحمر والأصفر والأخضر، و٥ خطوات تحمي بيها نفسك.",
+    "summary": "العلامات الحمرا غالبًا بتظهر بدري، وأخطرها «القصف بالحب»: اهتمام واستعجال زيادة عن اللزوم في الأول. الفرق بين الحماس الصادق والتلاعب بيبان لما تقول «لأ»: هل بيحترم حدودك ولا بيضغط؟ امشي على مهلك، وخلّي صحابك قريبين، ولو فيه تهديد أو أذى اطلب مساعدة فورًا.",
+    "refs": [
+      {
+        "title": "Cleveland Clinic — Love Bombing",
+        "url": "https://health.clevelandclinic.org/love-bombing/"
+      },
+      {
+        "title": "Cleveland Clinic — How To Spot Relationship Red Flags",
+        "url": "https://health.clevelandclinic.org/domestic-abuse-how-to-spot-relationship-red-flags/"
+      },
+      {
+        "title": "Strutzenberg, Wiersma-Mosley, Jozkowski & Becnel (2017). Love-bombing: A narcissistic approach to relationship formation. Discovery, 18(1), 81–89",
+        "url": "https://scholarworks.uark.edu/discoverymag/vol18/iss1/14/"
+      }
+    ],
+    "minutes": 6,
+    "date": "2026-11-16",
+    "chapter": "من الفصل الرابع",
+    "discuss": "إيه أكتر علامة حمرا الناس بتقول عليها «عادي» في أول التعارف؟",
+    "image": "art-early-red-flags-love-bombing",
+    "image_alt": "رسم لبنت شعرها بني ماسكة موبايل وبتبتسم، وقدامها فقاعات رسايل كتير كلها قلوب",
+    "reviewed_on": "2026-11-16"
+  },
+  {
+    "slug": "first-days-after-breakup",
+    "category": "resilience-recovery",
+    "title": "أول أيام بعد الانفصال: خطة تعافي بسيطة ترجّعك لنفسك",
+    "description": "إزاي تعدي أول أيام بعد الانفصال؟ ليه الوجع بيبقى زي الاشتياق، وخطة ٣ أسابيع بخطوة صغيرة كل يوم تهدّي بيها جسمك وترجع لنفسك، وامتى تكلم متخصص.",
+    "summary": "وجع أول أيام بعد الانفصال حقيقي، والمخ بيتعامل معاه زي اشتياق. التعافي بيبدأ بخطوات صغيرة: ترجّع نومك وروتينك، وترد على الصوت اللي بيجلدك بحنية، وترجع لناسك وهواياتك. ولو الحزن فضل تقيل أسابيع أو جتلك أفكار إنك تؤذي نفسك، كلم متخصص.",
+    "refs": [
+      {
+        "title": "Fisher, Brown, Aron, Strong & Mashek (2010). Reward, addiction, and emotion regulation systems associated with rejection in love. Journal of Neurophysiology (Rutgers news release)",
+        "url": "https://www.rutgers.edu/news/study-finds-romantic-rejection-stimulates-areas-brain-involved-motivation-reward-and-addiction"
+      },
+      {
+        "title": "Larson & Sbarra (2015). Participating in research on romantic breakups promotes emotional recovery via changes in self-concept clarity. Social Psychological and Personality Science, 6(4), 399–406",
+        "url": "https://experts.arizona.edu/en/publications/participating-in-research-on-romantic-breakups-promotes-emotional/"
+      },
+      {
+        "title": "Cleveland Clinic — How To Get Over a Breakup",
+        "url": "https://health.clevelandclinic.org/how-to-get-over-a-breakup"
+      }
+    ],
+    "minutes": 6,
+    "date": "2026-11-16",
+    "chapter": "من الفصل السادس",
+    "discuss": "إيه الحاجة الصغيرة اللي ساعدتك أو ساعدت حد تعرفه بعد انفصال؟",
+    "image": "art-first-days-after-breakup",
+    "image_alt": "رسم لبنت قاعدة على كنبة ماسكة كوباية شاي، وجنبها شباك بتطلع منه الشمس",
+    "reviewed_on": "2026-11-16"
+  },
+  {
+    "slug": "procrastination-not-laziness",
+    "category": "personality-behavior",
+    "title": "التسويف مش كسل: ليه بأجّل كل حاجة لآخر لحظة وإزاي أبدأ؟",
+    "description": "ليه بأجّل كل حاجة رغم إني عارف إنها مهمة؟ التسويف مش كسل، ده هروب من إحساس تقيل. اعرف أسبابه وخطوات عملية تبدأ بيها، وامتى تكلم متخصص.",
+    "summary": "التسويف مش كسل؛ الأبحاث بتقول إنه في الغالب هروب مؤقت من إحساس مش مريح زي الملل أو الخوف من الفشل أو الشك في النفس، والتمن بندفعه بعدين. البداية بتسهل لما تسمّي الإحساس، وتقسّم المهمة لخطوة صغيرة جدًا، وتسامح نفسك على اللي فات بدل ما تجلدها. ولو التأجيل مأثر بوضوح على حياتك أو جاي مع حزن مستمر، كلم متخصص.",
+    "refs": [
+      {
+        "title": "Centre for Clinical Interventions (CCI) — Putting Off Procrastinating, Module 1: Understanding Procrastination",
+        "url": "https://cci.health.wa.gov.au/-/media/CCI/Consumer-Modules/Put-Off-Procrastinating/Putting-Off-Procrastinating---01---Understanding-Procrastination-Part-1.pdf"
+      },
+      {
+        "title": "CCI — Putting Off Procrastinating, Module 2: Understanding Procrastination Part 2",
+        "url": "https://www.cci.health.wa.gov.au/~/media/CCI/Consumer%20Modules/Put%20Off%20Procrastinating/Putting%20Off%20Procrastinating%20-%2002%20-%20Understanding%20Procrastination%20Part%202.pdf"
+      },
+      {
+        "title": "CCI — Putting Off Procrastinating, Module 5: Practical Techniques to Stop Procrastination",
+        "url": "https://www.cci.health.wa.gov.au/~/media/CCI/Consumer-Modules/Put-Off-Procrastinating/Putting-Off-Procrastinating---05---Practical-Techniques-to-stop-Procrastination.pdf"
+      },
+      {
+        "title": "Sirois & Pychyl (2013). Procrastination and the priority of short-term mood regulation: Consequences for future self. Social and Personality Psychology Compass, 7(2), 115–127. doi:10.1111/spc3.12011",
+        "url": "https://doi.org/10.1111/spc3.12011"
+      },
+      {
+        "title": "Steel (2007). The nature of procrastination: A meta-analytic and theoretical review of quintessential self-regulatory failure. Psychological Bulletin, 133(1), 65–94. doi:10.1037/0033-2909.133.1.65 (ScienceDaily summary)",
+        "url": "https://www.sciencedaily.com/releases/2007/01/070110090851.htm"
+      },
+      {
+        "title": "Wohl, Pychyl & Bennett (2010). I forgive myself, now I can study. Personality and Individual Differences, 48(7), 803–808. doi:10.1016/j.paid.2010.01.029 (BPS Research Digest summary)",
+        "url": "https://bps.org.uk/research-digest/cure-procrastination-forgive-yourself"
+      },
+      {
+        "title": "NIMH — Attention-Deficit/Hyperactivity Disorder (ADHD)",
+        "url": "https://www.nimh.nih.gov/health/topics/attention-deficit-hyperactivity-disorder-adhd"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-16",
+    "image": "art-procrastination-not-laziness",
+    "image_alt": "رسم لبنت قاعدة على كرسي ماسكة موبايل منوّر وزعلانة، وجنبها ترابيزة عليها لابتوب مقفول وساعة على الحيطة",
+    "reviewed_on": "2026-11-16"
   }
 ]

@@ -279,6 +279,12 @@ def put_block(path, block, before):
         f.write(t)
 
 
+# Google's video rich-result check rejects an author that is only an @id
+# reference ("invalid object type in author"), so spell the Person out.
+AUTHOR = {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail",
+          "alternateName": "د. ميلاد ميخائيل", "url": f"{SITE}/about/"}
+
+
 def iso_datetime(d):
     """Google wants uploadDate as a full ISO 8601 date-time WITH a time zone;
     a bare date gives a Search Console structured-data warning."""
@@ -299,7 +305,7 @@ def ld_video(v):
          "uploadDate": iso_datetime(v["published"]),
          "contentUrl": f"https://www.youtube.com/watch?v={v['id']}",
          "embedUrl": f"https://www.youtube-nocookie.com/embed/{v['id']}",
-         "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
+         "inLanguage": "ar", "author": AUTHOR}
     return d
 
 
@@ -345,7 +351,7 @@ def page(vs, data=None):
     if not vs:
         sec = f'<p>الفيديوهات هتظهر هنا قريب. لحد ما تظهر، تقدر تتفرّج على <a href="{HANDLE}">القناة على يوتيوب</a>.</p>'
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "فيديوهات د. ميلاد ميخائيل",
-          "url": f"{SITE}/videos/", "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"},
+          "url": f"{SITE}/videos/", "inLanguage": "ar", "author": AUTHOR,
           "hasPart": [ld_video(v) for v in vs if v.get("published")]}
     desc = "فيديوهات بالعامية عن الحب والتعلق والقلق والبحث عن المعنى، من قناة «جلسة شيزلونج» لـ د. ميلاد ميخائيل."
     first = vs[0]["id"] if vs else None
