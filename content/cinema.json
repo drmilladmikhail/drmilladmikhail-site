@@ -40,6 +40,188 @@
       },
       "reviewed_on": "2026-11-17",
       "updated": "2026-11-17"
+    },
+    {
+      "slug": "joker",
+      "film": "Joker",
+      "film_ar": "الجوكر",
+      "year": "2019",
+      "director": "Todd Phillips",
+      "title": "التحليل النفسي لفيلم Joker: لما الوجع يتراكم ومحدش شايف",
+      "theme": "الصدمات المتراكمة والتهميش ووصمة المرض النفسي",
+      "description": "مهرج بيضحك غصب عنه في مدينة مش شايفاه. تحليل نفسي لفيلم Joker: صدمات الطفولة، والتهميش، وليه المرض النفسي مش معناه عنف.",
+      "summary": "فيلم Joker بيورّينا اللي بيحصل لإنسان لما الوجع يتراكم عليه من طفولته ومحدش شايفه. بس الفيلم بيخلط بين المرض النفسي والعنف، والحقيقة إن المرضى النفسيين أكتر عرضة إنهم يتأذوا مش إنهم يأذوا.",
+      "date": "2026-11-17",
+      "minutes": 7,
+      "image": "joker",
+      "image_alt": "رسم لسلّم طويل بين عمارات مدينة بالليل، وفوقه قناعين مسرح واحد بيضحك وواحد بيعيط",
+      "spoilers": true,
+      "related": [
+        "/articles/psychiatrist-vs-psychologist/"
+      ],
+      "refs": [
+        {
+          "title": "Wikipedia: Joker (2019 film)",
+          "url": "https://en.wikipedia.org/wiki/Joker_(2019_film)"
+        },
+        {
+          "title": "AFSP: Debunking the myth of violence and mental illness",
+          "url": "https://afsp.org/story/debunking-the-myth-of-violence-and-mental-illness"
+        },
+        {
+          "title": "CDC: About Adverse Childhood Experiences",
+          "url": "https://www.cdc.gov/aces/about/index.html"
+        }
+      ],
+      "trailer": {
+        "youtube_id": "U5oZx61dRZw",
+        "channel": "Warner Bros. UK",
+        "title": "JOKER – Teaser Trailer"
+      },
+      "requested_on": "2026-11-17"
+    },
+    {
+      "slug": "pursuit-of-happyness",
+      "film": "The Pursuit of Happyness",
+      "film_ar": "البحث عن السعادة",
+      "year": "2006",
+      "director": "Gabriele Muccino",
+      "title": "التحليل النفسي لفيلم The Pursuit of Happyness: المرونة النفسية لما الدنيا تقفل في وشك",
+      "theme": "المرونة النفسية ومواجهة الأزمات",
+      "description": "أب وابنه والدنيا بتقفل في وشهم باب ورا باب. تحليل نفسي لفيلم The Pursuit of Happyness: يعني إيه مرونة نفسية، وإزاي نبنيها خطوة خطوة.",
+      "summary": "فيلم The Pursuit of Happyness قصة حقيقية عن المرونة النفسية: إنك تتوجع وتعيط وبرضه تكمّل. والمرونة مهارة بتتعلم، قايمة على الناس اللي حوالينا، والمعنى، والخطوات الصغيرة، وطلب المساعدة.",
+      "date": "2026-11-17",
+      "minutes": 6,
+      "image": "pursuit-of-happyness",
+      "image_alt": "رسم لأب وابنه ماسكين إيد بعض وماشيين على طريق طالع لتل ناحية شمس بتطلع",
+      "spoilers": true,
+      "related": [
+        "/articles/burnout-signs-recovery/"
+      ],
+      "refs": [
+        {
+          "title": "Wikipedia: The Pursuit of Happyness",
+          "url": "https://en.wikipedia.org/wiki/The_Pursuit_of_Happyness"
+        },
+        {
+          "title": "APA: Building your resilience",
+          "url": "https://www.apa.org/topics/resilience/building-your-resilience"
+        }
+      ],
+      "trailer": {
+        "youtube_id": "DMOBlEcRuw8",
+        "title": "The Pursuit of Happyness (2006) Official Trailer"
+      },
+      "requested_on": "2026-11-17"
+    },
+    {
+      "slug": "fight-club",
+      "film": "Fight Club",
+      "film_ar": "نادي القتال",
+      "year": "1999",
+      "director": "David Fincher",
+      "title": "التحليل النفسي لفيلم Fight Club: لما الجزء اللي كبتناه يطلع يتكلم",
+      "theme": "الكبت والهوية والخدر العاطفي",
+      "description": "راجل مش بينام، وصاحب غامض ظهر فجأة. تحليل نفسي لفيلم Fight Club: الكبت والخدر العاطفي، والفرق بين الفيلم واضطراب الهوية الانشقاقي الحقيقي.",
+      "summary": "فيلم Fight Club بيورّينا اللي بيحصل لما الإنسان يكتم غضبه ورغباته سنين: الجزء المكتوم بيدوّر على طريقة يطلع بيها. والفيلم مش وصف علمي لاضطراب الهوية الانشقاقي، اللي غالبًا بيرتبط بصدمات الطفولة.",
+      "date": "2026-11-17",
+      "minutes": 6,
+      "image": "fight-club",
+      "image_alt": "رسم لمراية مشروخة قدامها خيال واحد، وجوه المراية خيالين مختلفين",
+      "spoilers": true,
+      "related": [
+        "/tests/meaning-in-life-mlq/"
+      ],
+      "refs": [
+        {
+          "title": "Britannica: Fight Club",
+          "url": "https://www.britannica.com/topic/Fight-Club"
+        },
+        {
+          "title": "Cleveland Clinic: Dissociative Identity Disorder",
+          "url": "https://my.clevelandclinic.org/health/diseases/9792-dissociative-identity-disorder-multiple-personality-disorder"
+        }
+      ],
+      "trailer": {
+        "youtube_id": "BdJKm16Co6M",
+        "channel": "20th Century FOX",
+        "title": "Fight Club | #TBT Trailer"
+      },
+      "requested_on": "2026-11-17"
+    },
+    {
+      "slug": "a-beautiful-mind",
+      "film": "A Beautiful Mind",
+      "film_ar": "عقل جميل",
+      "year": "2001",
+      "director": "Ron Howard",
+      "title": "التحليل النفسي لفيلم A Beautiful Mind: الفصام والتعافي ودعم العيلة",
+      "theme": "الفصام والتعايش معه ودعم الأسرة",
+      "description": "عبقري وشفرات سرية وناس بتراقبه. تحليل نفسي لفيلم A Beautiful Mind: يعني إيه فصام، وإيه اللي الفيلم غيّره عن الحقيقة، وإزاي العلاج والدعم بيفرقوا.",
+      "summary": "فيلم A Beautiful Mind بيدخلنا جوه عقل جون ناش لدرجة إننا بنصدّق هلاوسه. وبيورّينا إن الفصام مرض ليه علاج، وإن التعافي ممكن بالعلاج ودعم العيلة، مع إن الفيلم غيّر حاجات عن القصة الحقيقية.",
+      "date": "2026-11-17",
+      "minutes": 7,
+      "image": "a-beautiful-mind",
+      "image_alt": "رسم لشباك بالليل عليه معادلات ورموز رياضية منوّرة ونقط متوصلة ببعض",
+      "spoilers": true,
+      "related": [
+        "/articles/psychiatrist-vs-psychologist/"
+      ],
+      "refs": [
+        {
+          "title": "Britannica: A Beautiful Mind",
+          "url": "https://www.britannica.com/topic/A-Beautiful-Mind"
+        },
+        {
+          "title": "MIT News: John Nash",
+          "url": "https://news.mit.edu/2002/nash-0213"
+        },
+        {
+          "title": "NIMH: Schizophrenia",
+          "url": "https://www.nimh.nih.gov/health/publications/schizophrenia"
+        }
+      ],
+      "trailer": {
+        "youtube_id": "EajIlG_OCvw",
+        "channel": "Amblin",
+        "title": "A BEAUTIFUL MIND (2001) | Theatrical Trailer"
+      },
+      "requested_on": "2026-11-17"
+    },
+    {
+      "slug": "inception",
+      "film": "Inception",
+      "film_ar": "البداية",
+      "year": "2010",
+      "director": "Christopher Nolan",
+      "title": "التحليل النفسي لفيلم Inception: الذنب اللي بيطاردنا في أحلامنا",
+      "theme": "الذنب والحزن المعقّد والإسقاط",
+      "description": "لص بيدخل أحلام الناس، وست غامضة بتطارده في كل حلم. تحليل نفسي لفيلم Inception: الذنب بعد الفقد، والإسقاط، والأفكار اللي بتتزرع جوانا.",
+      "summary": "ورا الأكشن والأحلام، فيلم Inception حكاية راجل شايل ذنب تقيل بعد موت مراته، والذنب ده بيطارده في شكل إسقاط من عقله الباطن. والشفا في الفيلم بييجي لما يتصالح مع الفقد ويرجع للي بيحبهم.",
+      "date": "2026-11-17",
+      "minutes": 7,
+      "image": "inception",
+      "image_alt": "رسم لنحلة (لعبة بتلف) على ترابيزة، ووراها مدينة بتتطوي لفوق تحت سما فيها نجوم",
+      "spoilers": true,
+      "related": [
+        "/tests/self-compassion-scs/"
+      ],
+      "refs": [
+        {
+          "title": "Wikipedia: Inception",
+          "url": "https://en.wikipedia.org/wiki/Inception"
+        },
+        {
+          "title": "Mayo Clinic: Complicated grief",
+          "url": "https://www.mayoclinic.org/diseases-conditions/complicated-grief/symptoms-causes/syc-20360374"
+        }
+      ],
+      "trailer": {
+        "youtube_id": "Qwe6qXFTdgc",
+        "channel": "Warner Bros. Entertainment",
+        "title": "Inception | Digital Trailer"
+      },
+      "requested_on": "2026-11-17"
     }
   ]
 }

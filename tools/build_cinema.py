@@ -9,12 +9,15 @@ Source of truth:
 
 Each entry: {"slug", "film", "film_ar", "year", "director", "title", "theme", "description",
              "summary", "date", "minutes", "image", "image_alt", "spoilers", "related", "refs",
-             "trailer" (optional: {"youtube_id", "channel", "title"}), "reviewed_on"}
+             "trailer" (optional: {"youtube_id", "channel" (only if verified), "title"}),
+             "reviewed_on" and/or "requested_on"}
 Trailer: only an OFFICIAL trailer (studio channel or a licensed trailer channel such as Movieclips),
 never a clip that spoils the ending. It is click-to-play via assets/videos.js (youtube-nocookie,
 nothing loads from YouTube until the visitor presses play).
 Review rule (content/REVIEW-POLICY.md): an entry goes live only when it has "reviewed_on"
-(the date Dr. Millad approved it). Without it the entry is skipped, and /cinema/ isn't built
+(the date Dr. Millad approved it) or "requested_on" (the date he asked for that exact film in the
+chat; his standing instruction of 2026-11-17 is to publish what he asks for without coming back for
+approval — he reviews afterwards and Claude fixes). Without it the entry is skipped, and /cinema/ isn't built
 until at least one entry is reviewed. CINEMA_PREVIEW=1 builds unreviewed entries for a local
 preview only — never commit a preview build.
 
@@ -58,7 +61,7 @@ def load(root=ROOT, preview=None):
             raise SystemExit(f"cinema {f['slug']}: content/cinema/{f['slug']}.html not found")
         if not (Path(root) / "assets" / "cinema" / (f["image"] + ".jpg")).exists():
             raise SystemExit(f"cinema {f['slug']}: assets/cinema/{f['image']}.jpg not found")
-        reviewed = bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(f.get("reviewed_on", ""))))
+        reviewed = any(re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(f.get(k, ""))) for k in ("reviewed_on", "requested_on"))
         if reviewed or preview:
             items.append(f)
     return sorted(items, key=lambda f: (f["date"], f["slug"]), reverse=True)
@@ -85,7 +88,7 @@ def shell(rel, title, description, og, kind, ld, body):
 {ba.social(url, title, description, og, title, kind)}
 <meta name="theme-color" content="#2f6f62">
 {ba.FONTS}
-<link rel="stylesheet" href="/assets/cinema.css?v=1">
+<link rel="stylesheet" href="/assets/cinema.css?v=2">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False).replace("<", chr(92) + "u003c")}</script>
 </head>
 <body class="cinema-page">
@@ -123,7 +126,7 @@ def trailer_block(f):
           <img src="https://i.ytimg.com/vi_webp/{vid}/hqdefault.webp" width="480" height="360" alt="" loading="lazy" decoding="async">
           <span class="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path class="bg" d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2.4 34 .4 34 .4s-21.2 0-26.5 1.3a8.5 8.5 0 0 0-6 6C.2 13 .2 24 .2 24s0 11 1.3 16.3a8.5 8.5 0 0 0 6 6c5.3 1.3 26.5 1.3 26.5 1.3s21.2 0 26.5-1.3a8.5 8.5 0 0 0 6-6C67.8 35 67.8 24 67.8 24s0-11-1.3-16.3Z"/><path class="fg" d="M45 24 27 14v20"/></svg></span>
         </a>
-        <figcaption>الإعلان الرسمي للفيلم من قناة <span lang="en" dir="ltr">{esc(t.get("channel", "YouTube"))}</span> على يوتيوب. مفيهوش حرق للنهاية، والفيديو مش بيشتغل غير لما تضغط.</figcaption>
+        <figcaption>الإعلان الرسمي للفيلم{(' من قناة <span lang="en" dir="ltr">' + esc(t["channel"]) + '</span>') if t.get("channel") else ""} على يوتيوب. مفيهوش حرق للنهاية، والفيديو مش بيشتغل غير لما تضغط.</figcaption>
       </figure>'''
 
 

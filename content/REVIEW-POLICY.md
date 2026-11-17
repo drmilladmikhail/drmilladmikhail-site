@@ -21,5 +21,11 @@ the translation task may push English adaptations straight to `main` (no review 
 "reviewed_on" date. The English entry's "reviewed_on" = the Arabic original's date. It must translate only: no new facts, sources or
 claims, every safety note kept. Anything else in English that is new health content still follows the review steps above.
 
+Exception — «سينما على الشيزلونج» films he asks for by name (his standing instruction, 2026-11-17: «اعمل الصح ديما من غير ما ترجعلي انت المدير للمشروع»):
+when he names a film in the chat, Claude writes the analysis and publishes it directly with "requested_on" = that date
+(tools/build_cinema.py accepts "reviewed_on" or "requested_on"). Same writing rules: sources opened, no diagnosis of real people,
+say where the film exaggerates, safe-messaging, crisis lines from tools/pages_trust.py. He reviews afterwards; Claude fixes what he asks.
+Films chosen by a scheduled task (not named by him) still go through a review PR.
+
 Also: his display name is د. ميلاد ميخائيل (never «ميلاد منير» in new text). Hosting is GitHub Pages (not Netlify).
 Never invent research, citations, numbers, qualifications, licences or experience.

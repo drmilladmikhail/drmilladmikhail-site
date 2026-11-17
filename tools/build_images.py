@@ -88,7 +88,7 @@ def cover(im, w, h):
 
 def wrap(draw, text, fnt, width, rtl=True):
     kw = {"direction": "rtl", "language": "ar"} if rtl else {}
-    words, lines, cur = text.split(), [], ""
+    words, lines, cur = [w for w in text.split(" ") if w], [], ""  # NBSP keeps a phrase (an English film title) on one line
     for wd in words:
         test = (cur + " " + wd).strip()
         if draw.textlength(test, font=fnt, **kw) <= width or not cur:
@@ -120,7 +120,8 @@ def card(out, image_path, kicker, title, foot, rtl=True, title_font="naskh-700.t
         tf = font(title_font, size)
         lines = wrap(d, title, tf, width, rtl)
         lh = round(size * 1.55)
-        if len(lines) <= 5 and 130 + lh * len(lines) <= H - 150:
+        widest = max(d.textlength(ln, font=tf, **kw) for ln in lines)
+        if len(lines) <= 5 and 130 + lh * len(lines) <= H - 150 and widest <= width:
             break
     y = 130
     for ln in lines:
