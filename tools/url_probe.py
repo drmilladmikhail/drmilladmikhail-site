@@ -18,7 +18,11 @@ with sync_playwright() as p:
             html = pg.content()
             links = sorted(set(re.findall(r'href="([^"]*(?:/stores/|/e/B0|/author/|/-/e/)[^"]*)"', html)))[:15]
             out.append({"url": u, "status": r.status if r else None, "final": pg.url, "title": pg.title()[:150],
-                        "author_links": links, "byline": re.findall(r'class="author[^"]*"[^>]*>.{0,300}', html)[:2]})
+                        "author_links": links, "byline": re.findall(r'class="author[^"]*"[^>]*>.{0,300}', html)[:2],
+                        # YouTube: uploader of a video page, and video ids/titles on a channel or search page
+                        "yt_owner": list(dict.fromkeys(re.findall(r'"ownerChannelName":"([^"]+)"', html)))[:3],
+                        "yt_videos": list(dict.fromkeys(re.findall(r'"videoId":"([\w-]{11})"', html)))[:12],
+                        "yt_titles": list(dict.fromkeys(re.findall(r'"title":\{"runs":\[\{"text":"([^"]{5,120})"', html)))[:12]})
         except Exception as e:
             out.append({"url": u, "error": str(e)[:200]})
         pg.close()
