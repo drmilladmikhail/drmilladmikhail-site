@@ -743,6 +743,8 @@ def main():
     challenges_page()
     import build_glossary
     build_glossary.build()
+    import build_cinema
+    build_cinema.build()
     start_page()
     book_page()
     battery_page()

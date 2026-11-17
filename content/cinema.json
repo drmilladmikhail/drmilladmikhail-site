@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "slug": "shutter-island",
+      "film": "Shutter Island",
+      "film_ar": "جزيرة شاتر",
+      "year": "2010",
+      "director": "Martin Scorsese",
+      "title": "التحليل النفسي لفيلم Shutter Island: لما العقل يهرب من وجع مش قادر يشيله",
+      "theme": "آليات الدفاع النفسي وصدمة الفقد",
+      "description": "تحليل نفسي لفيلم Shutter Island بالعربي: إزاي الإنكار وآليات الدفاع بتحمي العقل من صدمة الفقد والذنب، وإزاي ده بيحصل معانا في الحياة بشكل أبسط.",
+      "summary": "فيلم Shutter Island بيقدّم دراما نفسية عن آليات الدفاع، وبالذات الإنكار: عقل البطل بيخلق واقع بديل عشان يهرب من صدمة فقد وذنب أكبر من إن وعيه يستحملها.",
+      "date": "2026-11-17",
+      "minutes": 6,
+      "image": "shutter-island",
+      "image_alt": "رسم لجزيرة صخرية وسط بحر هايج وعليها فنار، والضباب مغطي نصها",
+      "spoilers": true,
+      "related": ["/articles/why-is-it-hard-to-leave/", "/glossary/"],
+      "refs": [
+        {"title": "Wikipedia: Shutter Island (film)", "url": "https://en.wikipedia.org/wiki/Shutter_Island_(film)"},
+        {"title": "Simply Psychology: Denial as a Defense Mechanism", "url": "https://www.simplypsychology.org/denial-as-a-defense-mechanism.html"},
+        {"title": "Cleveland Clinic: Grief — what's normal, what's not", "url": "https://health.clevelandclinic.org/grief-whats-normal-whats-not-and-13-tips-to-get-through-it/"}
+      ]
+    }
+  ]
+}

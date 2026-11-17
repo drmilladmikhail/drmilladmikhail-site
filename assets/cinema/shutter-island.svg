@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="t">
+  <title id="t">رسم لجزيرة صخرية وسط بحر هايج وعليها فنار، والضباب مغطي نصها</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#18233a"/>
+      <stop offset="0.65" stop-color="#2c3f5a"/>
+      <stop offset="1" stop-color="#3f5a6e"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22394a"/>
+      <stop offset="1" stop-color="#101a28"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e2b35a" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#e2b35a" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blur" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <g fill="#e8ecef" opacity=".7">
+    <circle cx="140" cy="90" r="2"/><circle cx="310" cy="150" r="1.6"/><circle cx="520" cy="70" r="2.2"/>
+    <circle cx="900" cy="110" r="1.8"/><circle cx="1060" cy="60" r="2"/><circle cx="760" cy="40" r="1.4"/>
+  </g>
+  <circle cx="1070" cy="80" r="40" fill="#e8ecef" opacity=".85"/>
+  <circle cx="1086" cy="70" r="38" fill="#1d2a40"/>
+  <!-- lighthouse beam -->
+  <polygon points="452,262 1200,190 1200,360" fill="url(#beam)"/>
+  <!-- island -->
+  <path d="M120 560 C200 470 260 430 330 420 C380 300 430 290 470 300 C520 330 560 400 620 410 C700 420 760 470 860 500 C930 520 990 545 1060 560 Z" fill="#0f1a24"/>
+  <path d="M330 420 C360 400 400 395 430 410 L470 300 C430 290 380 300 330 420 Z" fill="#162432"/>
+  <!-- lighthouse -->
+  <path d="M440 300 L464 300 L470 400 L434 400 Z" fill="#e8ecef"/>
+  <rect x="436" y="335" width="32" height="12" fill="#2f6f62"/>
+  <rect x="438" y="366" width="30" height="12" fill="#2f6f62"/>
+  <rect x="436" y="276" width="32" height="24" rx="3" fill="#e2b35a"/>
+  <path d="M432 276 L452 256 L472 276 Z" fill="#e8ecef"/>
+  <!-- buildings on the island -->
+  <g fill="#1c2c3d">
+    <rect x="610" y="378" width="120" height="44"/><rect x="640" y="350" width="60" height="30"/>
+    <rect x="740" y="400" width="80" height="34"/>
+  </g>
+  <g fill="#e2b35a" opacity=".8">
+    <rect x="622" y="392" width="8" height="10"/><rect x="650" y="362" width="8" height="10"/>
+    <rect x="690" y="392" width="8" height="10"/><rect x="756" y="410" width="8" height="10"/>
+  </g>
+  <!-- fog -->
+  <g filter="url(#blur)" fill="#dfe9e4">
+    <ellipse cx="300" cy="500" rx="360" ry="34" opacity=".35"/>
+    <ellipse cx="820" cy="470" rx="420" ry="30" opacity=".3"/>
+    <ellipse cx="600" cy="540" rx="520" ry="26" opacity=".25"/>
+  </g>
+  <!-- sea -->
+  <rect y="555" width="1200" height="245" fill="url(#sea)"/>
+  <g fill="none" stroke="#7fc1b1" stroke-linecap="round" opacity=".45" stroke-width="3">
+    <path d="M40 610 q30 -14 60 0 t60 0 t60 0"/><path d="M380 640 q30 -14 60 0 t60 0 t60 0 t60 0"/>
+    <path d="M820 600 q30 -14 60 0 t60 0 t60 0"/><path d="M160 700 q30 -14 60 0 t60 0 t60 0 t60 0"/>
+    <path d="M700 720 q30 -14 60 0 t60 0 t60 0 t60 0"/><path d="M980 670 q30 -14 60 0 t60 0"/>
+  </g>
+  <!-- reflection of the light -->
+  <path d="M440 560 L466 560 L480 800 L426 800 Z" fill="#e2b35a" opacity=".12"/>
+</svg>
