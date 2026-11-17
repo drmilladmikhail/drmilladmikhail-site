@@ -55,5 +55,15 @@ class DiscoverFeelings(unittest.TestCase):
             self.assertIn(must, html)
 
 
+    def test_music_at_the_end_is_in_the_source(self):
+        # 2026-11-17: the music list was once added only to the built page and a rebuild wiped it; keep it in content/.
+        html = read("index.html")
+        srcs = re.findall(r'<source src="(/assets/discover-feelings/music/[0-9]+\.m4a)"', html)
+        self.assertEqual(len(srcs), 10)
+        for src in srcs:
+            self.assertTrue(os.path.isfile(os.path.join(ROOT, src.strip("/"))), src)
+        self.assertNotIn("autoplay", html)
+
+
 if __name__ == "__main__":
     unittest.main()
