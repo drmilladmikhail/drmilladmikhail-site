@@ -1,4 +1,4 @@
-/* «فوانيس العقل» — game content. Fictional characters; psychoeducation based on CBT
+/* «مدينة الأفكار» — game content. Fictional characters; psychoeducation based on CBT
    (cognitive model, thought records, behavioural activation). Not a test and not a diagnosis.
    Edit text here; the engine is assets/game/game.js. */
 window.FANOOS = {

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Build /game/ «فوانيس العقل» — a small CBT game (called by build_pages.main).
+"""Build /game/ «مدينة الأفكار» — a small CBT game (called by build_pages.main).
 
 Content: assets/game/data.js · engine: assets/game/game.js · style: assets/game/game.css.
-Nothing a player types is sent or stored; only the list of lit lanterns is kept on the device.
+Nothing a player types is sent or stored; only the list of lit neighbourhoods is kept on the device.
 Health content: goes live only after Dr. Millad's review (content/REVIEW-POLICY.md).
 """
 SLUG = "game"
-TITLE = "فوانيس العقل"
-DESC = ("لعبة مجانية بالمصري من العلاج المعرفي السلوكي: نوّر فوانيس ٥ حارات في مدينة العقل "
+TITLE = "مدينة الأفكار"
+DESC = ("لعبة مجانية بالمصري من العلاج المعرفي السلوكي: نوّر ٥ حارات في مدينة عقلك "
         "(القلق، الحزن، العلاقات، الثقة بالنفس، الغضب) واتعلّم تمسك فخاخ التفكير.")
 REFS = [
     ("NHS: Cognitive behavioural therapy (CBT)",
@@ -23,7 +23,7 @@ def build(ba, page, write, SITE):
     <div class="wrap narrow">
       <p class="kicker-g">لعبة مجانية، حوالي ١٠ دقايق</p>
       <h1>{TITLE}</h1>
-      <p class="lead">مدينة العقل ضلمة، وفي كل حارة فكرة قاسية مطفية الفانوس. ساعد أهل الحارات يمسكوا «فخاخ التفكير» ويفرّقوا بين الحقيقة والتخمين، ونوّر المدينة كلها. واللي هتتعلمه هنا، تقدر تستخدمه على أفكارك إنت.</p>
+      <p class="lead">مدينة الأفكار ضلمة، وفي كل حارة فكرة قاسية مطفية نورها. ساعد أهل الحارات يمسكوا «فخاخ التفكير» ويفرّقوا بين الحقيقة والتخمين، ونوّر المدينة كلها. واللي هتتعلمه هنا، تقدر تستخدمه على أفكارك إنت.</p>
       <p class="privacy">🔒 مفيش تسجيل، واللي بتكتبه مش بيتبعت لأي حد.</p>
     </div>
   </section>

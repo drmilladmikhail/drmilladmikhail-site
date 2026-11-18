@@ -1,5 +1,5 @@
-/* «فوانيس العقل» — a small CBT game. Content: assets/game/data.js.
-   Nothing the player types is sent anywhere. Only the list of lit lanterns is kept on this device (localStorage, optional). */
+/* «مدينة الأفكار» — a small CBT game. Content: assets/game/data.js.
+   Nothing the player types is sent anywhere. Only the list of lit neighbourhoods is kept on this device (localStorage, optional). */
 (function () {
   "use strict";
   var D = window.FANOOS, root = document.getElementById("fanoos");
@@ -55,12 +55,12 @@
         '<span class="fn-hstate">' + (on ? "منوّر ✓" : "مطفي") + "</span></button></li>";
     }).join("");
     var lead = done === 0
-      ? "المدينة دي هي عقلك. كل حارة فيها فانوس مطفي، لأن فيه فكرة قاسية مسيطرة عليها. ادخل أي حارة، ساعد صاحبها يشوف فكرته بوضوح، والفانوس هينوّر."
-      : done < total ? "نوّرت " + ar(done) + " من " + ar(total) + " فوانيس. كمّل، لسه فيه حارات مستنياك."
+      ? "المدينة دي هي عقلك. كل حارة فيها النور مطفي، لأن فيه فكرة قاسية مسيطرة عليها. ادخل أي حارة، ساعد صاحبها يشوف فكرته بوضوح، والحارة هتنوّر."
+      : done < total ? "نوّرت " + ar(done) + " من " + ar(total) + " حارات. كمّل، لسه فيه حارات مستنياك."
         : "المدينة كلها نوّرت. تقدر تلعب أي حارة تاني، أو تشوف حقيبة أدواتك.";
     show(
-      '<div class="fn-head"><p class="fn-kicker">لعبة العلاج المعرفي السلوكي</p><h2>فوانيس العقل</h2><p class="fn-lead">' + lead + "</p></div>" +
-      '<div class="fn-meter" role="img" aria-label="الفوانيس المنوّرة: ' + done + " من " + total + '"><span style="width:' + (done / total * 100) + '%"></span></div>' +
+      '<div class="fn-head"><p class="fn-kicker">لعبة العلاج المعرفي السلوكي</p><h2>مدينة الأفكار</h2><p class="fn-lead">' + lead + "</p></div>" +
+      '<div class="fn-meter" role="img" aria-label="الحارات المنوّرة: ' + done + " من " + total + '"><span style="width:' + (done / total * 100) + '%"></span></div>' +
       '<ul class="fn-city">' + houses + "</ul>" +
       '<div class="fn-skyline" aria-hidden="true"></div>' +
       '<div class="fn-actions">' +
@@ -148,7 +148,7 @@
     var fb = root.querySelector(".fn-fb");
     var b = document.createElement("button");
     b.type = "button"; b.className = "fn-btn fn-primary fn-next"; b.dataset.act = "next";
-    b.textContent = cur.stage === STAGES.length - 1 ? "نوّر الفانوس" : "كمّل";
+    b.textContent = cur.stage === STAGES.length - 1 ? "نوّر الحارة" : "كمّل";
     fb.insertAdjacentElement("afterend", b);
     b.focus({ preventScroll: true });
   }
@@ -201,7 +201,7 @@
     var all = lit.length === D.worlds.length;
     show('<div class="fn-win" style="--hue:' + w.hue + '">' +
       '<div class="fn-lanwrap big">' + lantern(w.hue, 1, 120) + "</div>" +
-      "<h2>فانوس " + esc(w.place) + " نوّر</h2>" +
+      "<h2>" + esc(w.place) + " نوّرت</h2>" +
       "<p>" + esc(w.who) + " بدأ ب" + esc(w.feeling) + " قوته " + ar(w.before) + " من ١٠، ودلوقتي بقى " + ar(w.after) + ". الإحساس ماختفاش، بس بقى أخف وأوضح.</p>" +
       '<div class="fn-skill"><span>مهارة جديدة في حقيبتك</span><p>' + esc(w.skill) + "</p></div>" +
       '<div class="fn-actions">' +
@@ -230,7 +230,7 @@
       '<button type="submit" class="fn-btn fn-primary">جمّع الورقة</button>' +
       '<div class="fn-card-out" hidden></div></form>' +
       '<div class="fn-actions"><button type="button" class="fn-btn fn-ghost" data-act="map">ارجع للمدينة</button>' +
-      '<button type="button" class="fn-btn fn-ghost" data-act="reset">طفّي الفوانيس والعب من الأول</button></div>', "h2");
+      '<button type="button" class="fn-btn fn-ghost" data-act="reset">ابدأ اللعبة من الأول</button></div>', "h2");
   }
 
   function ownCard(form) {
@@ -244,7 +244,7 @@
     var text = rows.map(function (r) { return r[0] + ": " + r[1]; }).join("\n");
     out.innerHTML = "<h4>ورقتك</h4><dl>" + rows.map(function (r) { return "<dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("") + "</dl>" +
       '<button type="button" class="fn-btn fn-ghost" data-act="copy">انسخ الورقة</button>';
-    out.dataset.text = text + "\n\n— من لعبة «فوانيس العقل»";
+    out.dataset.text = text + "\n\n— من لعبة «مدينة الأفكار»";
     out.querySelector("h4").setAttribute("tabindex", "-1");
     out.querySelector("h4").focus();
   }
