@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="t">
+  <title id="t">رسم لمراية مشروخة قدامها خيال واحد، وجوه المراية خيالين مختلفين</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c2230"/>
+      <stop offset="1" stop-color="#3a2f36"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6d7e95"/>
+      <stop offset="1" stop-color="#2e3a4d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <!-- bare hanging bulb -->
+  <line x1="600" y1="0" x2="600" y2="70" stroke="#58606f" stroke-width="3"/>
+  <circle cx="600" cy="86" r="18" fill="#f2d48a"/>
+  <circle cx="600" cy="86" r="60" fill="#f2d48a" opacity=".12"/>
+  <!-- mirror frame -->
+  <rect x="380" y="150" width="440" height="560" rx="16" fill="#2b2f3a" stroke="#b9862a" stroke-width="10"/>
+  <rect x="402" y="172" width="396" height="516" rx="8" fill="url(#glass)"/>
+  <!-- crack -->
+  <path d="M600 172 L585 300 L630 360 L575 450 L620 540 L598 688" stroke="#e8ecef" stroke-width="4" fill="none" opacity=".85"/>
+  <path d="M585 300 L520 320 M630 360 L700 330 M575 450 L500 470 M620 540 L690 575" stroke="#e8ecef" stroke-width="2.5" fill="none" opacity=".6"/>
+  <!-- two different reflections -->
+  <g fill="#18233a" opacity=".85">
+    <circle cx="505" cy="380" r="46"/>
+    <path d="M440 688 C440 520 570 520 570 688 Z"/>
+  </g>
+  <g fill="#7a2f2f" opacity=".9">
+    <circle cx="695" cy="372" r="50"/>
+    <path d="M622 688 C622 505 768 505 768 688 Z"/>
+  </g>
+  <!-- the person in front, seen from behind -->
+  <g fill="#0d121b">
+    <circle cx="600" cy="660" r="62"/>
+    <path d="M470 800 C470 700 730 700 730 800 Z"/>
+  </g>
+</svg>

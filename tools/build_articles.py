@@ -543,6 +543,8 @@ def sitemap(items):
     for path in sorted((Path(ROOT) / "glossary").glob("**/index.html")):
         slug = path.parent.relative_to(ROOT).as_posix()
         urls.append((f"{SITE}/{slug}/", "2026-11-08", False))
+    import build_cinema  # «سينما ونفس»: only reviewed films
+    urls += build_cinema.sitemap_urls()
     # English adaptations (/en/articles/): each pair links ar <-> en
     pairs = {}
     if en_items:

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="t">
+  <title id="t">رسم لأب وابنه ماسكين إيد بعض وماشيين على طريق طالع لتل ناحية شمس بتطلع</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c3f5a"/>
+      <stop offset=".55" stop-color="#d98c5f"/>
+      <stop offset="1" stop-color="#f3c77a"/>
+    </linearGradient>
+    <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#fff3d1"/>
+      <stop offset=".6" stop-color="#f6d27a"/>
+      <stop offset="1" stop-color="#f6d27a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="820" cy="430" r="220" fill="url(#sun)"/>
+  <circle cx="820" cy="430" r="80" fill="#fff0c2"/>
+  <!-- far city on the left -->
+  <g fill="#7a5a5a" opacity=".55">
+    <rect x="40" y="380" width="60" height="140"/><rect x="95" y="340" width="45" height="180"/><rect x="135" y="400" width="70" height="120"/>
+    <rect x="200" y="360" width="40" height="160"/><rect x="235" y="410" width="60" height="110"/>
+  </g>
+  <!-- hills -->
+  <path d="M0 560 C220 470 420 470 640 520 C820 560 1000 500 1200 470 L1200 800 L0 800 Z" fill="#3c5a52"/>
+  <path d="M0 640 C260 560 520 580 760 620 C960 650 1080 610 1200 590 L1200 800 L0 800 Z" fill="#2f6f62"/>
+  <!-- road climbing to the sun -->
+  <path d="M430 800 C520 700 640 620 770 545 L800 545 C700 625 640 705 640 800 Z" fill="#e8d7b0" opacity=".9"/>
+  <path d="M535 800 C590 710 670 630 785 548" stroke="#f6f0dc" stroke-width="4" stroke-dasharray="18 16" fill="none"/>
+  <!-- father and child silhouettes, holding hands -->
+  <g fill="#18233a" transform="translate(560 600)">
+    <circle cx="0" cy="-118" r="17"/>
+    <path d="M-17 -98 L17 -98 L22 -30 L12 -30 L8 30 L-2 30 L-4 -20 L-8 30 L-18 30 L-14 -30 L-22 -30 Z"/>
+    <path d="M18 -90 L44 -48 L38 -44 L16 -76 Z"/>
+    <path d="M-18 -90 L-30 -40 L-24 -38 L-12 -76 Z"/>
+    <rect x="-40" y="-170" width="0" height="0"/>
+    <circle cx="58" cy="-62" r="11"/>
+    <path d="M47 -50 L69 -50 L72 -8 L66 -8 L64 28 L58 28 L57 0 L54 28 L48 28 L47 -8 L44 -8 Z"/>
+    <path d="M47 -46 L40 -44 L42 -38 L49 -40 Z"/>
+  </g>
+  <!-- a briefcase -->
+  <rect x="520" y="560" width="26" height="20" rx="3" fill="#18233a"/>
+</svg>

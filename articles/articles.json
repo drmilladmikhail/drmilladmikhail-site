@@ -727,5 +727,31 @@
     "image": "art-procrastination-not-laziness",
     "image_alt": "رسم لبنت قاعدة على كرسي ماسكة موبايل منوّر وزعلانة، وجنبها ترابيزة عليها لابتوب مقفول وساعة على الحيطة",
     "reviewed_on": "2026-11-16"
+  },
+  {
+    "slug": "grief-after-losing-loved-one",
+    "category": "resilience-recovery",
+    "title": "الحزن بعد وفاة حد بحبه: إزاي أعيش مع الفقد؟",
+    "description": "الحزن بعد وفاة حد بتحبه: ليه بييجي على موجات، وخطوات عملية تعيش بيها مع الفقد، وامتى الحزن يطوّل ويبقى محتاج مساعدة متخصص.",
+    "summary": "الحزن بعد وفاة حد بنحبه رد فعل طبيعي، بييجي على موجات من صدمة وحزن وغضب وذنب، وغالبًا بيخف تدريجيًا مع الوقت والسند والكلام عنه. لو عدّت شهور كتير والحزن زي ما هو أو بيعطّل حياتك، أو جالك تفكير في إيذاء نفسك، ده وقت تطلب مساعدة متخصص.",
+    "refs": [
+      {
+        "title": "NHS — Grief after bereavement or loss",
+        "url": "https://www.nhs.uk/conditions/stress-anxiety-depression/coping-with-bereavement/"
+      },
+      {
+        "title": "Mayo Clinic — الحزن المعقد: الأعراض والأسباب (Complicated grief)",
+        "url": "https://www.mayoclinic.org/ar/diseases-conditions/complicated-grief/symptoms-causes/syc-20360374"
+      },
+      {
+        "title": "American Psychiatric Association — APA Offers Tips for Understanding Prolonged Grief Disorder",
+        "url": "https://psychiatry.org/news-room/news-releases/apa-offers-tips-for-understanding-prolonged-grief"
+      }
+    ],
+    "minutes": 6,
+    "date": "2026-11-17",
+    "image": "art-grief-after-losing-loved-one",
+    "image_alt": "رسم لست قاعدة ساكتة وحزينة جنب كرسي فاضي، وعلى الحيطة صورة في برواز وجنبها شمعة منوّرة وهلال في الشباك",
+    "reviewed_on": "2026-11-17"
   }
 ]

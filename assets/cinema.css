@@ -1,0 +1,24 @@
+/* «سينما ونفس» (/cinema/) — extends site.css; built by tools/build_cinema.py */
+.cinema-hero { border-top: 0; padding-bottom: 8px; }
+.cinema-hero h1 { margin: 0 0 10px; font-family: var(--display); font-weight: 700; font-size: clamp(32px, 5vw, 46px); }
+.cinema-list { border-top: 0; padding-top: 12px; }
+.film-label { color: var(--amber); font-size: 14px; font-weight: 600; }
+.post-hero figcaption { margin-top: 6px; font-size: 13px; color: var(--muted); }
+.film-facts { margin: 22px 0 26px; padding: 16px 20px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); border-inline-start: 4px solid var(--amber); }
+.film-facts .ff-title { margin: 0 0 6px; font-weight: 700; }
+.film-facts ul { margin: 0; padding-inline-start: 18px; font-size: 16.5px; }
+.film-facts li { margin-bottom: 2px; }
+.spoiler-note { margin: 26px 0; padding: 14px 18px; border-radius: 12px; background: #2a2a1f; background: color-mix(in srgb, var(--amber) 16%, var(--surface)); border: 1px dashed var(--amber); }
+.spoiler-note p { margin: 0; }
+.film-note { margin: 26px 0 0; font-size: 14px; color: var(--muted); }
+.back-link { margin-top: 24px; }
+.film-trailer { margin: 28px 0 8px; }
+.film-trailer .yt { border-radius: 14px; }
+.film-trailer iframe { width: 100%; height: 100%; border: 0; display: block; }
+.film-trailer div.yt { cursor: default; }
+.film-trailer figcaption { margin-top: 8px; font-size: 14px; color: var(--muted); }
+.cinema-sub { margin: -4px 0 12px; font-family: var(--display); font-weight: 600; font-size: clamp(19px, 2.6vw, 23px); color: var(--eucalyptus); }
+/* amber text needs a darker tone on white cards for WCAG AA contrast */
+.film-label { color: #8a5d14; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .film-label { color: var(--amber); } }
+:root[data-theme="dark"] .film-label { color: var(--amber); }

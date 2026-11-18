@@ -228,7 +228,7 @@ def article_page(a, others):
               + '</aside>')
     disclaimer = ("" if "Safety note" in body else
                   '<p class="post-disclaimer"><strong>Safety note:</strong> This article is for education and awareness, '
-                  'not diagnosis or a substitute for professional care. If you are in crisis, call or text 988 in the US, or call 105 in Egypt.</p>')
+                  'not diagnosis or a substitute for professional care. If you are in crisis, call or text 988 in the US, or call the mental health hotline 16328 in Egypt.</p>')
     refs = ('<section class="refs" aria-labelledby="refs-' + s + '"><h2 id="refs-' + s + '">References</h2><ol>'
             + "".join(f'<li><a href="{esc(r["url"])}" target="_blank" rel="noopener">{esc(r["title"])}</a></li>' for r in a["refs"])
             + "</ol></section>")

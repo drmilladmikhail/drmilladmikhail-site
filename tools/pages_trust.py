@@ -245,7 +245,7 @@ def help_now_page(ba, page, write, SITE):
     ld = {"@context": "https://schema.org", "@type": "WebPage", "url": f"{SITE}/help-now/", "inLanguage": "ar",
           "name": "محتاج مساعدة دلوقتي", "about": "Crisis and mental health helplines in Egypt and Arab countries"}
     write("help-now", page("help-now", "محتاج مساعدة دلوقتي",
-                           "أرقام الطوارئ وخطوط الدعم النفسي المجانية في مصر والدول العربية: الخط الساخن للدعم النفسي 105، وعلاج الإدمان 16023، وأكتر.", body, ld))
+                           "أرقام الطوارئ وخطوط الدعم النفسي المجانية في مصر والدول العربية: الخط الساخن للدعم النفسي 16328، وعلاج الإدمان 16023، وأكتر.", body, ld))
 
 
 # ------------------------------------------------------------------ privacy

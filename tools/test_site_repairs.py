@@ -14,12 +14,15 @@ class SiteRepairsTests(unittest.TestCase):
     def test_egypt_official_contact_is_not_general_health_number(self):
         row = pages_trust.HELPLINES[0][1][0]
         self.assertEqual(row[1:3], ("16328", "16328"))
-        for folder in ("assets", "tools", "content"):
-            for path in (ROOT / folder).rglob("*"):
+        roots = [ROOT / "index.html", ROOT / "en" / "index.html"]
+        for folder in ("assets", "tools", "content", "articles/content", "en/articles/content"):
+            roots += list((ROOT / folder).rglob("*"))
+        for path in roots:
+            if True:
                 if path.suffix not in (".js", ".html", ".json", ".py") or path.name == Path(__file__).name:
                     continue
                 text = path.read_text(encoding="utf-8")
-                for obsolete in ('tel:105"', '>105<', "مصر: 105", "الدعم النفسي 105"):
+                for obsolete in ('tel:105"', '>105<', "مصر: 105", "الدعم النفسي 105", "النفسي 105", "تكلم 105", "call 105"):
                     self.assertNotIn(obsolete, text, str(path))
 
     def test_research_uses_readable_theme_tokens(self):
