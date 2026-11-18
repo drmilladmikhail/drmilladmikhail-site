@@ -1345,5 +1345,62 @@
    "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0362807"
   ],
   "added": "2026-11-17"
+ },
+ {
+  "doi": "10.1371/journal.pone.0362858",
+  "title": "Intergenerational transmission of depression and anxiety among diverse immigrant populations in Sweden",
+  "title_ar": "انتقال الاكتئاب والقلق عبر الأجيال لدى فئات متنوعة من المهاجرين في السويد",
+  "abstract": "Background\n\nLittle is known about the intergenerational transmission of depression and anxiety among children to immigrants. Our study aimed to investigate the association between parental depression/anxiety and offspring depression/anxiety among non-immigrants and second-generation immigrants, and whether the association differs by sex and immigrants’ regions of origin.\n\nMethods\n\nWe used nationwide longitudinal registers that cover the entire population in Sweden. The study individuals were categorized as non-immigrants (n = 744,089) and second-generation immigrants (n = 210,868) from six regions of origin. Parental and offspring depression and anxiety were assessed by registered diagnosis from the National Patient Register, and the association was examined by Cox proportional hazard models, adjusted for potential confounders.\n\nFindings\n\nParental depression and anxiety were associated with increased risks of depression and anxiety among offspring of non-immigrants and second-generation immigrants and the strength of the associations differed by sex and immigrants’ region of origin. Overall, the associations were weaker among second-generation immigrants than non-immigrants. No association was found among second-generation immigrant females from Latin America. The association with maternal depression and anxiety was more pronounced (compared with paternal) among second-generation immigrant males and females from Africa.\n\nConclusions\n\nThe findings indicate potentially different mechanisms by region of origin and sex in the intergenerational transmission of depression and anxiety. Underlying factors of the weaker association of parental and offspring depression and anxiety among second-generation immigrants could be investigated in future studies.",
+  "abstract_ar": "الخلفية\n\nلا يُعرف الكثير عن انتقال الاكتئاب والقلق عبر الأجيال لدى أبناء المهاجرين. وهدفت دراستنا إلى بحث الارتباط بين اكتئاب الوالدين وقلقهما واكتئاب الأبناء وقلقهم لدى غير المهاجرين والجيل الثاني من المهاجرين، وما إذا كان هذا الارتباط يختلف بحسب الجنس ومناطق منشأ المهاجرين.\n\nالمنهجية\n\nاستخدمنا سجلات طولية وطنية تغطي جميع سكان السويد. وصُنّف أفراد الدراسة إلى غير مهاجرين (العدد = 744,089) وأفراد من الجيل الثاني للمهاجرين (العدد = 210,868) ينحدرون من ست مناطق منشأ. وقُيّم الاكتئاب والقلق لدى الوالدين والأبناء بالاستناد إلى التشخيصات المسجلة في السجل الوطني للمرضى، وفُحص الارتباط باستخدام نماذج كوكس للمخاطر النسبية، مع الضبط للعوامل المربكة المحتملة.\n\nالنتائج\n\nارتبط اكتئاب الوالدين وقلقهما بزيادة مخاطر الاكتئاب والقلق لدى أبناء غير المهاجرين والجيل الثاني من المهاجرين، واختلفت قوة الارتباطات بحسب الجنس ومنطقة منشأ المهاجرين. وبوجه عام، كانت الارتباطات أضعف لدى الجيل الثاني من المهاجرين مقارنةً بغير المهاجرين. ولم يُرصد ارتباط لدى الإناث من الجيل الثاني للمهاجرين من أمريكا اللاتينية. وكان الارتباط باكتئاب الأم وقلقها أوضح، مقارنةً باكتئاب الأب وقلقه، لدى الذكور والإناث من الجيل الثاني للمهاجرين من أفريقيا.\n\nالاستنتاجات\n\nتشير النتائج إلى احتمال اختلاف آليات انتقال الاكتئاب والقلق عبر الأجيال بحسب منطقة المنشأ والجنس. ويمكن للدراسات المستقبلية أن تبحث العوامل الكامنة وراء ضعف الارتباط بين اكتئاب الوالدين وقلقهما واكتئاب الأبناء وقلقهم لدى الجيل الثاني من المهاجرين.",
+  "authors": [
+   "Kenta Okuyama",
+   "Sara Larsson Lönn",
+   "Tsuyoshi Hamano",
+   "Ardavan M. Khoshnood",
+   "Jan Sundquist",
+   "Kristina Sundquist"
+  ],
+  "journal": "PLOS One",
+  "journal_ar": "بلوس وان",
+  "volume": "21",
+  "issue": "11",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "e0362858",
+  "published": "2026-11-16",
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "copyright": "© 2026 Okuyama et al. This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "source_urls": [
+   "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0362858"
+  ],
+  "added": "2026-11-18"
+ },
+ {
+  "doi": "10.1371/journal.pone.0361991",
+  "title": "The effects of active recovery and meditation on perceived fatigue, cognitive function, and physical performance following mental fatigue: A randomised crossover study",
+  "title_ar": "آثار التعافي النشط والتأمل في التعب المُدرَك والوظائف المعرفية والأداء البدني بعد التعب الذهني: دراسة عشوائية تبادلية",
+  "abstract": "Background\n\nMental fatigue is a psychophysiological state caused by periods of prolonged cognitively demanding activity, characterised by impaired motivation, cognitive, and physical performance. Whether mental fatigue also affects functional movement ability, and the extent to which recovery strategies such as active recovery, meditation, or passive recovery mitigate these effects, remains unclear.\n\nMethods\n\nThis study examined the impact of active recovery, meditation, and passive recovery on perceptions of fatigue, cognitive and physical performance, and movement ability. Using a repeated-measures randomised crossover design, 12 healthy young adults completed perceptual, cognitive, functional, and performance tests before and after a 30-minute Stroop task. Participants then completed 15 minutes of active recovery, meditation, or passive recovery in a randomised order across three sessions before repeating the tests. Data were analysed using linear mixed-effects models and cumulative link mixed models.\n\nResults\n\nThe Stroop task induced large increases in perceived physical and mental fatigue (ηp² = 0.267–0.497), slowed Go/No-Go response time (ηp² = 0.301), and reduced hurdle step and in-line lunge movement quality, alongside a moderate reduction in knee extensor force (ηp² = 0.094). N-back accuracy changed little, although a ceiling effect limited the capacity to detect change. Time × intervention interaction effects were small to moderate (ηp² = 0.016 to 0.080) and largely compatible with the null. Outcomes generally returned towards baseline during the 15-minute recovery period in all conditions, with minimal evidence that active recovery or meditation produced greater recovery than passive rest; responses varied considerably between individuals.\n\nConclusion\n\nA 30-minute Stroop task acutely increased fatigue, as evidenced by changes in perceptual, cognitive, functional, and performance outcomes. Outcomes generally moved back towards baseline over the 15-minute recovery period regardless of modality, with minimal evidence that active recovery or meditation offered greater benefit than passive rest. These exploratory findings require confirmation in larger samples.",
+  "abstract_ar": "الخلفية\n\nالتعب الذهني حالة نفسية فسيولوجية تنجم عن فترات مطوّلة من النشاط الذي يتطلب جهدًا معرفيًا، وتتسم بضعف الدافعية والأداء المعرفي والبدني. ولا يزال غير واضح ما إذا كان التعب الذهني يؤثر أيضًا في القدرة الحركية الوظيفية، وإلى أي مدى تخفف استراتيجيات التعافي، مثل التعافي النشط أو التأمل أو التعافي السلبي، هذه الآثار.\n\nالمنهجية\n\nفحصت هذه الدراسة أثر التعافي النشط والتأمل والتعافي السلبي في إدراك التعب والأداء المعرفي والبدني والقدرة على الحركة. وباستخدام تصميم عشوائي تبادلي ذي قياسات متكررة، أكمل 12 شابًا بالغًا من الأصحاء اختبارات إدراكية ومعرفية ووظيفية واختبارات للأداء قبل مهمة ستروب مدتها 30 دقيقة وبعدها. ثم أمضى المشاركون 15 دقيقة في التعافي النشط أو التأمل أو التعافي السلبي بترتيب عشوائي عبر ثلاث جلسات، قبل إعادة الاختبارات. وحُلّلت البيانات باستخدام نماذج خطية ذات تأثيرات مختلطة ونماذج مختلطة ذات دالة ربط تراكمية.\n\nالنتائج\n\nأحدثت مهمة ستروب زيادات كبيرة في التعب البدني والذهني المُدرَك (ηp² = 0.267–0.497)، وأبطأت زمن الاستجابة في مهمة Go/No-Go (ηp² = 0.301)، وخفّضت جودة حركتَي خطو الحاجز والاندفاع على خط مستقيم، إلى جانب انخفاض متوسط في قوة العضلات الباسطة للركبة (ηp² = 0.094). ولم تتغير دقة الأداء في مهمة N-back إلا قليلًا، وإن كان أثر السقف قد حدّ من القدرة على كشف التغير. وكانت تأثيرات التفاعل بين الزمن والتدخل صغيرة إلى متوسطة (ηp² = 0.016 إلى 0.080)، ومتوافقة إلى حد كبير مع فرضية العدم. وعادت النواتج عمومًا باتجاه مستويات خط الأساس خلال فترة التعافي البالغة 15 دقيقة في جميع الحالات، مع وجود أدلة ضئيلة على أن التعافي النشط أو التأمل حقّقا تعافيًا أكبر من الراحة السلبية؛ وقد تباينت الاستجابات بدرجة كبيرة بين الأفراد.\n\nالاستنتاج\n\nأدّت مهمة ستروب مدتها 30 دقيقة إلى زيادة حادة في التعب، كما اتضح من التغيرات في النواتج الإدراكية والمعرفية والوظيفية والأدائية. وعادت النواتج عمومًا باتجاه مستويات خط الأساس خلال فترة التعافي البالغة 15 دقيقة بصرف النظر عن الأسلوب المتّبع، مع وجود أدلة ضئيلة على أن التعافي النشط أو التأمل قدّما فائدة أكبر من الراحة السلبية. وتتطلب هذه النتائج الاستكشافية تأكيدًا في عينات أكبر.",
+  "authors": [
+   "Simon O’Brien",
+   "Thomas Mullen",
+   "Nick Dobbin"
+  ],
+  "journal": "PLOS One",
+  "journal_ar": "بلوس وان",
+  "volume": "21",
+  "issue": "11",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "e0361991",
+  "published": "2026-11-16",
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "copyright": "© 2026 O’Brien et al. This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "source_urls": [
+   "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0361991"
+  ],
+  "added": "2026-11-18"
  }
 ]
