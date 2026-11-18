@@ -737,6 +737,8 @@ def main():
     ask_page()
     feelings_page()
     relationship_check_page()
+    import build_game
+    build_game.build(ba, page, write, SITE)
     worksheets_page()
     questions_page()
     csbd_page()
