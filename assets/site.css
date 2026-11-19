@@ -1298,3 +1298,34 @@ body:has(.topbar details[open]) .floating-home, body:has(.topbar details[open]) 
   .card a, html body .floating-home, html body .helper-btn { transition: none; }
   .card a:hover { transform: none; }
 }
+
+/* 2026-11-19 · Quick awareness quizzes (.aq) on /tests/<slug>/ — content/quick-quizzes/<slug>.json, assets/quick-check.js */
+.aq { margin: 22px 0 26px; padding: 18px 16px 14px; border-radius: 20px; background: var(--surface); border: 2px solid var(--eucalyptus); box-shadow: 0 10px 28px rgba(24, 35, 58, .08); }
+.aq-kicker { margin: 0; color: var(--amber-text); font-weight: 700; font-size: 14px; }
+.aq-title { margin: 4px 0 6px; font-size: clamp(22px, 5.6vw, 28px); line-height: 1.5; text-wrap: balance; color: var(--eucalyptus); }
+.aq-intro { margin: 0 0 14px; color: var(--muted); line-height: 1.85; }
+.aq .q { margin-bottom: 10px; }
+.aq .q legend { font-size: 16.5px; }
+.aq .q.missing { border-color: #c0392b; }
+.aq-out:focus { outline: none; }
+.aq-res { border-radius: 16px; padding: 14px 16px; border: 1px solid var(--line); background: var(--paper); }
+.aq-res h2, .aq-res h3 { margin: 2px 0 6px; font-size: 22px; line-height: 1.5; color: var(--ink); }
+.aq-res p { margin: 0 0 8px; line-height: 1.9; }
+.aq-res-kicker { color: var(--muted); font-size: 13.5px; font-weight: 600; }
+.aq-res .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.aq-good { border-inline-start: 6px solid #2e9e6a; }
+.aq-warn { border-inline-start: 6px solid #d99a2b; }
+.aq-serious { border-inline-start: 6px solid #c0392b; }
+.aq-neutral { border-inline-start: 6px solid var(--eucalyptus); }
+.aq-note { margin: 10px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+@media (max-width: 640px) { .aq .opts-4 { grid-template-columns: repeat(2, 1fr); } }
+.aq-page .aq { margin: 0; padding: 0; border: 0; box-shadow: none; background: none; }
+.aq-extra { margin: 4px 0 0; font-weight: 600; }
+.aq-after { margin-top: 14px; }
+.aq-teaser { border-radius: 18px; padding: 16px; background: var(--eucalyptus); color: var(--eucalyptus-ink); }
+.aq-teaser p { margin: 0 0 12px; line-height: 1.9; }
+.aq-teaser .aq-teaser-kicker { margin: 0 0 4px; font-weight: 700; font-size: 14px; opacity: .85; }
+.aq-teaser .btn.primary { background: var(--surface); color: var(--ink); border-color: var(--surface); white-space: normal; text-align: center; line-height: 1.6; }
+.aq-again-row { margin: 10px 0 0; text-align: center; }
+.quick-tests { margin-top: 34px; }
+.quick-tests > h2 { margin: 0 0 6px; }

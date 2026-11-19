@@ -249,6 +249,7 @@ def battery_page():
       </article>
       <h2 class="sec-h">لحد ما ينزل، جرّب دول</h2>
       <ul class="link-grid">
+        <li><a href="/game/"><b>لعبة «بطاريتي <span dir="ltr">1%</span>»</b><span>عيش يوم كامل وشوف إيه اللي بيشحنك وإيه اللي بيسحب منك.</span></a></li>
         <li><a href="/tests/wellbeing-who5/"><b>مؤشر الرفاهية النفسية (WHO-5)</b><span>طاقتك ومزاجك عاملين إيه آخر أسبوعين؟</span></a></li>
         <li><a href="/videos/#immunity"><b>فيديوهات المناعة النفسية</b><span>إزاي تقف تاني بعد الضغوط.</span></a></li>
         <li><a href="/articles/"><b>المقالات</b><span>مقال جديد كل اتنين وخميس.</span></a></li>
@@ -737,6 +738,8 @@ def main():
     ask_page()
     feelings_page()
     relationship_check_page()
+    import build_game
+    build_game.build(ba, page, write, SITE)
     worksheets_page()
     questions_page()
     csbd_page()
