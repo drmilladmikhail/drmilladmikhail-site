@@ -54,13 +54,14 @@
     lastPick = pick;
     return G.slots.map(function (slot, n) {
       var v = slot.variants[pick[n]];
-      return { time: slot.time, part: slot.part, text: v.text, choices: shuffle(v.choices) };
+      return { time: slot.time, part: slot.part, text: v.text, art: v.art, choices: shuffle(v.choices) };
     });
   }
 
   function intro() {
     days++;
     st = { p: G.start, i: 0, log: [], trail: [G.start], warned: false, day: newDay() };
+    preload(st.day[0]);
     render("dawn",
       statusBar("6:55 ص", G.start) +
       '<div class="bg-intro">' + battery(G.start, true) +
@@ -71,7 +72,15 @@
   }
 
   /* ---------- a scene ---------- */
+  function artUrl(s) { return s && s.art && G.art ? G.art + s.art + ".webp" : ""; }
+  function art(s) {  // the caricature repeats what the text says, so it is decorative for screen readers
+    var u = artUrl(s);
+    return u ? '<img class="bg-art" src="' + u + '" alt="" width="800" height="500" decoding="async">' : "";
+  }
+  function preload(s) { var u = artUrl(s); if (u) { var im = new Image(); im.src = u; } }
+
   function scene() {
+    preload(st.day[st.i + 1]);
     var s = st.day[st.i];
     var opts = s.choices.map(function (c, k) {
       return '<button type="button" class="bg-choice" data-k="' + k + '">' + esc(c.t) + "</button>";
@@ -79,7 +88,7 @@
     render(s.part,
       statusBar(s.time + " " + ampm(s), st.p) +
       '<div class="bg-progress" aria-hidden="true"><span style="width:' + (st.i / st.day.length * 100) + '%"></span></div>' +
-      '<div class="bg-note"><span class="bg-note-head"><i></i>يومك · ' + esc(s.time) + " " + ampm(s) + '</span><h2>' + esc(s.text) + "</h2></div>" +
+      '<div class="bg-note">' + art(s) + '<span class="bg-note-head"><i></i>يومك · ' + esc(s.time) + " " + ampm(s) + '</span><h2>' + esc(s.text) + "</h2></div>" +
       '<p class="bg-ask">هتعمل إيه؟</p><div class="bg-choices">' + opts + "</div>" +
       '<div class="bg-out" role="status" aria-live="polite"></div>');
   }

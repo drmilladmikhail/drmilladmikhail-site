@@ -54,6 +54,7 @@
 /* notification card + choices */
 .bg-note { background: var(--card); color: var(--card-ink); border-radius: 22px; padding: 14px 16px 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, .12); animation: bg-drop .45s ease-out; }
 @keyframes bg-drop { from { transform: translateY(-14px); } }
+.bg-art { display: block; width: calc(100% + 16px); max-width: none; height: auto; aspect-ratio: 8 / 5; margin: -6px -8px 12px; border-radius: 16px; background: #eef1ee; }
 .bg-note-head { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
 .bg-note-head i { width: 22px; height: 22px; border-radius: 7px; background: var(--accent); display: inline-block; box-shadow: inset 0 -6px 0 #e2b35a; }
 .bg-note h2 { font-size: clamp(21px, 5.6vw, 25px); line-height: 1.65; margin-top: 8px; color: var(--card-ink); }
