@@ -1,5 +1,32 @@
 [
   {
+    "slug": "stingy-or-limited-means",
+    "category": "relationships-family",
+    "title": "إزاي تعرف إن الشخص اللي قدامك بخيل ولا ظروفه على قده؟",
+    "description": "إزاي تعرف إن الشخص اللي قدامك بخيل ولا ظروفه على قده؟ الفرق بين البخل وقلة الإمكانيات والتحكم بالفلوس، وعلامات صفرا وخضرا، وخطوات تتأكد بيها بنفسك.",
+    "summary": "الشبكة والفرح والهدايا لوحدهم مش مقياس للبخل، دي قرارات عن مناسبات. البخل بيبان في الطريقة اليومية: بيصرف على نفسه وعليك لأ، مش صريح في ظروفه، بيعايرك، أو بيرفض أي حل وسط. اسأل الشخص نفسه مش الناس، واتكلموا في الأرقام والخطة، وخد وقتك قبل أي خطوة رسمية.",
+    "refs": [
+      {
+        "title": "Dew, Britt & Huston (2012). Examining the relationship between financial issues and divorce. Family Relations",
+        "url": "https://doi.org/10.1111/j.1741-3729.2012.00715.x"
+      },
+      {
+        "title": "Francis-Tan & Mialon. ‘A Diamond is Forever’ and Other Fairy Tales: Wedding Expenses and Marriage Duration (SSRN)",
+        "url": "https://papers.ssrn.com/abstract=2501480"
+      },
+      {
+        "title": "NNEDV — About Financial Abuse",
+        "url": "https://nnedv.org/content/about-financial-abuse/"
+      }
+    ],
+    "minutes": 6,
+    "discuss": "إيه أهم حاجة لازم تتفقوا عليها في الفلوس قبل الارتباط؟",
+    "image": "art-stingy-or-limited-means",
+    "image_alt": "اتنين قاعدين على ترابيزة في كافيه، وبينهم الحساب، وفوقهم علامة استفهام",
+    "date": "2026-11-19",
+    "reviewed_on": "2026-11-19"
+  },
+  {
     "slug": "why-we-choose-the-same-person",
     "title": "تكرار العلاقات المؤذية: ليه بتختار نفس الشخص كل مرة؟",
     "description": "ليه بكرر نفس العلاقات المؤذية؟ مقال يناقش المألوف والخوف من الوحدة وتقدير الذات، مع تمرين لفهم اختياراتك وروابط عن أنماط التعلق.",

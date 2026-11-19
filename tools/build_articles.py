@@ -523,6 +523,10 @@ def sitemap(items):
         with open(tj, encoding="utf-8") as f:
             tests = json.load(f)
         urls += [(f"{SITE}/tests/", "2026-11-04", False)] + [(f"{SITE}/tests/{x['slug']}/", "2026-11-04", False) for x in tests]
+    qj = os.path.join(ROOT, "tests", "quick.json")  # «اختبارات توعية سريعة» (tools/build_tests.py)
+    if os.path.exists(qj):
+        with open(qj, encoding="utf-8") as f:
+            urls += [(f"{SITE}/tests/{x['slug']}/", "2026-11-19", False) for x in json.load(f)]
     vj = os.path.join(ROOT, "assets", "videos.json")
     if os.path.exists(os.path.join(ROOT, "videos", "index.html")) and os.path.exists(vj):
         with open(vj, encoding="utf-8") as f:

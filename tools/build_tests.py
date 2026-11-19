@@ -712,6 +712,78 @@ def test_page(t):
 '''
 
 
+def load_quick():
+    """«اختبارات توعية سريعة» (2026-11-19): content/quick-quizzes/<slug>.json. NOT validated scales — they are
+    awareness checklists, shown in their own group on /tests/ and never mixed with the scientific measures.
+    Scored in the browser by assets/quick-check.js (first result whose "all"/"any" rules match)."""
+    d = os.path.join(ROOT, "content", "quick-quizzes")
+    out = []
+    if os.path.isdir(d):
+        for name in sorted(os.listdir(d)):
+            if name.endswith(".json"):
+                with open(os.path.join(d, name), encoding="utf-8") as f:
+                    out.append(json.load(f))
+    return out
+
+
+def quick_page(q):
+    url = f"{SITE}/tests/{q['slug']}/"
+    n_ans = len(q["answers"])
+    qs = ""
+    for i, it in enumerate(q["items"], 1):
+        opts = "".join(f'<label class="opt"><input type="radio" name="aq{i}" value="{esc(v)}" required><span>{esc(lab)}</span></label>'
+                       for lab, v in q["answers"])
+        qs += (f'<fieldset class="q" data-g="{esc(it["g"])}"><legend><span class="qn">{i}</span> {esc(it["t"])}</legend>'
+               f'<div class="opts opts-{n_ans}">{opts}</div></fieldset>')
+    art = q.get("article")
+    teaser = ""
+    if art:
+        teaser = (f'<div class="aq-teaser"><p class="aq-teaser-kicker">كمّل الحكاية</p><p>{esc(art["teaser"])}</p>'
+                  f'<a class="btn primary" href="{esc(art["href"])}">اقرا المقال: {esc(art["title"])}</a></div>')
+    res = ""
+    for r in q["results"]:
+        link = r.get("link")
+        extra = f'<p class="aq-extra"><a href="{esc(link[0])}">{esc(link[1])} ←</a></p>' if link else ""
+        res += (f'<div class="aq-res aq-{esc(r.get("tone", "neutral"))}" data-all="{esc(r.get("all", ""))}" data-any="{esc(r.get("any", ""))}" hidden>'
+                f'<p class="aq-res-kicker">نتيجتك</p><h2>{esc(r["title"])}</h2><p>{esc(r["text"])}</p>{extra}</div>')
+    ld = {"@context": "https://schema.org", "@type": "WebPage", "name": q["title"], "description": q["description"],
+          "url": url, "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
+    return head(q["title"], q["description"], url, ld) + f'''
+  <section class="section test aq-page">
+    <div class="wrap narrow">
+      <div class="test-head">
+        <p class="crumbs"><a href="/tests/">اختبارات نفسية</a> · <a href="/tests/#quick">اختبارات توعية سريعة</a></p>
+        <p class="test-kicker">{esc(q["kicker"])}</p>
+        <h1>{esc(q["title"])}</h1>
+      </div>
+      <p class="test-intro">{esc(q["intro"])}</p>
+      <p class="privacy">🔒 إجاباتك بتتحسب على جهازك بس، ومش بتتبعت أو تتحفظ في أي مكان.</p>
+      <div class="aq">
+        <form class="quiz aq-form" novalidate>
+          {qs}
+          <p class="quiz-error" hidden>فاضل جمل ماجاوبتهاش، اتعلّمت باللون الأحمر.</p>
+          <button class="btn primary big" type="submit">اعرض النتيجة</button>
+        </form>
+        <div class="aq-out" tabindex="-1" aria-live="polite">{res}
+          <div class="aq-after" hidden>{teaser}<p class="aq-again-row"><button type="button" class="btn aq-again">جاوب تاني</button></p></div>
+        </div>
+        <noscript><p>الاختبار محتاج JavaScript. تقدر تقرا <a href="{esc(art["href"]) if art else "/articles/"}">المقال</a> على طول.</p></noscript>
+      </div>
+      <p class="aq-note">{esc(q["note"])}</p>
+      {ba_share(url, q["title"], "شارك الاختبار")}
+      <p class="more-tests"><a class="btn" href="/tests/">جرّب اختبارات تانية</a></p>
+    </div>
+  </section>
+</main>
+{FOOTER}
+<script src="/assets/quick-check.js" defer></script>
+<script src="/assets/share.js" defer></script>
+<script src="/assets/helper.js" defer></script>
+</body>
+</html>
+'''
+
+
 def index_page():
     cards = []
     for t in TESTS:
@@ -725,6 +797,22 @@ def index_page():
           </div>
         </a>
       </li>''')
+    quick = load_quick()
+    qcards = "".join(f'''<li class="test-card">
+        <a href="/tests/{q["slug"]}/">
+          {icon(q.get("icon", "heart"))}
+          <div class="tc-body">
+            <h2>{esc(q["short"])}</h2>
+            <span class="card-desc">{esc(q["description"])}</span>
+            <span class="card-date">{count_label(len(q["items"]))} · {"دقيقة واحدة" if q["minutes"] == 1 else str(q["minutes"]) + " دقايق"}</span>
+          </div>
+        </a>
+      </li>''' for q in quick)
+    quick_block = ("" if not quick else
+                   '<section class="quick-tests" id="quick" aria-labelledby="quick-h"><h2 id="quick-h">اختبارات توعية سريعة</h2>'
+                   '<p class="section-intro">أسئلة قصيرة عن مواقف من الحياة، بتساعدك تاخد بالك من علامات مهمة، وبعدها مقال يشرح أكتر. '
+                   'دي مش مقاييس علمية مقننة، ومش تشخيص ولا حكم على حد.</p>'
+                   f'<ul class="cards">{qcards}</ul></section>')
     ld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": "اختبارات نفسية مجانية",
           "url": f"{SITE}/tests/", "inLanguage": "ar", "author": {"@id": f"{SITE}/#person"}}
     return head("اختبارات نفسية مجانية بالعربي", "12 اختبار نفسي علمي مجاني بالعربي بمراجعها: الشخصية، نمط التعلق، الاكتئاب (PHQ-8 وCES-D)، القلق، تقدير الذات، الاحتراق النفسي، معنى الحياة، الحضور الذهني والتعاطف مع الذات. النتيجة بتطلع فوراً.", f"{SITE}/tests/", ld) + f'''
@@ -735,6 +823,7 @@ def index_page():
       <ul class="cards">
       {"".join(cards)}
       </ul>
+      {quick_block}
       <section class="test-refs refs-all" aria-labelledby="allrefs-h">
         <h2 id="allrefs-h">📚 المراجع العلمية للمقاييس</h2>
         <ol>{"".join(f'<li><b>{esc(t["short"])}:</b> {t["source"]}</li>' for t in TESTS)}</ol>
@@ -758,9 +847,17 @@ def main():
             f.write(test_page(t))
     with open(os.path.join(ROOT, "tests", "index.html"), "w", encoding="utf-8") as f:
         f.write(index_page())
+    quick = load_quick()
+    for q in quick:
+        d = os.path.join(ROOT, "tests", q["slug"])
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+            f.write(quick_page(q))
+    with open(os.path.join(ROOT, "tests", "quick.json"), "w", encoding="utf-8") as f:
+        json.dump([{"slug": q["slug"], "title": q["title"]} for q in quick], f, ensure_ascii=False, indent=2)
     with open(os.path.join(ROOT, "tests", "tests.json"), "w", encoding="utf-8") as f:
         json.dump([{"slug": t["slug"], "title": t["title"]} for t in TESTS], f, ensure_ascii=False, indent=2)
-    print("built tests:", ", ".join(t["slug"] for t in TESTS))
+    print("built tests:", ", ".join(t["slug"] for t in TESTS), "| quick:", ", ".join(q["slug"] for q in quick))
 
 
 
