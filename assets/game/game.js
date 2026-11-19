@@ -37,33 +37,55 @@
   }
 
   /* ---------- start ---------- */
+  function shuffle(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+
+  /* Build a day: one random variant per time slot (never the same one as last time), choices shuffled. */
+  var lastPick = null, days = 0;
+  function newDay() {
+    var pick = G.slots.map(function (slot, n) {
+      var ids = slot.variants.map(function (v, k) { return k; });
+      if (lastPick && ids.length > 1) ids = ids.filter(function (k) { return k !== lastPick[n]; });
+      return ids[Math.floor(Math.random() * ids.length)];
+    });
+    lastPick = pick;
+    return G.slots.map(function (slot, n) {
+      var v = slot.variants[pick[n]];
+      return { time: slot.time, part: slot.part, text: v.text, choices: shuffle(v.choices) };
+    });
+  }
+
   function intro() {
-    st = { p: G.start, i: 0, log: [], trail: [G.start], warned: false };
+    days++;
+    st = { p: G.start, i: 0, log: [], trail: [G.start], warned: false, day: newDay() };
     render("dawn",
       statusBar("6:55 ص", G.start) +
       '<div class="bg-intro">' + battery(G.start, true) +
-      '<p class="bg-kicker">لعبة من كتاب «بطاريتي 1%»</p><h2>يومك بيبدأ والبطارية ' + G.start + "%</h2>" +
-      "<p>هتعيش يوم كامل في " + G.scenes.length + " موقف. كل اختيار يا بيشحن بطاريتك، يا بيسحب منها. وفي آخر اليوم هتعرف إيه اللي بيستنزفك، وإيه اللي بيشحنك بجد.</p>" +
+      '<p class="bg-kicker">' + (days > 1 ? "يوم جديد، بمواقف جديدة" : "لعبة من كتاب «بطاريتي 1%»") + "</p><h2>يومك بيبدأ والبطارية " + G.start + "%</h2>" +
+      "<p>هتعيش يوم كامل في " + st.day.length + " موقف. كل اختيار يا بيشحن بطاريتك، يا بيسحب منها. وفي آخر اليوم هتعرف إيه اللي بيستنزفك، وإيه اللي بيشحنك بجد.</p>" +
       '<button type="button" class="bg-btn bg-go" data-act="go">ابدأ يومك</button>' +
       '<p class="bg-small">مفيش تسجيل، واختياراتك مش بتتبعت لأي حد.</p></div>');
   }
 
   /* ---------- a scene ---------- */
   function scene() {
-    var s = G.scenes[st.i];
+    var s = st.day[st.i];
     var opts = s.choices.map(function (c, k) {
       return '<button type="button" class="bg-choice" data-k="' + k + '">' + esc(c.t) + "</button>";
     }).join("");
     render(s.part,
       statusBar(s.time + " " + ampm(s), st.p) +
-      '<div class="bg-progress" aria-hidden="true"><span style="width:' + (st.i / G.scenes.length * 100) + '%"></span></div>' +
+      '<div class="bg-progress" aria-hidden="true"><span style="width:' + (st.i / st.day.length * 100) + '%"></span></div>' +
       '<div class="bg-note"><span class="bg-note-head"><i></i>يومك · ' + esc(s.time) + " " + ampm(s) + '</span><h2>' + esc(s.text) + "</h2></div>" +
       '<p class="bg-ask">هتعمل إيه؟</p><div class="bg-choices">' + opts + "</div>" +
       '<div class="bg-out" role="status" aria-live="polite"></div>');
   }
 
   function choose(k) {
-    var s = G.scenes[st.i], c = s.choices[k], before = st.p;
+    var s = st.day[st.i], c = s.choices[k], before = st.p;
     st.p = clamp(st.p + c.d);
     st.trail.push(st.p);
     st.log.push({ scene: st.i, k: k, d: st.p - before, raw: c.d, c: c.c });
@@ -80,7 +102,7 @@
     }
     var out = root.querySelector(".bg-out");
     out.innerHTML = num('<p class="bg-chip ' + sign + '">' + chip + "</p><p class=\"bg-why\">" + esc(c.why) + "</p>" + low +
-      '<button type="button" class="bg-btn" data-act="next">' + (st.i === G.scenes.length - 1 ? "خلّص اليوم" : "كمّل اليوم") + "</button>");
+      '<button type="button" class="bg-btn" data-act="next">' + (st.i === st.day.length - 1 ? "خلّص اليوم" : "كمّل اليوم") + "</button>");
     // update the status bar battery
     var pct = root.querySelector(".bg-pct");
     pct.innerHTML = num("<b>" + st.p + "%</b>") + battery(st.p);
@@ -102,10 +124,10 @@
   function tips() {
     // the 3 scenes where the picked choice cost the most → show that scene's best charger
     return st.log.filter(function (e) {
-      var best = Math.max.apply(null, G.scenes[e.scene].choices.map(function (c) { return c.d; }));
+      var best = Math.max.apply(null, st.day[e.scene].choices.map(function (c) { return c.d; }));
       return e.raw < best;
     }).sort(function (a, b) { return a.raw - b.raw; }).slice(0, 3).map(function (e) {
-      var s = G.scenes[e.scene], best = s.choices.slice().sort(function (a, b) { return b.d - a.d; })[0];
+      var s = st.day[e.scene], best = s.choices.slice().sort(function (a, b) { return b.d - a.d; })[0];
       return { when: s.time + " " + ampm(s), text: best.t, gain: best.d };
     });
   }
@@ -144,7 +166,7 @@
         return "<li><span>" + esc(x.when) + "</span>" + esc(x.text) + " <b>+" + x.gain + "%</b></li>";
       }).join("") + "</ol></div>" : "") +
       '<div class="bg-actions"><button type="button" class="bg-btn" data-act="share">صورة لنتيجتك</button>' +
-      '<button type="button" class="bg-btn bg-ghost" data-act="again">عيش اليوم تاني</button></div>' +
+      '<button type="button" class="bg-btn bg-ghost" data-act="again">عيش يوم جديد</button></div>' +
       '<div class="bg-share" hidden></div>' +
       '<div class="bg-card bg-book"><h3>الحكاية مكمّلة في الكتاب</h3><p>«بطاريتي 1%: إزاي تشحن روحك من جديد وتلاقي معنى لحياتك». تمارين وقصص ورسومات بالعامية المصرية.</p>' +
       '<a class="bg-link" href="/battery/">اعرف أكتر عن الكتاب</a></div>' +
@@ -204,7 +226,7 @@
     if (b.dataset.k !== undefined) return choose(+b.dataset.k);
     var a = b.dataset.act;
     if (a === "go") scene();
-    else if (a === "next") { st.i++; st.i < G.scenes.length ? scene() : ending(); }
+    else if (a === "next") { st.i++; st.i < st.day.length ? scene() : ending(); }
     else if (a === "again") intro();
     else if (a === "share") shareImage();
     else if (a === "native") {
