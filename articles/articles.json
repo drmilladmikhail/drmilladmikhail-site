@@ -1,5 +1,57 @@
 [
   {
+    "slug": "money-fights-couples",
+    "category": "relationships-family",
+    "title": "الخناق على الفلوس بين الزوجين: نتفق إزاي من غير ما نخسر بعض؟",
+    "description": "الخناق على الفلوس بين الزوجين غالبًا مش عن الفلوس: ليه بيتكرر، وإزاي تفهموا القصة اللي ورا كل رأي، وخطوات عملية تتفقوا بيها على مصروف البيت.",
+    "summary": "الخناق على الفلوس بين الزوجين غالبًا مش عن المبلغ نفسه، لكن عن المعنى اللي الفلوس شايلاه لكل واحد: أمان، حرية، احترام، أو خوف من بكرة. الحل إنكم تحوّلوا الموضوع من «أنا ضدك» لـ«إحنا الاتنين ضد المشكلة»: قعدة فلوس ثابتة بهدوء، صراحة كاملة في الدخل والديون، واتفاق يحس فيه الاتنين بالعدل. ولو الفلوس بقت وسيلة تحكم أو تهديد، ده محتاج متخصص.",
+    "refs": [
+      {
+        "title": "Dew, Britt & Huston (2012). Examining the relationship between financial issues and divorce. Family Relations, 61(4)",
+        "url": "https://doi.org/10.1111/j.1741-3729.2012.00715.x"
+      },
+      {
+        "title": "The Gottman Institute — 8 Ways to Have Lower Conflict Conversations about Money",
+        "url": "https://www.gottman.com/blog/8-ways-to-have-lower-conflict-conversations-about-money"
+      },
+      {
+        "title": "The Gottman Institute — Perpetual Problems Around Finances",
+        "url": "https://www.gottman.com/blog/perpetual-problems-around-finances"
+      }
+    ],
+    "minutes": 5,
+    "date": "2026-11-19",
+    "reviewed_on": "2026-11-19",
+    "image": "art-money-fights-couples",
+    "image_alt": "رسم لزوج وزوجة قاعدين على ترابيزة عليها فواتير وفلوس قليلة، وشكلهم زعلانين وفوقهم علامة خناقة"
+  },
+  {
+    "slug": "cbt-explained",
+    "title": "العلاج المعرفي السلوكي (CBT) يعني إيه بالبساطة؟",
+    "description": "العلاج المعرفي السلوكي (CBT) يعني إيه؟ فكرته إن أفكارك بتأثر على إحساسك وتصرفك، وبيحصل إيه في الجلسات، وبيفيد في إيه، وتمرين تجربه بنفسك.",
+    "date": "2026-11-19",
+    "category": "research-education",
+    "summary": "العلاج المعرفي السلوكي (CBT) علاج بالكلام بيقوم على إن أفكارنا ومشاعرنا وإحساس جسمنا وتصرفاتنا مربوطين ببعض، فلو غيّرنا فكرة أو تصرف مش مفيد، الباقي بيتغير. بيكون منظم وله عدد جلسات محدد وتمارين بين الجلسات، والأبحاث بتدعمه في الاكتئاب والقلق ومشاكل تانية كتير، لكنه مش مناسب لكل الناس، والمتخصص هو اللي يحدد.",
+    "refs": [
+      {
+        "title": "NHS: Cognitive behavioural therapy (CBT)",
+        "url": "https://www.nhs.uk/tests-and-treatments/cognitive-behavioural-therapy-cbt/"
+      },
+      {
+        "title": "American Psychological Association: What is Cognitive Behavioral Therapy?",
+        "url": "https://www.apa.org/ptsd-guideline/patients-and-families/cognitive-behavioral"
+      },
+      {
+        "title": "Royal College of Psychiatrists: العلاج المعرفي السلوكي (CBT)",
+        "url": "https://www.rcpsych.ac.uk/mental-health/translations/arabic/cognitive-behavioural-therapy-(CBT)"
+      }
+    ],
+    "reviewed_on": "2026-11-19",
+    "minutes": 5,
+    "image": "art-cbt-explained",
+    "image_alt": "رسم لشاب واقف جنب دايرة فيها تلات حاجات مربوطة ببعض بأسهم: فكرة، وإحساس، وتصرف"
+  },
+  {
     "slug": "stingy-or-limited-means",
     "category": "relationships-family",
     "title": "إزاي تعرف إن الشخص اللي قدامك بخيل ولا ظروفه على قده؟",
