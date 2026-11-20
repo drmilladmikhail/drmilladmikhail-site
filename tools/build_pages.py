@@ -210,7 +210,7 @@ def book_page():
           <p class="sub">إزاي تشحن نفسك من جديد وتلاقي معنى لحياتك</p>
           <p>تمارين وقصص ورسومات، للأيام اللي بتحس فيها إن طاقتك خلصت.</p>
           <div class="actions">
-            <a class="btn primary" href="__BATT__" target="_blank" rel="noopener">اشتري الكتاب (Kindle)</a>
+            <a class="btn primary" href="https://www.amazon.com/dp/B0HS9KPSRT" target="_blank" rel="noopener">اشتري الكتاب (Kindle)</a>
             <a class="btn" href="/battery/">اعرف أكتر</a>
           </div>
         </div>
@@ -246,7 +246,7 @@ def battery_page():
           <p>هتمشي الرحلة مع سارة وأمير، نفس شخصيات «ليه بنحب اللي بيوجعنا؟»، ومعاك أكتر من 15 تمرين، و4 تحديات 7 أيام، و18 رسمة.</p>
           <p><b>متاح دلوقتي على أمازون كيندل.</b> تقدر تقراه على تطبيق Kindle المجاني على الموبايل أو الكمبيوتر.</p>
           <div class="actions">
-            <a class="btn primary" href="__BATT__" target="_blank" rel="noopener">اشتري الكتاب على أمازون</a>
+            <a class="btn primary" href="https://www.amazon.com/dp/B0HS9KPSRT" target="_blank" rel="noopener">اشتري الكتاب على أمازون</a>
             <a class="btn" href="/book/">كل كتبي</a>
           </div>
         </div>
@@ -263,6 +263,7 @@ def battery_page():
   </section>'''
     ld = {"@context": "https://schema.org", "@type": "Book", "name": "بطاريتي 1%",
           "alternateName": "My Battery Is at 1%", "inLanguage": "ar", "url": f"{SITE}/battery/",
+          "sameAs": ["https://www.amazon.com/dp/B0HS9KPSRT"], "datePublished": "2026-11-20", "bookFormat": "https://schema.org/EBook",
           "author": {"@id": f"{SITE}/#person", "@type": "Person", "name": "Dr. Millad Mikhail"},
           "image": f"{SITE}/assets/battery-cover.jpg", "description": "إزاي تشحن نفسك من جديد وتلاقي معنى لحياتك."}
     write("battery", page("battery", "بطاريتي 1%", "«بطاريتي 1%»: كتاب جديد لـ د. ميلاد ميخائيل عن إزاي تشحن نفسك من جديد وتلاقي معنى لحياتك. متاح على أمازون كيندل.", body, ld))
