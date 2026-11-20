@@ -145,7 +145,7 @@ def about_page(ba, page, write):
       <ul class="link-grid">
         <li><a href="/about/qualifications/"><b>المؤهلات العلمية</b><span>الدرجات العلمية والتقييم الأمريكي (WES).</span></a></li>
         <li><a href="/about/publications/"><b>الرسائل العلمية والأبحاث</b><span>رسالة الدكتوراه والماجستير وأبحاث المؤتمرات.</span></a></li>
-        <li><a href="/book/"><b>الكتب</b><span>«ليه بنحب اللي بيوجعنا؟» و«بطاريتي 1%» (قريبًا).</span></a></li>
+        <li><a href="/book/"><b>الكتب</b><span>«ليه بنحب اللي بيوجعنا؟» و«بطاريتي 1%».</span></a></li>
         <li><a href="/articles/"><b>المقالات</b><span>مقالات مبسّطة بمراجع علمية.</span></a></li>
         <li><a href="/family/"><b>التوعية الأسرية والزوجية</b><span>كل محتوى العلاقات والزواج في مكان واحد.</span></a></li>
         <li><a href="/contact/"><b>تواصل</b><span>للجلسات أو التعاون أو الأسئلة.</span></a></li>

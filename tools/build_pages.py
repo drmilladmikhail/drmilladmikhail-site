@@ -205,11 +205,14 @@ def book_page():
           <img src="/assets/battery-cover.jpg" width="480" height="720" alt="غلاف كتاب بطاريتي 1%" loading="lazy">
         </picture>
         <div>
-          <p class="badge-soon">قريبًا</p>
+          <p class="badge-soon">جديد</p>
           <h2>بطاريتي 1%</h2>
-          <p class="sub">إزاي تشحن روحك من جديد وتلاقي معنى لحياتك</p>
+          <p class="sub">إزاي تشحن نفسك من جديد وتلاقي معنى لحياتك</p>
           <p>تمارين وقصص ورسومات، للأيام اللي بتحس فيها إن طاقتك خلصت.</p>
-          <div class="actions"><a class="btn" href="/battery/">اعرف أكتر</a></div>
+          <div class="actions">
+            <a class="btn primary" href="__BATT__" target="_blank" rel="noopener">اشتري الكتاب (Kindle)</a>
+            <a class="btn" href="/battery/">اعرف أكتر</a>
+          </div>
         </div>
       </article>
       {ba.share_block(SITE + "/book/", "كتب د. ميلاد ميخائيل: ليه بنحب اللي بيوجعنا؟ وبطاريتي 1%", "شارك الصفحة")}
@@ -222,7 +225,7 @@ def book_page():
            "sameAs": [ba.BOOK_AR, ba.BOOK_EN], "datePublished": "2026"},
           {"@context": "https://schema.org", "@type": "FAQPage",
            "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQ]}]
-    write("book", page("book", "الكتب", "كتب د. ميلاد ميخائيل بالعامية: «ليه بنحب اللي بيوجعنا؟» عن نمط التعلق واختيار شريك الحياة، و«بطاريتي 1%» قريبًا.", body, ld))
+    write("book", page("book", "الكتب", "كتب د. ميلاد ميخائيل بالعامية: «ليه بنحب اللي بيوجعنا؟» عن نمط التعلق واختيار شريك الحياة، و«بطاريتي 1%» عن الإرهاق النفسي والرجوع لمعنى الحياة.", body, ld))
 
 
 # ------------------------------------------------------------------ battery
@@ -235,33 +238,34 @@ def battery_page():
           <img src="/assets/battery-cover.jpg" width="480" height="720" alt="غلاف كتاب بطاريتي 1% لـ د. ميلاد ميخائيل">
         </picture>
         <div>
-          <p class="badge-soon">قريبًا</p>
+          <p class="badge-soon">جديد</p>
           <h1>بطاريتي 1%</h1>
-          <p class="sub">إزاي تشحن روحك من جديد وتلاقي معنى لحياتك</p>
+          <p class="sub">إزاي تشحن نفسك من جديد وتلاقي معنى لحياتك</p>
           <p>كتاب جديد بالعامية المصرية، فيه تمارين وقصص ورسومات، للأيام اللي بتحس فيها إن طاقتك خلصت ومش لاقي سبب تكمّل بيه.</p>
           <p>الكتاب قريب من موضوع رسالة الدكتوراه بتاعتي: الإرشاد بالمعنى (العلاج بالمعنى عند فيكتور فرانكل) والمناعة النفسية، بس مكتوب للناس العادية، مش للمتخصصين.</p>
-          <p><b>عايز تعرف أول ما ينزل؟</b> تابع قناة «جلسة شيزلونج» أو المدونة.</p>
+          <p>هتمشي الرحلة مع سارة وأمير، نفس شخصيات «ليه بنحب اللي بيوجعنا؟»، ومعاك أكتر من 15 تمرين، و4 تحديات 7 أيام، و18 رسمة.</p>
+          <p><b>متاح دلوقتي على أمازون كيندل.</b> تقدر تقراه على تطبيق Kindle المجاني على الموبايل أو الكمبيوتر.</p>
           <div class="actions">
-            <a class="btn primary" href="https://www.youtube.com/@DrMilladMikhail?sub_confirmation=1" target="_blank" rel="noopener">اشترك في القناة</a>
-            <a class="btn" href="https://blog.drmilladmikhail.com/" target="_blank" rel="noopener">المدونة</a>
+            <a class="btn primary" href="__BATT__" target="_blank" rel="noopener">اشتري الكتاب على أمازون</a>
+            <a class="btn" href="/book/">كل كتبي</a>
           </div>
         </div>
       </article>
-      <h2 class="sec-h">لحد ما ينزل، جرّب دول</h2>
+      <h2 class="sec-h">وكمان جرّب دول</h2>
       <ul class="link-grid">
         <li><a href="/game/"><b>لعبة «بطاريتي <span dir="ltr">1%</span>»</b><span>عيش يوم كامل وشوف إيه اللي بيشحنك وإيه اللي بيسحب منك.</span></a></li>
         <li><a href="/tests/wellbeing-who5/"><b>مؤشر الرفاهية النفسية (WHO-5)</b><span>طاقتك ومزاجك عاملين إيه آخر أسبوعين؟</span></a></li>
         <li><a href="/videos/#immunity"><b>فيديوهات المناعة النفسية</b><span>إزاي تقف تاني بعد الضغوط.</span></a></li>
         <li><a href="/articles/"><b>المقالات</b><span>مقال جديد كل اتنين وخميس.</span></a></li>
       </ul>
-      {ba.share_block(SITE + "/battery/", "بطاريتي 1% — كتاب جديد قريبًا لـ د. ميلاد ميخائيل", "شارك الصفحة")}
+      {ba.share_block(SITE + "/battery/", "بطاريتي 1% — كتاب جديد لـ د. ميلاد ميخائيل", "شارك الصفحة")}
     </div>
   </section>'''
     ld = {"@context": "https://schema.org", "@type": "Book", "name": "بطاريتي 1%",
           "alternateName": "My Battery Is at 1%", "inLanguage": "ar", "url": f"{SITE}/battery/",
           "author": {"@id": f"{SITE}/#person", "@type": "Person", "name": "Dr. Millad Mikhail"},
-          "image": f"{SITE}/assets/battery-cover.jpg", "description": "إزاي تشحن روحك من جديد وتلاقي معنى لحياتك — قريبًا."}
-    write("battery", page("battery", "بطاريتي 1% (قريبًا)", "«بطاريتي 1%»: كتاب جديد قريبًا لـ د. ميلاد ميخائيل عن إزاي تشحن روحك وتلاقي معنى لحياتك.", body, ld))
+          "image": f"{SITE}/assets/battery-cover.jpg", "description": "إزاي تشحن نفسك من جديد وتلاقي معنى لحياتك."}
+    write("battery", page("battery", "بطاريتي 1%", "«بطاريتي 1%»: كتاب جديد لـ د. ميلاد ميخائيل عن إزاي تشحن نفسك من جديد وتلاقي معنى لحياتك. متاح على أمازون كيندل.", body, ld))
 
 
 # ------------------------------------------------------------------ questions

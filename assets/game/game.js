@@ -177,7 +177,7 @@
       '<div class="bg-actions"><button type="button" class="bg-btn" data-act="share">صورة لنتيجتك</button>' +
       '<button type="button" class="bg-btn bg-ghost" data-act="again">عيش يوم جديد</button></div>' +
       '<div class="bg-share" hidden></div>' +
-      '<div class="bg-card bg-book"><h3>الحكاية مكمّلة في الكتاب</h3><p>«بطاريتي 1%: إزاي تشحن روحك من جديد وتلاقي معنى لحياتك». تمارين وقصص ورسومات بالعامية المصرية.</p>' +
+      '<div class="bg-card bg-book"><h3>الحكاية مكمّلة في الكتاب</h3><p>«بطاريتي 1%: إزاي تشحن نفسك من جديد وتلاقي معنى لحياتك». تمارين وقصص ورسومات بالعامية المصرية.</p>' +
       '<a class="bg-link" href="/battery/">اعرف أكتر عن الكتاب</a></div>' +
       "</div>");
   }
