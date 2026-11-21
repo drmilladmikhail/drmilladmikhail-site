@@ -183,4 +183,32 @@
   }
   window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   document.addEventListener('focusin', function (e) { if (e.target.closest && e.target.closest('.floating-home, .helper')) root.classList.remove('fab-away'); });
+  /* On phones, keep them off the answer buttons while a test/quiz form is on screen (2026-11-21). */
+  var quiz = document.querySelector('form#quiz, form.quiz');
+  if (quiz && 'IntersectionObserver' in window && window.matchMedia) {
+    var small = window.matchMedia('(max-width: 760px)');
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) { root.classList.toggle('fab-quiz', en.isIntersecting && small.matches); });
+    }, { rootMargin: '0px 0px -90px 0px' }).observe(quiz);
+  }
+})();
+
+/* Announcement ticker: a pause/play button, so the moving text can be stopped on phones too (WCAG 2.2.2, 2026-11-21). */
+(function () {
+  var bar = document.querySelector('.site-announcement');
+  if (!bar || bar.querySelector('.site-announcement-pause')) return;
+  var en = document.documentElement.lang === 'en';
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'site-announcement-pause';
+  function set(paused) {
+    bar.classList.toggle('is-paused', paused);
+    btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+    btn.setAttribute('aria-label', paused ? (en ? 'Play announcements' : 'تشغيل الشريط') : (en ? 'Pause announcements' : 'إيقاف الشريط مؤقتًا'));
+    btn.textContent = paused ? '\u25B6' : '\u275A\u275A';
+  }
+  set(false);
+  btn.addEventListener('click', function () { set(!bar.classList.contains('is-paused')); });
+  var close = bar.querySelector('.site-announcement-close');
+  bar.insertBefore(btn, close || null);
 })();

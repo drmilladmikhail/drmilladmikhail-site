@@ -26,3 +26,8 @@ html[lang="en"] .site-announcement-track{direction:ltr;animation-name:site-annou
 @media(hover:hover){.site-announcement-viewport:hover .site-announcement-track{animation-play-state:paused}}
 @media(max-width:480px){.site-announcement{gap:8px;min-height:44px;padding-inline:10px;font-size:12px}.site-announcement-link{padding-inline:22px}}
 @media(prefers-reduced-motion:reduce){.site-announcement-track{animation:none!important;width:100%}.site-announcement-link[aria-hidden="true"]{display:none}.site-announcement-link{white-space:normal;padding:2px 8px}}
+
+/* ticker pause control + pause while focused (2026-11-21) */
+.site-announcement-pause{flex:none;width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font:700 11px/1 Arial,sans-serif;letter-spacing:-1px;cursor:pointer}.site-announcement-pause:hover{background:rgba(255,255,255,.22)}.site-announcement-pause:focus-visible,.site-announcement-close:focus-visible{outline:3px solid #e2b35a;outline-offset:2px}
+.site-announcement.is-paused .site-announcement-track,.site-announcement:focus-within .site-announcement-track{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.site-announcement-pause{display:none}}

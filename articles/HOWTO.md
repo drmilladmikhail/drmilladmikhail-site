@@ -52,7 +52,7 @@ Each category has its own page `/articles/category/<slug>/` (built automatically
 - Original Egyptian Arabic, 600–1200 words (the length the answer needs, no padding), clear `<h2>` questions, a practical Egyptian example, steps the reader can take.
 - ≥ 2 reliable sources you actually opened (WHO, NIMH, NHS, APA, Mayo Clinic, Cleveland Clinic, peer-reviewed papers with DOI).
 - 2–3 internal links (related article, test, glossary term or tool) — only where they really fit.
-- «امتى تكلم متخصص» + safety note; crisis topics follow safe-messaging (no methods; Egypt 105/122/123, US 988/911).
+- «امتى تكلم متخصص» + safety note; crisis topics follow safe-messaging (no methods; Egypt 16328 mental-health line, 122/123 (never 105 — see tools/pages_trust.py HELPLINES), US 988/911).
 - No diagnosis, no medication names or doses, no therapy offers to people in the US.
 - Don't duplicate: check `articles/articles.json`, `/questions/`, `/glossary/`, `/stories/` and the blog log first.
 
