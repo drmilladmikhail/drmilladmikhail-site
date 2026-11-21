@@ -1282,7 +1282,8 @@ html body .floating-home, html body .helper-btn { transition: transform .3s cubi
   body { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
 }
 /* hidden while reading down, back when scrolling up (assets/nav.js adds .fab-away) */
-html.fab-away body .floating-home, html.fab-away body .helper:not(.open) .helper-btn { transform: translateY(140%); opacity: 0; pointer-events: none; }
+html.fab-away body .floating-home, html.fab-away body .helper:not(.open) .helper-btn,
+html.fab-quiz body .floating-home, html.fab-quiz body .helper:not(.open) .helper-btn { transform: translateY(140%); opacity: 0; pointer-events: none; }
 body:has(.topbar details[open]) .floating-home, body:has(.topbar details[open]) .helper:not(.open) { display: none; }
 
 /* ---------- gentle entrance for cards and article blocks ---------- */

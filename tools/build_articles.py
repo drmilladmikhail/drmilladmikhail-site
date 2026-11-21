@@ -215,8 +215,9 @@ def article_page(a, prev_items, en_slugs=frozenset()):
         "author": {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail",
                    "alternateName": "د. ميلاد ميخائيل", "url": f"{SITE}/about/"},
         "publisher": {"@type": "Person", "@id": f"{SITE}/#person", "name": "Dr. Millad Mikhail"},
-        "isBasedOn": {"@type": "Book", "name": "ليه بنحب اللي بيوجعنا؟", "url": BOOK_AR},
     }
+    if a.get("chapter"):  # only articles drawn from the book (2026-11-21)
+        ld["isBasedOn"] = {"@type": "Book", "name": "ليه بنحب اللي بيوجعنا؟", "url": BOOK_AR}
     if a.get("refs"):
         ld["citation"] = [r["url"] for r in a["refs"]]
     cat_name = CATEGORIES[a["category"]][0]
