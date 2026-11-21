@@ -1,5 +1,27 @@
 [
   {
+    "slug": "perfectionism-never-good-enough",
+    "title": "الكمالية: ليه مفيش حاجة بعملها بتبقى كفاية؟ وإزاي أخفف منها؟",
+    "description": "ليه مفيش حاجة بعملها بتعجبني؟ الكمالية مش مجرد اجتهاد. اعرف الفرق بين المعايير العالية والكمالية المرهقة، علاماتها، وخطوات عملية تخفف بيها عن نفسك.",
+    "date": "2026-11-20",
+    "category": "personality-behavior",
+    "summary": "الكمالية هي السعي إن كل حاجة تطلع من غير ولا غلطة، وهي سمة شخصية منتشرة مش تشخيص طبي. بتبقى مشكلة لما قيمتك عند نفسك تتربط بالنتيجة، فتحس إن مفيش حاجة كفاية وتأجل وتقلق. بتخف بخطوات صغيرة: مواعيد واقعية، تجربة «الكويس كفاية» عن قصد، وملاحظة إنك بتعدّي أغلاطك، ولو مأثرة على حياتك كلم متخصص.",
+    "refs": [
+      {
+        "title": "Cleveland Clinic (2023) — 5 Signs That You Might Be a Perfectionist — and How To Find Balance",
+        "url": "https://health.clevelandclinic.org/signs-of-perfectionism"
+      },
+      {
+        "title": "American Psychological Association (2018) — Perfectionism among young people significantly increased since 1980s, study finds (Curran & Hill, Psychological Bulletin)",
+        "url": "https://www.apa.org/news/press/releases/2018/01/perfectionism-young-people"
+      }
+    ],
+    "reviewed_on": "2026-11-20",
+    "minutes": 5,
+    "image": "art-perfectionism-never-good-enough",
+    "image_alt": "رسم لست قاعدة قدام لابتوب بالليل وشكلها زعلانة، وحواليها ورق متكرمش على الأرض وساعة على الحيطة"
+  },
+  {
     "slug": "money-fights-couples",
     "category": "relationships-family",
     "title": "الخناق على الفلوس بين الزوجين: نتفق إزاي من غير ما نخسر بعض؟",
