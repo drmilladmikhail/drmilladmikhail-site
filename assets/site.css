@@ -1329,3 +1329,4 @@ body:has(.topbar details[open]) .floating-home, body:has(.topbar details[open]) 
 .aq-again-row { margin: 10px 0 0; text-align: center; }
 .quick-tests { margin-top: 34px; }
 .quick-tests > h2 { margin: 0 0 6px; }
+.bf-second { margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--night-line); }
