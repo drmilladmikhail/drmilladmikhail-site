@@ -312,6 +312,10 @@ def article_page(a, prev_items, en_slugs=frozenset()):
         </div>
       </div>
       {refs_block}
+      <aside class="session-box" aria-label="جلسات نفسية أونلاين">
+        <p class="session-box-title">لو الكلام ده قريب من اللي انت عايشه</p>
+        <p>مش لازم تشيله لوحدك. فيه <a href="/sessions/">جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي</a>، ساعة فيديو أو صوت، والحجز برسالة واتساب.</p>
+      </aside>
       <div class="author-box">
         <img src="/assets/millad.jpg" width="96" height="96" alt="د. ميلاد ميخائيل" loading="lazy">
         <p><strong><a href="/about/" rel="author">د. ميلاد ميخائيل</a></strong><br>حاصل على الدكتوراه في الصحة النفسية من جامعة قناة السويس، وعضو الجمعية الأمريكية لعلم النفس (APA).<br><a href="/about/">السيرة المهنية</a> · <a href="/about/qualifications/">المؤهلات</a> · <a href="/about/publications/">الأبحاث</a> · <a href="/book/">كتاب «ليه بنحب اللي بيوجعنا؟»</a></p>

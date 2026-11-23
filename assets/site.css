@@ -1368,3 +1368,15 @@ body:has(.topbar details[open]) .floating-home, body:has(.topbar details[open]) 
   .brand-text { min-width: 0; }
   .brand-text small { overflow: hidden; text-overflow: ellipsis; }
 }
+
+/* 2026-11-24 (batches 2-4, his approval): a quiet sessions note at the end of articles, next steps under test results */
+.session-box { margin: 26px 0 18px; padding: 18px 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--amber); font-size: 16px; }
+.session-box p { margin: 0; }
+.session-box .session-box-title { font-family: var(--display); font-weight: 700; font-size: 18.5px; margin-bottom: 6px; color: var(--ink); }
+.session-box a { color: var(--eucalyptus); font-weight: 600; text-underline-offset: 3px; }
+.result-next { margin: 18px 0 14px; padding: 14px 18px; border-radius: 14px; background: var(--mist); border: 1px solid var(--line); }
+.result-next .result-next-title { margin: 0 0 6px; font-weight: 700; color: var(--ink); }
+.result-next ul { margin: 0; padding-inline-start: 20px; }
+.result-next li { margin: 4px 0; }
+.result-next a { color: var(--eucalyptus); font-weight: 600; }
