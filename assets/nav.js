@@ -28,12 +28,18 @@
     for (var p = el.parentElement; p; p = p.parentElement) {
       if (p.tagName === 'DETAILS' && !p.open) { p.open = true; changed = true; }
     }
+    if (el.matches('details.qa') && !el.open) { el.open = true; changed = true; }
     var d = el.querySelector('details.fold');
     if (d && !d.open) { d.open = true; changed = true; }
     if (changed) el.scrollIntoView();
   }
   window.addEventListener('hashchange', openHash);
   openHash();
+  // Content above (fonts, images) can still shift after load: re-align a linked question.
+  window.addEventListener('load', function () {
+    var el = location.hash && document.getElementById(location.hash.slice(1));
+    if (el && el.matches('details.qa')) el.scrollIntoView();
+  });
 })();
 
 /* Site-wide «جديد» ticker: the newest content on the site, written into each
