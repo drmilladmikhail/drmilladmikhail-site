@@ -11,6 +11,12 @@ HERO = """<section class="hero hero-dark clarity-hero">
     <p class="statement">مقالات مبسطة وأدوات توعوية وتمارين عملية لفهم مشاعرك وعلاقاتك، بالعربي البسيط.</p>
     <div class="actions"><a class="btn btn-gold" href="/discover-feelings/">اكتشف مشاعرك</a> <a class="btn btn-ghost" href="#concern-title">اختار اللي شاغل بالك</a></div>
     <p class="hero-sub">مش عارف إحساسك؟ اكتبه بكلماتك، وسمّيه، وجرّب خطوة صغيرة. اللي بتكتبه ما بيتبعتش ولا بيتحفظ.</p>
+    <p class="hero-sessions">ولو محتاج حد يسمعك بجد، فيه <a href="/sessions/">جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي</a>.</p>
+    <ul class="hero-creds" aria-label="عن د. ميلاد باختصار">
+      <li>دكتوراه في الصحة النفسية، جامعة قناة السويس</li>
+      <li>عضو الجمعية الأمريكية لعلم النفس (APA)</li>
+      <li>مؤلف «ليه بنحب اللي بيوجعنا؟»</li>
+    </ul>
   </div>
   <div class="hero3d"><div class="h3d-stage">
     <span class="h3d-core" aria-hidden="true"><span class="h3d-ring"></span><span class="h3d-orb"></span><span class="h3d-ring h3d-ring-front"></span></span>
