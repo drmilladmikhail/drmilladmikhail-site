@@ -1,0 +1,21 @@
+/* «دقايق هدوء» page only. */
+.calm-page h1{margin:8px 0 14px}
+.calm-lead{font-size:1.08rem;line-height:1.9;max-width:36em}
+.calm-page h2{margin:34px 0 12px;font-size:1.3rem}
+.calm-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.calm-track{border:1px solid var(--line,#dbe3dc);border-radius:16px;padding:14px 16px;background:#fff;display:grid;gap:8px}
+.calm-track-copy b{display:block}
+.calm-track-copy span{color:#52645d;font-size:.9rem}
+.calm-track audio{width:100%}
+.calm-hint{color:#52645d;line-height:1.8}
+.calm-prompts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.calm-chip{font:inherit;border:1px solid #2f6f62;background:#fff;color:#234c42;border-radius:999px;padding:8px 14px;cursor:pointer}
+.calm-chip:focus-visible,.calm-btn:focus-visible,.calm-text:focus-visible{outline:3px solid #2f6f62;outline-offset:2px}
+.calm-label{display:block;font-weight:600;margin-bottom:8px}
+.calm-text{display:block;width:100%;box-sizing:border-box;font:inherit;line-height:1.9;padding:14px;border:1px solid #bcc9c2;border-radius:14px;background:#fff;color:#18233a;resize:vertical}
+.calm-count{font-size:.85rem;color:#52645d;text-align:start;margin:6px 0 0}
+.calm-clear{margin:10px 0 0}
+.calm-btn{font:inherit;border:1px solid #2f6f62;background:#fff;color:#234c42;border-radius:12px;padding:9px 16px;cursor:pointer;text-decoration:none;display:inline-block}
+.calm-safety{margin-top:36px;padding:18px 20px;border-radius:16px;background:#f3ece0;border:1px solid #e2b35a}
+.calm-safety h2{margin:0 0 8px;font-size:1.15rem}
+.calm-safety p{margin:0 0 10px;line-height:1.8}
