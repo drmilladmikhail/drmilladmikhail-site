@@ -29,6 +29,21 @@ HERO = """<section class="hero hero-dark clarity-hero">
   </div></div>
   </div>
 </section>"""
+REEL = """<section class="section home-reel" aria-labelledby="reel-h">
+  <div class="wrap home-reel-wrap">
+    <div class="home-reel-text">
+      <h2 id="reel-h">جولة سريعة في الموقع</h2>
+      <p>دقيقة واحدة تعرّفك إيه اللي تلاقيه هنا، وتبدأ منين.</p>
+      <a class="btn" href="/discover-feelings/">ابدأ من «اكتشف مشاعرك»</a>
+    </div>
+    <figure class="home-reel-frame">
+      <video controls playsinline preload="metadata" width="720" height="1280" poster="/assets/home/site-reel-poster.jpg" aria-label="فيديو تعريفي: جولة سريعة في موقع د. ميلاد ميخائيل">
+        <source src="/assets/home/site-reel.mp4" type="video/mp4">
+        متصفحك مش بيدعم تشغيل الفيديو. <a href="/assets/home/site-reel.mp4">حمّل الفيديو</a>
+      </video>
+    </figure>
+  </div>
+</section>"""
 REMOVED = ('discovery-hub', 'guide', 'quick-quiz', 'myth-promo', 'tests-band', 'quote-band')
 GLOSSARY = """<section class="section glossary-home" aria-labelledby="glossary-home-title">
   <div class="wrap">
@@ -61,7 +76,8 @@ def transform(text):
     heroes = list(re.finditer(section_pattern('hero'), main, flags=re.S))
     if len(heroes) != 1 or len(re.findall(r'<section\b', heroes[0].group(0))) != 1:
         raise ValueError('Expected one non-nested homepage hero')
-    main = re.sub(section_pattern('hero'), lambda _: HERO, main, count=1, flags=re.S)
+    main = re.sub(r'\s*' + section_pattern('home-reel'), '', main, flags=re.S)
+    main = re.sub(section_pattern('hero'), lambda _: HERO + '\n' + REEL, main, count=1, flags=re.S)
     import build_your_path
     concerns = list(re.finditer(section_pattern('concern-finder'), main, flags=re.S))
     if len(concerns) != 1 or len(re.findall(r'<section\b', concerns[0].group(0))) != 1:
