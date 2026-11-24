@@ -11,6 +11,12 @@ HERO = """<section class="hero hero-dark clarity-hero">
     <p class="statement">مقالات مبسطة وأدوات توعوية وتمارين عملية لفهم مشاعرك وعلاقاتك، بالعربي البسيط.</p>
     <div class="actions"><a class="btn btn-gold" href="/discover-feelings/">اكتشف مشاعرك</a> <a class="btn btn-ghost" href="#concern-title">اختار اللي شاغل بالك</a></div>
     <p class="hero-sub">مش عارف إحساسك؟ اكتبه بكلماتك، وسمّيه، وجرّب خطوة صغيرة. اللي بتكتبه ما بيتبعتش ولا بيتحفظ.</p>
+    <p class="hero-sessions">ولو محتاج حد يسمعك بجد، فيه <a href="/sessions/">جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي</a>.</p>
+    <ul class="hero-creds" aria-label="عن د. ميلاد باختصار">
+      <li>دكتوراه في الصحة النفسية، جامعة قناة السويس</li>
+      <li>عضو الجمعية الأمريكية لعلم النفس (APA)</li>
+      <li>مؤلف «ليه بنحب اللي بيوجعنا؟»</li>
+    </ul>
   </div>
   <div class="hero3d"><div class="h3d-stage">
     <span class="h3d-core" aria-hidden="true"><span class="h3d-ring"></span><span class="h3d-orb"></span><span class="h3d-ring h3d-ring-front"></span></span>
@@ -21,6 +27,21 @@ HERO = """<section class="hero hero-dark clarity-hero">
       <li><a class="h3d-card" href="/articles/"><span class="h3d-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M9 8h6M9 12h6"/></svg></span><span><b>مقالات مبسّطة</b><small>بالعامية، ومن مراجع علمية</small></span></a></li>
     </ul>
   </div></div>
+  </div>
+</section>"""
+REEL = """<section class="section home-reel" aria-labelledby="reel-h">
+  <div class="wrap home-reel-wrap">
+    <div class="home-reel-text">
+      <h2 id="reel-h">جولة سريعة في الموقع</h2>
+      <p>دقيقة واحدة تعرّفك إيه اللي تلاقيه هنا، وتبدأ منين.</p>
+      <a class="btn" href="/discover-feelings/">ابدأ من «اكتشف مشاعرك»</a>
+    </div>
+    <figure class="home-reel-frame">
+      <video controls playsinline preload="metadata" width="720" height="1280" poster="/assets/home/site-reel-poster.jpg" aria-label="فيديو تعريفي: جولة سريعة في موقع د. ميلاد ميخائيل">
+        <source src="/assets/home/site-reel.mp4" type="video/mp4">
+        متصفحك مش بيدعم تشغيل الفيديو. <a href="/assets/home/site-reel.mp4">حمّل الفيديو</a>
+      </video>
+    </figure>
   </div>
 </section>"""
 REMOVED = ('discovery-hub', 'guide', 'quick-quiz', 'myth-promo', 'tests-band', 'quote-band')
@@ -55,7 +76,8 @@ def transform(text):
     heroes = list(re.finditer(section_pattern('hero'), main, flags=re.S))
     if len(heroes) != 1 or len(re.findall(r'<section\b', heroes[0].group(0))) != 1:
         raise ValueError('Expected one non-nested homepage hero')
-    main = re.sub(section_pattern('hero'), lambda _: HERO, main, count=1, flags=re.S)
+    main = re.sub(r'\s*' + section_pattern('home-reel'), '', main, flags=re.S)
+    main = re.sub(section_pattern('hero'), lambda _: HERO + '\n' + REEL, main, count=1, flags=re.S)
     import build_your_path
     concerns = list(re.finditer(section_pattern('concern-finder'), main, flags=re.S))
     if len(concerns) != 1 or len(re.findall(r'<section\b', concerns[0].group(0))) != 1:

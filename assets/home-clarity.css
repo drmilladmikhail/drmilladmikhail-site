@@ -78,3 +78,37 @@ html[lang="ar"] body.home-redesign #main .ses-topics{list-style:none;padding:0;m
 html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker{display:inline-block;margin:0 0 14px;padding:5px 14px;border-radius:999px;background:#e9f2ee;border:1px solid #cfe0d8;color:#1f5247;font-size:15px;font-weight:700;line-height:1.6}
 html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker span{color:#4a5b53;font-weight:600}
 @media(max-width:420px){html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker{font-size:13.5px;padding:4px 12px}}
+
+/* ===== 2026-11-24 DMMA identity (batch 1, his approval): navy hero band, ivory card, teal + gold ===== */
+html[lang="ar"] body.home-redesign{--home-paper:#f6f2e9;--home-ink:#13213b;--home-muted:#5b6577;--home-line:#e2dacb;--home-blue:#2f6e68;--home-blue-dark:#1f4f4a}
+html[lang="ar"] body.home-redesign #main .clarity-hero{position:relative;overflow:hidden;background:radial-gradient(90% 120% at 100% 0%,rgba(214,176,106,.16),rgba(214,176,106,0) 55%),linear-gradient(165deg,#13213b 0%,#1c2f4f 100%);border-bottom:1px solid rgba(214,176,106,.35)}
+html[lang="ar"] body.home-redesign #main .clarity-hero::after{content:"";position:absolute;width:620px;height:620px;inset-inline-start:-260px;bottom:-420px;border-radius:50%;border:1px solid rgba(214,176,106,.2);box-shadow:0 0 0 60px rgba(214,176,106,.04),0 0 0 140px rgba(214,176,106,.03);pointer-events:none}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card{background:linear-gradient(155deg,#fffdf8 0%,#fbf8f1 55%,#f6efdf 100%);background-color:#fbf8f1;border-color:rgba(214,176,106,.55);
+  box-shadow:0 1px 0 #fff inset,0 0 0 1px rgba(214,176,106,.18),0 44px 70px -34px rgba(0,0,0,.65)}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-name{color:#13213b}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-name{background:linear-gradient(120deg,#13213b 0%,#24425f 55%,#7a5a1f 100%);-webkit-background-clip:text;background-clip:text;color:transparent}}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .statement{color:#2b3850}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-sub{color:#3d4a5e}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker{background:#f3ead9;border-color:#e2cfa6;color:#13213b}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker span{color:#5b6577}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-sessions{max-width:34em;margin:14px auto 0;font-size:15.5px;color:#3d4a5e}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-sessions a{color:#1f4f4a;font-weight:600;text-underline-offset:4px}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0 0;padding:16px 0 0;border-top:1px solid #e2dacb}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds li{font-size:13.5px;line-height:1.6;color:#13213b;background:#fff;border:1px solid #e2dacb;border-radius:999px;padding:4px 12px}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds li::before{content:"✓";color:#7a5a1f;font-weight:700;margin-inline-end:6px}
+html[lang="ar"] body.home-redesign #main .today .daily{background:radial-gradient(120% 90% at 100% 0%,rgba(214,176,106,.30) 0%,rgba(214,176,106,0) 55%),linear-gradient(150deg,#0f1a2b 0%,#13213b 48%,#1c2f4f 100%);background-color:#13213b;border-color:rgba(214,176,106,.5)}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-date,html[lang="ar"] body.home-redesign #main .today .daily figcaption{color:#d9e1ea}
+html[lang="ar"] body.home-redesign a:focus-visible,html[lang="ar"] body.home-redesign summary:focus-visible,html[lang="ar"] body.home-redesign button:focus-visible{outline-color:#2f6e68}
+html[lang="ar"] body.home-redesign .about-facts li{color:#13213b;background:#efe8da}
+@media(max-width:560px){html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds li{font-size:12.5px}}
+/* Site tour video, right after the hero (tools/home_clarity.py REEL). */
+html[lang="ar"] body.home-redesign .home-reel{background:var(--home-paper)}
+html[lang="ar"] body.home-redesign .home-reel-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:clamp(24px,5vw,64px);align-items:center}
+html[lang="ar"] body.home-redesign .home-reel-text h2{margin:0 0 10px;font-family:var(--display-ar);font-size:clamp(24px,3.5vw,32px);color:var(--home-ink)}
+html[lang="ar"] body.home-redesign .home-reel-text p{margin:0 0 22px;color:var(--home-muted);line-height:1.9;max-width:28em}
+html[lang="ar"] body.home-redesign .home-reel-frame{margin:0;border-radius:22px;overflow:hidden;background:#0f1a17;border:1px solid var(--home-line);box-shadow:0 18px 40px -22px rgba(24,35,58,.45)}
+html[lang="ar"] body.home-redesign .home-reel-frame video{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;background:#0f1a17}
+@media(max-width:760px){html[lang="ar"] body.home-redesign .home-reel-wrap{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}
+html[lang="ar"] body.home-redesign .home-reel-text p{margin-inline:auto}
+html[lang="ar"] body.home-redesign .home-reel-frame{width:min(100%,300px)}}

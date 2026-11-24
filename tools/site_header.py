@@ -20,9 +20,10 @@ NAME = "د. ميلاد ميخائيل"
 TITLE = "استشاري العلاج النفسي والأسري"
 SLOGAN = "راحة بال، وتعديل حال… معاك في الرحلة لحياة أحلى"
 
-# Logo mark: a sunrise arc (حياة أحلى) over the letter م, in the site colours.
+# Logo mark: a sunrise arc (حياة أحلى) over the letter م, in the site colours
+# (2026-11-24 identity: deep navy tile, gold arc).
 MARK = ('<svg class="brand-mark" viewBox="0 0 44 44" aria-hidden="true" focusable="false">'
-        '<rect width="44" height="44" rx="13" fill="#2f6f62"/>'
+        '<rect width="44" height="44" rx="13" fill="#13213b"/>'
         '<path d="M9 31a13 13 0 0 1 26 0" fill="none" stroke="#e2b35a" stroke-width="2.6" stroke-linecap="round"/>'
         '<circle cx="22" cy="12.5" r="2.4" fill="#e2b35a"/>'
         '<text x="22" y="31" text-anchor="middle" font-family="Noto Naskh Arabic, serif" font-weight="700" '
@@ -46,6 +47,7 @@ GROUPS = [
     ]),
     ("اختبر نفسك واتمرّن", [
         ("/discover-feelings/", "اكتشاف مشاعرك"),
+        ("/calm/", "دقايق هدوء"),
         ("/paths/", "مسارات التعلّم"),
         ("/experts/", "دليل المتخصصين"),
         ("/tests/", "اختبارات نفسية"),
@@ -75,6 +77,9 @@ def _links(items):
 RESEARCH_LIBRARY = ("/research/library/", "مكتبة الأكاديميين والباحثين")
 SAVED = ("/saved/", "محفوظاتي")
 EXPLORE = ("/explore/", "دوّر واكتشف")
+# 2026-11-24 (batch 1, his approval): «فيديوهات» moved into «مكتبتي» and «المنصة» into
+# «عن د. ميلاد» so the top bar stays short; a «احجز جلسة» button links to /sessions/.
+PLATFORM = ("/platform/", "المنصة")
 
 
 def _menu():
@@ -110,14 +115,13 @@ TOPBAR = f'''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
       <a href="/">الصفحة الرئيسية</a>
       <a href="/articles/">المقالات</a>
       <a href="/tests/">اختبارات نفسية</a>
-      <a href="/videos/">فيديوهات</a>
-      <a href="/platform/">المنصة</a>
       <a href="/paths/">مسارات التعلّم</a>
 {_dropdown("تمارين وأدوات", GROUPS[1][1][1:])}
 {_dropdown("مكتبتي", [EXPLORE, SAVED, RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6, 7, 8, 9)])}
-{_dropdown("عن د. ميلاد", GROUPS[2][1])}
+{_dropdown("عن د. ميلاد", GROUPS[2][1] + [PLATFORM])}
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
     </nav>
+    <a class="nav-book" href="/sessions/">احجز<span class="nb-more"> جلسة</span></a>
     <details class="menu">
       <summary aria-label="القائمة"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
       <nav aria-label="القائمة">

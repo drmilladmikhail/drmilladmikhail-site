@@ -1331,3 +1331,52 @@ body:has(.topbar details[open]) .floating-home, body:has(.topbar details[open]) 
 .quick-tests > h2 { margin: 0 0 6px; }
 .bf-second { margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--night-line); }
 .qa { scroll-margin-top: 90px; }
+
+/* ================= 2026-11-24 DMMA identity (batch 1, his approval) =================
+   Deep navy ink, soft ivory paper, muted teal for action, a thread of gold.
+   Same variable names as before, so every page picks the palette up at once.
+   Contrast (WCAG AA): muted on paper 5.7:1, amber-text on paper 5.7:1, white on teal 5.9:1. */
+:root {
+  --paper: #f6f2e9; --surface: #ffffff; --mist: #ece5d6; --ink: #13213b; --muted: #556071;
+  --line: #e2dacb; --eucalyptus: #2f6e68; --eucalyptus-ink: #ffffff;
+  --amber: #a98142; --amber-text: #7a5a1f; --focus: #2f6e68;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1a2b; --surface: #16243a; --mist: #1e2d45; --ink: #ece6da; --muted: #a6afbe;
+    --line: #273752; --eucalyptus: #7fbfb5; --eucalyptus-ink: #0b1424;
+    --amber: #d6b06a; --amber-text: #d6b06a; --focus: #7fbfb5;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1a2b; --surface: #16243a; --mist: #1e2d45; --ink: #ece6da; --muted: #a6afbe;
+  --line: #273752; --eucalyptus: #7fbfb5; --eucalyptus-ink: #0b1424;
+  --amber: #d6b06a; --amber-text: #d6b06a; --focus: #7fbfb5;
+}
+/* «احجز جلسة»: the one action that stays visible in the top bar, on phones too */
+.topbar .nav { margin-inline-start: auto; }
+.nav-book { display: inline-flex; align-items: center; flex: none; padding: 8px 18px; border-radius: 999px;
+  background: var(--eucalyptus); color: var(--eucalyptus-ink); font-size: 15px; font-weight: 600;
+  text-decoration: none; white-space: nowrap; box-shadow: 0 8px 18px -12px rgba(19,33,59,.7); }
+.nav-book:hover { filter: brightness(1.06); }
+.topbar-dark .nav-book { background: #d6b06a; color: #13213b; }
+@media (max-width: 1180px) { .nav-book { margin-inline-start: auto; } }
+@media (max-width: 420px) {
+  .nav-book { padding: 7px 14px; font-size: 14px; }
+  .nav-book .nb-more { display: none; }
+  .brand { min-width: 0; }
+  .brand-text { min-width: 0; }
+  .brand-text small { overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* 2026-11-24 (batches 2-4, his approval): a quiet sessions note at the end of articles, next steps under test results */
+.session-box { margin: 26px 0 18px; padding: 18px 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--amber); font-size: 16px; }
+.session-box p { margin: 0; }
+.session-box .session-box-title { font-family: var(--display); font-weight: 700; font-size: 18.5px; margin-bottom: 6px; color: var(--ink); }
+.session-box a { color: var(--eucalyptus); font-weight: 600; text-underline-offset: 3px; }
+.result-next { margin: 18px 0 14px; padding: 14px 18px; border-radius: 14px; background: var(--mist); border: 1px solid var(--line); }
+.result-next .result-next-title { margin: 0 0 6px; font-weight: 700; color: var(--ink); }
+.result-next ul { margin: 0; padding-inline-start: 20px; }
+.result-next li { margin: 4px 0; }
+.result-next a { color: var(--eucalyptus); font-weight: 600; }
