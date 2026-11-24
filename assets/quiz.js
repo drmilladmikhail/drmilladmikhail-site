@@ -14,7 +14,13 @@
   }
 
   function render(html) {
-    out.innerHTML = html + '<button type="button" class="btn again">أعد الاختبار</button>';
+    /* 2026-11-24 (batch 4, his approval): a calm next step under every result. Static links only;
+       the answers and the score stay on this device as before. */
+    var next = '<div class="result-next"><p class="result-next-title">خطوتك الجاية</p><ul>' +
+      '<li><a href="/articles/">اقرأ مقالات مبسطة عن اللي ظهر في نتيجتك</a></li>' +
+      '<li><a href="/exercise/">جرّب تمرين صغير يهديك</a></li>' +
+      '<li>ولو محتاج حد يسمعك، فيه <a href="/sessions/">جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي</a></li></ul></div>';
+    out.innerHTML = html + next + '<button type="button" class="btn again">أعد الاختبار</button>';
     out.hidden = false;
     out.querySelector('.again').addEventListener('click', function () {
       form.reset(); out.hidden = true; form.hidden = false;
