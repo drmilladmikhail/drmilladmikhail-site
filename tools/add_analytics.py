@@ -136,6 +136,35 @@ def inject_depth3d(t):
     return t
 
 
+def version_therapists(root):
+    """Therapist pages load their own scripts from /therapists/; version them too,
+    so a fix reaches phones right away instead of after the browser cache expires."""
+    import hashlib
+    names = ("sb.js", "profile.js", "dashboard.js", "app.js", "profile.css")
+    vers = {}
+    for name in names:
+        path = os.path.join(root, "therapists", name)
+        if os.path.isfile(path):
+            with open(path, "rb") as f:
+                vers[name] = hashlib.md5(f.read()).hexdigest()[:8]
+    pat = re.compile(r'(/therapists/)(' + "|".join(re.escape(n) for n in vers) + r')(\?v=[0-9a-f]+)?(")')
+    base = os.path.join(root, "therapists")
+    n = 0
+    for dirpath, _dirs, files in os.walk(base):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            path = os.path.join(dirpath, fn)
+            with open(path, encoding="utf-8") as f:
+                t = f.read()
+            new_t = pat.sub(lambda m: f"{m.group(1)}{m.group(2)}?v={vers[m.group(2)]}{m.group(4)}", t)
+            if new_t != t:
+                with open(path, "w", encoding="utf-8") as f:
+                    f.write(new_t)
+                n += 1
+    print(f"therapist asset versions: updated {n} page(s)")
+
+
 def version_assets(root):
     """Version shared styles and interactive scripts so fixes bypass stale caches."""
     import hashlib
@@ -214,6 +243,7 @@ def main():
     import build_news
     build_news.apply(ROOT)
     version_assets(ROOT)
+    version_therapists(ROOT)
 
 
 if __name__ == "__main__":
