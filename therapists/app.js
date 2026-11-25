@@ -5,31 +5,8 @@
     d3:{name:'د. (اسم الدكتور ٣)', spec:'اكتئاب ونوم', tags:['اكتئاب','نوم'], exp:'١٥ سنة', next:'الجمعة ٩:٠٠ ص', langs:'عربي'}
   };
 
-  // Profile fields for each doctor: placeholders until the doctor's form arrives.
-  var PROFILES = {
-    d1:{
-      bio:'[نبذة المعالج: ٣ إلى ٥ جمل عن أسلوبه وإيه اللي المريض يتوقعه في أول جلسة]',
-      creds:['[الشهادة الأولى، الجامعة، السنة]','[الشهادة الثانية، الجامعة، السنة]','[الترخيص أو الاعتماد، الجهة، الحالة]'],
-      courses:['[اسم الكورس، الجهة، السنة]','[اسم التدريب، الجهة، السنة]'],
-      articles:['[عنوان المقال، المكان، الرابط]','[عنوان المقال، المكان، الرابط]'],
-      video:'فيديو تعريفي (دقيقة لدقيقتين) هيتضاف هنا لما المعالج يبعته'
-    },
-    d2:{
-      bio:'[نبذة المعالج: ٣ إلى ٥ جمل عن أسلوبه وإيه اللي المريض يتوقعه في أول جلسة]',
-      creds:['[الشهادة الأولى، الجامعة، السنة]','[الترخيص أو الاعتماد، الجهة، الحالة]'],
-      courses:['[اسم الكورس، الجهة، السنة]'],
-      articles:['[عنوان المقال، المكان، الرابط]'],
-      video:'فيديو تعريفي هيتضاف هنا لما المعالج يبعته'
-    },
-    d3:{
-      bio:'[نبذة المعالج: ٣ إلى ٥ جمل عن أسلوبه وإيه اللي المريض يتوقعه في أول جلسة]',
-      creds:['[الشهادة الأولى، الجامعة، السنة]','[الترخيص أو الاعتماد، الجهة، الحالة]'],
-      courses:['[اسم الكورس، الجهة، السنة]'],
-      articles:['[عنوان المقال، المكان، الرابط]'],
-      video:'فيديو تعريفي هيتضاف هنا لما المعالج يبعته'
-    }
-  };
 
+  var SLUGS = {d1:'doctor-1', d2:'doctor-2', d3:'doctor-3'};
   var SLOTS = {tue:'الثلاثاء ٧:٠٠ م', wed:'الأربعاء ٨:٠٠ م', thu:'الخميس ٦:٣٠ م', sat:'السبت ٥:٠٠ م'};
   var state = {doc:'d1', dur:'60', slot:'wed'};
 
@@ -84,41 +61,17 @@
         '<div class="meta-row"><span>الخبرة <b>' + d.exp + '</b></span><span>الجلسة <b>١٠٠٠ ج</b></span></div>' +
         '<div class="meta-row"><span>أقرب ميعاد</span><b>' + d.next + '</b></div>' +
         '<div class="card-actions">' +
-          '<a class="btn btn-outline btn-block" href="#doc-' + k + '">عرض البروفايل</a>' +
+          '<a class="btn btn-outline btn-block" href="/therapists/' + SLUGS[k] + '/">عرض البروفايل</a>' +
           '<a class="btn btn-gold btn-block" href="#booking" data-book="' + k + '">احجز مع ' + d.name + '</a>' +
         '</div>';
       list.appendChild(card);
     });
   }
 
-  function list(items){
-    return items.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('');
-  }
-
-  function renderProfile(k){
-    var d = DOCS[k], p = PROFILES[k];
-    $('#pAvatar').textContent = 'د';
-    $('#pName').textContent = d.name;
-    $('#pSpec').textContent = d.spec + ' · معالج نفسي · جلسات أونلاين';
-    $('#pMeta').textContent = 'الخبرة: ' + d.exp + ' · اللغات: ' + d.langs;
-    $('#pBio').textContent = p.bio;
-    $('#pCreds').innerHTML = list(p.creds);
-    $('#pCourses').innerHTML = list(p.courses);
-    $('#pArticles').innerHTML = list(p.articles);
-    $('#pVideo').textContent = p.video;
-    $('#pBook').textContent = 'احجز جلسة مع ' + d.name;
-    $('#pBook').setAttribute('data-book', k);
-  }
-
   $('#doctorList').addEventListener('click', function(e){
     var b = e.target.closest('[data-book]');
     if(!b) return;
     state.doc = b.getAttribute('data-book');
-    refresh();
-  });
-
-  $('#pBook').addEventListener('click', function(){
-    state.doc = this.getAttribute('data-book');
     refresh();
   });
 
@@ -144,14 +97,14 @@
   function route(){
     var raw = (location.hash || '#home').slice(1);
     var view = 'home';
-    if(raw.indexOf('doc-') === 0 && DOCS[raw.slice(4)]){
-      view = 'profile';
-      renderProfile(raw.slice(4));
+    if(raw.indexOf('doc-') === 0 && SLUGS[raw.slice(4)]){
+      location.replace('/therapists/' + SLUGS[raw.slice(4)] + '/');
+      return;
     } else if(VIEWS.indexOf(raw) !== -1){
       view = raw;
     }
     $$('[data-view]').forEach(function(s){ s.hidden = s.getAttribute('data-view') !== view; });
-    var navId = view === 'profile' ? 'team' : view;
+    var navId = view;
     $$('[data-nav]').forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-nav') === navId); });
     window.scrollTo(0, 0);
   }
