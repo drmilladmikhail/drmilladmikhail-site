@@ -1,4 +1,6 @@
 {
+  "slug": "doctor-1",
+  "name": "د. (اسم المعالج ١)",
   "title": "معالج نفسي",
   "photo": "",
   "languages": [
@@ -11,51 +13,35 @@
   "credentials": [
     {
       "name": "[اسم الشهادة]",
-      "place": "[الجامعة]",
-      "year": "[السنة]"
-    },
-    {
-      "name": "[الترخيص أو الاعتماد]",
-      "place": "[جهة الإصدار]",
-      "year": "[الحالة]"
+      "year": "[السنة]",
+      "place": "[الجامعة]"
     }
   ],
   "courses": [
     {
       "name": "[اسم الكورس أو التدريب]",
-      "place": "[الجهة]",
-      "year": "[السنة]"
+      "year": "[السنة]",
+      "place": "[الجهة]"
     }
   ],
-  "articles": [
-    {
-      "title": "[عنوان المقال]",
-      "place": "[مكان النشر]",
-      "url": ""
-    }
-  ],
-  "videos": [
-    {
-      "title": "[عنوان الفيديو]",
-      "url": ""
-    }
-  ],
+  "articles": [],
+  "videos": [],
   "sessions": [
     {
-      "length": "٦٠ دقيقة",
-      "price": "١٠٠٠ جنيه"
+      "price": "١٠٠٠ جنيه",
+      "length": "٦٠ دقيقة"
     }
   ],
   "session_mode": "فيديو أو صوت",
-  "cancel_policy": "[قبل الميعاد بكام ساعة]",
   "schedule": "[الأيام والساعات المتاحة، بتوقيت القاهرة]",
+  "cancel_policy": "[قبل الميعاد بكام ساعة]",
   "contact_whatsapp": "",
-  "preview": true,
-  "slug": "doctor-1",
-  "name": "د. (اسم المعالج ١)",
   "specialties": [
     "قلق",
     "ضغوط",
     "نوبات هلع"
-  ]
+  ],
+  "photo_path": "",
+  "preview": true,
+  "og": "a1ef3093bd73"
 }
