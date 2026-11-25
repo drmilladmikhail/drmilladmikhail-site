@@ -13,7 +13,7 @@
   var db = TP.client;
   var me = null;        // therapist row
   var tab = 'profile';
-  var COLS = 'id,slug,published,name,title,specialties,bio,experience,languages,credentials,courses,articles,videos,sessions,session_mode,schedule,cancel_policy,whatsapp,photo_path,comments_enabled';
+  var COLS = 'id,slug,published,name,title,specialties,bio,experience,languages,credentials,courses,articles,videos,sessions,session_mode,schedule,cancel_policy,whatsapp,photo_path,comments_enabled,book_title,book_author,book_why,note_path,note_text';
 
   function clear() { root.textContent = ''; }
   function msg(text, kind) { return el('p', { class: 'dash-msg' + (kind ? ' dash-' + kind : ''), role: 'status', text: text || '' }); }
@@ -149,7 +149,11 @@
       session_mode: input('p-mode', me.session_mode, { maxlength: 120 }),
       schedule: area('p-sched', me.schedule, { maxlength: 400, rows: 2 }),
       cancel_policy: input('p-cancel', me.cancel_policy, { maxlength: 300 }),
-      whatsapp: input('p-wa', me.whatsapp, { inputmode: 'numeric', dir: 'ltr', maxlength: 15 })
+      whatsapp: input('p-wa', me.whatsapp, { inputmode: 'numeric', dir: 'ltr', maxlength: 15 }),
+      book_title: input('p-book', me.book_title, { maxlength: 200 }),
+      book_author: input('p-book-author', me.book_author, { maxlength: 120 }),
+      book_why: area('p-book-why', me.book_why, { maxlength: 1200, rows: 3 }),
+      note_text: area('p-note-text', me.note_text, { maxlength: 600, rows: 3 })
     };
     var creds = rows('p-creds', me.credentials, [{ k: 'name', label: 'الشهادة' }, { k: 'place', label: 'الجامعة / الجهة' }, { k: 'year', label: 'السنة' }], 'شهادة');
     var courses = rows('p-courses', me.courses, [{ k: 'name', label: 'الكورس' }, { k: 'place', label: 'الجهة' }, { k: 'year', label: 'السنة' }], 'كورس');
@@ -158,6 +162,32 @@
     var prices = rows('p-prices', me.sessions, [{ k: 'length', label: 'المدة (مثلاً ٦٠ دقيقة)' }, { k: 'price', label: 'السعر' }], 'مدة وسعر');
     var comments = el('input', { type: 'checkbox', id: 'p-comments' });
     comments.checked = !!me.comments_enabled;
+
+    function uploader(id, key, label, hint, preview) {
+      var st = msg('');
+      var inp = el('input', { type: 'file', id: id, accept: 'image/jpeg,image/png,image/webp' });
+      inp.addEventListener('change', function () {
+        var file = inp.files && inp.files[0];
+        if (!file) return;
+        if (file.size > 3 * 1024 * 1024) { st.textContent = 'الصورة أكبر من ٣ ميجا. اختار صورة أصغر.'; return; }
+        var ext = ({ 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' })[file.type];
+        if (!ext) { st.textContent = 'الصورة لازم تكون JPG أو PNG أو WEBP.'; return; }
+        var path = me.id + '/' + key + '-' + Date.now() + '.' + ext;
+        st.textContent = 'بترفع الصورة…';
+        db.storage.from(TP.BUCKET).upload(path, file, { contentType: file.type, upsert: false }).then(function (u) {
+          if (u.error) { st.textContent = 'الصورة ماترفعتش. جرّب تاني.'; return; }
+          var col = key === 'note' ? 'note_path' : 'photo_path';
+          var old = me[col], upd = {};
+          upd[col] = path;
+          db.from('therapists').update(upd).eq('id', me.id).then(function (r) {
+            if (r.error) { st.textContent = 'الصورة اترفعت بس ماتحفظتش. جرّب تاني.'; return; }
+            me[col] = path; preview(); st.textContent = 'الصورة اتحفظت.';
+            if (old) db.storage.from(TP.BUCKET).remove([old]);
+          });
+        });
+      });
+      return [field(label, inp, hint), st];
+    }
 
     var photoStatus = msg('');
     var photoPrev = el('div', { class: 'dash-photo' });
@@ -187,6 +217,25 @@
       });
     });
 
+    var notePrev = el('div', { class: 'dash-note' });
+    function showNote() {
+      notePrev.textContent = '';
+      var u = TP.photoUrl(me.note_path);
+      if (u) {
+        notePrev.appendChild(el('img', { src: u, alt: 'رسالتك بخط إيدك' }));
+        notePrev.appendChild(el('button', { type: 'button', class: 'dash-link dash-danger', text: 'شيل الصورة', onclick: function () {
+          var old = me.note_path;
+          db.from('therapists').update({ note_path: '' }).eq('id', me.id).then(function (r) {
+            if (r.error) return;
+            me.note_path = ''; showNote();
+            if (old) db.storage.from(TP.BUCKET).remove([old]);
+          });
+        } }));
+      }
+    }
+    showNote();
+    var noteUp = uploader('p-note', 'note', 'صورة الرسالة', 'اكتب رسالة قصيرة للزائر على ورقة بخط إيدك وصوّرها في نور كويس. JPG أو PNG.', showNote);
+
     var status = msg('');
     var save = el('button', { type: 'submit', class: 'tp-btn', text: 'احفظ التعديلات' });
     var form = el('form', { class: 'dash-card', novalidate: true }, [
@@ -198,10 +247,17 @@
       field('الخبرة', f.experience, 'مثلاً: ١٠ سنين'),
       field('اللغات', f.languages, 'افصل بينهم بفاصلة'),
       field('نبذة عنك', f.bio, 'بتشتغل إزاي، بتساعد مين، وإيه اللي الشخص يتوقعه في أول جلسة. سيب سطر فاضي بين الفقرات.'),
+      el('h2', { text: 'كلمة مني' }),
+      el('p', { class: 'tp-small tp-muted', text: 'رسالة قصيرة منك للزائر بخط إيدك. بتخلي الصفحة شخصية جداً.' }),
+      notePrev, noteUp[0], noteUp[1],
+      field('نص الرسالة', f.note_text, 'اكتب نفس الكلام اللي في الصورة، عشان اللي مش قادر يقرا الخط أو بيستخدم قارئ شاشة.'),
       el('h2', { text: 'الشهادات والترخيص' }), el('p', { class: 'tp-small tp-muted', text: 'اكتب بس الحاجات الحقيقية اللي تقدر تثبتها.' }), creds,
       el('h2', { text: 'الكورسات والتدريب' }), courses,
       el('h2', { text: 'مقالاتك' }), arts,
       el('h2', { text: 'فيديوهاتك' }), el('p', { class: 'tp-small tp-muted', text: 'ارفع الفيديو على قناتك على يوتيوب وحط الرابط هنا، وهيشتغل جوه صفحتك.' }), vids,
+      el('h2', { text: 'كتاب غيّر في حياتي' }),
+      field('اسم الكتاب', f.book_title), field('المؤلف', f.book_author),
+      field('ليه الكتاب ده؟', f.book_why, 'سطرين أو تلاتة: غيّر فيك إيه، ومين ممكن يستفيد منه.'),
       el('h2', { text: 'الجلسات والحجز' }), prices,
       field('طريقة الجلسة', f.session_mode, 'مثلاً: فيديو أو صوت'),
       field('المواعيد المتاحة', f.schedule, 'الأيام والساعات، واكتب التوقيت'),
@@ -224,7 +280,9 @@
         languages: splitList(f.languages.value).slice(0, 6), bio: f.bio.value.trim(),
         credentials: creds.read(), courses: courses.read(), articles: arts.read(), videos: vids.read(), sessions: prices.read(),
         session_mode: f.session_mode.value.trim(), schedule: f.schedule.value.trim(), cancel_policy: f.cancel_policy.value.trim(),
-        whatsapp: wa, comments_enabled: comments.checked
+        whatsapp: wa, comments_enabled: comments.checked,
+        book_title: f.book_title.value.trim(), book_author: f.book_author.value.trim(), book_why: f.book_why.value.trim(),
+        note_text: f.note_text.value.trim()
       };
       save.disabled = true; status.textContent = 'بيحفظ…';
       db.from('therapists').update(update).eq('id', me.id).select(COLS).single().then(function (r) {

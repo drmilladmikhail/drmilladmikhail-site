@@ -96,3 +96,24 @@ button.tp-btn:disabled{opacity:.6;cursor:wait}
 .dash-actions{display:flex;flex-wrap:wrap;gap:.9rem;align-items:center}
 .dash-comment.dash-approved{border-inline-start:3px solid #3a8f5c;padding-inline-start:.7rem}
 .dash-comment.dash-rejected{opacity:.6}
+
+/* «كلمة مني» — handwritten note */
+.tp-note{background:#fffdf6}
+.tp-note-img{width:100%;max-width:520px;justify-self:center;border-radius:6px;box-shadow:0 6px 18px rgba(28,58,58,.12);transform:rotate(-1deg);background:#fff}
+.tp-note-text{font-size:1.1rem;line-height:2}
+.tp-sign{justify-self:end}
+/* «كتاب غيّر في حياتي» */
+.tp-bookcard{display:flex;gap:.9rem;align-items:center}
+.tp-bookspine{flex:0 0 14px;align-self:stretch;min-height:64px;border-radius:3px;background:linear-gradient(var(--tp-deep),#2f5a5a)}
+.tp-booktitle{font-size:1.1rem}
+/* Share */
+.tp-share-row{display:flex;flex-wrap:wrap;gap:.5rem}
+.tp-share-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.4rem 1.1rem;border-radius:999px;border:1.5px solid var(--tp-line);background:var(--tp-card);color:var(--tp-ink);font:inherit;font-weight:700;text-decoration:none;cursor:pointer}
+.tp-share-btn.tp-wa{background:#1f7a4d;border-color:#1f7a4d;color:#fff}
+.tp-share-btn.tp-fb{background:#1d4f9c;border-color:#1d4f9c;color:#fff}
+/* «مقالات ممكن تفيدك» */
+.tp-related-wrap{background:var(--tp-soft);border-radius:10px;padding:.6rem .9rem}
+.tp-related{margin:0;padding-inline-start:1.1rem;display:grid;gap:.3rem}
+.tp-related a{color:var(--tp-deep)}
+.dash-note{display:grid;gap:.4rem}
+.dash-note img{max-width:260px;border-radius:6px;border:1px solid var(--tp-line)}

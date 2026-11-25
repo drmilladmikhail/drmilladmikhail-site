@@ -143,8 +143,98 @@
       bodyEl,
       TP.youtubeEmbed(p.video_url, p.title),
       cl.childNodes.length ? el('div', null, [el('h4', { text: 'التعليقات' }), cl]) : null,
+      el('div', { class: 'tp-related-slot' }),
       t.comments_enabled ? el('details', { class: 'tp-cdetails' }, [el('summary', { text: 'علّق على الموضوع ده' }), commentForm(p, t)]) : null
     ]);
+  }
+
+  function noteBlock(t) {
+    var img = TP.photoUrl(t.note_path);
+    if (!img && !t.note_text) return null;
+    return el('section', { class: 'tp-block tp-note' }, [
+      el('h2', { text: 'كلمة مني' }),
+      img ? el('img', { class: 'tp-note-img', src: img, alt: t.note_text ? ('رسالة بخط ' + (t.name || 'المعالج') + ': ' + t.note_text) : ('رسالة بخط ' + (t.name || 'المعالج')), loading: 'lazy' }) : null,
+      !img && t.note_text ? el('p', { class: 'tp-note-text', text: t.note_text }) : null,
+      el('p', { class: 'tp-small tp-muted tp-sign', text: '— ' + (t.name || '') })
+    ]);
+  }
+
+  function bookBlock(t) {
+    if (!t.book_title) return null;
+    return el('section', { class: 'tp-block tp-book-pick' }, [
+      el('h2', { text: 'كتاب غيّر في حياتي' }),
+      el('div', { class: 'tp-bookcard' }, [
+        el('div', { class: 'tp-bookspine', 'aria-hidden': 'true' }),
+        el('div', null, [
+          el('b', { class: 'tp-booktitle', text: t.book_title }),
+          t.book_author ? el('div', { class: 'tp-small tp-muted', text: t.book_author }) : null
+        ])
+      ]),
+      t.book_why ? el('p', { text: t.book_why }) : null
+    ]);
+  }
+
+  function shareBlock(t) {
+    var url = location.origin + location.pathname;
+    var msg = (t.name || '') + (t.title ? ' · ' + t.title : '') + '\n' + url;
+    var status = el('span', { class: 'tp-small tp-muted', role: 'status' });
+    var copy = el('button', { type: 'button', class: 'tp-share-btn', text: 'انسخ اللينك', onclick: function () {
+      var done = function () { status.textContent = 'اتنسخ.'; };
+      try {
+        navigator.clipboard.writeText(url).then(done, function () { status.textContent = url; });
+      } catch (e) { status.textContent = url; }
+    } });
+    var native = (navigator.share ? el('button', { type: 'button', class: 'tp-share-btn', text: 'مشاركة', onclick: function () {
+      navigator.share({ title: t.name || '', text: t.title || '', url: url }).catch(function () {});
+    } }) : null);
+    return el('section', { class: 'tp-block tp-share' }, [
+      el('h2', { text: 'شارك الصفحة' }),
+      el('p', { class: 'tp-small tp-muted', text: 'لو تعرف حد ممكن يستفيد، ابعتله الصفحة.' }),
+      el('div', { class: 'tp-share-row' }, [
+        el('a', { class: 'tp-share-btn tp-wa', target: '_blank', rel: 'noopener', href: 'https://wa.me/?text=' + encodeURIComponent(msg), text: 'واتساب' }),
+        el('a', { class: 'tp-share-btn tp-fb', target: '_blank', rel: 'noopener', href: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), text: 'فيسبوك' }),
+        native, copy
+      ]),
+      status
+    ]);
+  }
+
+  // «مقالات ممكن تفيدك»: match a post's words against the site's articles.
+  var articlesPromise = null;
+  function loadArticles() {
+    if (!articlesPromise) {
+      articlesPromise = fetch('/therapists/related-articles.json', { credentials: 'omit' })
+        .then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; });
+    }
+    return articlesPromise;
+  }
+  function norm(w) {
+    return w.replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي')
+      .replace(/^(وال|بال|فال|كال|لل|ال)/, '');
+  }
+  var STOP = { 'اللي': 1, 'علشان': 1, 'عشان': 1, 'ازاي': 1, 'ليه': 1, 'لما': 1, 'كمان': 1, 'بس': 1, 'حاجه': 1, 'كده': 1, 'هو': 1, 'هي': 1, 'انت': 1, 'انا': 1, 'مش': 1, 'على': 1, 'علي': 1, 'من': 1, 'في': 1, 'عن': 1, 'مع': 1, 'او': 1, 'ولا': 1, 'كل': 1, 'بين': 1, 'لو': 1, 'دي': 1, 'ده': 1, 'هل': 1, 'ايه': 1, 'يعني': 1 };
+  function words(text) {
+    var out = {};
+    String(text || '').split(/[^؀-ۿA-Za-z]+/).forEach(function (w) {
+      w = norm(w);
+      if (w.length >= 3 && !STOP[w]) out[w] = 1;
+    });
+    return out;
+  }
+  function related(post, t, arts) {
+    var mine = words((post.title || '') + ' ' + (post.body || '') + ' ' + (t.specialties || []).join(' '));
+    var scored = arts.map(function (a) {
+      var aw = words(a.t + ' ' + a.k), score = 0;
+      Object.keys(aw).forEach(function (w) { if (mine[w]) score += 1; });
+      Object.keys(words(a.t)).forEach(function (w) { if (mine[w]) score += 2; });
+      return { a: a, s: score };
+    }).filter(function (x) { return x.s >= 3; }).sort(function (x, y) { return y.s - x.s; }).slice(0, 3);
+    if (!scored.length) return null;
+    var ul = el('ul', { class: 'tp-related' });
+    scored.forEach(function (x) {
+      if (/^\/articles\/[a-z0-9-]+\/$/.test(x.a.u)) ul.appendChild(el('li', null, [el('a', { href: x.a.u, text: x.a.t })]));
+    });
+    return ul.childNodes.length ? el('div', { class: 'tp-related-wrap' }, [el('h4', { text: 'مقالات ممكن تفيدك' }), ul]) : null;
   }
 
   function render(t, posts, comments) {
@@ -159,24 +249,37 @@
 
     var nodes = [
       facts(t),
+      noteBlock(t),
       block('نبذة', bio(t)),
       block('مواضيع وبوستات', postsWrap.childNodes.length ? postsWrap : null, 'posts'),
       block('فيديوهات', videos(t)),
+      bookBlock(t),
       block('الشهادات والمؤهلات', list(t.credentials, 'cred')),
       block('الكورسات والتدريب', list(t.courses, 'cred')),
       block('مقالات', list(t.articles, 'article')),
       booking(t),
+      shareBlock(t),
       el('p', { class: 'tp-urgent', text: 'لو أنت أو حد قريبك في خطر فوري، متستناش جلسة ولا رد على تعليق: اتصل بالطوارئ (في مصر ١٢٣) أو خط الصحة النفسية ١٦٣٢٨، أو اتوجه لأقرب مستشفى.' })
     ];
     main.textContent = '';
     nodes.forEach(function (n) { if (n) main.appendChild(n); });
+    if (posts.length) {
+      loadArticles().then(function (arts) {
+        if (!arts || !arts.length) return;
+        posts.forEach(function (p) {
+          var slot = document.querySelector('#post-' + p.id + ' .tp-related-slot');
+          var r = slot && related(p, t, arts);
+          if (r) slot.appendChild(r);
+        });
+      });
+    }
     if (location.hash) {
       var target = document.getElementById(location.hash.slice(1));
       if (target) target.scrollIntoView();
     }
   }
 
-  db.from('therapists').select('id,slug,name,title,specialties,bio,experience,languages,credentials,courses,articles,videos,sessions,session_mode,schedule,cancel_policy,whatsapp,photo_path,comments_enabled')
+  db.from('therapists').select('id,slug,name,title,specialties,bio,experience,languages,credentials,courses,articles,videos,sessions,session_mode,schedule,cancel_policy,whatsapp,photo_path,comments_enabled,book_title,book_author,book_why,note_path,note_text')
     .eq('slug', slug).maybeSingle().then(function (r) {
       if (r.error || !r.data) return; // keep the static page
       var t = r.data;

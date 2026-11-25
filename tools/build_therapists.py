@@ -13,12 +13,14 @@ with the live data from Supabase (project putqeswsycwyxxrdcmyh).
 import html
 import json
 import os
+import re
 import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "content", "therapists")
 OUT = os.path.join(ROOT, "therapists")
 SITE = "https://drmilladmikhail.com"
+SUPABASE = "https://putqeswsycwyxxrdcmyh.supabase.co"
 
 
 def e(s):
@@ -69,10 +71,15 @@ def page(d):
     url = f"{SITE}/therapists/{slug}/"
     specs = d.get("specialties") or []
     desc = f'{name} · {d.get("title", "معالج نفسي")}' + (f' · {"، ".join(specs)}' if specs else "") + " · جلسات نفسية أونلاين."
-    photo = d.get("photo") or ""
-    avatar = (f'<img class="tp-photo" src="/{e(photo.lstrip("/"))}" alt="صورة {e(name)}" width="160" height="160">'
+    photo_path = d.get("photo_path") or ""
+    photo = (f"{SUPABASE}/storage/v1/object/public/therapist-photos/{photo_path}"
+             if re.fullmatch(r"[0-9a-f-]{36}/[A-Za-z0-9._-]+", photo_path) else "")
+    avatar = (f'<img class="tp-photo" src="{e(photo)}" alt="صورة {e(name)}" width="160" height="160">'
               if photo else f'<div class="tp-photo tp-initial" aria-hidden="true">{e(initial(name))}</div>')
-    og_img = f'<meta property="og:image" content="{SITE}/{e(photo.lstrip("/"))}">\n' if photo else ""
+    og_file = os.path.join(OUT, slug, "og.jpg")
+    og_img = (f'<meta property="og:image" content="{url}og.jpg?v={e(d.get("og") or "1")}">\n'
+              '<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n'
+              f'<meta property="og:image:alt" content="{e(name)}">\n' if os.path.exists(og_file) else "")
     robots = '<meta name="robots" content="noindex, nofollow">\n' if d.get("preview", True) else ""
     preview = ('<p class="tp-preview">صفحة تجريبية: البيانات اللي بين الأقواس هتتملى من استمارة المعالج.</p>'
                if d.get("preview", True) else "")
@@ -122,7 +129,7 @@ def page(d):
 <meta property="og:title" content="{e(name)} | {e(d.get("title", "معالج نفسي"))}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:url" content="{url}">
-{og_img}<meta name="twitter:card" content="summary">
+{og_img}<meta name="twitter:card" content="{"summary_large_image" if og_img else "summary"}">
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="stylesheet" href="/therapists/profile.css">
 </head>
@@ -178,7 +185,19 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             f.write(new)
         built.append(d["slug"])
+    related_index()
     print(f"therapists: built {len(built)} profile page(s): {', '.join(built)}")
+
+
+def related_index():
+    """Small list of the site's articles for «مقالات ممكن تفيدك» under therapists' posts."""
+    with open(os.path.join(ROOT, "articles", "articles.json"), encoding="utf-8") as f:
+        arts = json.load(f)
+    out = [{"u": f"/articles/{a['slug']}/", "t": a.get("title", ""),
+            "k": " ".join(x for x in (a.get("description", ""), a.get("summary", ""), a.get("category", "")) if x)[:400]}
+           for a in arts if a.get("slug") and a.get("title")]
+    with open(os.path.join(OUT, "related-articles.json"), "w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
 
 
 if __name__ == "__main__":
