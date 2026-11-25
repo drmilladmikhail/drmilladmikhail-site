@@ -8,7 +8,7 @@ NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
 SITE = "https://drmilladmikhail.com"
 # 2026-11-11 SEO brief
 IDENTITY = ("about", "about/qualifications", "about/publications", "family", "en/about")
-PRIVATE = {SITE + "/saved/", SITE + "/my-space/", SITE + "/newsletter/thanks/"}
+PRIVATE = {SITE + "/saved/", SITE + "/my-space/", SITE + "/newsletter/thanks/", SITE + "/therapists/"}
 ET.register_namespace("", NS)
 ET.register_namespace("xhtml", "http://www.w3.org/1999/xhtml")
 
