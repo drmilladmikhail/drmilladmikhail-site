@@ -120,3 +120,5 @@ button.tp-btn:disabled{opacity:.6;cursor:wait}
 .tp-preview-note{background:#fff3c4;color:#5a4500;border-radius:10px;padding:.7rem 1rem;margin-top:1rem}
 .dash-pending{background:#fff3c4;color:#5a4500;border-radius:10px;padding:.6rem .8rem}
 .dash-linkprev{font-size:.95rem;color:var(--tp-deep);background:var(--tp-soft);border-radius:8px;padding:.4rem .7rem;overflow-wrap:anywhere}
+.dash-hr{border:0;border-top:1px solid var(--tp-line);margin:.4rem 0;width:100%}
+.dash-pw{border-color:var(--tp-accent)}

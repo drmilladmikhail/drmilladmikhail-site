@@ -31,15 +31,51 @@
   }
 
   /* ---------- sign in ---------- */
+  // Default: email + password (no email needed, works from any browser, the phone can save it).
+  // The emailed link is for the first time and for a forgotten password.
   function loginView(note) {
+    clear();
+    var email = input('pw-email', '', { type: 'email', autocomplete: 'username', dir: 'ltr', required: true, inputmode: 'email', name: 'email' });
+    var pass = input('pw-pass', '', { type: 'password', autocomplete: 'current-password', dir: 'ltr', required: true, name: 'password' });
+    var status = msg(note || '');
+    var btn = el('button', { class: 'tp-btn', type: 'submit', text: 'دخول' });
+    var form = el('form', { class: 'dash-card', novalidate: true, method: 'post', action: '#' }, [
+      el('h1', { text: 'لوحة المعالج' }),
+      field('الإيميل', email), field('الباسورد', pass), btn, status,
+      el('hr', { class: 'dash-hr' }),
+      el('p', { class: 'tp-small tp-muted', text: 'أول مرة تدخل، أو نسيت الباسورد؟' }),
+      el('button', { type: 'button', class: 'dash-link', text: 'ادخل بلينك على الإيميل', onclick: function () { linkView(); } })
+    ]);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = email.value.trim().toLowerCase(), p = pass.value;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { status.textContent = 'اكتب إيميل صحيح.'; return; }
+      if (!p) { status.textContent = 'اكتب الباسورد.'; return; }
+      btn.disabled = true; status.textContent = 'لحظة…';
+      db.auth.signInWithPassword({ email: v, password: p }).then(function (r) {
+        btn.disabled = false;
+        if (r.error) {
+          status.textContent = /confirm/i.test(r.error.message || '')
+            ? 'الإيميل ده لسه ماتأكدش. ادخل بلينك على الإيميل الأول.'
+            : 'الإيميل أو الباسورد مش مظبوط. لو لسه ماعملتش باسورد، ادخل بلينك على الإيميل وأنت تعمله من جوه.';
+          return;
+        }
+        // onAuthStateChange takes it from here.
+      });
+    });
+    root.appendChild(form);
+  }
+
+  function linkView(note) {
     clear();
     var email = input('login-email', '', { type: 'email', autocomplete: 'email', dir: 'ltr', required: true, inputmode: 'email' });
     var status = msg(note || '');
     var btn = el('button', { class: 'tp-btn', type: 'submit', text: 'ابعتلي لينك الدخول' });
     var form = el('form', { class: 'dash-card', novalidate: true }, [
-      el('h1', { text: 'لوحة المعالج' }),
-      el('p', { class: 'tp-muted', text: 'اكتب إيميلك، وهيوصلك لينك تدخل بيه من غير باسورد. لو دي أول مرة، هتعمل صفحتك بعد الدخول.' }),
-      field('الإيميل', email), btn, status
+      el('h1', { text: 'ادخل بلينك على الإيميل' }),
+      el('p', { class: 'tp-muted', text: 'اكتب إيميلك، وهيوصلك لينك تدخل بيه. لو دي أول مرة، هتعمل صفحتك بعد الدخول، وبعدها اعمل باسورد عشان تدخل بسهولة كل مرة.' }),
+      field('الإيميل', email), btn, status,
+      el('button', { type: 'button', class: 'dash-link', text: '← رجوع للدخول بالباسورد', onclick: function () { loginView(); } })
     ]);
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -63,6 +99,47 @@
 
   /* ---------- after sign in ---------- */
   var isAdmin = false;
+  var authUser = null;
+  var showPw = false;
+
+  function hasPassword() {
+    return !!(authUser && authUser.user_metadata && authUser.user_metadata.has_password);
+  }
+
+  // Set (or change) a password once, so next time it's email + password from any browser.
+  function passwordCard() {
+    var p1 = input('pw-new', '', { type: 'password', autocomplete: 'new-password', dir: 'ltr', minlength: 8, name: 'new-password' });
+    var p2 = input('pw-new2', '', { type: 'password', autocomplete: 'new-password', dir: 'ltr', minlength: 8 });
+    var hidden = el('input', { type: 'email', autocomplete: 'username', value: (authUser && authUser.email) || '', hidden: true, 'aria-hidden': 'true', tabindex: '-1' });
+    var st = msg('');
+    var btn = el('button', { type: 'submit', class: 'tp-btn tp-btn-sm', text: 'احفظ الباسورد' });
+    var form = el('form', { class: 'dash-card dash-pw', novalidate: true }, [
+      el('h2', { text: hasPassword() ? 'غيّر الباسورد' : 'اعمل باسورد عشان تدخل بسهولة' }),
+      el('p', { class: 'tp-small tp-muted', text: 'بعد كده هتدخل بالإيميل والباسورد من أي موبايل أو متصفح، من غير ما تستنى إيميل. والموبايل هيعرض يحفظهولك.' }),
+      hidden,
+      field('الباسورد (٨ حروف أو أرقام على الأقل)', p1), field('اكتبه تاني', p2), btn, st
+    ]);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (p1.value.length < 8) { st.textContent = 'الباسورد لازم يكون ٨ حروف أو أرقام على الأقل.'; return; }
+      if (p1.value !== p2.value) { st.textContent = 'الباسوردين مش زي بعض.'; return; }
+      btn.disabled = true; st.textContent = 'بيحفظ…';
+      db.auth.updateUser({ password: p1.value, data: { has_password: true } }).then(function (r) {
+        btn.disabled = false;
+        if (r.error) {
+          st.textContent = /reauth|recent/i.test(r.error.message || '')
+            ? 'لأمانك، اخرج وادخل تاني بلينك على الإيميل، وبعدها اعمل الباسورد علطول.'
+            : (/weak|short|characters/i.test(r.error.message || '') ? 'الباسورد ضعيف. اختار واحد أطول.' : 'ماتحفظش. جرّب تاني.');
+          return;
+        }
+        authUser = r.data.user; showPw = false;
+        shell();
+        var ok = document.getElementById('dash-body');
+        if (ok) ok.insertBefore(msg('تمام! من النهارده ادخل بالإيميل والباسورد.'), ok.firstChild);
+      });
+    });
+    return form;
+  }
   function load() {
     clear(); root.appendChild(msg('بيحمّل…'));
     db.rpc('am_i_admin').then(function (a) {
@@ -139,6 +216,7 @@
       el('div', null, [el('b', { text: (me && me.name) || 'أهلاً' }), el('div', { class: 'tp-small tp-muted', text: me ? 'لوحة التحكم في صفحتك' : 'إدارة صفحات المعالجين' })]),
       el('div', { class: 'dash-top-actions' }, [
         me ? el('a', { class: 'tp-btn tp-btn-sm', href: myPageUrl(), target: '_blank', rel: 'noopener', text: 'افتح صفحتي' }) : null,
+        hasPassword() ? el('button', { type: 'button', class: 'dash-link', text: 'الباسورد', onclick: function () { showPw = !showPw; shell(); } }) : null,
         el('button', { type: 'button', class: 'dash-link', text: 'خروج', onclick: function () { db.auth.signOut().then(function () { loginView('خرجت من حسابك.'); }); } })
       ])
     ]);
@@ -149,6 +227,7 @@
       root.appendChild(el('p', { class: 'dash-msg tp-small', dir: 'ltr', text: 'drmilladmikhail.com/therapists/' + me.slug + '/' }));
     }
     var body = el('div', { id: 'dash-body' });
+    if (!hasPassword() || showPw) root.appendChild(passwordCard());
     root.appendChild(nav); root.appendChild(body);
     if (tab === 'admin' && isAdmin) adminView(body);
     else if (tab === 'posts') postsView(body);
@@ -548,8 +627,11 @@
 
   var started = false;
   function route(session) {
-    if (session) { if (!started) { started = true; load(); } }
-    else { started = false; me = null; loginView(linkNote); linkNote = ''; }
+    if (session) { authUser = session.user || authUser; if (!started) { started = true; load(); } }
+    else {
+      started = false; me = null; authUser = null;
+      if (linkNote) { linkView(linkNote); linkNote = ''; } else loginView();
+    }
   }
   db.auth.getSession().then(function (r) {
     // Only after the library has read the address: drop a leftover error from it.
