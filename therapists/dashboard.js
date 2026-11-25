@@ -38,7 +38,7 @@
     var btn = el('button', { class: 'tp-btn', type: 'submit', text: 'ابعتلي لينك الدخول' });
     var form = el('form', { class: 'dash-card', novalidate: true }, [
       el('h1', { text: 'لوحة المعالج' }),
-      el('p', { class: 'tp-muted', text: 'اكتب الإيميل المسجل بيه، وهيوصلك لينك تدخل بيه من غير باسورد.' }),
+      el('p', { class: 'tp-muted', text: 'اكتب إيميلك، وهيوصلك لينك تدخل بيه من غير باسورد. لو دي أول مرة، هتعمل صفحتك بعد الدخول.' }),
       field('الإيميل', email), btn, status
     ]);
     form.addEventListener('submit', function (e) {
@@ -46,60 +46,158 @@
       var v = email.value.trim().toLowerCase();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { status.textContent = 'اكتب إيميل صحيح.'; return; }
       btn.disabled = true; status.textContent = 'لحظة…';
-      db.rpc('is_therapist_email', { p_email: v }).then(function (r) {
-        if (r.error) { btn.disabled = false; status.textContent = 'حصلت مشكلة. جرّب تاني بعد شوية.'; return; }
-        if (!r.data) { btn.disabled = false; status.textContent = 'الإيميل ده مش مسجل كمعالج. كلّم إدارة الموقع عشان يضيفوك.'; return; }
-        db.auth.signInWithOtp({ email: v, options: { emailRedirectTo: location.origin + '/therapists/dashboard/', shouldCreateUser: true } })
-          .then(function (s) {
-            btn.disabled = false;
-            if (s.error) {
-              status.textContent = /rate|seconds/i.test(s.error.message || '')
-                ? 'استنى دقيقة وجرّب تاني (فيه حد أقصى للإيميلات).'
-                : 'اللينك ماتبعتش. جرّب تاني بعد شوية.';
-              return;
-            }
-            status.textContent = 'تمام! افتح الإيميل بتاعك ودوس على اللينك. لو مالقيتوش، بص في Spam.';
-          });
-      });
+      db.auth.signInWithOtp({ email: v, options: { emailRedirectTo: location.origin + '/therapists/dashboard/', shouldCreateUser: true } })
+        .then(function (s) {
+          btn.disabled = false;
+          if (s.error) {
+            status.textContent = /rate|seconds/i.test(s.error.message || '')
+              ? 'استنى دقيقة وجرّب تاني (فيه حد أقصى للإيميلات).'
+              : 'اللينك ماتبعتش. جرّب تاني بعد شوية.';
+            return;
+          }
+          status.textContent = 'تمام! افتح الإيميل بتاعك ودوس على اللينك مرة واحدة. لو مالقيتوش، بص في Spam.';
+        });
     });
     root.appendChild(form);
   }
 
   /* ---------- after sign in ---------- */
+  var isAdmin = false;
   function load() {
     clear(); root.appendChild(msg('بيحمّل…'));
-    db.rpc('my_therapist').then(function (r) {
-      if (r.error || !r.data) {
-        db.auth.signOut().then(function () { loginView('الحساب ده مش مربوط بصفحة معالج. كلّم إدارة الموقع.'); });
-        return;
-      }
-      db.from('therapists').select(COLS).eq('id', r.data).single().then(function (t) {
-        if (t.error) { clear(); root.appendChild(msg('مش قادر أحمّل بياناتك. جرّب تحدّث الصفحة.', 'err')); return; }
-        me = t.data; shell();
+    db.rpc('am_i_admin').then(function (a) {
+      isAdmin = !!(a && a.data);
+      db.rpc('my_therapist').then(function (r) {
+        if (r.error) { clear(); root.appendChild(msg('حصلت مشكلة. جرّب تحدّث الصفحة.', 'err')); return; }
+        if (!r.data) { if (isAdmin) { me = null; tab = 'admin'; shell(); } else registerView(); return; }
+        db.from('therapists').select(COLS).eq('id', r.data).single().then(function (t) {
+          if (t.error) { clear(); root.appendChild(msg('مش قادر أحمّل بياناتك. جرّب تحدّث الصفحة.', 'err')); return; }
+          me = t.data; shell();
+        });
       });
     });
   }
 
+  function slugify(v) {
+    return String(v || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 50);
+  }
+
+  function registerView() {
+    clear();
+    var nameAr = input('r-name', '', { maxlength: 120, placeholder: 'مثلاً: د. أحمد علي' });
+    var nameEn = input('r-en', '', { maxlength: 60, dir: 'ltr', placeholder: 'Ahmed Ali', autocomplete: 'off' });
+    var preview = el('div', { class: 'dash-linkprev', dir: 'ltr' });
+    function upd() {
+      var s = slugify(nameEn.value);
+      preview.textContent = 'drmilladmikhail.com/therapists/' + (s || '…') + '/';
+    }
+    nameEn.addEventListener('input', upd); upd();
+    var agree = el('input', { type: 'checkbox', id: 'r-agree' });
+    var status = msg('');
+    var btn = el('button', { type: 'submit', class: 'tp-btn', text: 'اعمل صفحتي' });
+    var form = el('form', { class: 'dash-card', novalidate: true }, [
+      el('h1', { text: 'أهلاً بيك! يلا نعمل صفحتك' }),
+      el('p', { class: 'tp-muted', text: 'خطوة واحدة وصفحتك تبقى جاهزة تكمّلها. الصفحة بتظهر للناس بعد مراجعة سريعة من إدارة الموقع.' }),
+      field('اسمك زي ما يظهر على الصفحة', nameAr),
+      field('اسمك بالإنجليزي (ده اللي هيبقى في لينك صفحتك)', nameEn, 'حروف إنجليزي بس. اللينك مش هيتغيّر بعد كده، فاكتبه صح.'),
+      preview,
+      el('label', { class: 'dash-check', for: 'r-agree' }, [agree, ' أقر إني متخصص في الصحة النفسية، وإن كل البيانات والشهادات اللي هكتبها حقيقية وأقدر أثبتها.']),
+      btn, status,
+      el('button', { type: 'button', class: 'dash-link', text: 'خروج', onclick: function () { db.auth.signOut().then(function () { loginView('خرجت من حسابك.'); }); } })
+    ]);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var n = nameAr.value.trim(), sl = slugify(nameEn.value);
+      if (n.length < 2) { status.textContent = 'اكتب اسمك.'; return; }
+      if (sl.length < 3) { status.textContent = 'اكتب اسمك بالإنجليزي (٣ حروف على الأقل).'; return; }
+      if (!agree.checked) { status.textContent = 'لازم توافق على الإقرار عشان تكمّل.'; return; }
+      btn.disabled = true; status.textContent = 'بنعمل صفحتك…';
+      db.rpc('register_therapist', { p_name: n, p_slug: sl }).then(function (r) {
+        btn.disabled = false;
+        if (r.error) { status.textContent = 'ماقدرناش نعمل الصفحة. جرّب اسم إنجليزي تاني.'; return; }
+        tab = 'profile'; load();
+      });
+    });
+    root.appendChild(form);
+  }
+
+  function myPageUrl() {
+    return me ? '/therapists/view/?d=' + encodeURIComponent(me.slug) : '#';
+  }
+
   function shell() {
     clear();
-    var tabs = [['profile', 'صفحتي'], ['posts', 'البوستات'], ['comments', 'التعليقات']];
+    var tabs = me ? [['profile', 'صفحتي'], ['posts', 'البوستات'], ['comments', 'التعليقات']] : [];
+    if (isAdmin) tabs.push(['admin', 'إدارة الصفحات']);
+    if (!me && tab !== 'admin') tab = 'admin';
     var nav = el('nav', { class: 'dash-tabs', 'aria-label': 'أقسام اللوحة' });
     tabs.forEach(function (x) {
       nav.appendChild(el('button', { type: 'button', class: 'dash-tab', 'aria-pressed': String(tab === x[0]), text: x[1],
         onclick: function () { tab = x[0]; shell(); } }));
     });
     var top = el('div', { class: 'dash-top' }, [
-      el('div', null, [el('b', { text: me.name || 'أهلاً' }), el('div', { class: 'tp-small tp-muted', text: 'لوحة التحكم في صفحتك' })]),
+      el('div', null, [el('b', { text: (me && me.name) || 'أهلاً' }), el('div', { class: 'tp-small tp-muted', text: me ? 'لوحة التحكم في صفحتك' : 'إدارة صفحات المعالجين' })]),
       el('div', { class: 'dash-top-actions' }, [
-        el('a', { class: 'tp-btn tp-btn-sm', href: '/therapists/' + me.slug + '/', target: '_blank', rel: 'noopener', text: 'افتح صفحتي' }),
+        me ? el('a', { class: 'tp-btn tp-btn-sm', href: myPageUrl(), target: '_blank', rel: 'noopener', text: 'افتح صفحتي' }) : null,
         el('button', { type: 'button', class: 'dash-link', text: 'خروج', onclick: function () { db.auth.signOut().then(function () { loginView('خرجت من حسابك.'); }); } })
       ])
     ]);
+    root.appendChild(top);
+    if (me && !me.published) {
+      root.appendChild(el('p', { class: 'dash-msg dash-pending', text: 'صفحتك لسه مش ظاهرة للناس. كمّل بياناتك براحتك، وهتظهر بعد مراجعة سريعة من إدارة الموقع. تقدر تشوف شكلها من «افتح صفحتي».' }));
+    } else if (me) {
+      root.appendChild(el('p', { class: 'dash-msg tp-small', dir: 'ltr', text: 'drmilladmikhail.com/therapists/' + me.slug + '/' }));
+    }
     var body = el('div', { id: 'dash-body' });
-    root.appendChild(top); root.appendChild(nav); root.appendChild(body);
-    if (tab === 'profile') profileView(body);
+    root.appendChild(nav); root.appendChild(body);
+    if (tab === 'admin' && isAdmin) adminView(body);
     else if (tab === 'posts') postsView(body);
-    else commentsView(body);
+    else if (tab === 'comments') commentsView(body);
+    else profileView(body);
+  }
+
+  /* ---------- admin (site owner) ---------- */
+  function adminView(body) {
+    var card = el('div', { class: 'dash-card' }, [
+      el('h2', { text: 'صفحات المعالجين' }),
+      el('p', { class: 'tp-small tp-muted', text: 'قبل ما تنشر صفحة: افتح المعاينة واتأكد من الاسم والشهادات. الصفحة المنشورة بيبقى ليها لينك باسم المعالج خلال ساعة.' })
+    ]);
+    var list = el('div', null, [msg('بيحمّل…')]);
+    card.appendChild(list);
+    body.appendChild(card);
+    function refresh() {
+      db.rpc('admin_list').then(function (r) {
+        list.textContent = '';
+        if (r.error) { list.appendChild(msg('مش قادر أحمّل القايمة.', 'err')); return; }
+        if (!r.data.length) { list.appendChild(msg('مفيش معالجين لسه.')); return; }
+        var pending = r.data.filter(function (x) { return !x.published; }).length;
+        list.appendChild(el('p', { class: 'dash-msg' + (pending ? ' dash-pending' : ''), text: pending ? ('مستني موافقتك: ' + pending) : 'كل الصفحات متراجعة.' }));
+        r.data.forEach(function (x) {
+          var st = msg('');
+          var row = el('div', { class: 'dash-post' }, [
+            el('b', { text: x.name || '(من غير اسم)' }),
+            el('div', { class: 'tp-small tp-muted', dir: 'ltr', text: x.email + ' · /therapists/' + x.slug + '/' }),
+            el('div', { class: 'tp-small', text: (x.published ? '✅ منشورة' : '⏳ مستنية موافقتك') + ' · اتسجلت ' + TP.date(x.created_at) }),
+            el('div', { class: 'dash-actions' }, [
+              el('a', { class: 'dash-link', href: '/therapists/view/?d=' + encodeURIComponent(x.slug), target: '_blank', rel: 'noopener', text: 'معاينة' }),
+              x.published
+                ? el('button', { type: 'button', class: 'dash-link dash-danger', text: 'اخفي الصفحة', onclick: function () { set(x.slug, false, st); } })
+                : el('button', { type: 'button', class: 'tp-btn tp-btn-sm', text: 'انشر الصفحة', onclick: function () { set(x.slug, true, st); } })
+            ]),
+            st
+          ]);
+          list.appendChild(row);
+        });
+      });
+    }
+    function set(slug, pub, st) {
+      st.textContent = 'لحظة…';
+      db.rpc('admin_set_published', { p_slug: slug, p_published: pub }).then(function (r) {
+        if (r.error) { st.textContent = 'ماتغيّرش. جرّب تاني.'; return; }
+        refresh();
+      });
+    }
+    refresh();
   }
 
   /* ---------- repeatable rows (certificates, courses, articles, videos, prices) ---------- */

@@ -6,6 +6,11 @@
   if (!TP || !TP.client) return;
   var el = TP.el, db = TP.client;
   var slug = (location.pathname.match(/\/therapists\/([a-z0-9-]+)\/?$/) || [])[1];
+  var isView = slug === 'view';
+  if (isView) {
+    try { slug = new URLSearchParams(location.search).get('d') || ''; } catch (e) { slug = ''; }
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) slug = '';
+  }
   if (!slug || slug === 'dashboard') return;
 
   var hero = document.getElementById('tp-hero');
@@ -175,7 +180,7 @@
   }
 
   function shareBlock(t) {
-    var url = location.origin + location.pathname;
+    var url = location.origin + '/therapists/' + t.slug + '/';
     var msg = (t.name || '') + (t.title ? ' · ' + t.title : '') + '\n' + url;
     var status = el('span', { class: 'tp-small tp-muted', role: 'status' });
     var copy = el('button', { type: 'button', class: 'tp-share-btn', text: 'انسخ اللينك', onclick: function () {
@@ -261,6 +266,9 @@
       shareBlock(t),
       el('p', { class: 'tp-urgent', text: 'لو أنت أو حد قريبك في خطر فوري، متستناش جلسة ولا رد على تعليق: اتصل بالطوارئ (في مصر ١٢٣) أو خط الصحة النفسية ١٦٣٢٨، أو اتوجه لأقرب مستشفى.' })
     ];
+    if (t.published === false) {
+      nodes.unshift(el('p', { class: 'tp-preview-note', text: 'معاينة: الصفحة دي لسه مش ظاهرة للناس. بتظهر بعد مراجعة إدارة الموقع.' }));
+    }
     main.textContent = '';
     nodes.forEach(function (n) { if (n) main.appendChild(n); });
     if (posts.length) {
@@ -279,9 +287,15 @@
     }
   }
 
-  db.from('therapists').select('id,slug,name,title,specialties,bio,experience,languages,credentials,courses,articles,videos,sessions,session_mode,schedule,cancel_policy,whatsapp,photo_path,comments_enabled,book_title,book_author,book_why,note_path,note_text')
+  db.from('therapists').select('id,slug,published,name,title,specialties,bio,experience,languages,credentials,courses,articles,videos,sessions,session_mode,schedule,cancel_policy,whatsapp,photo_path,comments_enabled,book_title,book_author,book_why,note_path,note_text')
     .eq('slug', slug).maybeSingle().then(function (r) {
-      if (r.error || !r.data) return; // keep the static page
+      if (r.error || !r.data) {
+        if (isView) {
+          main.textContent = '';
+          main.appendChild(el('p', { class: 'tp-block', text: 'الصفحة دي مش موجودة أو لسه مش منشورة. لو انت صاحبها، ادخل من لوحة المعالج وافتحها من هناك.' }));
+        }
+        return; // keep the static page
+      }
       var t = r.data;
       db.from('posts').select('id,title,body,video_url,created_at').eq('therapist_id', t.id)
         .order('created_at', { ascending: false }).limit(50).then(function (pr) {

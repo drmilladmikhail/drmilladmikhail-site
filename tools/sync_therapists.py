@@ -56,7 +56,7 @@ def to_json(row, old):
         "contact_whatsapp": row.get("whatsapp") or "",
         "specialties": row.get("specialties") or [],
         "photo_path": row.get("photo_path") or "",
-        "preview": old.get("preview", True),
+        "preview": old.get("preview", False),  # new, admin-approved pages are real
         "og": old.get("og", ""),
     }
 
