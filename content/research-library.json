@@ -1464,5 +1464,62 @@
    "https://pubmed.ncbi.nlm.nih.gov/43063189/"
   ],
   "added": "2026-11-24"
+ },
+ {
+  "doi": "10.1371/journal.pgph.0007665",
+  "title": "The distribution of depressive symptoms by age, sex, and family type: A survey of school-going adolescents in Kampala, Uganda",
+  "title_ar": "توزّع أعراض الاكتئاب بحسب العمر والجنس ونمط الأسرة: مسح للمراهقين الملتحقين بالمدارس في كمبالا بأوغندا",
+  "abstract": "While depression in adolescents is known to be a public health concern and frequently related to poor psychosocial outcomes, little is known about its distribution, particularly in African countries like Uganda. This study assessed the prevalence, distribution, and odds of reporting depressive symptoms by age, sex, and in different family types in early adolescents.\n\nUsing data from 347 young adolescents (12–15 years of age), we employed descriptive statistics, t-tests, and binary logistic regressions to calculate the odds of reporting depressive symptoms by age, sex, and in different family types: nuclear (reference), single-mother, mother and stepfather, father and stepmother, and relatives.\n\nOut of the 347 primary school-going adolescents aged between 12 and 15 years (Mean = 13.3, SD = 0.98, range 12–15), 173 were female (n = 173, 49.9%). About half of the respondents (n = 173, 49.9%) reported living in a nuclear family with both parents in the same household, while approximately 25% (n = 88) lived with a single mother.\n\nOverall, compared to the nuclear family type, the odds of reporting depressive symptoms for the single-mother family type and for adolescents living with relatives were 1.71 (95% Confidence Intervals (CI) 1.18, 2.36) and 1.76 (95% CI: 1.28, 2.48), respectively.\n\nThe odds of reporting depressive symptoms are associated with being female, older (e.g., 15 years of age), living in a single-mother household, and with relatives. Interventions for early detection of vulnerable adolescents, particularly female and older adolescents, and those living in households with a high density of depressive symptoms should be prioritised.",
+  "abstract_ar": "مع أن الاكتئاب لدى المراهقين يُعدّ مشكلة من مشكلات الصحة العامة ويرتبط كثيرًا بنتائج نفسية واجتماعية سلبية، فإن المعلومات المتاحة عن توزّعه محدودة، خصوصًا في بلدان أفريقية مثل أوغندا. وقيّمت هذه الدراسة انتشار أعراض الاكتئاب وتوزّعها وأرجحية الإبلاغ عنها في مرحلة المراهقة المبكرة، بحسب العمر والجنس ونمط الأسرة.\n\nاستخدمنا بيانات 347 مراهقًا في المرحلة المبكرة من المراهقة (12–15 عامًا)، وطبّقنا الإحصاء الوصفي واختبارات «ت» ونماذج الانحدار اللوجستي الثنائي لحساب أرجحية الإبلاغ عن أعراض الاكتئاب بحسب العمر والجنس ونمط الأسرة: أسرة نووية (الفئة المرجعية)، أو العيش مع الأم وحدها، أو مع الأم وزوجها، أو مع الأب وزوجته، أو مع الأقارب.\n\nمن بين 347 مراهقًا ملتحقًا بالمدارس الابتدائية تتراوح أعمارهم بين 12 و15 عامًا (المتوسط = 13.3، والانحراف المعياري = 0.98، والمدى 12–15)، كانت 173 من الإناث (49.9%). وأفاد نحو نصف المشاركين (العدد = 173، 49.9%) بأنهم يعيشون في أسرة نووية مع كلا الوالدين في المنزل نفسه، بينما عاش نحو 25% (العدد = 88) مع الأم وحدها.\n\nإجمالًا، وبالمقارنة مع الأسرة النووية، بلغت نسبة أرجحية الإبلاغ عن أعراض الاكتئاب 1.71 لدى من يعيشون مع الأم وحدها (فاصل الثقة 95%: من 1.18 إلى 2.36)، و1.76 لدى المراهقين الذين يعيشون مع الأقارب (فاصل الثقة 95%: من 1.28 إلى 2.48).\n\nارتبطت أرجحية الإبلاغ عن أعراض الاكتئاب بكون المشارك أنثى، وبالعمر الأكبر (مثل 15 عامًا)، وبالعيش مع الأم وحدها أو مع الأقارب. وينبغي إعطاء الأولوية لتدخلات الكشف المبكر عن المراهقين الأكثر عرضة للخطر، ولا سيما الإناث والأكبر سنًا ومن يعيشون في أسر يكثر فيها ظهور أعراض الاكتئاب.",
+  "authors": [
+   "Mellon Naijuka",
+   "Jane Namusoke",
+   "Nathaniel Mayengo",
+   "Henry Kibedi",
+   "Joseph Ssenyonga",
+   "Kennedy Amone-P’Olak"
+  ],
+  "journal": "PLOS Global Public Health",
+  "journal_ar": "بلوس للصحة العامة العالمية",
+  "volume": "6",
+  "issue": "11",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "e0007665",
+  "published": "2026-11-24",
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "copyright": "© 2026 Naijuka et al. This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "source_urls": [
+   "https://journals.plos.org/globalpublichealth/article?id=10.1371/journal.pgph.0007665"
+  ],
+  "added": "2026-11-25"
+ },
+ {
+  "pmid": "43071634",
+  "doi": "10.1371/journal.pone.0363619",
+  "title": "Associations of physical exercise and sedentary behavior with problematic smartphone use and interaction anxiety in a predominantly first-year convenience sample of Chinese college students: A cross-sectional study",
+  "title_ar": "ارتباط التمارين البدنية وسلوك الخمول بالاستخدام الإشكالي للهواتف الذكية وقلق التفاعل الاجتماعي لدى عينة ميسّرة من طلاب جامعات في الصين معظمهم في السنة الأولى: دراسة مقطعية",
+  "abstract": "Problematic smartphone use and interaction anxiety are common concerns in university settings, but their joint relationships with exercise and sedentary behavior remain unclear. We examined these associations in a predominantly first-year convenience sample recruited through 36 universities in four Chinese provinces. The analytical sample included 1,025 students aged 18 years or older, of whom 902 (88.0%) were first-year students.\n\nPhysical exercise was represented by an adapted self-reported exercise-volume index derived from exercise intensity, duration, and frequency. Sedentary behavior was assessed with a single item whose response categories used inconsistent daily and weekly time frames; it was therefore analyzed as an exploratory categorical indicator. Problematic smartphone use and interaction anxiety were measured with the 22-item Smartphone Addiction Scale for College Students and the conventionally scored 15-item Interaction Anxiousness Scale.\n\nMultivariable linear regression models used HC3 heteroscedasticity-robust standard errors and adjusted for sex, academic-year status, and major type. Higher exercise-index values were associated with lower problematic smartphone use (B = −0.120, 95% CI [−0.177, −0.063], p < 0.001) and lower interaction anxiety (B = −0.066, 95% CI [−0.097, −0.035], p < 0.001).\n\nWhen problematic smartphone use was added to the interaction-anxiety model, its association with interaction anxiety was positive (B = 0.305, 95% CI [0.268, 0.342], p < 0.001), while the exercise-index coefficient was attenuated but remained inverse (B = −0.029, 95% CI [−0.055, −0.003], p = 0.027).\n\nThe overall sedentary-behavior term was not statistically significant in the primary categorical models and varied across sensitivity specifications. Taken together, the results show modest exercise-related associations, no stable sedentary-behavior association, and a positive relationship between problematic smartphone use and interaction anxiety in this sample.",
+  "abstract_ar": "يُعدّ الاستخدام الإشكالي للهواتف الذكية وقلق التفاعل الاجتماعي من المشكلات الشائعة في البيئات الجامعية، لكن علاقاتهما المشتركة بممارسة التمارين وسلوك الخمول ما زالت غير واضحة. وفحصنا هذه الارتباطات في عينة ميسّرة جرى استقطابها عبر 36 جامعة في أربع مقاطعات صينية، وكان معظم أفرادها من طلاب السنة الأولى. وشملت العينة التي خضعت للتحليل 1,025 طالبًا تبلغ أعمارهم 18 عامًا فأكثر، منهم 902 (88.0%) في السنة الأولى.\n\nوقِيسَت ممارسة التمارين البدنية بمؤشر معدّل لحجم التمارين يعتمد على بيانات التقرير الذاتي عن شدة التمارين ومدتها وتكرارها. وقُيّم سلوك الخمول ببند واحد استخدمت فئات الإجابة عنه أطرًا زمنية غير متسقة بين اليوم والأسبوع، لذا حُلِّل بوصفه مؤشرًا فئويًا استكشافيًا. وقِيس الاستخدام الإشكالي للهواتف الذكية بمقياس إدمان الهواتف الذكية لطلاب الجامعات المكوّن من 22 بندًا، وقِيس قلق التفاعل الاجتماعي بمقياس قلق التفاعل المكوّن من 15 بندًا، وفق طريقة احتساب الدرجات المعتادة.\n\nاستخدمت نماذج الانحدار الخطي متعدد المتغيرات أخطاء معيارية متينة إزاء عدم تجانس التباين من نوع HC3، مع الضبط للجنس والسنة الدراسية ونوع التخصص. وارتبطت القيم الأعلى لمؤشر التمارين بانخفاض الاستخدام الإشكالي للهواتف الذكية (B = −0.120، فاصل الثقة 95%: من −0.177 إلى −0.063، p < 0.001) وانخفاض قلق التفاعل الاجتماعي (B = −0.066، فاصل الثقة 95%: من −0.097 إلى −0.035، p < 0.001).\n\nوعند إضافة الاستخدام الإشكالي للهواتف الذكية إلى نموذج قلق التفاعل الاجتماعي، كان ارتباطه بقلق التفاعل إيجابيًا (B = 0.305، فاصل الثقة 95%: من 0.268 إلى 0.342، p < 0.001)، بينما انخفض مقدار معامل مؤشر التمارين لكنه ظل سالبًا (B = −0.029، فاصل الثقة 95%: من −0.055 إلى −0.003، p = 0.027).\n\nلم يكن متغير سلوك الخمول ككل ذا دلالة إحصائية في النماذج الفئوية الأساسية، وتباينت نتائجه باختلاف مواصفات تحليلات الحساسية. وتشير النتائج مجتمعةً إلى ارتباطات محدودة القوة بممارسة التمارين، وعدم وجود ارتباط ثابت بسلوك الخمول، ووجود ارتباط إيجابي بين الاستخدام الإشكالي للهواتف الذكية وقلق التفاعل الاجتماعي في هذه العينة.",
+  "authors": [
+   "Qi Han"
+  ],
+  "journal": "PLOS One",
+  "journal_ar": "بلوس وان",
+  "volume": "21",
+  "issue": "11",
+  "issue_ar": "نوفمبر 2026",
+  "issue_en": "November 2026",
+  "pages": "e0363619",
+  "published": "2026-11-23",
+  "license": "CC BY 4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0/",
+  "copyright": "© 2026 Qi Han. This is an open access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.",
+  "source_urls": [
+   "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0363619",
+   "https://pubmed.ncbi.nlm.nih.gov/43071634/"
+  ],
+  "added": "2026-11-25"
  }
 ]
