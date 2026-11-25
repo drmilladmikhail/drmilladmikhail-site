@@ -57,7 +57,7 @@ FOOTER_DUP_RE = re.compile(
 
 
 # 2026-11-11 SEO brief: personal tools that hold nothing public stay out of Google.
-PRIVATE_PAGES = {"saved", "my-space", os.path.join("newsletter", "thanks")}
+PRIVATE_PAGES = {"saved", "my-space", os.path.join("newsletter", "thanks"), "therapists"}
 
 
 def ensure_robots_meta(t, rel_dir):
