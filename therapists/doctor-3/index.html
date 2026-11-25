@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://*.google-analytics.com https://www.googletagmanager.com data: https://images.unsplash.com https://i.ytimg.com; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://*.google-analytics.com https://www.googletagmanager.com data: https://images.unsplash.com https://i.ytimg.com https://putqeswsycwyxxrdcmyh.supabase.co; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://cloudflareinsights.com https://putqeswsycwyxxrdcmyh.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
@@ -20,7 +20,7 @@
 <body class="tp">
 <p class="tp-preview">صفحة تجريبية: البيانات اللي بين الأقواس هتتملى من استمارة المعالج.</p>
 <header class="tp-hero">
-<div class="tp-wrap tp-hero-in">
+<div class="tp-wrap tp-hero-in" id="tp-hero">
 <div class="tp-photo tp-initial" aria-hidden="true">ا</div>
 <div class="tp-id">
 <h1>د. (اسم المعالج ٣)</h1>
@@ -30,7 +30,7 @@
 </div>
 </div>
 </header>
-<main class="tp-wrap">
+<main class="tp-wrap" id="tp-main">
 <ul class="tp-facts"><li><span>الخبرة</span><b>[عدد سنين الخبرة]</b></li><li><span>اللغات</span><b>العربية</b></li><li><span>الجلسة</span><b>أونلاين · فيديو أو صوت</b></li></ul>
 <section class="tp-block">
 <h2>نبذة</h2>
@@ -66,6 +66,9 @@
 <footer class="tp-foot tp-wrap">
 <a href="/">مقالات واختبارات نفسية مجانية بالعربي ←</a>
 </footer>
+<script src="/assets/vendor/supabase/supabase.js" defer></script>
+<script src="/therapists/sb.js" defer></script>
+<script src="/therapists/profile.js" defer></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "49dc5ec3f58f4825b6e04626f92dd475"}'></script><!-- End Cloudflare Web Analytics -->
 <script src="/assets/ga4.js?v=e4571aff" data-ga4="G-SGZ53QSWQJ" defer></script>
 </body>

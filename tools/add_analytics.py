@@ -12,8 +12,8 @@ SNIPPET = ("<!-- Cloudflare Web Analytics --><script defer src='https://static.c
            "data-cf-beacon='{\"token\": \"" + TOKEN + "\"}'></script><!-- End Cloudflare Web Analytics -->")
 CSP = ("default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; "
        "style-src 'self' 'unsafe-inline'; font-src 'self'; "
-       "img-src 'self' data: https://images.unsplash.com https://i.ytimg.com; "
-       "frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com; "
+       "img-src 'self' data: https://images.unsplash.com https://i.ytimg.com https://putqeswsycwyxxrdcmyh.supabase.co; "
+       "frame-src https://www.youtube-nocookie.com; connect-src 'self' https://cloudflareinsights.com https://putqeswsycwyxxrdcmyh.supabase.co; "
        "object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests")
 try:
     import json as _json

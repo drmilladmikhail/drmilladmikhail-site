@@ -5,7 +5,10 @@ Data: content/therapists/<slug>.json (see content/therapists/HOWTO.md).
 His request (2026-11-25): every therapist gets a page with their own name in the
 link, that feels like their own profile, while it lives on this site. So the page
 carries no site header and no personal branding of the site owner; the site shows
-only as a small link in the footer. No scripts: booking is a WhatsApp link.
+only as a small link in the footer.
+The JSON is the static fallback (and the share preview). Since 2026-11-25 therapists edit
+their own page from /therapists/dashboard/, and therapists/profile.js replaces this content
+with the live data from Supabase (project putqeswsycwyxxrdcmyh).
 """
 import html
 import json
@@ -126,7 +129,7 @@ def page(d):
 <body class="tp">
 {preview}
 <header class="tp-hero">
-<div class="tp-wrap tp-hero-in">
+<div class="tp-wrap tp-hero-in" id="tp-hero">
 {avatar}
 <div class="tp-id">
 <h1>{e(name)}</h1>
@@ -136,7 +139,7 @@ def page(d):
 </div>
 </div>
 </header>
-<main class="tp-wrap">
+<main class="tp-wrap" id="tp-main">
 <ul class="tp-facts">{"".join(facts)}</ul>
 {section("نبذة", bio)}
 {section("الشهادات والمؤهلات", f'<ul class="tp-list">{item_list(creds, "cred")}</ul>' if creds else "")}
@@ -149,6 +152,9 @@ def page(d):
 <footer class="tp-foot tp-wrap">
 <a href="/">مقالات واختبارات نفسية مجانية بالعربي ←</a>
 </footer>
+<script src="/assets/vendor/supabase/supabase.js" defer></script>
+<script src="/therapists/sb.js" defer></script>
+<script src="/therapists/profile.js" defer></script>
 </body>
 </html>
 '''
