@@ -381,14 +381,29 @@
   }
 
   /* ---------- start ---------- */
+  // A used or expired email link comes back with #error_code=... in the address.
+  var linkNote = '';
+  var h = location.hash || '';
+  if (/error_code=otp_expired|error=access_denied/.test(h)) {
+    linkNote = 'اللينك ده اتستخدم قبل كده أو خلص (كل لينك بيشتغل مرة واحدة بس). اطلب لينك جديد من هنا.';
+  } else if (/error/.test(h)) {
+    linkNote = 'اللينك ماشتغلش. اطلب لينك جديد من هنا.';
+  }
+
   var started = false;
   function route(session) {
-    if (session) { if (!started || !me) { started = true; load(); } }
-    else { started = false; me = null; loginView(); }
+    if (session) { if (!started) { started = true; load(); } }
+    else { started = false; me = null; loginView(linkNote); linkNote = ''; }
   }
-  db.auth.getSession().then(function (r) { route(r.data && r.data.session); });
+  db.auth.getSession().then(function (r) {
+    // Only after the library has read the address: drop a leftover error from it.
+    if (/error/.test(location.hash || '')) {
+      try { history.replaceState(null, '', location.pathname); } catch (e) {}
+    }
+    route(r.data && r.data.session);
+  });
   db.auth.onAuthStateChange(function (event, session) {
-    if (event === 'SIGNED_IN' && !me) route(session);
+    if (event === 'SIGNED_IN') route(session);
     if (event === 'SIGNED_OUT') { me = null; started = false; }
   });
 })();
