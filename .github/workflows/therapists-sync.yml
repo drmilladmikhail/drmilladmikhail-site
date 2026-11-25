@@ -1,0 +1,50 @@
+# Keeps therapists' static pages and share images in step with what they edit
+# in /therapists/dashboard/ (Supabase). The live page already shows edits
+# instantly through therapists/profile.js; this refreshes the static fallback
+# and the WhatsApp/Facebook preview (og.jpg). Commits only when something changed.
+# Approved by Dr. Millad on 2026-11-25.
+name: Therapists sync
+
+on:
+  schedule:
+    - cron: "41 * * * *"   # every hour
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["tools/sync_therapists.py", "tools/therapists_og.py", "tools/build_therapists.py", ".github/workflows/therapists-sync.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: therapists-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Pillow
+        run: pip install --quiet pillow
+      - name: Pull profiles and rebuild pages
+        run: |
+          python3 tools/sync_therapists.py
+          python3 tools/build_therapists.py
+          python3 tools/add_analytics.py > /dev/null
+      - name: Commit if anything changed
+        run: |
+          git config user.name "site-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A content/therapists therapists
+          if git diff --cached --quiet; then
+            echo "No therapist changes."
+          else
+            git commit -m "Sync therapist pages from dashboard"
+            git pull --rebase --quiet origin main
+            git push
+          fi
