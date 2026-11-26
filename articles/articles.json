@@ -1,5 +1,31 @@
 [
   {
+    "slug": "trauma-after-hard-event",
+    "title": "بعد حادثة أو موقف صعب: امتى يبقى ده صدمة نفسية؟",
+    "description": "عديت بحادثة أو موقف صعب ومش قادر تنسى؟ اعرف الفرق بين رد الفعل الطبيعي والصدمة النفسية، تعمل إيه في أول أسابيع، وامتى تكلم متخصص نفسي.",
+    "date": "2026-11-26",
+    "category": "resilience-recovery",
+    "summary": "بعد أي حادثة أو موقف صادم طبيعي يجيلك كوابيس، وذكريات بترجع غصب عنك، وتوتر وقلة نوم، وأغلب الناس بيتحسنوا مع الوقت والدعم. لكن لو الأعراض لسه شديدة ومتحسنتش خالص بعد شهر، أو مكمّلة أكتر من تلات شهور ومأثرة على حياتك، ممكن تكون اضطراب ما بعد الصدمة، ووقتها لازم تكلم متخصص لأن فيه علاج بيفيد.",
+    "refs": [
+      {
+        "title": "NHS — PTSD (post-traumatic stress disorder)",
+        "url": "https://www.nhs.uk/mental-health/conditions/post-traumatic-stress-disorder-ptsd/overview/"
+      },
+      {
+        "title": "Royal College of Psychiatrists — التأقلم بعد حدث صادم (Coping after a traumatic event, Arabic)",
+        "url": "https://www.rcpsych.ac.uk/mental-health/translations/arabic/coping-after-a-traumatic-event"
+      },
+      {
+        "title": "Mayo Clinic — اضطراب الكرب التالي للصدمة: الأعراض والأسباب",
+        "url": "https://www.mayoclinic.org/ar/diseases-conditions/ptsd/symptoms-causes/syc-20355967"
+      }
+    ],
+    "reviewed_on": "2026-11-26",
+    "minutes": 6,
+    "image": "art-trauma-after-hard-event",
+    "image_alt": "رسم لشاب قاعد على كرسي بالليل وشكله قلقان، وفوقه فقاعة فيها عربية، ودواير متقطعة حواليه كأن الذكرى بترجعله"
+  },
+  {
     "slug": "perfectionism-never-good-enough",
     "title": "الكمالية: ليه مفيش حاجة بعملها بتبقى كفاية؟ وإزاي أخفف منها؟",
     "description": "ليه مفيش حاجة بعملها بتعجبني؟ الكمالية مش مجرد اجتهاد. اعرف الفرق بين المعايير العالية والكمالية المرهقة، علاماتها، وخطوات عملية تخفف بيها عن نفسك.",
