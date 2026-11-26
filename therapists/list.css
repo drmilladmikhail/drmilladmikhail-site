@@ -1,0 +1,17 @@
+/* «اختار المعالج» cards (therapists/list.js) — used on /sessions/ and /therapists/. */
+.tl-grid{list-style:none;margin:1rem 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.tl-card{background:#fff;color:#15213a;border:1px solid #e3ddcf;border-radius:16px;padding:1.1rem;display:grid;gap:.75rem;align-content:start;min-width:0}
+.tl-head{display:flex;gap:.8rem;align-items:center;text-decoration:none;color:inherit}
+.tl-photo{width:72px;height:72px;border-radius:50%;object-fit:cover;flex:0 0 auto;border:3px solid #c9a227;background:#f3efe2}
+.tl-initial{display:grid;place-items:center;font-size:1.8rem;font-weight:700;color:#1c3a3a}
+.tl-id{display:grid;gap:.1rem;min-width:0}
+.tl-name{font-size:1.15rem;line-height:1.4}
+.tl-title{color:#5d6679;font-size:.92rem}
+.tl-tags{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.35rem}
+.tl-tags li{background:#f3efe2;color:#6b5410;border-radius:999px;padding:.1rem .7rem;font-size:.86rem}
+.tl-price{margin:0;display:flex;justify-content:space-between;gap:.6rem;border-top:1px dashed #e3ddcf;padding-top:.55rem;color:#5d6679;font-size:.95rem}
+.tl-price b{color:#15213a}
+.tl-actions{display:flex;flex-wrap:wrap;gap:.5rem}
+.tl-btn{flex:1 1 140px;white-space:nowrap;font-size:.95rem;line-height:1.2;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.4rem 1rem;border-radius:999px;border:1.5px solid #1c3a3a;color:#1c3a3a;font-weight:700;text-decoration:none;background:#fff}
+.tl-btn.tl-primary{background:#1c3a3a;color:#fff}
+.tl-btn:focus-visible{outline:3px solid #c9a227;outline-offset:2px}

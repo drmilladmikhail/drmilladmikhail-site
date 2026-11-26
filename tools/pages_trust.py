@@ -1,7 +1,10 @@
 """Phase A pages (2026-11-05): /sessions/, /contact/, /help-now/, /privacy/, /terms/.
 
 Called from tools/build_pages.py main(). Arabic only. Facts here must stay true:
-- sessions: «جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي», 60 minutes, 1000 EGP (his words 2026-11-10; was 500).
+- sessions: «جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي». Since 2026-11-25 (his request «خلي حجز الجلسه
+  للدكاترة كلهم وانا واحد منهم») the page books with every approved therapist; he is one of them (first card).
+  His own session: 60 minutes, 1000 EGP. Cards come live from Supabase (therapists/list.js); the static card
+  below is his, as the fallback.
   NEVER put sessions on English pages. No invented testimonials — only real ones with written consent.
 - help-now numbers were checked on 2026-11-05 (sources in the page). Re-check them every few months.
 - privacy describes the real data flows of the site. If you add any outside service, update /privacy/.
@@ -43,20 +46,30 @@ SESSION_3D = '''<figure class="sessions-visual s3d" data-d3="card">
       </figure>'''
 
 
+OWNER_CARD = '''<article class="tl-card">
+        <a class="tl-head" href="/therapists/millad-mikhail/"><img class="tl-photo" src="/assets/millad.jpg" alt="" width="72" height="72" loading="lazy"><span class="tl-id"><b class="tl-name">د. ميلاد ميخائيل</b><span class="tl-title">استشاري العلاج النفسي والأسري</span></span></a>
+        <ul class="tl-tags"><li>العلاقات والتعلّق</li><li>القلق والضغوط</li><li>الفراغ وفقدان المعنى</li><li>تقدير الذات</li></ul>
+        <p class="tl-price"><span>الجلسة</span><b>ساعة كاملة · 1000 جنيه مصري</b></p>
+        <div class="tl-actions"><a class="tl-btn tl-primary" href="{book}" target="_blank" rel="noopener">احجز على واتساب</a><a class="tl-btn" href="/therapists/millad-mikhail/">البروفايل</a></div>
+      </article>'''
+
+
 def sessions_page(ba, page, write, SITE):
     book = wa("أهلًا د. ميلاد، أنا جاي من الموقع وعايز أحجز جلسة نفسية أونلاين. أنا مقيم في: ")
     faq = [
-        ("الجلسة بتبقى إزاي؟", "أونلاين، فيديو أو صوت حسب راحتك، ومدتها ساعة. بنتفق على الميعاد وطريقة الدفع على واتساب."),
+        ("الجلسة بتبقى إزاي؟", "أونلاين، فيديو أو صوت حسب راحتك. بتتفق مع المعالج على الميعاد وطريقة الدفع على واتساب."),
         ("لازم أفتح الكاميرا؟", "لأ. لو مرتاح أكتر بالصوت بس، مفيش أي مشكلة."),
         ("الكلام اللي بقوله بيفضل سر؟", "أيوه. كل اللي بيتقال في الجلسة سري. الاستثناء الوحيد، زي ما هو متعارف عليه في كل المهن النفسية، لو فيه خطر حقيقي ووشيك على حياتك أو حياة حد تاني، ساعتها الأولوية إننا نحافظ على سلامتك."),
         ("هحتاج كام جلسة؟", "بيختلف من شخص للتاني ومن مشكلة للتانية. في أول جلسة بنفهم اللي انت محتاجه، وبنتفق سوا على خطة تناسبك."),
-        ("لو محتاج دوا؟", "الجلسات مش بيتكتب فيها أدوية. لو حسيت إن حالتك محتاجة تقييم دوائي، هقولك بصراحة وأنصحك تروح لدكتور نفسي."),
+        ("أختار مين من المعالجين؟", "اقرا بروفايل كل معالج: تخصصه، وطريقته، وشهاداته. واختار الأقرب للي انت محتاجه. وتقدر تسأله على واتساب قبل ما تحجز."),
+        ("السعر كام؟", "السعر بيختلف من معالج للتاني، ومكتوب على كارت كل واحد وفي البروفايل بتاعه."),
+        ("لو محتاج دوا؟", "الجلسات مش بيتكتب فيها أدوية. لو حالتك محتاجة تقييم دوائي، المعالج هيقولك بصراحة وينصحك تروح لدكتور نفسي."),
         ("لو أنا في أزمة دلوقتي؟", 'الجلسات مش خدمة طوارئ. لو انت في خطر دلوقتي، روح لصفحة <a href="/help-now/">محتاج مساعدة دلوقتي</a> أو كلّم الإسعاف.'),
     ]
     topics = [
         ("العلاقات والتعلّق", "ليه بتختار نفس النوع كل مرة؟ وإزاي تخرج من علاقة بتوجعك وتختار صح."),
         ("القلق والضغوط", "لما دماغك مش بتبطّل تفكير، والقلق مأثر على نومك وشغلك."),
-        ("الفراغ وفقدان المعنى", "لما تحس إن حياتك مالهاش طعم. ده تخصص رسالة الدكتوراه بتاعتي: الإرشاد بالمعنى."),
+        ("الفراغ وفقدان المعنى", "لما تحس إن حياتك مالهاش طعم. وده تخصص رسالة الدكتوراه لـ د. ميلاد ميخائيل: الإرشاد بالمعنى."),
         ("تقدير الذات وجلد الذات", "الصوت اللي جواك اللي دايمًا شايفك مش كفاية."),
         ("العادات اللي مش قادر تبطّلها", 'زي مشاهدة الإباحية والسلوك الجنسي القهري. من غير حكم عليك. <a href="/porn-addiction/">اقرا الصفحة الخاصة</a>.'),
         ("الحزن والانفصال", "لما تخسر حد أو علاقة، ومحتاج حد يسمعك وانت بتعدّي الفترة دي."),
@@ -75,7 +88,7 @@ def sessions_page(ba, page, write, SITE):
     ]
     therapies = [
         ("العلاج المعرفي السلوكي (CBT)", "بنفهم الأفكار اللي بتوجعك ونغيّرها بخطوات عملية."),
-        ("العلاج بالمعنى (Logotherapy)", "تخصص رسالة الدكتوراه: إزاي تلاقي معنى يسندك وقت الصعب."),
+        ("العلاج بالمعنى (Logotherapy)", "إزاي تلاقي معنى يسندك وقت الصعب (تخصص رسالة الدكتوراه لـ د. ميلاد ميخائيل)."),
         ("العلاج بالقبول والالتزام (ACT)", "تعيش بقيمك حتى والمشاعر الصعبة موجودة."),
         ("العلاج الأسري والزوجي", "جلسات للزوجين أو الأسرة، عشان تفهموا بعض وتحلّوا الخلاف."),
         ("العلاج باليقظة الذهنية", "تمارين تهدّي الجسم والدماغ وتقلل التوتر."),
@@ -93,17 +106,15 @@ def sessions_page(ba, page, write, SITE):
   </section>
   <section class="section">
     <div class="wrap narrow">
-      <div class="price-card">
-        <div class="price-main"><span class="price-num">1000</span><span class="price-unit">جنيه مصري</span></div>
-        <ul class="price-facts"><li>الجلسة ساعة كاملة</li><li>أونلاين: فيديو أو صوت</li><li>سرية تمامًا</li></ul>
-        <a class="btn primary big" href="{book}" target="_blank" rel="noopener">احجز على واتساب</a>
-        <p class="price-note">واتساب: <bdi dir="ltr">{WA_SHOW}</bdi> · الميعاد وطريقة الدفع بنتفق عليهم في الرسايل.</p>
-      </div>
+      <h2 class="sec-h" id="choose">اختار المعالج</h2>
+      <p class="tl-intro">كل المعالجين هنا متراجعة بياناتهم. اختار الأقرب للي انت محتاجه، واحجز معاه مباشرة على واتساب.</p>
+      <link rel="stylesheet" href="/therapists/list.css">
+      <div id="tp-list" class="tl-grid" aria-live="polite">{OWNER_CARD.format(book=book)}</div>
 
       <h2 class="sec-h">الحجز بيمشي إزاي؟</h2>
       <ol class="how">
-        <li><b>ابعت رسالة على واتساب</b><span>قول اسمك الأول بس، وانت مقيم فين، ولو حابب قول الموضوع باختصار.</span></li>
-        <li><b>نتفق على ميعاد</b><span>بنختار وقت يناسبك، ونتفق على طريقة الدفع.</span></li>
+        <li><b>اختار المعالج وابعتله على واتساب</b><span>قول اسمك الأول بس، وانت مقيم فين، ولو حابب قول الموضوع باختصار.</span></li>
+        <li><b>تتفقوا على ميعاد</b><span>تختاروا وقت يناسبك، وتتفقوا على السعر وطريقة الدفع.</span></li>
         <li><b>الجلسة</b><span>ساعة أونلاين، فيديو أو صوت. اختار مكان هادي تقدر تتكلم فيه براحتك.</span></li>
       </ol>
 
@@ -118,48 +129,36 @@ def sessions_page(ba, page, write, SITE):
       </ul>
       <p class="ses-medical">لو الحالة محتاجة دوا أو متابعة طبية (زي الاضطراب ثنائي القطب، أو الذهان، أو أفكار الانتحار)، الطبيب النفسي هو الأساس، والجلسات بتبقى جنبه مش بداله.</p>
 
-      <h2 class="sec-h">أنواع العلاج اللي بستخدمها</h2>
+      <h2 class="sec-h">أنواع العلاج المتاحة</h2>
       <ul class="topic-cards topic-cards-tx">
 {thcards}
       </ul>
-      <p class="ses-medical">في أول جلسة بنختار سوا الطريقة الأنسب ليك، وممكن نجمع بين أكتر من طريقة.</p>
+      <p class="ses-medical">كل معالج بيكتب في البروفايل بتاعه الطرق اللي بيشتغل بيها. وفي أول جلسة بتختاروا سوا الطريقة الأنسب ليك.</p>
 
-      <h2 class="sec-h">مين هيكون معاك في الجلسة؟</h2>
-      <div class="who-card">
-        <picture><source srcset="/assets/millad-cut.webp" type="image/webp"><img src="/assets/millad.jpg" width="160" height="160" alt="د. ميلاد ميخائيل" loading="lazy"></picture>
-        <div>
-          <p><b>د. ميلاد ميخائيل</b>، استشاري العلاج النفسي والأسري.</p>
-          <ul class="creds">
-            <li>دكتوراه في الصحة النفسية، جامعة قناة السويس (2022)</li>
-            <li>الدبلوم المتخصص في الإرشاد وعلم النفس الإكلينيكي، جامعة طنطا</li>
-            <li>مؤهلاته معادلة أمريكيًا من <a href="https://www.credly.com/badges/5a6796c0-5e1a-4ad5-b1af-fb64254e81cf/public_url" target="_blank" rel="noopener">WES (شوف البادج)</a></li>
-            <li>عضو الجمعية الأمريكية لعلم النفس (APA)</li>
-            <li>مؤلف كتاب <a href="/book/">«ليه بنحب اللي بيوجعنا؟»</a>، وصاحب قناة <a href="/videos/">«جلسة شيزلونج»</a></li>
-          </ul>
-        </div>
-      </div>
 
       <h2 class="sec-h">أسئلة قبل الحجز</h2>
       {_faq(faq)}
 
       <div class="note-box">
-        <h2>كنت في جلسات معايا؟</h2>
+        <h2>كنت في جلسات مع معالج من هنا؟</h2>
         <p>رأيك بيفرق مع ناس تانية مترددة. لو حابب تكتبه، ابعته على واتساب وقول هل موافق ننشره <b>من غير اسمك</b> ولا لأ. مش هننشر أي رأي من غير موافقة صاحبه.</p>
         <div class="actions"><a class="btn" href="{wa('رأيي في الجلسات: ... (موافق/مش موافق إنه يتنشر في الموقع من غير اسمي)')}" target="_blank" rel="noopener">ابعت رأيك</a></div>
       </div>
 
       <div class="safety-note" role="note"><p><b>مهم:</b> الجلسات مش خدمة طوارئ. لو انت في خطر دلوقتي أو عندك أفكار تأذي بيها نفسك، روح <a href="/help-now/">صفحة المساعدة الفورية</a>، أو كلّم الخط الساخن للدعم النفسي في مصر <a href="tel:16328">16328</a>.</p></div>
-      {ba.share_block(SITE + "/sessions/", "جلسات نفسية أونلاين مع د. ميلاد ميخائيل", "شارك الصفحة")}
+      {ba.share_block(SITE + "/sessions/", "جلسات نفسية أونلاين", "شارك الصفحة")}
     </div>
-  </section>'''
+  </section>
+  <script src="/assets/vendor/supabase/supabase.js" defer></script>
+  <script src="/therapists/sb.js" defer></script>
+  <script src="/therapists/list.js" defer></script>'''
     url = f"{SITE}/sessions/"
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "Service", "@id": url + "#service", "name": "جلسات نفسية أونلاين", "url": url, "inLanguage": "ar",
-         "provider": {"@id": f"{SITE}/#person"}, "areaServed": ["Egypt", "Arab world"], "availableChannel": {"@type": "ServiceChannel", "serviceUrl": f"https://wa.me/{WA}"},
-         "offers": {"@type": "Offer", "price": "1000", "priceCurrency": "EGP", "description": "جلسة مدتها ساعة، أونلاين"}},
+         "areaServed": ["Egypt", "Arab world"]},
         _faq_ld(faq, url)]}
     write("sessions", page("sessions", "جلسات نفسية أونلاين",
-                           "جلسات نفسية أونلاين مع د. ميلاد ميخائيل لأهلنا في مصر والوطن العربي: ساعة كاملة بـ 1000 جنيه، فيديو أو صوت، سرية، والحجز على واتساب.", body, ld))
+                           "جلسات نفسية أونلاين لأهلنا في مصر والوطن العربي مع معالجين نفسيين متراجعة بياناتهم: فيديو أو صوت، سرية، واحجز مع المعالج اللي تختاره على واتساب.", body, ld))
 
 
 # ------------------------------------------------------------------ contact
