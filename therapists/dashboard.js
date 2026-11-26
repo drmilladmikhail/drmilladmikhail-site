@@ -204,7 +204,7 @@
 
   function shell() {
     clear();
-    var tabs = me ? [['profile', 'صفحتي'], ['posts', 'البوستات'], ['comments', 'التعليقات']] : [];
+    var tabs = me ? [['profile', 'صفحتي'], ['articles', 'المقالات'], ['posts', 'البوستات'], ['comments', 'التعليقات']] : [];
     if (isAdmin) tabs.push(['admin', 'إدارة الصفحات']);
     if (!me && tab !== 'admin') tab = 'admin';
     var nav = el('nav', { class: 'dash-tabs', 'aria-label': 'أقسام اللوحة' });
@@ -225,14 +225,185 @@
       root.appendChild(el('p', { class: 'dash-msg dash-pending', text: 'صفحتك لسه مش ظاهرة للناس. كمّل بياناتك براحتك، وهتظهر بعد مراجعة سريعة من إدارة الموقع. تقدر تشوف شكلها من «افتح صفحتي».' }));
     } else if (me) {
       root.appendChild(el('p', { class: 'dash-msg tp-small', dir: 'ltr', text: 'drmilladmikhail.com/therapists/' + me.slug + '/' }));
+      root.appendChild(statsLine());
     }
     var body = el('div', { id: 'dash-body' });
     if (!hasPassword() || showPw) root.appendChild(passwordCard());
     root.appendChild(nav); root.appendChild(body);
     if (tab === 'admin' && isAdmin) adminView(body);
+    else if (tab === 'articles') articlesView(body);
     else if (tab === 'posts') postsView(body);
     else if (tab === 'comments') commentsView(body);
     else profileView(body);
+  }
+
+  /* ---------- visits ---------- */
+  var ZERO = '00000000-0000-0000-0000-000000000000';
+  function loadViews() {
+    return db.from('page_views').select('article_key,day,views').eq('therapist_id', me.id).then(function (r) {
+      var rows = (r && r.data) || [], since = new Date(Date.now() - 6 * 864e5).toISOString().slice(0, 10);
+      var out = { page: 0, page7: 0, articles: {}, articles7: 0 };
+      rows.forEach(function (x) {
+        if (x.article_key === ZERO) { out.page += x.views; if (x.day >= since) out.page7 += x.views; }
+        else { out.articles[x.article_key] = (out.articles[x.article_key] || 0) + x.views; if (x.day >= since) out.articles7 += x.views; }
+      });
+      return out;
+    });
+  }
+  function statsLine() {
+    var p = el('p', { class: 'dash-stats', 'aria-live': 'polite' }, ['…']);
+    loadViews().then(function (v) {
+      var totalArts = Object.keys(v.articles).reduce(function (n, k) { return n + v.articles[k]; }, 0);
+      p.textContent = '';
+      p.appendChild(el('span', null, [el('b', { text: String(v.page) }), ' زيارة لصفحتك']));
+      p.appendChild(el('span', null, [el('b', { text: String(v.page7) }), ' آخر ٧ أيام']));
+      p.appendChild(el('span', null, [el('b', { text: String(totalArts) }), ' قراية لمقالاتك']));
+    });
+    return p;
+  }
+
+  /* ---------- «صفحتك ناقصها إيه» ---------- */
+  function completenessCard() {
+    var card = el('div', { class: 'dash-card dash-progress' }, [msg('بيحسب…')]);
+    Promise.all([
+      db.from('articles').select('id', { count: 'exact', head: true }).eq('therapist_id', me.id),
+      db.from('posts').select('id,video_url').eq('therapist_id', me.id)
+    ]).then(function (res) {
+      var nArts = (res[0] && res[0].count) || 0, posts = (res[1] && res[1].data) || [];
+      var nVids = (me.videos || []).filter(function (v) { return v && v.url; }).length + posts.filter(function (p) { return p.video_url; }).length;
+      var price = (me.sessions || []).some(function (s) { return s && s.price; });
+      var checks = [
+        [!!me.photo_path, 'صورة شخصية واضحة', 'profile'],
+        [String(me.bio || '').length >= 150, 'نبذة عنك (٣ جمل على الأقل): بتشتغل إزاي وبتساعد مين', 'profile'],
+        [(me.specialties || []).length >= 2, 'تخصصاتك (اكتب كل تخصص لوحده)', 'profile'],
+        [(me.credentials || []).length >= 1, 'شهاداتك والجهة اللي اديتهالك', 'profile'],
+        [!!me.whatsapp, 'رقم الواتساب عشان الناس تحجز', 'profile'],
+        [price, 'سعر الجلسة', 'profile'],
+        [!!(me.note_path || me.note_text), '«كلمة مني» للزائر', 'profile'],
+        [nVids >= 1, 'فيديو واحد على الأقل من يوتيوب', 'profile'],
+        [nArts >= 1, 'أول مقال ليك', 'articles'],
+        [posts.length >= 1, 'أول بوست', 'posts']
+      ];
+      var done = checks.filter(function (c) { return c[0]; }).length, pct = Math.round(done * 100 / checks.length);
+      card.textContent = '';
+      card.appendChild(el('h2', { text: pct === 100 ? 'صفحتك كاملة 👏' : 'صفحتك كاملة ' + pct + '%' }));
+      card.appendChild(el('div', { class: 'dash-bar', role: 'progressbar', 'aria-valuenow': String(pct), 'aria-valuemin': '0', 'aria-valuemax': '100' }, [el('span', { style: 'width:' + pct + '%' })]));
+      if (pct < 100) {
+        card.appendChild(el('p', { class: 'tp-small tp-muted', text: 'الصفحة الكاملة بتطمّن الناس وبتجيبلك حجوزات أكتر. ناقصك:' }));
+        var ul = el('ul', { class: 'dash-todo' });
+        checks.filter(function (c) { return !c[0]; }).forEach(function (c) {
+          ul.appendChild(el('li', null, [c[2] === 'profile' ? c[1] : el('button', { type: 'button', class: 'dash-link', text: c[1] + ' ←', onclick: function () { tab = c[2]; shell(); } })]));
+        });
+        card.appendChild(ul);
+      }
+    });
+    return card;
+  }
+
+  /* ---------- articles ---------- */
+  function articlesView(body) {
+    var editing = null; // article being edited, or null for a new one
+    var title = input('a-title', '', { maxlength: 200 });
+    var text = area('a-body', '', { maxlength: 40000, rows: 14 });
+    var coverPath = '';
+    var coverPrev = el('div', { class: 'dash-cover' });
+    var status = msg('');
+    var heading = el('h2', { text: 'مقال جديد' });
+    var save = el('button', { type: 'submit', class: 'tp-btn', text: 'انشر المقال' });
+    var cancel = el('button', { type: 'button', class: 'dash-link', text: 'إلغاء التعديل', hidden: true, onclick: function () { reset(); } });
+    function showCover() {
+      coverPrev.textContent = '';
+      var u = TP.photoUrl(coverPath);
+      if (u) {
+        coverPrev.appendChild(el('img', { src: u, alt: 'صورة الغلاف' }));
+        coverPrev.appendChild(el('button', { type: 'button', class: 'dash-link dash-danger', text: 'شيل الصورة', onclick: function () { coverPath = ''; showCover(); } }));
+      }
+    }
+    var coverInput = el('input', { type: 'file', id: 'a-cover', accept: 'image/jpeg,image/png,image/webp' });
+    var coverStatus = msg('');
+    coverInput.addEventListener('change', function () {
+      var file = coverInput.files && coverInput.files[0];
+      if (!file) return;
+      if (file.size > 3 * 1024 * 1024) { coverStatus.textContent = 'الصورة أكبر من ٣ ميجا. اختار صورة أصغر.'; return; }
+      var ext = ({ 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' })[file.type];
+      if (!ext) { coverStatus.textContent = 'الصورة لازم تكون JPG أو PNG أو WEBP.'; return; }
+      var path = me.id + '/cover-' + Date.now() + '.' + ext;
+      coverStatus.textContent = 'بترفع الصورة…';
+      db.storage.from(TP.BUCKET).upload(path, file, { contentType: file.type, upsert: false }).then(function (u) {
+        if (u.error) { coverStatus.textContent = 'الصورة ماترفعتش. جرّب تاني.'; return; }
+        coverPath = path; showCover(); coverStatus.textContent = 'الصورة جاهزة، هتتحفظ مع المقال.';
+      });
+    });
+    function reset() {
+      editing = null; title.value = ''; text.value = ''; coverPath = ''; showCover();
+      heading.textContent = 'مقال جديد'; save.textContent = 'انشر المقال'; cancel.hidden = true; status.textContent = '';
+    }
+    var form = el('form', { class: 'dash-card', novalidate: true }, [
+      heading,
+      field('عنوان المقال', title, 'عنوان واضح بيقول المقال هيفيد القارئ في إيه.'),
+      field('صورة الغلاف (اختياري)', coverInput, 'صورة أفقية، JPG أو PNG.'), coverStatus, coverPrev,
+      field('المقال', text, 'سيب سطر فاضي بين الفقرات. ولو عاوز عنوان فرعي، ابدأ السطر بـ ## ومسافة، مثلاً: ## إزاي تبدأ'),
+      el('p', { class: 'tp-small tp-muted', text: 'اكتب معلومات دقيقة من مصادر موثوقة. المقال للتوعية ومش بديل عن جلسة.' }),
+      el('div', { class: 'dash-actions' }, [save, cancel]), status
+    ]);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var t = title.value.trim(), b = text.value.trim();
+      if (t.length < 3) { status.textContent = 'اكتب عنوان للمقال.'; return; }
+      if (b.length < 50) { status.textContent = 'المقال قصير أوي. اكتب فقرة واحدة على الأقل.'; return; }
+      save.disabled = true; status.textContent = 'بيحفظ…';
+      var row = { title: t, body: b, cover_path: coverPath };
+      var q = editing ? db.from('articles').update(row).eq('id', editing.id) : db.from('articles').insert(Object.assign({ therapist_id: me.id }, row));
+      q.then(function (r) {
+        save.disabled = false;
+        if (r.error) { status.textContent = 'المقال ماتحفظش. اتأكد إن العنوان والمقال مش طوال زيادة وجرّب تاني.'; return; }
+        var was = !!editing; reset();
+        status.textContent = was ? 'التعديل اتحفظ.' : 'اتنشر على صفحتك!';
+        loadList();
+      });
+    });
+
+    var listCard = el('div', { class: 'dash-card' }, [el('h2', { text: 'مقالاتك' })]);
+    var list = el('div');
+    listCard.appendChild(list);
+    function loadList() {
+      list.textContent = 'بيحمّل…';
+      Promise.all([
+        db.from('articles').select('id,title,cover_path,body,created_at').eq('therapist_id', me.id).order('created_at', { ascending: false }),
+        loadViews()
+      ]).then(function (res) {
+        var r = res[0], views = res[1];
+        list.textContent = '';
+        if (r.error) { list.appendChild(msg('مش قادر أحمّل المقالات.', 'err')); return; }
+        if (!r.data.length) { list.appendChild(msg('لسه ماكتبتش مقالات. أول مقال بيفرق جداً في ظهور صفحتك على جوجل.')); return; }
+        r.data.forEach(function (a) {
+          var confirmDel = el('span', { class: 'dash-confirm', hidden: true }, [
+            'متأكد؟ ',
+            el('button', { type: 'button', class: 'dash-link dash-danger', text: 'أيوه، امسح', onclick: function () {
+              db.from('articles').delete().eq('id', a.id).then(function () { loadList(); });
+            } }),
+            el('button', { type: 'button', class: 'dash-link', text: 'لأ', onclick: function () { confirmDel.hidden = true; } })
+          ]);
+          var href = me.published ? '/therapists/' + me.slug + '/?a=' + a.id : '/therapists/view/?d=' + encodeURIComponent(me.slug) + '&a=' + a.id;
+          list.appendChild(el('div', { class: 'dash-post' }, [
+            el('b', { text: a.title }),
+            el('div', { class: 'tp-small tp-muted', text: TP.date(a.created_at) + ' · ' + (views.articles[a.id] || 0) + ' قراية' }),
+            el('div', { class: 'dash-actions' }, [
+              el('a', { class: 'dash-link', href: href, target: '_blank', rel: 'noopener', text: 'افتح' }),
+              el('button', { type: 'button', class: 'dash-link', text: 'عدّل', onclick: function () {
+                editing = a; title.value = a.title; text.value = a.body; coverPath = a.cover_path || ''; showCover();
+                heading.textContent = 'تعديل المقال'; save.textContent = 'احفظ التعديل'; cancel.hidden = false; status.textContent = '';
+                form.scrollIntoView({ block: 'start' });
+              } }),
+              el('button', { type: 'button', class: 'dash-link dash-danger', text: 'امسح', onclick: function () { confirmDel.hidden = false; } }),
+              confirmDel
+            ])
+          ]));
+        });
+      });
+    }
+    body.appendChild(form); body.appendChild(listCard);
+    loadList();
   }
 
   /* ---------- admin (site owner) ---------- */
@@ -311,11 +482,12 @@
   }
 
   function splitList(v) {
-    return String(v || '').split(/[،,\n]/).map(function (s) { return s.trim(); }).filter(Boolean);
+    return String(v || '').split(/[،,\n]|\s[-–]\s/).map(function (s) { return s.trim(); }).filter(Boolean);
   }
 
   /* ---------- profile ---------- */
   function profileView(body) {
+    body.appendChild(completenessCard());
     var f = {
       name: input('p-name', me.name, { maxlength: 120 }),
       title: input('p-title', me.title, { maxlength: 120 }),

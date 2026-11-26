@@ -242,49 +242,181 @@
     return ul.childNodes.length ? el('div', { class: 'tp-related-wrap' }, [el('h4', { text: 'مقالات ممكن تفيدك' }), ul]) : null;
   }
 
-  function render(t, posts, comments) {
+  /* ---------- tabs: عني / مقالات / فيديوهات / بوستات / احجز ---------- */
+  var TABS = [['about', 'عني'], ['articles', 'مقالات'], ['videos', 'فيديوهات'], ['posts', 'بوستات'], ['book', 'احجز']];
+  var params = (function () { try { return new URLSearchParams(location.search); } catch (e) { return null; } })();
+  var articleId = params && params.get('a');
+  if (articleId && !/^[0-9a-f-]{36}$/.test(articleId)) articleId = null;
+
+  function pageUrl(t) { return location.origin + '/therapists/' + t.slug + '/'; }
+  function articleUrl(t, a) { return pageUrl(t) + '?a=' + a.id; }
+
+  function excerpt(body, n) {
+    var txt = String(body || '').replace(/^##\s+/gm, '').replace(/\s+/g, ' ').trim();
+    return txt.length > n ? txt.slice(0, n).replace(/\s+\S*$/, '') + '…' : txt;
+  }
+
+  // Article body: blank line = new paragraph, a line starting with "## " = sub-heading.
+  function articleBody(body) {
+    var d = el('div', { class: 'tp-prose tp-article-body' });
+    String(body || '').split(/\n\s*\n/).forEach(function (chunk) {
+      chunk = chunk.trim();
+      if (!chunk) return;
+      chunk.split('\n').forEach(function (line, i, all) {
+        if (/^##\s+/.test(line)) { d.appendChild(el('h2', { text: line.replace(/^##\s+/, '') })); }
+      });
+      var text = chunk.split('\n').filter(function (l) { return !/^##\s+/.test(l); }).join(' ').trim();
+      if (text) d.appendChild(el('p', { text: text }));
+    });
+    return d;
+  }
+
+  function articleCard(t, a) {
+    var cover = TP.photoUrl(a.cover_path);
+    return el('a', { class: 'tp-acard', href: (isView ? '?d=' + slug + '&a=' : '?a=') + a.id }, [
+      cover ? el('img', { class: 'tp-acover', src: cover, alt: '', loading: 'lazy' }) : el('div', { class: 'tp-acover tp-acover-empty', 'aria-hidden': 'true' }),
+      el('div', { class: 'tp-abody' }, [
+        el('h3', { text: a.title }),
+        el('time', { class: 'tp-small tp-muted', datetime: a.created_at, text: TP.date(a.created_at) }),
+        el('p', { class: 'tp-muted', text: excerpt(a.body, 140) })
+      ])
+    ]);
+  }
+
+  function videoCard(v) {
+    var id = TP.youtubeId(v.url);
+    if (!id) return null;
+    var thumb = el('button', { type: 'button', class: 'tp-vthumb', 'aria-label': 'شغّل الفيديو: ' + (v.title || '') }, [
+      el('img', { src: 'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg', alt: '', loading: 'lazy' }),
+      el('span', { class: 'tp-vplay', 'aria-hidden': 'true', text: '▶' })
+    ]);
+    var fig = el('figure', { class: 'tp-vcard' }, [thumb, v.title ? el('figcaption', { text: v.title }) : null]);
+    thumb.addEventListener('click', function () {
+      var emb = TP.youtubeEmbed(v.url, v.title);
+      if (emb) { fig.replaceChild(emb, thumb); var f = emb.querySelector('iframe'); if (f) f.src += '?autoplay=1'; }
+    });
+    return fig;
+  }
+
+  function allVideos(t, posts) {
+    var seen = {}, out = [];
+    (t.videos || []).concat(posts.filter(function (p) { return p.video_url; }).map(function (p) { return { title: p.title, url: p.video_url }; }))
+      .forEach(function (v) { var id = v && TP.youtubeId(v.url); if (id && !seen[id]) { seen[id] = 1; out.push(v); } });
+    return out;
+  }
+
+  function trackOnce(key, articleKey) {
+    // One count per page per browser per day; a bad network never breaks the page.
+    var k = 'tpv:' + key + ':' + new Date().toISOString().slice(0, 10);
+    try { if (localStorage.getItem(k)) return; localStorage.setItem(k, '1'); } catch (e) { /* still count */ }
+    db.rpc('track_view', { p_slug: slug, p_article: articleKey || null }).then(function () {}, function () {});
+  }
+
+  function render(t, posts, comments, arts) {
     hero.textContent = '';
     heroView(t).forEach(function (n) { hero.appendChild(n); });
     document.title = (t.name || '') + ' | ' + (t.title || 'معالج نفسي');
+    main.textContent = '';
+    if (t.published === false) main.appendChild(el('p', { class: 'tp-preview-note', text: 'معاينة: الصفحة دي لسه مش ظاهرة للناس. بتظهر بعد مراجعة إدارة الموقع.' }));
+
+    // One article on its own
+    if (articleId) {
+      var a = arts.filter(function (x) { return x.id === articleId; })[0];
+      if (a) { renderArticle(t, a); trackOnce('a' + a.id, a.id); return; }
+    }
 
     var byPost = {};
     comments.forEach(function (c) { (byPost[c.post_id] = byPost[c.post_id] || []).push(c); });
-    var postsWrap = el('div', { class: 'tp-posts' });
-    posts.forEach(function (p) { postsWrap.appendChild(postView(p, byPost[p.id] || [], t)); });
+    var vids = allVideos(t, posts);
 
-    var nodes = [
-      facts(t),
-      noteBlock(t),
-      block('نبذة', bio(t)),
-      block('مواضيع وبوستات', postsWrap.childNodes.length ? postsWrap : null, 'posts'),
-      block('فيديوهات', videos(t)),
-      bookBlock(t),
-      block('الشهادات والمؤهلات', list(t.credentials, 'cred')),
-      block('الكورسات والتدريب', list(t.courses, 'cred')),
-      block('مقالات', list(t.articles, 'article')),
-      booking(t),
-      shareBlock(t),
-      el('p', { class: 'tp-urgent', text: 'لو أنت أو حد قريبك في خطر فوري، متستناش جلسة ولا رد على تعليق: اتصل بالطوارئ (في مصر ١٢٣) أو خط الصحة النفسية ١٦٣٢٨، أو اتوجه لأقرب مستشفى.' })
-    ];
-    if (t.published === false) {
-      nodes.unshift(el('p', { class: 'tp-preview-note', text: 'معاينة: الصفحة دي لسه مش ظاهرة للناس. بتظهر بعد مراجعة إدارة الموقع.' }));
+    var panes = {};
+    panes.about = [facts(t), noteBlock(t), block('نبذة', bio(t)), bookBlock(t),
+      block('الشهادات والمؤهلات', list(t.credentials, 'cred')), block('الكورسات والتدريب', list(t.courses, 'cred')),
+      block('مقالات في أماكن تانية', list(t.articles, 'article'))];
+    var agrid = el('div', { class: 'tp-agrid' });
+    arts.forEach(function (x) { agrid.appendChild(articleCard(t, x)); });
+    panes.articles = [agrid.childNodes.length ? agrid : el('p', { class: 'tp-block tp-muted', text: 'لسه مفيش مقالات.' })];
+    var vgrid = el('div', { class: 'tp-vgrid' });
+    vids.forEach(function (v) { var c = videoCard(v); if (c) vgrid.appendChild(c); });
+    panes.videos = [vgrid.childNodes.length ? vgrid : el('p', { class: 'tp-block tp-muted', text: 'لسه مفيش فيديوهات.' })];
+    var postsWrap = el('div', { class: 'tp-posts tp-block' });
+    posts.forEach(function (p) { postsWrap.appendChild(postView(p, byPost[p.id] || [], t)); });
+    panes.posts = [posts.length ? postsWrap : el('p', { class: 'tp-block tp-muted', text: 'لسه مفيش بوستات.' })];
+    panes.book = [booking(t), shareBlock(t)];
+
+    var counts = { articles: arts.length, videos: vids.length, posts: posts.length };
+    var nav = el('nav', { class: 'tp-tabs', 'aria-label': 'أقسام الصفحة' });
+    var paneEls = {};
+    TABS.forEach(function (x) {
+      var key = x[0];
+      if (counts[key] === 0 && key !== 'articles') return; // hide empty videos/posts tabs
+      if (key === 'articles' && !counts.articles) return;
+      nav.appendChild(el('a', { class: 'tp-tab', href: '#' + key, 'data-tab': key }, [x[1], counts[key] ? el('span', { class: 'tp-count', text: String(counts[key]) }) : null]));
+      var pane = el('section', { class: 'tp-pane', id: key, 'data-pane': key });
+      panes[key].forEach(function (n) { if (n) pane.appendChild(n); });
+      paneEls[key] = pane;
+    });
+    main.appendChild(nav);
+    Object.keys(paneEls).forEach(function (k) { main.appendChild(paneEls[k]); });
+    main.appendChild(el('p', { class: 'tp-urgent', text: 'لو أنت أو حد قريبك في خطر فوري، متستناش جلسة ولا رد على تعليق: اتصل بالطوارئ (في مصر ١٢٣) أو خط الصحة النفسية ١٦٣٢٨، أو اتوجه لأقرب مستشفى.' }));
+
+    function show(key, scroll) {
+      if (!paneEls[key]) key = 'about';
+      Object.keys(paneEls).forEach(function (k) { paneEls[k].hidden = k !== key; });
+      nav.querySelectorAll('.tp-tab').forEach(function (a) {
+        var on = a.getAttribute('data-tab') === key;
+        a.classList.toggle('is-on', on);
+        if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      });
+      if (scroll) nav.scrollIntoView({ block: 'start' });
     }
-    main.textContent = '';
-    nodes.forEach(function (n) { if (n) main.appendChild(n); });
+    var first = (location.hash || '').slice(1);
+    show(first, !!paneEls[first] && first !== 'about');
+    window.addEventListener('hashchange', function () { show((location.hash || '').slice(1), true); });
+
     if (posts.length) {
-      loadArticles().then(function (arts) {
-        if (!arts || !arts.length) return;
+      loadArticles().then(function (sa) {
+        if (!sa || !sa.length) return;
         posts.forEach(function (p) {
           var slot = document.querySelector('#post-' + p.id + ' .tp-related-slot');
-          var r = slot && related(p, t, arts);
+          var r = slot && related(p, t, sa);
           if (r) slot.appendChild(r);
         });
       });
     }
-    if (location.hash) {
-      var target = document.getElementById(location.hash.slice(1));
-      if (target) target.scrollIntoView();
-    }
+    trackOnce('p', null);
+  }
+
+  function renderArticle(t, a) {
+    var url = articleUrl(t, a);
+    var cover = TP.photoUrl(a.cover_path);
+    document.title = a.title + ' | ' + (t.name || '');
+    var status = el('span', { class: 'tp-small tp-muted', role: 'status' });
+    var art = el('article', { class: 'tp-block tp-article' }, [
+      el('a', { class: 'tp-back', href: location.pathname + (isView ? location.search.replace(/[?&]a=[^&]*/, '') : '') + '#articles', text: '← كل مقالات ' + (t.name || '') }),
+      el('h1', { class: 'tp-atitle', text: a.title }),
+      el('p', { class: 'tp-small tp-muted' }, [(t.name || '') + ' · ', el('time', { datetime: a.created_at, text: TP.date(a.created_at) })]),
+      cover ? el('img', { class: 'tp-acover-big', src: cover, alt: '' }) : null,
+      articleBody(a.body),
+      el('div', { class: 'tp-related-slot' }),
+      el('div', { class: 'tp-share-row' }, [
+        el('a', { class: 'tp-share-btn tp-wa', target: '_blank', rel: 'noopener', href: 'https://wa.me/?text=' + encodeURIComponent(a.title + '\n' + url), text: 'شارك على واتساب' }),
+        el('a', { class: 'tp-share-btn tp-fb', target: '_blank', rel: 'noopener', href: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), text: 'فيسبوك' }),
+        el('button', { type: 'button', class: 'tp-share-btn', text: 'انسخ اللينك', onclick: function () {
+          try { navigator.clipboard.writeText(url).then(function () { status.textContent = 'اتنسخ.'; }, function () { status.textContent = url; }); } catch (e) { status.textContent = url; }
+        } }),
+        status
+      ]),
+      el('a', { class: 'tp-btn', href: location.pathname + (isView ? location.search.replace(/[?&]a=[^&]*/, '') : '') + '#book', text: 'احجز جلسة مع ' + (t.name || '') })
+    ]);
+    main.appendChild(art);
+    main.appendChild(el('p', { class: 'tp-urgent', text: 'المقال للتوعية ومش بديل عن جلسة. لو أنت أو حد قريبك في خطر فوري، اتصل بالطوارئ (في مصر ١٢٣) أو خط الصحة النفسية ١٦٣٢٨.' }));
+    loadArticles().then(function (sa) {
+      var r = sa && sa.length && related({ title: a.title, body: a.body }, t, sa);
+      var slot = art.querySelector('.tp-related-slot');
+      if (r && slot) slot.appendChild(r);
+    });
+    window.scrollTo(0, 0);
   }
 
   db.from('therapists').select('id,slug,published,name,title,specialties,bio,experience,languages,credentials,courses,articles,videos,sessions,session_mode,schedule,cancel_policy,whatsapp,photo_path,comments_enabled,book_title,book_author,book_why,note_path,note_text')
@@ -297,13 +429,15 @@
         return; // keep the static page
       }
       var t = r.data;
-      db.from('posts').select('id,title,body,video_url,created_at').eq('therapist_id', t.id)
-        .order('created_at', { ascending: false }).limit(50).then(function (pr) {
-          var posts = (pr && pr.data) || [];
-          if (!posts.length) { render(t, [], []); return; }
-          db.from('comments').select('id,post_id,author_name,body,reply,created_at').eq('status', 'approved')
-            .in('post_id', posts.map(function (p) { return p.id; })).order('created_at', { ascending: true })
-            .then(function (cr) { render(t, posts, (cr && cr.data) || []); });
-        });
+      Promise.all([
+        db.from('posts').select('id,title,body,video_url,created_at').eq('therapist_id', t.id).order('created_at', { ascending: false }).limit(50),
+        db.from('articles').select('id,title,cover_path,body,created_at').eq('therapist_id', t.id).order('created_at', { ascending: false }).limit(100)
+      ]).then(function (res) {
+        var posts = (res[0] && res[0].data) || [], arts = (res[1] && res[1].data) || [];
+        if (!posts.length) { render(t, [], [], arts); return; }
+        db.from('comments').select('id,post_id,author_name,body,reply,created_at').eq('status', 'approved')
+          .in('post_id', posts.map(function (p) { return p.id; })).order('created_at', { ascending: true })
+          .then(function (cr) { render(t, posts, (cr && cr.data) || [], arts); });
+      });
     });
 })();
