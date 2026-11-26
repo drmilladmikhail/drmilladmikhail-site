@@ -140,7 +140,7 @@ def version_therapists(root):
     """Therapist pages load their own scripts from /therapists/; version them too,
     so a fix reaches phones right away instead of after the browser cache expires."""
     import hashlib
-    names = ("sb.js", "profile.js", "dashboard.js", "app.js", "profile.css")
+    names = ("sb.js", "profile.js", "dashboard.js", "list.js", "profile.css", "list.css")
     vers = {}
     for name in names:
         path = os.path.join(root, "therapists", name)
@@ -148,9 +148,9 @@ def version_therapists(root):
             with open(path, "rb") as f:
                 vers[name] = hashlib.md5(f.read()).hexdigest()[:8]
     pat = re.compile(r'(/therapists/)(' + "|".join(re.escape(n) for n in vers) + r')(\?v=[0-9a-f]+)?(")')
-    base = os.path.join(root, "therapists")
     n = 0
-    for dirpath, _dirs, files in os.walk(base):
+    walk = [w for base in ("therapists", "sessions") for w in os.walk(os.path.join(root, base))]
+    for dirpath, _dirs, files in walk:
         for fn in files:
             if not fn.endswith(".html"):
                 continue

@@ -79,7 +79,14 @@ def main():
         og_path = os.path.join(OUT, slug, "og.jpg")
         if new["og"] != sig or not os.path.exists(og_path):
             photo = None
-            if new["photo_path"]:
+            local = new["photo_path"]
+            if local.startswith("/assets/") and ".." not in local and os.path.isfile(os.path.join(ROOT, local.lstrip("/"))):
+                therapists_og.make(new, og_path, os.path.join(ROOT, local.lstrip("/")))
+                new["og"] = sig
+                local = None
+            if local is None:
+                pass
+            elif new["photo_path"]:
                 try:
                     blob = get("/storage/v1/object/public/therapist-photos/" + urllib.parse.quote(new["photo_path"]))
                     fd, photo = tempfile.mkstemp(suffix=".img")
@@ -88,10 +95,11 @@ def main():
                 except Exception as e:  # keep going with the initial letter
                     print(f"{slug}: photo download failed: {e}")
                     photo = None
-            therapists_og.make(new, og_path, photo)
-            if photo:
-                os.remove(photo)
-            new["og"] = sig
+            if local is not None:
+                therapists_og.make(new, og_path, photo)
+                if photo:
+                    os.remove(photo)
+                new["og"] = sig
 
         if new != old:
             with open(path, "w", encoding="utf-8") as f:

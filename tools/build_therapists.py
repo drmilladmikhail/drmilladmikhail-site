@@ -72,8 +72,12 @@ def page(d):
     specs = d.get("specialties") or []
     desc = f'{name} · {d.get("title", "معالج نفسي")}' + (f' · {"، ".join(specs)}' if specs else "") + " · جلسات نفسية أونلاين."
     photo_path = d.get("photo_path") or ""
-    photo = (f"{SUPABASE}/storage/v1/object/public/therapist-photos/{photo_path}"
-             if re.fullmatch(r"[0-9a-f-]{36}/[A-Za-z0-9._-]+", photo_path) else "")
+    if re.fullmatch(r"/assets/[A-Za-z0-9._/-]+\.(jpg|jpeg|png|webp)", photo_path) and ".." not in photo_path:
+        photo = photo_path
+    elif re.fullmatch(r"[0-9a-f-]{36}/[A-Za-z0-9._-]+", photo_path):
+        photo = f"{SUPABASE}/storage/v1/object/public/therapist-photos/{photo_path}"
+    else:
+        photo = ""
     avatar = (f'<img class="tp-photo" src="{e(photo)}" alt="صورة {e(name)}" width="160" height="160">'
               if photo else f'<div class="tp-photo tp-initial" aria-hidden="true">{e(initial(name))}</div>')
     og_file = os.path.join(OUT, slug, "og.jpg")

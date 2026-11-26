@@ -62,6 +62,7 @@
 
   function photoUrl(path) {
     path = String(path || '');
+    if (/^\/assets\/[A-Za-z0-9._\/-]+\.(jpg|jpeg|png|webp)$/.test(path) && path.indexOf('..') < 0) return path;
     if (!/^[0-9a-f-]{36}\/[A-Za-z0-9._-]+$/.test(path)) return '';
     return URL + '/storage/v1/object/public/' + BUCKET + '/' + path;
   }
