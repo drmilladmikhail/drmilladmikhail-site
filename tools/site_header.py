@@ -76,7 +76,8 @@ def _links(items):
 
 RESEARCH_LIBRARY = ("/research/library/", "مكتبة الأكاديميين والباحثين")
 SAVED = ("/saved/", "محفوظاتي")
-EXPLORE = ("/explore/", "دوّر واكتشف")
+EXPLORE = ("/explore/", "تصفّح شبكة المعرفة")
+BRAIN_EXPLORER = ("/brain-explorer/", "الدماغ تحت المجهر 3D")
 # 2026-11-24 (batch 1, his approval): «فيديوهات» moved into «مكتبتي» and «المنصة» into
 # «عن د. ميلاد» so the top bar stays short; a «احجز جلسة» button links to /sessions/.
 PLATFORM = ("/platform/", "المنصة")
@@ -86,6 +87,7 @@ def _menu():
     parts = ['        <a class="m-home" href="/">الصفحة الرئيسية</a>',
              '        <a class="m-start" href="/start/">ابدأ من هنا</a>',
              f'        <a href="{EXPLORE[0]}">{EXPLORE[1]}</a>',
+             f'        <a href="{BRAIN_EXPLORER[0]}">{BRAIN_EXPLORER[1]}</a>',
              f'        <a href="{SAVED[0]}">{SAVED[1]}</a>',
              f'        <a href="{RESEARCH_LIBRARY[0]}">{RESEARCH_LIBRARY[1]}</a>']
     for title, items in GROUPS:
@@ -113,11 +115,13 @@ TOPBAR = f'''<a class="skip-link" href="#main">تخطّى للمحتوى</a>
     </a>
     <nav class="nav" aria-label="أقسام الموقع">
       <a href="/">الصفحة الرئيسية</a>
+      <a href="/explore/">تصفّح</a>
+      <a href="/brain-explorer/">الدماغ 3D</a>
       <a href="/articles/">المقالات</a>
       <a href="/tests/">اختبارات نفسية</a>
       <a href="/paths/">مسارات التعلّم</a>
 {_dropdown("تمارين وأدوات", GROUPS[1][1][1:])}
-{_dropdown("مكتبتي", [EXPLORE, SAVED, RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6, 7, 8, 9)])}
+{_dropdown("مكتبتي", [EXPLORE, BRAIN_EXPLORER, SAVED, RESEARCH_LIBRARY] + [GROUPS[0][1][i] for i in (2, 3, 4, 5, 6, 7, 8, 9)])}
 {_dropdown("عن د. ميلاد", GROUPS[2][1] + [PLATFORM])}
       <a class="lang" href="/en/" hreflang="en" lang="en">English</a>
     </nav>
