@@ -1,0 +1,38 @@
+[
+  {
+    "org": "NINDS — المعهد الوطني للاضطرابات العصبية والسكتة الدماغية (NIH)",
+    "title": "Brain Basics: Know Your Brain",
+    "url": "https://www.ninds.nih.gov/health-information/public-education/brain-basics/brain-basics-know-your-brain",
+    "note": "مرجع علمي عام موثّق حول تشريح الدماغ وفصوص القشرة المخية والخلية العصبية والنواقل العصبية."
+  },
+  {
+    "org": "NINDS — المعهد الوطني للاضطرابات العصبية والسكتة الدماغية (NIH)",
+    "title": "Brain Basics: Understanding Sleep",
+    "url": "https://www.ninds.nih.gov/health-information/public-education/brain-basics/brain-basics-understanding-sleep",
+    "note": "مرجع حول الإيقاع اليوماوي، تحت المهاد، الميلاتونين، ومراحل النوم وترسيخ الذاكرة."
+  },
+  {
+    "org": "NIMH — المعهد الوطني للصحة النفسية (NIH)",
+    "title": "Anxiety Disorders & Stress Response",
+    "url": "https://www.nimh.nih.gov/health/topics/anxiety-disorders",
+    "note": "مرجع علمي موثّق حول استجابة القلق والتوتر والشبكات العصبية المشاركة والفرق بين التوعية والتشخيص."
+  },
+  {
+    "org": "NIMH — المعهد الوطني للصحة النفسية (NIH)",
+    "title": "I'm So Stressed Out! Fact Sheet",
+    "url": "https://www.nimh.nih.gov/health/publications/so-stressed-out-fact-sheet",
+    "note": "توضيح علمي للفرق بين التوتر الحاد والمزمن وآثاره الفسيولوجية والنفسية."
+  },
+  {
+    "org": "National Library of Medicine (NLM / NCBI Bookshelf)",
+    "title": "Neuroanatomy, Cerebral Cortex & Limbic System (StatPearls)",
+    "url": "https://www.ncbi.nlm.nih.gov/books/",
+    "note": "مكتبة طبية محكّمة مفتوحة تضم مراجعات تشريحية ووظيفية دقيقة للقشرة المخية والجهاز الحوفي وجذع الدماغ."
+  },
+  {
+    "org": "NIH News in Health",
+    "title": "The Science of Emotion, Memory & Learning",
+    "url": "https://newsinhealth.nih.gov/",
+    "note": "مقالات توعوية علمية مبنية على أبحاث المعاهد الوطنية الأمريكية للصحة حول الذاكرة والمرونة العصبية والتنظيم الانفعالي."
+  }
+]

@@ -64,10 +64,12 @@ def apply(root):
             entry = ET.SubElement(urls, f"{{{NS}}}url")
             ET.SubElement(entry, f"{{{NS}}}loc").text = target
             locations.add(target)
-    target = SITE + "/myth-fact/"
-    if (root / "myth-fact" / "index.html").is_file() and target not in locations:
-        entry = ET.SubElement(urls, f"{{{NS}}}url")
-        ET.SubElement(entry, f"{{{NS}}}loc").text = target
+    for extra_slug in ("myth-fact", "explore", "brain-explorer"):
+        target = SITE + "/" + extra_slug + "/"
+        if (root / extra_slug / "index.html").is_file() and target not in locations:
+            entry = ET.SubElement(urls, f"{{{NS}}}url")
+            ET.SubElement(entry, f"{{{NS}}}loc").text = target
+            locations.add(target)
     output = serialize(tree)
     if output == original:
         return False

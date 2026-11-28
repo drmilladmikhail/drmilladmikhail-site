@@ -165,38 +165,16 @@ jobs:
                               assert page.locator('#bookmark-list li').count() == 0
                               assert page.evaluate("localStorage.getItem('journal:bookmark-test')") == 'preserve'
                           if name == 'explore':
-                              page.locator('.explore-controls').wait_for(state='visible')
-                              assert page.locator('.explore-item:visible').count() == 12
-                              page.locator('[data-explore-kind="article"]').click()
-                              assert page.locator('.explore-item:visible').count() > 0
-                              assert page.locator('.explore-item:visible:not([data-kind="article"])').count() == 0
-                              page.locator('[data-explore-kind="research"]').click()
-                              assert page.locator('.explore-item:visible').count() > 0
-                              assert page.locator('.explore-item:visible:not([data-kind="research"])').count() == 0
-                              with page.expect_popup() as paper_event:
-                                  page.locator('.explore-item:visible a').first.click()
-                              paper_page = paper_event.value
-                              paper_page.locator('.lib-card details[open]').wait_for(state='visible')
-                              target_id = paper_page.evaluate("decodeURIComponent(location.hash.slice(1))")
-                              assert paper_page.locator('.lib-card:has(details[open])').get_attribute('id') == target_id
-                              paper_page.locator('#lib-lang').click()
-                              assert paper_page.locator('.lib-card:has(details[open])').get_attribute('id') == target_id
-                              paper_page.close()
-                              page.locator('[data-explore-kind="all"]').click()
-                              page.locator('#explore-more').click()
-                              assert page.locator('.explore-item:visible').count() == 24
-                              page.locator('#explore-query').fill('Self-compassion')
-                              page.locator('#explore-form button[type="submit"]').click()
-                              assert 'التعاطف مع الذات' in page.locator('.explore-item:visible h2').first.inner_text()
-                              assert page.url.endswith('/explore/')
-                              page.locator('#explore-clear').click()
-                              page.locator('[data-explore-kind="story"]').click()
-                              assert page.locator('.explore-item:visible').count() == 10
-                              page.locator('#explore-query').fill('zzznomatch123')
-                              page.locator('#explore-form button[type="submit"]').click()
-                              assert page.locator('#explore-empty').is_visible()
-                              page.locator('#explore-reset').click()
-                              assert page.locator('.explore-item:visible').count() == 12
+                              assert page.locator('#explore-canvas').is_visible()
+                              assert page.locator('#explore-search').is_visible()
+                              assert page.request.get('http://127.0.0.1:8765/explore/graph-data.json').status == 200
+                              page.locator('[data-filter="audio"]').click()
+                              assert page.locator('[data-filter="audio"]').get_attribute('aria-pressed') == 'true'
+                              page.locator('[data-filter="all"]').click()
+                              page.locator('#explore-search').fill('القلق')
+                              page.wait_for_timeout(200)
+                              assert not page.locator('#empty-toast').is_visible()
+                              page.locator('#search-clear').click()
                           if name == 'your-path':
                               assert page.locator('.yp-topic').count() == 6
                               page.locator('[data-topic="anxiety"]').click()

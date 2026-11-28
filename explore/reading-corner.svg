@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 430" width="520" height="430" role="presentation">
+  <defs>
+    <radialGradient id="lampHalo" cx="50%" cy="42%" r="52%">
+      <stop offset="0%" stop-color="#ffdfa0" stop-opacity="0.52"/>
+      <stop offset="42%" stop-color="#e8b254" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#e8b254" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lampCone" x1="50%" y1="0%" x2="55%" y2="100%">
+      <stop offset="0%" stop-color="#ffe4a8" stop-opacity="0.26"/>
+      <stop offset="65%" stop-color="#e3a94b" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#e3a94b" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="shadeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff6dc"/>
+      <stop offset="60%" stop-color="#f5ca79"/>
+      <stop offset="100%" stop-color="#d89b3e"/>
+    </linearGradient>
+    <linearGradient id="rugTop" x1="15%" y1="15%" x2="85%" y2="85%">
+      <stop offset="0%" stop-color="#2b2435"/>
+      <stop offset="55%" stop-color="#1d1927"/>
+      <stop offset="100%" stop-color="#141320"/>
+    </linearGradient>
+    <linearGradient id="woodLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5d3e"/>
+      <stop offset="100%" stop-color="#5a3925"/>
+    </linearGradient>
+    <linearGradient id="woodDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#553622"/>
+      <stop offset="100%" stop-color="#352014"/>
+    </linearGradient>
+    <linearGradient id="chairMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4b3d58"/>
+      <stop offset="55%" stop-color="#31273d"/>
+      <stop offset="100%" stop-color="#211a2b"/>
+    </linearGradient>
+    <linearGradient id="chairSide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#392e46"/>
+      <stop offset="100%" stop-color="#1b1524"/>
+    </linearGradient>
+    <radialGradient id="floorShadow" cx="50%" cy="55%" r="50%">
+      <stop offset="0%" stop-color="#04070f" stop-opacity="0.82"/>
+      <stop offset="75%" stop-color="#04070f" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#04070f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Ambient floor shadow & isometric rug platform -->
+  <ellipse cx="262" cy="348" rx="235" ry="74" fill="url(#floorShadow)"/>
+  <polygon points="258,214 486,314 262,412 38,312" fill="#4f3524"/>
+  <polygon points="38,312 262,412 262,420 38,320" fill="#2c1c13"/>
+  <polygon points="486,314 262,412 262,420 486,322" fill="#3a2519"/>
+  <polygon points="258,218 476,313 262,406 48,311" fill="url(#rugTop)" stroke="#705038" stroke-width="1.2"/>
+  <polygon points="258,226 462,313 262,398 62,311" fill="none" stroke="#e8b866" stroke-opacity="0.16" stroke-width="1"/>
+
+  <!-- Warm lamp light pool on rug -->
+  <ellipse cx="145" cy="316" rx="88" ry="34" fill="#f3bd62" opacity="0.14"/>
+
+  <!-- LEFT ISOMETRIC BOOKSHELF -->
+  <g>
+    <!-- Back & side casing -->
+    <polygon points="126,96 226,52 226,216 126,260" fill="#2b1a10"/>
+    <polygon points="108,88 126,96 126,260 108,252" fill="url(#woodDark)"/>
+    <polygon points="108,88 208,44 226,52 126,96" fill="url(#woodLight)"/>
+    <!-- Shelves -->
+    <polygon points="126,136 224,93 224,99 126,142" fill="#7c5236"/>
+    <polygon points="126,178 224,135 224,141 126,184" fill="#7c5236"/>
+    <polygon points="126,220 224,177 224,183 126,226" fill="#7c5236"/>
+    <polygon points="126,254 226,211 226,218 126,261" fill="#6b452c"/>
+    <!-- Books row 1 -->
+    <polygon points="134,108 144,104 144,133 134,137" fill="#d79a49"/>
+    <polygon points="146,101 155,97 155,128 146,132" fill="#a84c3a"/>
+    <polygon points="157,98 165,94 165,124 157,128" fill="#dfc496"/>
+    <polygon points="168,92 178,88 178,118 168,122" fill="#486b62"/>
+    <polygon points="184,86 196,80 202,102 191,108" fill="#c97f43"/>
+    <polygon points="204,76 215,71 215,102 204,107" fill="#5e768c"/>
+    <!-- Books row 2 -->
+    <polygon points="133,149 143,145 143,175 133,179" fill="#6c8478"/>
+    <polygon points="145,143 156,138 156,170 145,175" fill="#e0ab58"/>
+    <polygon points="158,139 167,135 167,165 158,169" fill="#8f4338"/>
+    <polygon points="170,132 180,128 180,159 170,163" fill="#d2b488"/>
+    <polygon points="188,126 198,121 198,151 188,156" fill="#b96d3b"/>
+    <polygon points="200,119 212,114 212,145 200,150" fill="#465973"/>
+    <!-- Books row 3 -->
+    <polygon points="134,191 145,186 145,217 134,222" fill="#c56c47"/>
+    <polygon points="147,185 156,181 156,212 147,216" fill="#e5c27a"/>
+    <polygon points="159,180 170,175 170,206 159,211" fill="#4d6d63"/>
+    <polygon points="175,174 188,168 193,196 181,202" fill="#9c5140"/>
+    <polygon points="198,162 211,156 211,188 198,194" fill="#d49b4b"/>
+    <!-- Right front edge -->
+    <polygon points="222,50 228,53 228,217 222,214" fill="#6f482f"/>
+  </g>
+
+  <!-- CORNER TALL PLANT -->
+  <g>
+    <ellipse cx="256" cy="232" rx="18" ry="8" fill="#120f1a" opacity="0.65"/>
+    <polygon points="243,204 269,204 265,232 247,232" fill="#7a533c"/>
+    <ellipse cx="256" cy="204" rx="13" ry="5.5" fill="#4b3222"/>
+    <path d="M256,204 C254,180 242,162 232,150 C246,152 255,166 257,188 Z" fill="#4d7c63"/>
+    <path d="M256,204 C258,174 268,152 280,140 C276,158 267,176 258,196 Z" fill="#639979"/>
+    <path d="M256,202 C252,172 254,146 259,130 C265,148 263,174 257,198 Z" fill="#76b08c"/>
+    <path d="M255,198 C244,182 233,176 224,175 C235,184 245,192 255,202 Z" fill="#3f6852"/>
+    <path d="M257,196 C268,180 279,172 289,171 C279,182 268,191 257,201 Z" fill="#54886b"/>
+  </g>
+
+  <!-- RIGHT ISOMETRIC BOOKSHELF (low wide console shelf) -->
+  <g>
+    <polygon points="286,154 416,212 416,298 286,240" fill="#29180f"/>
+    <polygon points="286,154 304,146 434,204 416,212" fill="url(#woodLight)"/>
+    <polygon points="416,212 434,204 434,290 416,298" fill="url(#woodDark)"/>
+    <!-- Shelf divider -->
+    <polygon points="288,196 414,252 414,258 288,202" fill="#784f34"/>
+    <polygon points="286,236 416,294 416,300 286,242" fill="#6b452c"/>
+    <!-- Books upper tier -->
+    <polygon points="296,166 306,170 306,198 296,194" fill="#e1b15c"/>
+    <polygon points="309,172 319,176 319,204 309,200" fill="#9f4839"/>
+    <polygon points="322,178 331,182 331,209 322,205" fill="#53776c"/>
+    <polygon points="336,184 347,189 342,214 332,210" fill="#d9be92"/>
+    <polygon points="354,192 365,197 365,225 354,220" fill="#c87b42"/>
+    <polygon points="368,198 378,203 378,231 368,226" fill="#4b627d"/>
+    <polygon points="382,205 393,210 393,237 382,232" fill="#b35742"/>
+    <polygon points="396,211 407,216 407,243 396,238" fill="#e2bb6e"/>
+    <!-- Books lower tier -->
+    <polygon points="296,208 308,213 308,241 296,236" fill="#5a738a"/>
+    <polygon points="311,215 322,220 322,247 311,242" fill="#d89c4a"/>
+    <polygon points="325,221 335,226 335,253 325,248" fill="#8e4337"/>
+    <polygon points="342,229 354,234 354,261 342,256" fill="#66897a"/>
+    <polygon points="358,236 370,241 370,268 358,263" fill="#dec295"/>
+    <polygon points="376,244 388,249 388,276 376,271" fill="#c76f45"/>
+    <polygon points="391,251 404,257 404,283 391,277" fill="#e3b665"/>
+  </g>
+
+  <!-- RIGHT FOREGROUND POTTED PLANT -->
+  <g>
+    <ellipse cx="436" cy="316" rx="22" ry="9" fill="#0d0b14" opacity="0.7"/>
+    <polygon points="421,284 451,284 446,315 426,315" fill="#6a4835"/>
+    <ellipse cx="436" cy="284" rx="15" ry="6" fill="#3e281c"/>
+    <path d="M436,284 C430,260 415,246 404,242 C418,240 431,252 436,274 Z" fill="#46735b"/>
+    <path d="M436,284 C436,256 446,236 460,228 C457,246 447,264 438,280 Z" fill="#69a180"/>
+    <path d="M436,282 C429,252 432,228 439,214 C445,232 443,256 437,280 Z" fill="#7bb592"/>
+    <path d="M435,278 C450,266 463,262 474,264 C461,273 449,279 437,283 Z" fill="#528669"/>
+    <path d="M434,279 C420,268 408,266 399,269 C411,276 423,281 435,283 Z" fill="#3b614d"/>
+  </g>
+
+  <!-- COZY CONSULTATION ARMCHAIR -->
+  <g>
+    <ellipse cx="216" cy="296" rx="58" ry="24" fill="#0b0912" opacity="0.72"/>
+    <!-- Wooden legs -->
+    <line x1="176" y1="282" x2="173" y2="296" stroke="#6b472e" stroke-width="4" stroke-linecap="round"/>
+    <line x1="216" y1="298" x2="216" y2="313" stroke="#6b472e" stroke-width="4" stroke-linecap="round"/>
+    <line x1="255" y1="280" x2="258" y2="294" stroke="#533521" stroke-width="4" stroke-linecap="round"/>
+    <!-- Chair base & backrest -->
+    <path d="M174,244 L216,224 C224,220 232,223 236,232 L254,264 L212,286 L170,266 Z" fill="url(#chairMain)"/>
+    <!-- Backrest cushion -->
+    <path d="M174,204 C174,193 183,187 194,191 L232,208 C240,212 244,220 242,231 L236,258 L176,232 Z" fill="url(#chairMain)" stroke="#6c587c" stroke-opacity="0.35" stroke-width="1"/>
+    <!-- Left armrest (warm lamp rim light) -->
+    <path d="M162,232 C162,224 170,220 178,224 L208,238 C213,241 215,247 214,254 L212,286 L164,263 Z" fill="url(#chairSide)" stroke="#f0be6d" stroke-opacity="0.28" stroke-width="1.1"/>
+    <!-- Right armrest -->
+    <path d="M226,216 C232,213 240,215 246,219 L264,230 C269,233 270,240 268,248 L260,276 L236,262 Z" fill="#282033"/>
+    <!-- Plush seat cushion -->
+    <polygon points="184,248 224,230 256,246 216,266" fill="#463854"/>
+    <polygon points="184,248 216,266 216,276 184,258" fill="#2f253b"/>
+    <polygon points="256,246 216,266 216,276 256,256" fill="#241c2e"/>
+  </g>
+
+  <!-- COFFEE TABLE WITH STEAMING MUG & BOOK -->
+  <g>
+    <ellipse cx="288" cy="336" rx="50" ry="19" fill="#090810" opacity="0.68"/>
+    <!-- Table legs -->
+    <line x1="252" y1="312" x2="252" y2="334" stroke="#4c311f" stroke-width="3.6" stroke-linecap="round"/>
+    <line x1="288" y1="328" x2="288" y2="350" stroke="#68442c" stroke-width="3.8" stroke-linecap="round"/>
+    <line x1="326" y1="310" x2="326" y2="332" stroke="#3c2517" stroke-width="3.6" stroke-linecap="round"/>
+    <line x1="288" y1="296" x2="288" y2="316" stroke="#3c2517" stroke-width="3.2" stroke-linecap="round"/>
+    <!-- Tabletop -->
+    <polygon points="288,282 336,304 288,326 240,304" fill="url(#woodLight)"/>
+    <polygon points="240,304 288,326 288,332 240,310" fill="#4a2f1e"/>
+    <polygon points="336,304 288,326 288,332 336,310" fill="#382215"/>
+    <!-- Consultation book on table -->
+    <polygon points="295,296 318,306 304,314 281,304" fill="#c97b4b"/>
+    <polygon points="281,304 304,314 304,318 281,308" fill="#efe2c8"/>
+    <polygon points="318,306 304,314 304,318 318,310" fill="#8f4e2c"/>
+    <!-- Warm teacup & steam -->
+    <ellipse cx="270" cy="303" rx="8.5" ry="4" fill="#d9d2c5"/>
+    <path d="M264,295 L276,295 L275,302 C275,304 265,304 265,302 Z" fill="#f7f2e7"/>
+    <ellipse cx="270" cy="295" rx="6" ry="2.5" fill="#9c6334"/>
+    <path d="M276,296 C279,296 279,300 275.5,300.5" fill="none" stroke="#f7f2e7" stroke-width="1.5"/>
+    <path d="M268,289 C266,284 271,280 269,275" fill="none" stroke="#fff3d6" stroke-opacity="0.55" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M273,290 C271,285 275,282 273,277" fill="none" stroke="#fff3d6" stroke-opacity="0.38" stroke-width="1.1" stroke-linecap="round"/>
+  </g>
+
+  <!-- TALL WARM FLOOR LAMP & GOLDEN LIGHT CONE -->
+  <g>
+    <!-- Soft downward cone of warm light -->
+    <polygon points="88,162 124,162 196,326 42,326" fill="url(#lampCone)"/>
+    <!-- Radial golden bloom around shade -->
+    <circle cx="106" cy="148" r="78" fill="url(#lampHalo)"/>
+    <!-- Lamp base & pole -->
+    <ellipse cx="106" cy="306" rx="18" ry="7.5" fill="#7d5b2b"/>
+    <ellipse cx="106" cy="304.5" rx="16" ry="6.5" fill="#cfa052"/>
+    <line x1="106" y1="164" x2="106" y2="304" stroke="#cfa052" stroke-width="3.2"/>
+    <line x1="105" y1="164" x2="105" y2="304" stroke="#ffe5a3" stroke-opacity="0.5" stroke-width="1"/>
+    <!-- Glowing lampshade -->
+    <polygon points="91,126 121,126 129,165 83,165" fill="url(#shadeGrad)" stroke="#ffefc2" stroke-width="1"/>
+    <ellipse cx="106" cy="165" rx="23" ry="6.5" fill="#ffe7a8" opacity="0.88"/>
+    <ellipse cx="106" cy="126" rx="15" ry="4.2" fill="#fff8e3"/>
+  </g>
+</svg>
