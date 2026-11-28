@@ -1,114 +1,988 @@
-/* Loaded last on the Arabic homepage only. */
-html[lang="ar"] body.home-redesign{--home-paper:#f7f5ef;--home-card:#fff;--home-ink:#243731;--home-muted:#52645d;--home-line:#dbe3dc;--home-blue:#326356;--home-blue-dark:#234c42;background:var(--home-paper)}
-html[lang="ar"] body.home-redesign main,html[lang="ar"] body.home-redesign .section,html[lang="ar"] body.home-redesign .section:nth-of-type(even){background:var(--home-paper)}
-html[lang="ar"] body.home-redesign .clarity-hero{background:#eef3ed;border-bottom:1px solid var(--home-line);padding-block:clamp(36px,7vw,80px)}
-html[lang="ar"] body.home-redesign .clarity-hero .wrap:first-child{display:block;max-width:850px;text-align:center}
-html[lang="ar"] body.home-redesign .clarity-hero .statement{max-width:38em;margin:18px auto 26px}
-html[lang="ar"] body.home-redesign .clarity-hero .actions{justify-content:center}
-html[lang="ar"] body.home-redesign .section{padding-block:clamp(30px,5vw,52px)}
-html[lang="ar"] body.home-redesign .concern-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-html[lang="ar"] body.home-redesign .concern-card{min-width:0;padding:24px;border:1px solid var(--home-line);border-radius:18px;background:#fff;box-shadow:none}
-html[lang="ar"] body.home-redesign .concern-card b{color:var(--home-ink)}
-html[lang="ar"] body.home-redesign .concern-card small{color:var(--home-muted);line-height:1.9}
-html[lang="ar"] body.home-redesign .daily,html[lang="ar"] body.home-redesign .weekly,html[lang="ar"] body.home-redesign #articles .card a{border:1px solid var(--home-line);border-radius:18px;background:#fff;box-shadow:none}
-/* These cards are white even when the OS prefers dark mode. Pair their
-   foregrounds explicitly so earlier dark-card styles cannot leak through. */
-html[lang="ar"] body.home-redesign .daily{color:var(--home-ink)}
-html[lang="ar"] body.home-redesign .daily blockquote,
-html[lang="ar"] body.home-redesign .daily .daily-text{color:var(--home-ink)}
-html[lang="ar"] body.home-redesign .daily-kicker,
-html[lang="ar"] body.home-redesign .daily-kicker .mini-heading-icon{color:var(--home-blue-dark)}
-html[lang="ar"] body.home-redesign .daily-date,
-html[lang="ar"] body.home-redesign .daily figcaption{color:var(--home-muted)}
-html[lang="ar"] body.home-redesign .daily .daily-copy{background:#fff;color:var(--home-blue-dark);border-color:var(--home-blue-dark)}
-html[lang="ar"] body.home-redesign .weekly > span{color:var(--home-muted)}
-html[lang="ar"] body.home-redesign .weekly .weekly-kicker,
-html[lang="ar"] body.home-redesign .weekly .weekly-go{color:var(--home-blue-dark)}
-html[lang="ar"] body.home-redesign .book-feature{background:var(--home-blue-dark)}
-html[lang="ar"] body.home-redesign .concern-card:hover,html[lang="ar"] body.home-redesign #articles .card a:hover{transform:none;box-shadow:none;border-color:var(--home-blue)}
-html[lang="ar"] body.home-redesign a:focus-visible,html[lang="ar"] body.home-redesign summary:focus-visible,html[lang="ar"] body.home-redesign button:focus-visible{outline:3px solid #326356;outline-offset:4px}
-@media(max-width:900px){html[lang="ar"] body.home-redesign .concern-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){html[lang="ar"] body.home-redesign .concern-grid{grid-template-columns:1fr}html[lang="ar"] body.home-redesign .clarity-hero .hero-name{font-size:36px}html[lang="ar"] body.home-redesign .concern-card{padding:20px}html[lang="ar"] body.home-redesign .clarity-hero .btn{width:100%;max-width:340px}}
+/* DMMA Homepage Professional Redesign — Deep Navy #101D32, Gold #C5A45D, Ivory #F6F4EF, White #FFFFFF
+   Loaded last on the Arabic homepage only. Preserves all existing content, SEO, URLs, and CI contrast checks. */
 
-html[lang="ar"] body.home-redesign .clarity-hero .hero-sub{max-width:34em;margin:16px auto 0;font-size:15.5px;color:#3f4d47}
-html[lang="ar"] body.home-redesign .vcard .card-date{color:#7a5a12}
-html[lang="ar"] body.home-redesign .about-facts{list-style:none;margin:16px 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-html[lang="ar"] body.home-redesign .about-facts li{font-size:14.5px;line-height:1.6;color:#244d43;background:#e5ebe3;border-radius:999px;padding:4px 12px}
-html[lang="ar"] body.home-redesign .about-more{display:grid;gap:12px;margin-top:28px}
-html[lang="ar"] body.home-redesign .about-fold[open]>.about-grid{margin-top:20px}
+html[lang="ar"] body.home-redesign {
+  --dmma-navy: #101D32;
+  --dmma-navy-deep: #0B1526;
+  --dmma-navy-soft: #182A47;
+  --dmma-gold: #C5A45D;
+  --dmma-gold-bright: #DEC17E;
+  --dmma-gold-ink: #7A5E22;
+  --dmma-ivory: #F6F4EF;
+  --dmma-white: #FFFFFF;
+  --dmma-ink: #101D32;
+  --dmma-muted: #4A596E;
+  --dmma-line: #E3DDD0;
 
-/* ===== 2026-11-10 premium front: hero text as a 3D card, distinctive «تأمل اليوم» ===== */
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card{position:relative;isolation:isolate;overflow:hidden;padding:clamp(26px,4.4vw,48px) clamp(20px,4vw,46px);border-radius:30px;
-  background:linear-gradient(155deg,rgba(255,255,255,.97) 0%,rgba(243,249,246,.95) 52%,rgba(252,247,236,.96) 100%);
-  border:1px solid #fff;
-  box-shadow:0 1px 0 #fff inset,0 0 0 1px rgba(47,111,98,.10),
-    0 12px 0 -6px rgba(255,255,255,.85),0 12px 0 -5px rgba(47,111,98,.16),
-    0 24px 0 -12px rgba(255,255,255,.7),0 24px 0 -11px rgba(185,134,42,.18),
-    0 44px 70px -34px rgba(24,35,58,.5);background-color:#f4f9f6}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card::before{content:"";position:absolute;top:0;left:12%;right:12%;height:4px;border-radius:0 0 6px 6px;background:linear-gradient(90deg,transparent,#e2b35a 20%,#b9862a 50%,#e2b35a 80%,transparent)}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card-glow{position:absolute;z-index:-1;width:340px;height:340px;top:-170px;inset-inline-end:-120px;border-radius:50%;background:radial-gradient(circle,rgba(226,179,90,.30),rgba(226,179,90,0) 66%)}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card::after{content:"";position:absolute;z-index:-1;width:300px;height:300px;bottom:-170px;inset-inline-start:-110px;border-radius:50%;background:radial-gradient(circle,rgba(47,111,98,.18),rgba(47,111,98,0) 66%)}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-name{margin-top:0;color:#163c35;letter-spacing:-.01em}
-@supports ((-webkit-background-clip:text) or (background-clip:text)){
-  html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-name{background:linear-gradient(120deg,#123a33 0%,#235a4e 55%,#6f5210 100%);-webkit-background-clip:text;background-clip:text;color:transparent}}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .statement{color:#2c4a42}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-sub{position:relative;margin-top:22px;padding-top:18px;color:#3d4f48}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-sub::before{content:"";position:absolute;top:0;left:30%;right:30%;height:1px;background:linear-gradient(90deg,transparent,rgba(47,111,98,.35),transparent)}
-@media(min-width:900px){html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-sub::before{left:auto;right:0;width:40%}}
-@media(max-width:560px){html[lang="ar"] body.home-redesign #main .clarity-hero{padding-block:22px 34px}
-  html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card{border-radius:24px}}
+  --home-paper: var(--dmma-ivory);
+  --home-card: var(--dmma-white);
+  --home-ink: var(--dmma-ink);
+  --home-muted: var(--dmma-muted);
+  --home-line: var(--dmma-line);
+  --home-blue: var(--dmma-navy);
+  --home-blue-dark: var(--dmma-navy);
 
-/* «تأمل اليوم»: a deep green card with gold light — stands out from the white cards */
-html[lang="ar"] body.home-redesign #main .today .daily{position:relative;isolation:isolate;overflow:hidden;color:#f4f8f6;border:1px solid rgba(226,179,90,.45);border-radius:26px;
-  background:radial-gradient(120% 90% at 100% 0%,rgba(226,179,90,.32) 0%,rgba(226,179,90,0) 55%),linear-gradient(150deg,#0f3a33 0%,#1b4e44 48%,#2f6f62 100%);
-  box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 30px 60px -30px rgba(15,58,51,.75),0 10px 22px -14px rgba(15,58,51,.5);background-color:#1b4e44}
-html[lang="ar"] body.home-redesign #main .today .daily::before{content:"”";position:absolute;z-index:-1;top:-34px;inset-inline-end:14px;font:700 180px/1 Georgia,"Times New Roman",serif;color:rgba(226,179,90,.22)}
+  background: var(--dmma-ivory);
+  color: var(--dmma-ink);
+}
+
+html[lang="ar"] body.home-redesign main,
+html[lang="ar"] body.home-redesign .section,
+html[lang="ar"] body.home-redesign .section:nth-of-type(even) {
+  background: var(--dmma-ivory);
+  border-top-color: var(--dmma-line);
+}
+
+html[lang="ar"] body.home-redesign a:focus-visible,
+html[lang="ar"] body.home-redesign summary:focus-visible,
+html[lang="ar"] body.home-redesign button:focus-visible {
+  outline: 3px solid var(--dmma-gold);
+  outline-offset: 3px;
+}
+
+html[lang="ar"] body.home-redesign [id] {
+  scroll-margin-top: 86px;
+}
+
+/* ---------- 1. Header & Announcement Bar ---------- */
+html[lang="ar"] body.home-redesign .topbar.topbar-dark {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(16, 29, 50, 0.95) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(197, 164, 93, 0.28);
+  box-shadow: 0 10px 30px -18px rgba(5, 10, 20, 0.72);
+}
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .wrap {
+  max-width: 1240px;
+  min-height: 68px;
+  padding-block: 8px;
+  gap: 14px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand {
+  flex: none;
+  gap: 10px;
+  color: var(--dmma-white) !important;
+}
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand-mark {
+  width: 42px;
+  height: 42px;
+}
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand-mark rect {
+  fill: #152642 !important;
+  stroke: rgba(197, 164, 93, 0.58);
+  stroke-width: 1.4;
+}
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand-mark path,
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand-mark circle {
+  display: inline !important;
+}
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand-text b {
+  color: var(--dmma-white) !important;
+  font-size: 19px !important;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand-text small {
+  color: rgba(246, 244, 239, 0.76) !important;
+  font-size: 11.5px !important;
+  margin-top: 2px;
+}
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .nav {
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 11px;
+  font-size: 13.6px;
+}
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .nav > a,
+html[lang="ar"] body.home-redesign .topbar.topbar-dark .nav > .dd > summary {
+  white-space: nowrap;
+}
+html[lang="ar"] body.home-redesign .topbar-dark .nav a,
+html[lang="ar"] body.home-redesign .topbar-dark .dd summary {
+  color: rgba(246, 244, 239, 0.86);
+  transition: color 0.2s ease;
+}
+html[lang="ar"] body.home-redesign .topbar-dark .nav a:hover,
+html[lang="ar"] body.home-redesign .topbar-dark .nav a[aria-current="page"],
+html[lang="ar"] body.home-redesign .topbar-dark .dd summary:hover {
+  color: var(--dmma-gold-bright);
+}
+html[lang="ar"] body.home-redesign .topbar-dark .nav .lang {
+  color: var(--dmma-gold-bright);
+  border-color: rgba(197, 164, 93, 0.52);
+  padding: 3px 10px;
+  font-size: 12.8px;
+}
+html[lang="ar"] body.home-redesign .topbar-dark .nav-book {
+  flex: none;
+  white-space: nowrap;
+  background: linear-gradient(135deg, var(--dmma-gold-bright), var(--dmma-gold));
+  color: var(--dmma-navy);
+  font-size: 13.8px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 7px 16px;
+  box-shadow: 0 8px 22px -10px rgba(197, 164, 93, 0.65);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+html[lang="ar"] body.home-redesign .topbar-dark .nav-book:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+html[lang="ar"] body.home-redesign .topbar-dark .dd[open] > .dd-panel {
+  background: #13233d;
+  border: 1px solid rgba(197, 164, 93, 0.3);
+  box-shadow: 0 24px 50px rgba(4, 9, 20, 0.65);
+}
+html[lang="ar"] body.home-redesign .topbar-dark .dd-panel a {
+  color: #edf1f7;
+}
+html[lang="ar"] body.home-redesign .topbar-dark .dd-panel a:hover {
+  background: rgba(197, 164, 93, 0.14);
+  color: var(--dmma-gold-bright);
+}
+
+html[lang="ar"] body.home-redesign .site-announcement {
+  background: var(--dmma-navy-deep);
+  border-bottom: 1px solid rgba(197, 164, 93, 0.22);
+}
+html[lang="ar"] body.home-redesign .site-announcement-label {
+  background: var(--dmma-gold);
+  color: var(--dmma-navy);
+}
+
+/* ---------- 2. Cinematic Centered Hero + Integrated Intro Video ---------- */
+html[lang="ar"] body.home-redesign #main .clarity-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(28px, 4vw, 46px) clamp(40px, 5.5vw, 64px);
+  background:
+    radial-gradient(62% 55% at 50% 0%, rgba(197, 164, 93, 0.17) 0%, rgba(197, 164, 93, 0) 68%),
+    radial-gradient(45% 45% at 15% 85%, rgba(92, 152, 224, 0.12) 0%, transparent 65%),
+    linear-gradient(175deg, var(--dmma-navy-deep) 0%, var(--dmma-navy) 52%, #152642 100%) !important;
+  color: var(--dmma-white);
+  border-bottom: 1px solid rgba(197, 164, 93, 0.32);
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero::before,
+html[lang="ar"] body.home-redesign #main .clarity-hero::after {
+  content: none !important;
+  display: none !important;
+}
+
+.hero-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-arc {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(197, 164, 93, 0.16);
+}
+.hero-arc.arc-1 {
+  width: 780px;
+  height: 780px;
+  top: -420px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 80px rgba(197, 164, 93, 0.08) inset;
+  animation: heroOrbit 26s ease-in-out infinite alternate;
+}
+.hero-arc.arc-2 {
+  width: 1120px;
+  height: 1120px;
+  bottom: -760px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: rgba(197, 164, 93, 0.10);
+}
+@keyframes heroOrbit {
+  from { transform: translateX(-50%) scale(1); opacity: 0.65; }
+  to { transform: translateX(-50%) scale(1.04); opacity: 1; }
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-center-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(22px, 3.2vw, 34px);
+  max-width: 1020px;
+}
+
+.hero-intro {
+  text-align: center;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 14px;
+  padding: 5px 17px;
+  border-radius: 999px;
+  background: rgba(197, 164, 93, 0.13);
+  border: 1px solid rgba(197, 164, 93, 0.42);
+  color: var(--dmma-gold-bright);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-kicker span {
+  color: rgba(246, 244, 239, 0.84);
+  font-weight: 500;
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-name {
+  margin: 0;
+  font-family: "Amiri", var(--display-ar);
+  font-weight: 700;
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1.24;
+  color: var(--dmma-white) !important;
+  letter-spacing: -0.01em;
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .statement {
+  max-width: 38em;
+  margin: 14px auto 20px;
+  font-size: clamp(17px, 1.9vw, 19.5px);
+  line-height: 1.72;
+  color: rgba(246, 244, 239, 0.9) !important;
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 0;
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(135deg, var(--dmma-gold-bright) 0%, var(--dmma-gold) 100%);
+  color: var(--dmma-navy);
+  border: 1px solid var(--dmma-gold-bright);
+  border-radius: 12px;
+  padding: 12px 26px;
+  font-weight: 700;
+  box-shadow: 0 12px 28px -10px rgba(197, 164, 93, 0.65);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .btn-gold:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--dmma-white);
+  border: 1px solid rgba(246, 244, 239, 0.28);
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: var(--dmma-gold);
+  background: rgba(197, 164, 93, 0.12);
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-sub {
+  max-width: 38em;
+  margin: 18px auto 0;
+  font-size: 14.8px;
+  color: rgba(246, 244, 239, 0.72);
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-sessions {
+  max-width: 38em;
+  margin: 10px auto 0;
+  font-size: 15px;
+  color: rgba(246, 244, 239, 0.82);
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-sessions a {
+  color: var(--dmma-gold-bright);
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 22px 0 0;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(197, 164, 93, 0.22);
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds li {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--dmma-ivory);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(197, 164, 93, 0.28);
+  border-radius: 999px;
+  padding: 5px 14px;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds li::before {
+  content: "✓";
+  color: var(--dmma-gold-bright);
+  font-weight: 700;
+  margin-inline-end: 6px;
+}
+
+/* Cinematic Centered Introductory Video Stage */
+.hero-cinema {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: clamp(22px, 4vw, 44px);
+  align-items: center;
+  padding: clamp(20px, 3vw, 32px);
+  border-radius: 26px;
+  background: linear-gradient(155deg, rgba(24, 42, 71, 0.72), rgba(11, 21, 38, 0.86));
+  border: 1px solid rgba(197, 164, 93, 0.30);
+  box-shadow:
+    0 28px 64px -24px rgba(3, 7, 16, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.hero-video-frame {
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #070d18;
+  border: 1.5px solid rgba(197, 164, 93, 0.52);
+  box-shadow: 0 20px 44px -16px rgba(0, 0, 0, 0.75), 0 0 36px -12px rgba(197, 164, 93, 0.32);
+}
+.hero-video-frame video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  max-height: 440px;
+  object-fit: cover;
+  background: #070d18;
+}
+
+.hero-cinema-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: right;
+}
+.hero-reel-kicker {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dmma-gold-bright);
+  letter-spacing: 0.02em;
+}
+.hero-reel-copy h2 {
+  margin: 0 0 8px;
+  font-family: var(--display-ar);
+  font-size: clamp(22px, 2.6vw, 28px);
+  color: var(--dmma-white);
+}
+.hero-reel-copy p {
+  margin: 0;
+  font-size: 15.5px;
+  color: rgba(246, 244, 239, 0.8);
+}
+
+html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-cards {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  transform-style: flat !important;
+  pointer-events: auto !important;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 10px !important;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-cards li {
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  transform: none !important;
+  transform-style: flat !important;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  border-radius: 16px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  box-shadow: none !important;
+  color: var(--dmma-white) !important;
+  animation: none !important;
+  translate: none !important;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-card:hover {
+  transform: translateX(-4px);
+  border-color: rgba(197, 164, 93, 0.58) !important;
+  background: rgba(197, 164, 93, 0.12) !important;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-ico {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: rgba(197, 164, 93, 0.16) !important;
+  border: 1px solid rgba(197, 164, 93, 0.38);
+  box-shadow: none !important;
+  color: var(--dmma-gold-bright) !important;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-ico svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-card b {
+  display: block;
+  font-size: 15.5px;
+  color: var(--dmma-white) !important;
+}
+html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-card small {
+  display: block;
+  font-size: 13.5px;
+  color: rgba(246, 244, 239, 0.78) !important;
+}
+
+/* ---------- 3. Section Rhythm, Headings & Shared Buttons ---------- */
+html[lang="ar"] body.home-redesign .section {
+  padding-block: clamp(40px, 6vw, 68px);
+}
+html[lang="ar"] body.home-redesign .section-head {
+  margin-bottom: 26px;
+}
+html[lang="ar"] body.home-redesign .section-head svg {
+  color: var(--dmma-gold-ink);
+}
+html[lang="ar"] body.home-redesign .section-head h2 {
+  color: var(--dmma-navy);
+  font-size: clamp(25px, 3.2vw, 33px);
+}
+html[lang="ar"] body.home-redesign .btn {
+  border-radius: 12px;
+  border-color: var(--dmma-line);
+  background: var(--dmma-white);
+  color: var(--dmma-navy);
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+html[lang="ar"] body.home-redesign .btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--dmma-gold);
+  box-shadow: 0 10px 22px -14px rgba(16, 29, 50, 0.35);
+}
+html[lang="ar"] body.home-redesign .btn.primary {
+  background: var(--dmma-navy);
+  border-color: var(--dmma-navy);
+  color: var(--dmma-white);
+}
+html[lang="ar"] body.home-redesign .btn.primary:hover {
+  background: var(--dmma-navy-soft);
+  border-color: var(--dmma-gold);
+}
+
+/* ---------- 4. Concern Finder (6 Paths) ---------- */
+html[lang="ar"] body.home-redesign .concern-heading {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 30px;
+}
+html[lang="ar"] body.home-redesign .quiz-kicker {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: rgba(197, 164, 93, 0.16);
+  color: var(--dmma-gold-ink);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+html[lang="ar"] body.home-redesign .concern-heading h2 {
+  margin: 0 0 10px;
+  font-family: var(--display-ar);
+  font-size: clamp(26px, 3.6vw, 36px);
+  color: var(--dmma-navy);
+}
+html[lang="ar"] body.home-redesign .concern-heading p {
+  margin: 0;
+  color: var(--dmma-muted);
+}
+
+html[lang="ar"] body.home-redesign .concern-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+html[lang="ar"] body.home-redesign .concern-grid .concern-card {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--dmma-line);
+  border-radius: 20px;
+  background: var(--dmma-white) !important;
+  box-shadow: 0 8px 24px -18px rgba(16, 29, 50, 0.28);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+html[lang="ar"] body.home-redesign .concern-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: 24px;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(90deg, transparent, var(--dmma-gold), transparent);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+html[lang="ar"] body.home-redesign .concern-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--dmma-gold);
+  box-shadow: 0 18px 34px -20px rgba(16, 29, 50, 0.32);
+}
+html[lang="ar"] body.home-redesign .concern-card:hover::before {
+  opacity: 1;
+}
+html[lang="ar"] body.home-redesign .concern-card b {
+  color: var(--dmma-navy);
+  font-size: 18px;
+}
+html[lang="ar"] body.home-redesign .concern-card small {
+  color: var(--dmma-muted);
+  line-height: 1.85;
+}
+html[lang="ar"] body.home-redesign .concern-card i {
+  font-style: normal;
+  color: var(--dmma-gold-ink);
+  font-weight: 700;
+}
+html[lang="ar"] body.home-redesign .concern-note {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13.8px;
+  color: var(--dmma-muted);
+}
+
+/* ---------- 5. Today Section (Daily Reflection + Weekly Exercise) ---------- */
+html[lang="ar"] body.home-redesign #main .today .daily {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(197, 164, 93, 0.45);
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(197, 164, 93, 0.24) 0%, rgba(197, 164, 93, 0) 56%),
+    linear-gradient(155deg, var(--dmma-navy-deep) 0%, var(--dmma-navy) 55%, var(--dmma-navy-soft) 100%);
+  background-color: #101D32;
+  color: #FFFFFF;
+  box-shadow: 0 24px 48px -28px rgba(16, 29, 50, 0.72);
+}
+html[lang="ar"] body.home-redesign #main .today .daily::before {
+  content: "”";
+  position: absolute;
+  z-index: -1;
+  top: -32px;
+  inset-inline-end: 16px;
+  font: 700 170px/1 Georgia, "Times New Roman", serif;
+  color: rgba(197, 164, 93, 0.18);
+}
 html[lang="ar"] body.home-redesign #main .today .daily .daily-kicker,
-html[lang="ar"] body.home-redesign #main .today .daily .daily-kicker .mini-heading-icon{color:#f0cf8a}
-html[lang="ar"] body.home-redesign #main .today .daily .daily-date{color:#d6e6df}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-kicker .mini-heading-icon {
+  color: #E8CB82;
+}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-date,
+html[lang="ar"] body.home-redesign #main .today .daily figcaption {
+  color: #DCE3EC;
+}
 html[lang="ar"] body.home-redesign #main .today .daily blockquote,
-html[lang="ar"] body.home-redesign #main .today .daily .daily-text{color:#fff}
-html[lang="ar"] body.home-redesign #main .today .daily .daily-text{font-size:clamp(20px,2.4vw,25px);line-height:1.85}
-html[lang="ar"] body.home-redesign #main .today .daily figcaption{color:#d6e6df}
-html[lang="ar"] body.home-redesign #main .today .daily .daily-wa{background:#e2b35a;border-color:#e2b35a;color:#1d2a26}
-html[lang="ar"] body.home-redesign #main .today .daily .daily-copy{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
-html[lang="ar"] body.home-redesign #main .today .daily a:focus-visible,html[lang="ar"] body.home-redesign #main .today .daily button:focus-visible{outline-color:#f0cf8a}
-html[lang="ar"] body.home-redesign #main .ses-topics{list-style:none;padding:0;margin:0 0 14px}
-/* 2026-11-11: his name back at the top of the hero card (Google name searches) */
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker{display:inline-block;margin:0 0 14px;padding:5px 14px;border-radius:999px;background:#e9f2ee;border:1px solid #cfe0d8;color:#1f5247;font-size:15px;font-weight:700;line-height:1.6}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker span{color:#4a5b53;font-weight:600}
-@media(max-width:420px){html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker{font-size:13.5px;padding:4px 12px}}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-text {
+  color: #FFFFFF;
+  font-size: clamp(20px, 2.3vw, 24px);
+  line-height: 1.85;
+}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-wa {
+  background: var(--dmma-gold);
+  border-color: var(--dmma-gold);
+  color: var(--dmma-navy);
+  font-weight: 700;
+}
+html[lang="ar"] body.home-redesign #main .today .daily .daily-copy {
+  background: transparent;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.58);
+}
 
-/* ===== 2026-11-24 DMMA identity (batch 1, his approval): navy hero band, ivory card, teal + gold ===== */
-html[lang="ar"] body.home-redesign{--home-paper:#f6f2e9;--home-ink:#13213b;--home-muted:#5b6577;--home-line:#e2dacb;--home-blue:#2f6e68;--home-blue-dark:#1f4f4a}
-html[lang="ar"] body.home-redesign #main .clarity-hero{position:relative;overflow:hidden;background:radial-gradient(90% 120% at 100% 0%,rgba(214,176,106,.16),rgba(214,176,106,0) 55%),linear-gradient(165deg,#13213b 0%,#1c2f4f 100%);border-bottom:1px solid rgba(214,176,106,.35)}
-html[lang="ar"] body.home-redesign #main .clarity-hero::after{content:"";position:absolute;width:620px;height:620px;inset-inline-start:-260px;bottom:-420px;border-radius:50%;border:1px solid rgba(214,176,106,.2);box-shadow:0 0 0 60px rgba(214,176,106,.04),0 0 0 140px rgba(214,176,106,.03);pointer-events:none}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card{background:linear-gradient(155deg,#fffdf8 0%,#fbf8f1 55%,#f6efdf 100%);background-color:#fbf8f1;border-color:rgba(214,176,106,.55);
-  box-shadow:0 1px 0 #fff inset,0 0 0 1px rgba(214,176,106,.18),0 44px 70px -34px rgba(0,0,0,.65)}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-name{color:#13213b}
-@supports ((-webkit-background-clip:text) or (background-clip:text)){
-  html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-name{background:linear-gradient(120deg,#13213b 0%,#24425f 55%,#7a5a1f 100%);-webkit-background-clip:text;background-clip:text;color:transparent}}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .statement{color:#2b3850}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-sub{color:#3d4a5e}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker{background:#f3ead9;border-color:#e2cfa6;color:#13213b}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-card .hero-kicker span{color:#5b6577}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-sessions{max-width:34em;margin:14px auto 0;font-size:15.5px;color:#3d4a5e}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-sessions a{color:#1f4f4a;font-weight:600;text-underline-offset:4px}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0 0;padding:16px 0 0;border-top:1px solid #e2dacb}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds li{font-size:13.5px;line-height:1.6;color:#13213b;background:#fff;border:1px solid #e2dacb;border-radius:999px;padding:4px 12px}
-html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds li::before{content:"✓";color:#7a5a1f;font-weight:700;margin-inline-end:6px}
-html[lang="ar"] body.home-redesign #main .today .daily{background:radial-gradient(120% 90% at 100% 0%,rgba(214,176,106,.30) 0%,rgba(214,176,106,0) 55%),linear-gradient(150deg,#0f1a2b 0%,#13213b 48%,#1c2f4f 100%);background-color:#13213b;border-color:rgba(214,176,106,.5)}
-html[lang="ar"] body.home-redesign #main .today .daily .daily-date,html[lang="ar"] body.home-redesign #main .today .daily figcaption{color:#d9e1ea}
-html[lang="ar"] body.home-redesign a:focus-visible,html[lang="ar"] body.home-redesign summary:focus-visible,html[lang="ar"] body.home-redesign button:focus-visible{outline-color:#2f6e68}
-html[lang="ar"] body.home-redesign .about-facts li{color:#13213b;background:#efe8da}
-@media(max-width:560px){html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds li{font-size:12.5px}}
-/* Site tour video, right after the hero (tools/home_clarity.py REEL). */
-html[lang="ar"] body.home-redesign .home-reel{background:var(--home-paper)}
-html[lang="ar"] body.home-redesign .home-reel-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,340px);gap:clamp(24px,5vw,64px);align-items:center}
-html[lang="ar"] body.home-redesign .home-reel-text h2{margin:0 0 10px;font-family:var(--display-ar);font-size:clamp(24px,3.5vw,32px);color:var(--home-ink)}
-html[lang="ar"] body.home-redesign .home-reel-text p{margin:0 0 22px;color:var(--home-muted);line-height:1.9;max-width:28em}
-html[lang="ar"] body.home-redesign .home-reel-frame{margin:0;border-radius:22px;overflow:hidden;background:#0f1a17;border:1px solid var(--home-line);box-shadow:0 18px 40px -22px rgba(24,35,58,.45)}
-html[lang="ar"] body.home-redesign .home-reel-frame video{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;background:#0f1a17}
-@media(max-width:760px){html[lang="ar"] body.home-redesign .home-reel-wrap{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}
-html[lang="ar"] body.home-redesign .home-reel-text p{margin-inline:auto}
-html[lang="ar"] body.home-redesign .home-reel-frame{width:min(100%,300px)}}
+/* Weekly card strictly white rgb(255, 255, 255) with WCAG AA >= 4.5 contrast in light & dark schemes */
+html[lang="ar"] body.home-redesign .weekly {
+  background: #ffffff !important;
+  border: 1px solid var(--dmma-line);
+  border-radius: 24px;
+  color: var(--dmma-navy);
+  box-shadow: 0 12px 28px -20px rgba(16, 29, 50, 0.24);
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+html[lang="ar"] body.home-redesign .weekly:hover {
+  transform: translateY(-3px);
+  border-color: var(--dmma-gold);
+  box-shadow: 0 20px 38px -22px rgba(16, 29, 50, 0.3);
+}
+html[lang="ar"] body.home-redesign .weekly b {
+  color: var(--dmma-navy);
+}
+html[lang="ar"] body.home-redesign .weekly > span {
+  color: #4A596E;
+}
+html[lang="ar"] body.home-redesign .weekly .weekly-kicker,
+html[lang="ar"] body.home-redesign .weekly .weekly-go {
+  color: #7A5E22;
+  font-weight: 700;
+}
+
+/* ---------- 6. Articles & Videos Cards ---------- */
+html[lang="ar"] body.home-redesign #articles .card a,
+html[lang="ar"] body.home-redesign #videos .vcard {
+  border: 1px solid var(--dmma-line);
+  border-radius: 20px;
+  background: var(--dmma-white);
+  box-shadow: 0 10px 26px -20px rgba(16, 29, 50, 0.25);
+  overflow: hidden;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+html[lang="ar"] body.home-redesign #articles .card a:hover,
+html[lang="ar"] body.home-redesign #videos .vcard:hover {
+  transform: translateY(-4px);
+  border-color: var(--dmma-gold);
+  box-shadow: 0 20px 38px -22px rgba(16, 29, 50, 0.34);
+}
+html[lang="ar"] body.home-redesign #articles .card h3,
+html[lang="ar"] body.home-redesign #videos .vcard h3 {
+  color: var(--dmma-navy);
+}
+html[lang="ar"] body.home-redesign #articles .card .card-desc {
+  color: var(--dmma-muted);
+}
+html[lang="ar"] body.home-redesign #articles .card .card-date,
+html[lang="ar"] body.home-redesign .vcard .card-date {
+  color: var(--dmma-gold-ink);
+  font-weight: 600;
+}
+html[lang="ar"] body.home-redesign .vtag {
+  background: rgba(197, 164, 93, 0.15);
+  color: var(--dmma-gold-ink);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+/* ---------- 7. Books Feature Band ---------- */
+html[lang="ar"] body.home-redesign .book-feature {
+  background:
+    radial-gradient(60% 60% at 85% 20%, rgba(197, 164, 93, 0.16), transparent 60%),
+    linear-gradient(165deg, var(--dmma-navy-deep) 0%, var(--dmma-navy) 100%);
+  border-block: 1px solid rgba(197, 164, 93, 0.28);
+  color: var(--dmma-white);
+}
+html[lang="ar"] body.home-redesign .book-feature .bf-kind {
+  color: var(--dmma-gold-bright);
+  font-weight: 700;
+}
+html[lang="ar"] body.home-redesign .book-feature h2 {
+  color: var(--dmma-white);
+}
+html[lang="ar"] body.home-redesign .book-feature p {
+  color: rgba(246, 244, 239, 0.84);
+}
+html[lang="ar"] body.home-redesign .book-feature .bf-cover img {
+  border-radius: 16px;
+  box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(197, 164, 93, 0.35);
+}
+html[lang="ar"] body.home-redesign .book-feature .btn.primary {
+  background: linear-gradient(135deg, var(--dmma-gold-bright), var(--dmma-gold));
+  border-color: var(--dmma-gold-bright);
+  color: var(--dmma-navy);
+  font-weight: 700;
+}
+html[lang="ar"] body.home-redesign .book-feature .btn.ghost {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(246, 244, 239, 0.32);
+  color: var(--dmma-white);
+}
+html[lang="ar"] body.home-redesign .book-feature .btn.ghost:hover {
+  border-color: var(--dmma-gold);
+  color: var(--dmma-gold-bright);
+}
+
+/* ---------- 8. Online Sessions ---------- */
+html[lang="ar"] body.home-redesign .sessions .sessions-box {
+  width: 100%;
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 44px);
+  align-items: start;
+  background: var(--dmma-white);
+  border: 1px solid var(--dmma-line);
+  border-radius: 26px;
+  padding: clamp(22px, 3.6vw, 38px);
+  box-shadow: 0 18px 42px -28px rgba(16, 29, 50, 0.25);
+}
+html[lang="ar"] body.home-redesign .sessions .s3d-p2 {
+  background: linear-gradient(140deg, var(--dmma-navy-soft), var(--dmma-navy));
+  box-shadow: 0 30px 50px -26px rgba(16, 29, 50, 0.72);
+}
+html[lang="ar"] body.home-redesign .sessions .s3d-c3 {
+  background: var(--dmma-gold);
+  border-color: var(--dmma-gold);
+  color: var(--dmma-navy);
+}
+html[lang="ar"] body.home-redesign #main .ses-topics {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+html[lang="ar"] body.home-redesign .ses-pills li {
+  background: var(--dmma-ivory);
+  border: 1px solid var(--dmma-line);
+  color: var(--dmma-navy);
+}
+html[lang="ar"] body.home-redesign .ses-pills-tx li {
+  background: rgba(197, 164, 93, 0.14);
+  border-color: rgba(197, 164, 93, 0.38);
+  color: var(--dmma-navy);
+}
+html[lang="ar"] body.home-redesign .ses-price {
+  background: linear-gradient(135deg, var(--dmma-navy-deep), var(--dmma-navy));
+  background-color: var(--dmma-navy);
+  color: var(--dmma-white);
+  border-radius: 14px;
+  padding: 12px 18px;
+}
+html[lang="ar"] body.home-redesign .ses-price b {
+  color: var(--dmma-gold-bright);
+}
+
+/* ---------- 9. About, Credentials, Research & FAQ ---------- */
+html[lang="ar"] body.home-redesign .about-facts {
+  list-style: none;
+  margin: 16px 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+html[lang="ar"] body.home-redesign .about-facts li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--dmma-navy);
+  background: rgba(197, 164, 93, 0.16);
+  border: 1px solid rgba(197, 164, 93, 0.32);
+  border-radius: 999px;
+  padding: 4px 13px;
+}
+html[lang="ar"] body.home-redesign .about-more {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+html[lang="ar"] body.home-redesign .about-fold[open] > .about-grid {
+  margin-top: 20px;
+}
+html[lang="ar"] body.home-redesign #about details.fold {
+  background: var(--dmma-white);
+  border: 1px solid var(--dmma-line);
+  border-radius: 20px;
+  padding: 18px 22px;
+}
+html[lang="ar"] body.home-redesign #about .fold-hint {
+  color: var(--dmma-gold-ink);
+  font-weight: 600;
+}
+
+/* ---------- 10. Weekly Newsletter Band (Deep Navy + Gold) ---------- */
+html[lang="ar"] body.home-redesign section.section.nl-band {
+  background:
+    radial-gradient(65% 120% at 0% 50%, rgba(197, 164, 93, 0.16), transparent 60%),
+    linear-gradient(135deg, var(--dmma-navy-deep) 0%, var(--dmma-navy) 100%) !important;
+  color: var(--dmma-white);
+  border-top: 1px solid rgba(197, 164, 93, 0.28);
+}
+html[lang="ar"] body.home-redesign section.section.nl-band h2 {
+  color: var(--dmma-white);
+}
+html[lang="ar"] body.home-redesign section.section.nl-band .btn-gold {
+  background: linear-gradient(135deg, var(--dmma-gold-bright), var(--dmma-gold));
+  color: var(--dmma-navy);
+  border-color: var(--dmma-gold-bright);
+  font-weight: 700;
+}
+
+/* ---------- 11. Executive Footer ---------- */
+html[lang="ar"] body.home-redesign footer.footer {
+  background: var(--dmma-navy-deep);
+  color: rgba(246, 244, 239, 0.8);
+  border-top: 1px solid rgba(197, 164, 93, 0.34);
+  padding-block: 44px;
+}
+html[lang="ar"] body.home-redesign footer.footer h2 {
+  color: var(--dmma-gold-bright);
+  font-family: var(--display-ar);
+  font-size: 18px;
+}
+html[lang="ar"] body.home-redesign footer.footer p,
+html[lang="ar"] body.home-redesign footer.footer .fine {
+  color: rgba(246, 244, 239, 0.72);
+}
+html[lang="ar"] body.home-redesign footer.footer a {
+  color: rgba(246, 244, 239, 0.86);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+html[lang="ar"] body.home-redesign footer.footer a:hover {
+  color: var(--dmma-gold-bright);
+}
+
+/* ---------- 12. Responsive Breakpoints ---------- */
+@media (max-width: 1100px) {
+  html[lang="ar"] body.home-redesign .topbar.topbar-dark .wrap {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+  html[lang="ar"] body.home-redesign .topbar.topbar-dark .nav {
+    display: none;
+  }
+  html[lang="ar"] body.home-redesign .topbar.topbar-dark .menu {
+    display: block;
+  }
+}
+
+@media (max-width: 900px) {
+  html[lang="ar"] body.home-redesign .concern-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  html[lang="ar"] body.home-redesign .sessions .sessions-box {
+    grid-template-columns: 1fr;
+  }
+  html[lang="ar"] body.home-redesign .sessions .sessions-visual {
+    max-width: 340px;
+    margin-inline: auto;
+  }
+  .hero-cinema {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+  .hero-video-frame {
+    width: min(100%, 270px);
+  }
+  .hero-cinema-side {
+    width: 100%;
+    text-align: center;
+  }
+  html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-card {
+    text-align: right;
+  }
+}
+
+@media (max-width: 560px) {
+  html[lang="ar"] body.home-redesign .topbar.topbar-dark .wrap {
+    gap: 8px;
+    min-height: 60px;
+  }
+  html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+  html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand-text b {
+    font-size: 16px !important;
+  }
+  html[lang="ar"] body.home-redesign .topbar.topbar-dark .brand-text small {
+    font-size: 10.5px !important;
+  }
+  html[lang="ar"] body.home-redesign .topbar.topbar-dark .nav-book {
+    padding: 6px 12px;
+    font-size: 12.8px;
+  }
+  html[lang="ar"] body.home-redesign .concern-grid {
+    grid-template-columns: 1fr;
+  }
+  html[lang="ar"] body.home-redesign #main .clarity-hero {
+    padding-block: 30px 44px;
+  }
+  html[lang="ar"] body.home-redesign #main .clarity-hero .hero-name {
+    font-size: 33px;
+  }
+  html[lang="ar"] body.home-redesign #main .clarity-hero .btn {
+    width: 100%;
+    max-width: 340px;
+  }
+  html[lang="ar"] body.home-redesign #main .clarity-hero .hero-creds li {
+    font-size: 12.5px;
+  }
+  html[lang="ar"] body.home-redesign .concern-card {
+    padding: 20px;
+  }
+  .hero-cinema {
+    padding: 18px 16px;
+    border-radius: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-arc.arc-1 {
+    animation: none !important;
+  }
+  html[lang="ar"] body.home-redesign .btn,
+  html[lang="ar"] body.home-redesign .concern-card,
+  html[lang="ar"] body.home-redesign .weekly,
+  html[lang="ar"] body.home-redesign #articles .card a,
+  html[lang="ar"] body.home-redesign #videos .vcard,
+  html[lang="ar"] body.home-redesign #main .clarity-hero .h3d-card {
+    transition: none !important;
+    transform: none !important;
+  }
+}
