@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com https://images.unsplash.com https://i.ytimg.com https://putqeswsycwyxxrdcmyh.supabase.co; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://cloudflareinsights.com https://putqeswsycwyxxrdcmyh.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الدماغ البشري ثلاثي الأبعاد | DMMA Brain Explorer</title>
+<meta name="description" content="اكتشف الدماغ البشري بتجربة تفاعلية ثلاثية الأبعاد، وتعرف على مناطق المخ ووظائفها وعلاقتها بالمشاعر والذاكرة والسلوك.">
+<link rel="canonical" href="https://drmilladmikhail.com/brain-explorer/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_EG">
+<meta property="og:site_name" content="د. ميلاد ميخائيل">
+<meta property="og:url" content="https://drmilladmikhail.com/brain-explorer/">
+<meta property="og:title" content="الدماغ البشري ثلاثي الأبعاد | DMMA Brain Explorer">
+<meta property="og:description" content="اكتشف الدماغ البشري بتجربة تفاعلية ثلاثية الأبعاد، وتعرف على مناطق المخ ووظائفها وعلاقتها بالمشاعر والذاكرة والسلوك.">
+<meta property="og:image" content="https://drmilladmikhail.com/assets/og/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="الدماغ البشري ثلاثي الأبعاد | DMMA Brain Explorer">
+<meta name="twitter:description" content="رحلة تفاعلية ثلاثية الأبعاد لفهم الدماغ والمشاعر والسلوك الإنساني.">
+<meta name="theme-color" content="#070e1d">
+<link rel="preload" href="/assets/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/noto-naskh-arabic-arabic-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/brain-explorer/css/brain-explorer.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "DMMA Brain Explorer — الدماغ تحت المجهر",
+  "url": "https://drmilladmikhail.com/brain-explorer/",
+  "inLanguage": "ar",
+  "applicationCategory": "EducationalApplication",
+  "description": "اكتشف الدماغ البشري بتجربة تفاعلية ثلاثية الأبعاد، وتعرف على مناطق المخ ووظائفها وعلاقتها بالمشاعر والذاكرة والسلوك.",
+  "author": {
+    "@type": "Person",
+    "name": "Dr. Millad Mikhail",
+    "alternateName": "د. ميلاد ميخائيل",
+    "url": "https://drmilladmikhail.com/about/"
+  }
+}
+</script>
+</head>
+<body class="be-body">
+<a class="skip-link" href="#explorer">تخطّى إلى المستكشف ثلاثي الأبعاد</a>
+
+<!-- Top Museum Navigation -->
+<header class="be-header topbar">
+  <div class="be-wrap be-header-row">
+    <a class="be-brand" href="/" aria-label="د. ميلاد ميخائيل — الصفحة الرئيسية">
+      <svg class="be-brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="11" fill="#101d35" stroke="#e5b964" stroke-width="1.3"/>
+        <path d="M9 28a11 11 0 0 1 22 0" fill="none" stroke="#e5b964" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="20" cy="12" r="2.1" fill="#5cc2f8"/>
+        <text x="20" y="28" text-anchor="middle" font-family="Noto Naskh Arabic, serif" font-weight="700" font-size="16" fill="#fff">م</text>
+      </svg>
+      <span class="be-brand-text">
+        <strong>DMMA Brain Explorer</strong>
+        <small>الدماغ تحت المجهر · د. ميلاد ميخائيل</small>
+      </span>
+    </a>
+
+    <button type="button" id="be-menu-toggle" class="be-menu-toggle" aria-expanded="false" aria-controls="be-main-nav" aria-label="فتح القائمة">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+
+    <nav id="be-main-nav" class="be-nav" aria-label="أقسام مستكشف الدماغ">
+      <a href="#explorer">استكشف الدماغ</a>
+      <a href="#regions">مناطق الدماغ</a>
+      <a href="#modes">كيف تنشأ المشاعر؟</a>
+      <a href="#behavior">الجهاز العصبي</a>
+      <a href="#neuron-lab">مختبر الخلايا العصبية</a>
+      <a href="#knowledge">اختبر معلوماتك</a>
+      <a href="#glossary">قاموس علم الأعصاب</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO SECTION -->
+  <section class="be-hero" aria-labelledby="hero-title">
+    <div class="be-hero-bg" aria-hidden="true"></div>
+    <div class="be-wrap be-hero-grid">
+      <div class="be-hero-copy">
+        <p class="be-kicker">متحف تفاعلي لعلم الأعصاب النفسي · <span lang="en" dir="ltr">DMMA Brain Explorer</span></p>
+        <h1 id="hero-title">اكتشف عقلك من الداخل</h1>
+        <p class="be-hero-sub">رحلة تفاعلية لفهم الدماغ والمشاعر والسلوك الإنساني.</p>
+        <div class="be-hero-actions">
+          <a class="be-btn be-btn-gold" href="#explorer">ابدأ رحلة الاستكشاف</a>
+          <a class="be-btn be-btn-ghost" href="#modes">كيف يعمل الدماغ؟</a>
+        </div>
+        <ul class="be-hero-stats" aria-label="أبرز مكونات المنصة">
+          <li><strong>15</strong><span>بنية تشريحية تفاعلية</span></li>
+          <li><strong>6</strong><span>أوضاع نفسية متحركة</span></li>
+          <li><strong>3</strong><span>مستويات اختبار معرفي</span></li>
+          <li><strong>100%</strong><span>محتوى علمي موثّق</span></li>
+        </ul>
+      </div>
+      <div class="be-hero-note glass-panel" role="note">
+        <h2>تنويه علمي مهم</h2>
+        <p>هذه المنصة <strong>تعليمية وتثقيفية بالكامل</strong> لتبسيط فهم التشريح العصبي وعلاقته بالمشاعر والذاكرة والسلوك. هي <strong>ليست أداة تشخيص أو علاج</strong> لاضطرابات نفسية أو عصبية، ولا تُغني عن استشارة متخصص.</p>
+        <p class="be-hero-home-link">عودة إلى <a href="/">موقع د. ميلاد ميخائيل</a> · <a href="/explore/">شبكة المعرفة</a> · <a href="/articles/">المقالات</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: INTERACTIVE 3D BRAIN VIEWER -->
+  <section id="explorer" class="be-section be-explorer-section" aria-labelledby="explorer-heading">
+    <div class="be-wrap">
+      <div class="be-sec-head">
+        <div>
+          <p class="be-eyebrow">العرض ثلاثي الأبعاد · <span lang="en" dir="ltr">Interactive 3D Anatomy</span></p>
+          <h2 id="explorer-heading">استكشف الدماغ ثلاثي الأبعاد</h2>
+          <p class="be-sec-intro">اسحب لتدوير الدماغ 360°، كبّر وصغّر بالعجلة أو اللمس، وانقر على أي بنية تشريحية لاستكشاف وظائفها. فعّل <strong>«شفافية القشرة»</strong> أو <strong>«العرض المفكك»</strong> لرؤية البُنى العميقة مثل اللوزة والحُصين وتحت المهاد.</p>
+        </div>
+        <div class="be-view-mode-switch" role="group" aria-label="وضع العرض">
+          <button type="button" id="btn-mode-3d" class="be-chip is-active" aria-pressed="true">عرض 3D (WebGL)</button>
+          <button type="button" id="btn-mode-2d" class="be-chip" aria-pressed="false">البديل 2D المبسط</button>
+        </div>
+      </div>
+
+      <div class="be-stage-layout">
+        <!-- 3D / 2D Stage -->
+        <div class="be-viewer-shell glass-panel">
+          <!-- Loading Screen -->
+          <div id="be-loader" class="be-loader" role="status" aria-live="polite">
+            <div class="be-loader-ring" aria-hidden="true"></div>
+            <p class="be-loader-title">جارٍ تحميل نموذج الدماغ التشريحي المقسّم…</p>
+            <p class="be-loader-sub" id="be-loader-progress">تجهيز 15 بنية تشريحية مستقلة</p>
+          </div>
+
+          <!-- Top HUD inside viewer -->
+          <div class="be-viewer-hud">
+            <span id="be-hover-pill" class="be-hover-pill" aria-live="polite">حرّك المؤشر أو انقر على أي منطقة دماغية</span>
+            <span id="be-active-mode-badge" class="be-active-mode-badge" hidden></span>
+          </div>
+
+          <!-- WebGL 3D Mount -->
+          <div id="be-canvas-mount" class="be-canvas-mount" tabindex="0" aria-label="نموذج الدماغ البشري ثلاثي الأبعاد التفاعلي"></div>
+
+          <!-- 2D Accessible Fallback Mount -->
+          <div id="be-fallback-2d" class="be-fallback-2d" hidden aria-label="خريطة الدماغ التفاعلية ثنائية الأبعاد"></div>
+
+          <!-- Viewer Camera & Anatomy Controls -->
+          <div class="be-viewer-controls" role="toolbar" aria-label="أدوات التحكم في الكاميرا والدماغ">
+            <div class="be-ctrl-group">
+              <button type="button" class="be-ctrl-btn" data-cam="front">أمامي</button>
+              <button type="button" class="be-ctrl-btn" data-cam="side">جانبي</button>
+              <button type="button" class="be-ctrl-btn" data-cam="top">علوي</button>
+              <button type="button" class="be-ctrl-btn" data-cam="rear">خلفي</button>
+              <button type="button" class="be-ctrl-btn" data-cam="reset">إعادة ضبط</button>
+            </div>
+            <div class="be-ctrl-group">
+              <button type="button" id="btn-xray" class="be-ctrl-btn be-ctrl-accent" aria-pressed="false">شفافية القشرة (X-Ray)</button>
+              <button type="button" id="btn-explode" class="be-ctrl-btn be-ctrl-accent" aria-pressed="false">عرض مفكك</button>
+              <button type="button" id="btn-autorotate" class="be-ctrl-btn" aria-pressed="true">دوران هادئ</button>
+            </div>
+          </div>
+
+          <p class="be-model-note">نموذج تشريحي تعليمي مقسّم إلى 15 بنية مستقلة لتوضيح المواقع والعلاقات الوظيفية (وليس مسحاً طبياً لحالة فردية).</p>
+        </div>
+
+        <!-- Educational Anatomy Information Panel -->
+        <aside id="be-info-panel" class="be-info-panel glass-panel" aria-live="polite" aria-labelledby="region-ar-name">
+          <div id="be-info-empty" class="be-info-empty">
+            <p class="be-eyebrow">لوحة التشريح التفاعلية</p>
+            <h3>اختر بنية دماغية للاستكشاف</h3>
+            <p>انقر على أي فص أو بنية عميقة على النموذج ثلاثي الأبعاد، أو اختر مباشرة من القائمة السريعة بالأسفل لعرض الموقع، الوظائف الحيوية، الدور المعرفي والعاطفي، ومثال من الحياة اليومية.</p>
+            <div class="be-quick-picks" id="be-quick-picks"></div>
+          </div>
+
+          <div id="be-info-content" class="be-info-content" hidden>
+            <div class="be-info-top">
+              <div>
+                <span id="region-group-badge" class="be-badge">القشرة المخية</span>
+                <h3 id="region-ar-name">القشرة أمام الجبهية</h3>
+                <p id="region-en-name" class="be-en-name" lang="en" dir="ltr">Prefrontal Cortex</p>
+              </div>
+              <button type="button" id="btn-deselect" class="be-deselect-btn" aria-label="إلغاء التحديد">إلغاء التحديد ×</button>
+            </div>
+
+            <dl class="be-info-dl">
+              <div class="be-info-block">
+                <dt>الموقع التشريحي</dt>
+                <dd id="region-location"></dd>
+              </div>
+              <div class="be-info-block">
+                <dt>الوظائف البيولوجية الأساسية</dt>
+                <dd id="region-bio"></dd>
+              </div>
+              <div class="be-info-block">
+                <dt>الدور في الإدراك والسلوك</dt>
+                <dd id="region-cognition"></dd>
+              </div>
+              <div class="be-info-block">
+                <dt>العلاقة بالمعالجة الانفعالية</dt>
+                <dd id="region-emotion"></dd>
+              </div>
+              <div class="be-info-block be-example-box">
+                <dt>مثال بسيط من الحياة اليومية</dt>
+                <dd id="region-example"></dd>
+              </div>
+              <div class="be-info-block be-science-box">
+                <dt>ملاحظات علمية مهمة</dt>
+                <dd id="region-notes"></dd>
+              </div>
+            </dl>
+
+            <div class="be-related-wrap">
+              <span class="be-related-label">بُنى تشريحية مترابطة:</span>
+              <div id="region-related" class="be-related-pills"></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: ALL 15 ANATOMICAL STRUCTURES DIRECTORY -->
+  <section id="regions" class="be-section" aria-labelledby="regions-heading">
+    <div class="be-wrap">
+      <div class="be-sec-head">
+        <div>
+          <p class="be-eyebrow">الدليل التشريحي · <span lang="en" dir="ltr">15 Key Structures</span></p>
+          <h2 id="regions-heading">مناطق الدماغ الـ 15</h2>
+          <p class="be-sec-intro">اضغط على أي بطاقة لتوجيه الكاميرا ثلاثية الأبعاد تلقائياً نحو البنية وإبرازها وفتح ملفها العلمي الكامل.</p>
+        </div>
+        <div class="be-filter-row" role="group" aria-label="تصفية المناطق التشريحية">
+          <button type="button" class="be-chip is-active" data-region-cat="all" aria-pressed="true">الكل (15)</button>
+          <button type="button" class="be-chip" data-region-cat="cortex" aria-pressed="false">القشرة المخية</button>
+          <button type="button" class="be-chip" data-region-cat="limbic" aria-pressed="false">الجهاز الحوفي والعميق</button>
+          <button type="button" class="be-chip" data-region-cat="hindbrain" aria-pressed="false">المخيخ وجذع الدماغ</button>
+        </div>
+      </div>
+      <div id="be-regions-grid" class="be-regions-grid"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: 6 INTERACTIVE PSYCHOLOGICAL MODES -->
+  <section id="modes" class="be-section be-section-alt" aria-labelledby="modes-heading">
+    <div class="be-wrap">
+      <div class="be-sec-head">
+        <div>
+          <p class="be-eyebrow">الشبكات العصبية في العمل · <span lang="en" dir="ltr">Interactive Psychological Modes</span></p>
+          <h2 id="modes-heading">كيف تنشأ المشاعر والوظائف النفسية؟</h2>
+          <p class="be-sec-intro">اختر أحد الأوضاع التعليمية الستة لمشاهدة التسلسل المنسّق بين شبكات الدماغ، مع تفعيل الإضاءة التشريحية على النموذج ثلاثي الأبعاد، ورسم توضيحي مبسّط، ومثال عملي، واختبار سريع.</p>
+        </div>
+      </div>
+
+      <div id="be-mode-tabs" class="be-mode-tabs" role="tablist" aria-label="الأوضاع النفسية الستة"></div>
+
+      <div id="be-mode-stage" class="be-mode-stage glass-panel" role="tabpanel">
+        <div class="be-mode-header">
+          <div>
+            <span id="mode-en-title" class="be-en-name" lang="en" dir="ltr"></span>
+            <h3 id="mode-ar-title"></h3>
+            <p id="mode-summary" class="be-mode-summary"></p>
+          </div>
+          <div class="be-mode-actions">
+            <button type="button" id="btn-mode-play" class="be-btn be-btn-gold">▶ تشغيل التسلسل التعليمي</button>
+            <a class="be-btn be-btn-ghost" href="#explorer" id="btn-mode-3d-sync">شاهد المسار على الدماغ 3D</a>
+          </div>
+        </div>
+
+        <div class="be-mode-grid">
+          <div class="be-mode-timeline">
+            <h4>التسلسل المنسّق للشبكات الدماغية</h4>
+            <ol id="mode-steps" class="be-steps-list"></ol>
+          </div>
+
+          <div class="be-mode-side">
+            <div class="be-mode-diagram-box">
+              <h4>رسم تخطيطي مبسّط للمسار</h4>
+              <div id="mode-diagram" class="be-mode-diagram"></div>
+            </div>
+
+            <div class="be-mode-concepts">
+              <h4>المفاهيم المحورية</h4>
+              <div id="mode-concepts-list" class="be-concept-tags"></div>
+            </div>
+
+            <div class="be-example-box be-info-block">
+              <h4>مثال تطبيقي</h4>
+              <p id="mode-example"></p>
+            </div>
+
+            <div class="be-mini-quiz" id="mode-mini-quiz">
+              <h4>اختبار فهم سريع</h4>
+              <p id="mode-quiz-q" class="be-quiz-q"></p>
+              <div id="mode-quiz-opts" class="be-quiz-opts"></div>
+              <p id="mode-quiz-feedback" class="be-quiz-feedback" aria-live="polite"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: FROM BRAIN TO BEHAVIOR + NERVOUS SYSTEM -->
+  <section id="behavior" class="be-section" aria-labelledby="behavior-heading">
+    <div class="be-wrap">
+      <div class="be-sec-head">
+        <div>
+          <p class="be-eyebrow">الجهاز العصبي والحياة اليومية · <span lang="en" dir="ltr">From Brain to Behavior</span></p>
+          <h2 id="behavior-heading">من الدماغ إلى السلوك</h2>
+          <p class="be-sec-intro">كيف تتعاون شبكات الدماغ والجهاز العصبي الذاتي (السمبثاوي والباراسمبثاوي) في تشكيل تجاربنا اليومية؟ تذكّر دائماً: لا توجد «نقطة واحدة» تصنع شعوراً معقداً بمفردها، بل شبكات ديناميكية متكاملة.</p>
+        </div>
+      </div>
+      <div id="be-behavior-grid" class="be-behavior-grid"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: NEURAL SIGNAL SIMULATION LAB -->
+  <section id="neuron-lab" class="be-section be-section-alt" aria-labelledby="neuron-heading">
+    <div class="be-wrap">
+      <div class="be-sec-head">
+        <div>
+          <p class="be-eyebrow">مختبر التواصل العصبي · <span lang="en" dir="ltr">Neural Communication Lab</span></p>
+          <h2 id="neuron-heading">مختبر الخلايا العصبية وانتقال الإشارة</h2>
+          <p class="be-sec-intro">شاهد كيف تستقبل الزوائد الشجرية الإشارة، وتنتقل عبر جسم الخلية والمحور المغلّف بغمد المايلين حتى الشق المشبكي لإطلاق النواقل العصبية.</p>
+        </div>
+      </div>
+
+      <div class="be-neuron-shell glass-panel">
+        <p class="be-disclaimer-banner" role="note">
+          <strong>توضيح علمي:</strong> هذه المحاكاة <em>نموذج تعليمي مبسّط</em> لشرح مبدأ انتقال السيال العصبي والنقل المشبكي، وليست تسجيلاً حياً لنشاط الدماغ.
+        </p>
+
+        <div class="be-neuron-controls">
+          <button type="button" id="btn-fire-signal" class="be-btn be-btn-gold">⚡ أطلق إشارة عصبية</button>
+          <button type="button" id="btn-neuron-auto" class="be-btn be-btn-ghost" aria-pressed="false">تكرار مستمر</button>
+          <div class="be-neuron-parts" role="group" aria-label="أجزاء الخلية العصبية">
+            <button type="button" class="be-chip is-active" data-npart="dendrites">الزوائد الشجرية</button>
+            <button type="button" class="be-chip" data-npart="soma">جسم الخلية</button>
+            <button type="button" class="be-chip" data-npart="axon">المحور العصبي</button>
+            <button type="button" class="be-chip" data-npart="myelin">غمد المايلين</button>
+            <button type="button" class="be-chip" data-npart="synapse">الشق المشبكي</button>
+            <button type="button" class="be-chip" data-npart="neurotransmitters">النواقل العصبية</button>
+          </div>
+        </div>
+
+        <div class="be-neuron-canvas-wrap">
+          <canvas id="neuron-canvas" width="960" height="340" aria-label="محاكاة تعليمية لانتقال الإشارة العصبية بين خليتين عصبيتين"></canvas>
+        </div>
+
+        <div id="neuron-part-info" class="be-neuron-info" aria-live="polite">
+          <h3 id="neuron-part-title">الزوائد الشجرية (<span lang="en" dir="ltr">Dendrites</span>)</h3>
+          <p id="neuron-part-desc"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: INTERACTIVE KNOWLEDGE CENTER (QUIZZES + FLASHCARDS) -->
+  <section id="knowledge" class="be-section" aria-labelledby="knowledge-heading">
+    <div class="be-wrap">
+      <div class="be-sec-head">
+        <div>
+          <p class="be-eyebrow">مركز المعرفة التفاعلي · <span lang="en" dir="ltr">Knowledge Center</span></p>
+          <h2 id="knowledge-heading">اختبر معلوماتك والبطاقات التعليمية</h2>
+          <p class="be-sec-intro">اختبارات معرفية بثلاثة مستويات وبطاقات مراجعة سريعة لترسيخ فهمك. <strong>درجات الاختبار لقياس المعرفة التعليمية فقط وليست تقييماً إكلينيكياً أو تشخيصاً.</strong></p>
+        </div>
+      </div>
+
+      <div class="be-knowledge-grid">
+        <!-- Multi-level Quiz -->
+        <div class="be-quiz-panel glass-panel">
+          <div class="be-quiz-top">
+            <h3>الاختبار المعرفي</h3>
+            <div class="be-level-tabs" role="group" aria-label="مستوى الاختبار">
+              <button type="button" class="be-chip is-active" data-level="beginner" aria-pressed="true">مبتدئ</button>
+              <button type="button" class="be-chip" data-level="intermediate" aria-pressed="false">متوسط</button>
+              <button type="button" class="be-chip" data-level="advanced" aria-pressed="false">متقدم</button>
+            </div>
+          </div>
+
+          <div class="be-progress-wrap" aria-label="تقدم الاختبار">
+            <div class="be-progress-bar"><div id="quiz-progress-fill" class="be-progress-fill"></div></div>
+            <span id="quiz-progress-label" class="be-progress-label">سؤال 1 من 4</span>
+          </div>
+
+          <div id="quiz-body" class="be-quiz-body"></div>
+
+          <div id="quiz-result" class="be-quiz-result" hidden aria-live="polite">
+            <h4 id="quiz-score-heading"></h4>
+            <p id="quiz-score-note"></p>
+            <div id="quiz-review" class="be-quiz-review"></div>
+            <div class="be-quiz-result-actions">
+              <button type="button" id="btn-quiz-retry" class="be-btn be-btn-gold">أعد الاختبار</button>
+              <a class="be-btn be-btn-ghost" href="#regions">راجع مناطق الدماغ</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Educational Flashcards -->
+        <div class="be-flash-panel glass-panel">
+          <div class="be-quiz-top">
+            <h3>بطاقات المراجعة السريعة</h3>
+            <span id="flash-counter" class="be-progress-label">1 / 8</span>
+          </div>
+          <button type="button" id="flashcard-btn" class="be-flashcard" aria-pressed="false">
+            <span class="be-flash-side" id="flash-label">المصطلح</span>
+            <strong id="flash-front"></strong>
+            <span id="flash-en" class="be-en-name" lang="en" dir="ltr"></span>
+            <p id="flash-back" class="be-flash-back" hidden></p>
+            <span class="be-flash-hint">اضغط لقلب البطاقة</span>
+          </button>
+          <div class="be-flash-nav">
+            <button type="button" id="btn-flash-prev" class="be-ctrl-btn">السابق</button>
+            <button type="button" id="btn-flash-flip" class="be-ctrl-btn be-ctrl-accent">اقلب البطاقة</button>
+            <button type="button" id="btn-flash-next" class="be-ctrl-btn">التالي</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: SEARCHABLE GLOSSARY & VERIFIED REFERENCES -->
+  <section id="glossary" class="be-section be-section-alt" aria-labelledby="glossary-heading">
+    <div class="be-wrap">
+      <div class="be-sec-head">
+        <div>
+          <p class="be-eyebrow">المعجم العلمي · <span lang="en" dir="ltr">Arabic–English Neuroscience Glossary</span></p>
+          <h2 id="glossary-heading">قاموس علم الأعصاب</h2>
+          <p class="be-sec-intro">ابحث بالعربية أو الإنجليزية في المصطلحات التشريحية والعصبية الأساسية.</p>
+        </div>
+        <div class="be-glossary-search">
+          <label class="sr-only" for="glossary-input">ابحث في قاموس علم الأعصاب</label>
+          <input id="glossary-input" type="search" maxlength="100" autocomplete="off" placeholder="ابحث: Amygdala، الحُصين، الدوبامين، المايلين…">
+        </div>
+      </div>
+      <div id="be-glossary-list" class="be-glossary-list"></div>
+
+      <!-- Scientific Integrity & References -->
+      <div class="be-refs-box glass-panel" id="references">
+        <div class="be-refs-head">
+          <h3>المراجع العلمية والشفافية المعرفية</h3>
+          <p>يعتمد محتوى هذه المنصة على مصادر علمية عامة وموثوقة في علم الأعصاب والصحة النفسية، مع التمييز الصريح بين المعرفة العلمية الراسخة، والنماذج التعليمية المبسّطة، والمجالات التي لا يزال البحث العلمي فيها جارياً.</p>
+        </div>
+        <ul id="be-refs-list" class="be-refs-list"></ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="be-footer">
+  <div class="be-wrap be-footer-row">
+    <div>
+      <strong>DMMA Brain Explorer — الدماغ تحت المجهر</strong>
+      <p>مشروع تعليمي تثقيفي من د. ميلاد ميخائيل · المحتوى للتوعية والفهم العلمي وليس تشخيصاً أو بديلاً عن الرعاية المتخصصة.</p>
+    </div>
+    <nav class="be-footer-links" aria-label="روابط الموقع">
+      <a href="/">الرئيسية</a>
+      <a href="/explore/">شبكة المعرفة</a>
+      <a href="/articles/">المقالات</a>
+      <a href="/glossary/">القاموس النفسي</a>
+      <a href="/help-now/">محتاج مساعدة دلوقتي</a>
+    </nav>
+  </div>
+</footer>
+
+<script type="module" src="/brain-explorer/js/main.js"></script>
+</body>
+</html>
